@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("[\"c",["Operator"],[["[&quot;create&quot;]","[\"create\"]",[[,,,"[\"create\"]",0,"File:functions/fnc_collection.sqf:[\"create\"]"]]]]);

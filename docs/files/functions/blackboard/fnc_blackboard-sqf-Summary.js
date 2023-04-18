@@ -1,0 +1,1 @@
+﻿NDFramePage.OnPageTitleLoaded("File:functions/blackboard/fnc_blackboard.sqf","fnc_blackboard.sqf");NDSummary.OnSummaryLoaded("File:functions/blackboard/fnc_blackboard.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[7,0,1,"Functions","Functions"],[8,0,0,"xps_fnc_blackboard","xps_fnc_blackboard"]]);

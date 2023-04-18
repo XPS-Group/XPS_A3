@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("loc",["Type"],[["Location",,[[,,,,0,"File:functions/native_types:Location"]]]]);

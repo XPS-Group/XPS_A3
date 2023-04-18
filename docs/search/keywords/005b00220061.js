@@ -1,0 +1,1 @@
+﻿NDSearch.OnPrefixDataLoaded("[\"a",["Operator"],[["[&quot;addContainer&quot;]","[\"addcontainer\"]",[[,,,"[\"addcontainer\"]",0,"File:functions/fnc_containers.sqf:[\"addContainer\"]"]]],["[&quot;addItem&quot;]","[\"additem\"]",[[,,,"[\"additem\"]",0,"File:functions/fnc_collection.sqf:[\"addItem\"]"]]]]);

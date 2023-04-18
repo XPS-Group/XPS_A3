@@ -1,0 +1,1 @@
+﻿NDSummary.OnToolTipsLoaded("File:functions/helpers/fnc_createObjectNamespace.sqf",{10:"<div class=\"NDToolTip TFunction LSQF\"><div class=\"TTSummary\">Create and return a new Namespace based on CBA_NamespaceDummy. Same as CBA_fnc_createObjectNamespace but modified to only produce simpleObjects and not</div></div>"});

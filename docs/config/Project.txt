@@ -74,12 +74,6 @@ Source Folder 2: ..\..\addons\behaviour_trees
 Source Folder 3: ..\..\addons\pathfinding
    Name: Pathfinding
 
-Source Folder 4: ..\..\optionals\dangerAI
-   Name: Danger AI
-
-Source Folder 5: ..\..\optionals\formationAI
-   Name: Formation AI
-
 
 # This is where you tell Natural Docs which folders it should scan for source
 # files.  If you add any on the command line this section is ignored except
@@ -158,7 +152,7 @@ Source Folder 5: ..\..\optionals\formationAI
 
 HTML Output Folder: ..
    Title: XPS
-   Subtitle: eXtensible Planning System
+   Subtitle: eXtensible Project System
    Copyright: Copyright © 2023 Crashdome
 
 
