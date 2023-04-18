@@ -1,0 +1,50 @@
+#! SQF
+/* ----------------------------------------------------------------------------
+Type: Collection
+
+Description:
+<HashMap>   with initial properties [Name], [AllowedTypes], and [Items]
+
+	--- Text
+    Container <hashmap>
+    |___key: "Name" - value: <string> descriptive name of the container - shorter the better
+    |___key: "AllowedTypes" - <Array> similar to allowed types array in Params command
+    |___key: "ArrayTemplate" - <Array> used with isEqualTypeParams command to check array validity
+    |___key: "Items" - value: <HashMap> which will hold items of allowed type
+    --- 
+
+See Also : 
+<xps_fnc_collection>
+
+Type: Container
+
+Description:
+<HashMap>  with initial properties [Name] and [Type] 
+
+	--- Text
+    Container <hashmap>
+    |___key: "Type" - value: <string> a strict type label of the container
+    |___key: "Name" - value: <string> descriptive name of the container - shorter the better
+    --- 
+
+See Also : 
+<xps_fnc_container>
+
+Type: Containers
+
+Description:
+<Collection>  with additional properties [AllowedContainers] and preset [AllowedTypes] to be only 
+a <Container>. 
+
+	--- Text
+    Container <hashmap>
+    |___key: "Name" - value: <string> descriptive name of the container - shorter the better
+    |___key: "AllowedTypes" - value: <Array> - preset to [createhashmap] (can only accept containers that have a Name and Type definition)
+    |___key: "AllowedContainers" - value: <Array> of <strings> which is checked when adding an item
+    |___key: "Items" - value: <HashMap> which will hold items of allowed type
+    --- 
+
+See Also : 
+<xps_fnc_containers>
+
+------------------------------------------------------------------------------*/

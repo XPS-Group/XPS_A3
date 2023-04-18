@@ -1,0 +1,11 @@
+templates/
+docs/config/Working Data/
+docs/files/
+docs/search/
+docs/menu/
+docs/other/
+docs/*
+.hemtt/
+keys/*
+*.biprivatekey
+*.exe
