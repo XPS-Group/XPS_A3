@@ -1,1 +1,0 @@
-﻿NDSummary.OnToolTipsLoaded("File:functions/blackboard/types",{6:"<div class=\"NDToolTip TType LSQF\"><div class=\"TTSummary\">Container</div></div>"});

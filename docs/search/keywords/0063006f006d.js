@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("com",["Type"],[["Composite",,[[,,,,0,"File2:types:Composite"]]]]);

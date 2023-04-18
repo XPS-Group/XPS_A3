@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:functions/blackboard/types","types");NDSummary.OnSummaryLoaded("File:functions/blackboard/types",[["SQF","SQF"]],[["Groups","Group"],["Types","Type"]],[[5,0,0,"Types","Types"],[6,0,1,"Blackboard","Blackboard"]]);

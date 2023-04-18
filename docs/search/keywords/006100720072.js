@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("arr",["Type"],[["Array",,[[,,,,0,"File:functions/native_types:Array"]]]]);

@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("dec",["Type"],[["Decorator",,[[,,,,0,"File2:types:Decorator"]]]]);

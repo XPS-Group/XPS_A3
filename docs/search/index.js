@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixIndexLoaded(["[\"a","[\"c","[\"r","arr","bla","boo","cod","col","com","con","dec","dis","gro","has","lea","loc","nam","nod","num","obj","sid","str","sub","tre","xps"]);

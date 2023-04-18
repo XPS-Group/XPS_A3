@@ -1,1 +1,0 @@
-﻿NDSearch.OnPrefixDataLoaded("col",["Type"],[["Collection",,[[,,,,0,"File:functions/types:Collection"]]]]);

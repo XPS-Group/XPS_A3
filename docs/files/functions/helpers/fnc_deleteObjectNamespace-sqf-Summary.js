@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:functions/helpers/fnc_deleteObjectNamespace.sqf","fnc_deleteObjectNamespace.sqf");NDSummary.OnSummaryLoaded("File:functions/helpers/fnc_deleteObjectNamespace.sqf",[["SQF","SQF"]],[["Functions","Function"],["Groups","Group"]],[[1,0,1,"Functions","Functions"],[2,0,0,"xps_fnc_deleteObjectNamespace","xps_fnc_deleteObjectNamespace"]]);

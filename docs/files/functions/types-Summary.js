@@ -1,1 +1,0 @@
-﻿NDFramePage.OnPageTitleLoaded("File:functions/types","types");NDSummary.OnSummaryLoaded("File:functions/types",[["SQF","SQF"]],[["Groups","Group"],["Types","Type"]],[[36,0,0,"Types","Types"],[37,0,1,"Collection","Collection"],[38,0,1,"Container","Container"],[39,0,1,"Containers","Containers"]]);
