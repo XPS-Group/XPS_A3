@@ -1,11 +1,12 @@
 templates/
 docs/config/Working Data/
-1docs/files/
-1docs/files2/
-1docs/search/
-1docs/styles/
-1docs/menu/
-1docs/other/
+docs/files/
+docs/files2/
+docs/search/
+docs/styles/
+docs/menu/
+docs/other/
+docs/*
 .hemtt/
 keys/*
 *.biprivatekey
