@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-TypeDef: folder. XPS_PF_typ_MapSector
+TypeDef: pathfinding. XPS_PF_typ_MapSector
 	<TypeDefinition>
 
 Authors: 
