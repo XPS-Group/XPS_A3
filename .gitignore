@@ -1,5 +1,5 @@
-templates/
-docs/config/Working Data/
+docs/config/working data
+docs/noUpload
 .hemtt/
 keys/*
 *.biprivatekey

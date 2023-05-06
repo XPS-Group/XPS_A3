@@ -4,7 +4,7 @@ class CfgMods {
     class ADDON {
         name = "XPS Pathfinding";
         dir = COMPONENT_DIR;
-        author = "CrashDome";
+        author = "Crashdome";
 
         description = "Extensible Project System - Pathfinding";
 

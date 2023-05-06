@@ -2,7 +2,7 @@ class CfgPatches {
 	class ADDON {
 			// Meta information for editor
 			name = "XPS : Formation AI";
-			author = "CrashDome";
+			author = "Crashdome";
 			url = "";
 	
 			// Minimum compatible version. When the game's version is lower, pop-up warning will appear when launching the game.

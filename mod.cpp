@@ -1,8 +1,8 @@
 name = "XPS Core";
 // picture = "logo_xps.paa";
 actionName = "Website";
-action = "https://github.com/CrashDome/XPS_A3";
-description = "Issues: https://github.com/CrashDome/XPS_A3/issues";
+action = "https://github.com/Crashdome/XPS_A3";
+description = "Issues: https://github.com/Crashdome/XPS_A3/issues";
 // logo = "logo_xps.paa";
 // logoOver = "logo_xps.paa";
 tooltip = "eXtensible Project System - Core";

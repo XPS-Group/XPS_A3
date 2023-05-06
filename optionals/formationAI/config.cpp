@@ -4,10 +4,8 @@ class CfgMods {
     class ADDON {
         name = "XPS Formation AI";
         dir = COMPONENT_DIR;
-        author = "CrashDome";
-
+        author = "Crashdome";
         description = "Extensible Project System - Formation AI";
-
         overview = "Work In Progress";
     };
 };

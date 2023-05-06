@@ -4,10 +4,8 @@ class CfgMods {
     class ADDON {
         name = "XPS Danger AI";
         dir = COMPONENT_DIR;
-        author = "CrashDome";
-
+        author = "Crashdome";
         description = "Extensible Project System - Danger AI";
-
         overview = "Work In Progress";
     };
 };

@@ -1,6 +1,6 @@
 name = "XPS"
 prefix = "xps"
-author= "CrashDome"
+author= "Crashdome"
 reuse_private_key = false
 files = [
     "readme.txt"

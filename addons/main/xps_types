@@ -1,0 +1,24 @@
+#! SQF
+/* ----------------------------------------------------------------------------
+Type: TypeDefinition
+    <Array> of <arrays> in format: [[key1,value1],[key2,value2]...]
+
+Description:
+    Similar to the array used when making hashmaps but, contains extra
+    features such as the preset keys "#str" and "#create" for use in 
+    <HashmapObjects> 
+
+See also: <HashmapObjects>
+
+Type: Interface
+    <Array> of <arrays> in format: [[key1,type1],[key2,type2]...] where
+    'type' is the STRING of the native type (e.g. "STRING","HASHMAP","CODE",etc...)
+    of the command <typeName: https://community.bistudio.com/wiki/typeName>
+
+Description:
+    Used to ensure a <TypeDefinition> contains keys that have values of a specific type
+
+See also: 
+    <TypeDefinition>
+    <XPS_fnc_checkInterface>
+------------------------------------------------------------------------------*/

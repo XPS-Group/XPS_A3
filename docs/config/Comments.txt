@@ -1,0 +1,281 @@
+﻿Format: 2.3 (Development Release 1)
+
+# This is the Natural Docs comments file for this project.  If you change
+# anything here, it will apply to THIS PROJECT ONLY.  You can edit the version
+# in Natural Docs' Config folder to make the changes apply to all projects,
+# but it's recommended that you edit this version instead.
+
+
+# Ignored Keywords
+# ------------------------------------------------------------------------
+
+# If you'd like to prevent keywords from being recognized by Natural Docs,
+# you can do it like this:
+#
+# Ignore Keywords:
+#    [keyword]
+#    [keyword]
+#    ...
+
+
+# Comment Types
+# ------------------------------------------------------------------------
+# The syntax reference is after the definitions.
+
+Alter Comment Type: Class
+
+   Display Name: Hashmap Object
+   Plural Display Name: Hashmap Objects
+
+   Scope: Start
+   Flags: Code, Variable Type, Class Hierarchy
+
+   Keywords:
+      mapobject, mapobjects
+      typedef, typedefs
+      typedefinition, typedefinitions
+
+
+Alter Comment Type: Interface
+
+   Display Name: Hashmap Interface
+   Plural Display Name: Hashmap Interfaces
+
+   Scope: Start
+   Flags: Code, Variable Type, Database Hierarchy
+
+   Keywords:
+      mapinterface, mapinterfaces
+
+
+Comment Type: Key
+
+   Display Name: Hashmap Key
+   Plural Display Name: Hashmap Keys
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      key, keys
+      mapkey, mapkeys
+
+
+Comment Type: Parameter
+
+   Display Name: Parameter
+   Plural Display Name: Parameters
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      parameter, parameters
+      optional, optionals
+
+
+Comment Type: Example
+
+   Display Name: Example
+   Plural Display Name: Examples
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      example, examples
+
+
+Comment Type: Author
+
+   Display Name: Author
+   Plural Display Name: Authors
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      author, authors
+
+
+Comment Type: Return
+
+   Display Name: Return
+   Plural Display Name: Returns
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      return, returns
+
+
+Alter Comment Type: Property
+
+   Keywords:
+
+
+Comment Type: HMParent
+
+   Display Name: Parent
+   Plural Display Name: Parents
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      parent, parents
+      inherit, inherits
+
+
+Comment Type: HMInterface
+
+   Display Name: Interface
+   Plural Display Name: Interfaces
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      implement, implements
+
+
+Comment Type: HMProperty
+
+   Display Name: Property
+   Plural Display Name: Properties
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      property, properties
+      prop, props
+
+
+Comment Type: HMFlags
+
+   Display Name: Flag
+   Plural Display Name: Flags
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      flag, flags
+
+
+Comment Type: HMProtected
+
+   Display Name: Protected
+   Plural Display Name: Protected
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      protected, protected
+
+
+Comment Type: HMMethod
+
+   Display Name: Method
+   Plural Display Name: Methods
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      method, methods
+      callback, callbacks
+      constructor, constructors
+      destructor, destructors
+
+
+Alter Comment Type: Package
+
+   Display Name: Function
+   Plural Display Name: Function
+
+   Scope: Start
+   Flags: Code, Variable Type, Package Hierarchy
+
+   Keywords:
+      function, functions
+      Function, Functions
+
+
+Alter Comment Type: Module
+
+   Display Name: Global Variable
+   Plural Display Name: Global Variables
+
+   Scope: Start
+   Flags: Code, Variable Type, Module Hierarchy
+
+   Keywords:
+      variable, variables
+      var, vars
+      gvar, gvars
+
+
+# Each Natural Docs comment has a corresponding type which determine its
+# behavior.  You can define your own here or override the settings of the
+# existing ones.
+#
+# Comment Type: [name]
+# Alter Comment Type: [name]
+#    Creates a new comment type or changes an existing one.
+#
+# Display Name: [name]
+# Plural Display Name: [name]
+#    The singular and plural name of the comment type as it should appear in
+#    the output.
+#
+# Simple Identifier: [name]
+#    The name of the comment type using only the letters A to Z.  No spaces,
+#    numbers, symbols, or Unicode allowed.  Defaults to the comment type name
+#    minus any unacceptable characters.  This is used to generate things like
+#    CSS class names.
+#
+# Scope: [normal|start|end|always global]
+#    How the comment affects scope.  Defaults to normal.
+#    normal        - The comment stays within the current scope.
+#    start         - The comment starts a new scope for all the comments
+#                    beneath it, like class comments.
+#    end           - The comment resets the scope back to global for all the
+#                    comments beneath it, like section comments.
+#    always global - The comment is defined as a global symbol, but does not
+#                    change the scope for any other comments.
+#
+# Flags: [flag], [flag], ...
+#    A combination of settings that apply to the comment type.
+#    Code, File, or Documentation
+#        Whether it's used to describe a code element, a file, or is a
+#        standalone documentation comment.  Defaults to Code.
+#    Variable Type
+#        Whether it describes a code element that can be used as a variable's
+#        type.
+#    Class Hierarchy or Database Hierarchy
+#        Whether it describes a code element that should be included in the
+#        class or database hierarchy.  Requires Scope: Start.
+#    Enum
+#        Whether it describes an enum.
+#
+# Keywords:
+#    [keyword]
+#    [keyword], [plural keyword]
+#    ...
+#    A list of the comment type's keywords.  Each line after the heading is
+#    the keyword and optionally its plural form for list comments.  You can
+#    reuse existing keywords to change their definition.  When using
+#    "Alter Comment Type", these keywords are added to the existing ones
+#    rather than replacing them.
+#
+# [Language] Keywords:
+#    [keyword]
+#    [keyword], [plural keyword]
+#    ...
+#    A list of keywords that only apply to the comment type when using a
+#    specific programming language.  Each line after the heading is the
+#    keyword and optionally its plural form for list comments.

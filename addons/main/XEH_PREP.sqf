@@ -1,10 +1,14 @@
-PREPMAIN_F(container);
-PREPMAIN_F(containers);
-PREPMAIN_F(collection);
 
-SUBPREPMAIN_F(blackboard,blackboard);
+PREPMAIN_FNC(buildTypeDefinition);
+PREPMAIN_FNC(checkInterface);
+PREPMAIN_FNC(createObjectNamespace);
+PREPMAIN_FNC(createUniqueID);
+PREPMAIN_FNC(deleteObjectNamespace);
+PREPMAIN_FNC(logError);
 
-SUBPREPMAIN_F(helpers,addBlackboardToUnit);
-SUBPREPMAIN_F(helpers,createUniqueID);
-SUBPREPMAIN_F(helpers,createObjectNamespace);
-SUBPREPMAIN_F(helpers,deleteObjectNamespace);
+PREPMAIN_IFC(IBlackboard);
+PREPMAIN_IFC(ICollection);
+
+PREPMAIN_TYP(Blackboard);
+PREPMAIN_TYP(Collection);
+PREPMAIN_TYP(HashmapCollection);

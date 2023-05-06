@@ -4,10 +4,8 @@ class CfgMods {
     class ADDON {
         name = "XPS Behaviour Trees";
         dir = COMPONENT_DIR;
-        author = "CrashDome";
-
+        author = "Crashdome";
         description = "Extensible Project System - Behaviour Trees";
-
         overview = "Work In Progress";
     };
 };

@@ -4,10 +4,8 @@ class CfgMods {
     class ADDON {
         name = "XPS - Extensible Project System";
         dir = COMPONENT_DIR;
-        author = "CrashDome";
-
+        author = "Crashdome";
         description = "Extensible Project System - Core Functionality";
-
         overview = "Work In Progress";
     };
 };
@@ -16,7 +14,7 @@ class CfgPatches {
 	class ADDON {
 			// Meta information for editor
 			name = CSTRING(component);
-			author = "CrashDome";
+			author = "Crashdome";
 			url = "";
 	
 			// Minimum compatible version. When the game's version is lower, pop-up warning will appear when launching the game.
