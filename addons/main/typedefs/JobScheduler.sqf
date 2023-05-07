@@ -92,7 +92,7 @@ Flags:
         if !(params [["_item",nil,[hashmap]]]) exitwith {false;};
         private _uid = call XPS_fnc_createUniqueID;
         if (_self call ["XPS_type_HashmapCollection.AddItem",[_uid,_item]]) exitwith {
-			_self set ["Queue",(_self get "Queue") pushback _item];
+			(_self get "Queue") pushback _item;
 			if (isNil {_self get "CurrentItem"} && count (_self get "Queue")>0) then {
 				private _next = _queue deleteAt 0;
 				_self set ["CurrentItem",_next];
