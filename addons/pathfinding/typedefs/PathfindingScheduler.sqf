@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: folder. XPS_PF_typ_PathfindingScheduler
+TypeDef: pathfinding. XPS_PF_typ_PathfindingScheduler
 	<TypeDefinition>
 
 Authors: 

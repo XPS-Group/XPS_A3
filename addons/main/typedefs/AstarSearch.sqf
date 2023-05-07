@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: folder. XPS_typ_AstarSearch
+TypeDef: main. XPS_typ_AstarSearch
 	<TypeDefinition>
 
 Authors: 
