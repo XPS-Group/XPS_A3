@@ -22,9 +22,55 @@ Flags:
 --------------------------------------------------------------------------------*/
 [
 	["#str",{"XPS_typ_AstarSearch"}],
+	["#interfaces",["XPS_ifc_IAstarSearch"]],
 
-	["#interfaces",[]],
+	/*----------------------------------------------------------------------------
+	Protected: cameFrom
+    
+    	--- Prototype --- 
+    	get "cameFrom"
+    	---
+    
+    Returns: 
+		<Hashmap> - of nodes where key is index and value is previous node in graph
+	-----------------------------------------------------------------------------*/
+	["cameFrom",nil], //part of working graph
+	/*----------------------------------------------------------------------------
+	Protected: costSoFar
+    
+    	--- Prototype --- 
+    	get "costSoFar"
+    	---
+    
+    Returns: 
+		<Hashmap> - of nodes where key is index and value is cost to reach node from start
+	-----------------------------------------------------------------------------*/
+	["costSoFar",nil], //part of working graph
+	/*----------------------------------------------------------------------------
+	Protected: frontier
+    
+    	--- Prototype --- 
+    	get "frontier"
+    	---
+    
+    Returns: 
+		<Array> - of nodes from priority lowest to highest (higher is worse)
+	-----------------------------------------------------------------------------*/
+	["frontier",nil], //part of working graph
+	/*----------------------------------------------------------------------------
+	Constructor: #create
+    
+    	--- Prototype --- 
+    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_startNodeKey*,_endNodeKey*]]
+    	---
+    
+    Optionals: 
+		_startNodeKey* - <Anything> - (Optional - Default : nil) 
+    	_endNodeKey* - <Anything> - (Optional - Default : nil) 
 
+	Returns:
+		_result - <HashmapObject>
+	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
 		params ["_nodes",["_startNodeKey",nil,[]],["_endNodeKey",nil,[]]];
 		_self set ["Nodes",_nodes];
@@ -36,13 +82,16 @@ Flags:
 		_self set ["cameFrom",createhashmap];
 		_self set ["Path",[]];
 	}],
-
-	["cameFrom",nil], //part of working graph
-
-	["costSoFar",nil], //part of working graph
-
-	["frontier",nil], //part of working graph
-
+	/*----------------------------------------------------------------------------
+	Protected: getPath
+    
+    	--- Prototype --- 
+    	call ["getPath"]
+    	---
+    
+    Returns: 
+		<Array> - of nodes from start to goal
+	-----------------------------------------------------------------------------*/
 	["getPath",compileFinal {
 		private _start = _self get "StartNode";
 		private _current = _self get "EndNode";
@@ -56,7 +105,20 @@ Flags:
 
 		_self set ["Path",reverse _path];
 	}],
+	/*----------------------------------------------------------------------------
+	Protected: frontierAdd
+    
+    	--- Prototype --- 
+    	call ["frontierAdd",[_priority,_item]]
+    	---
 
+    Parameters:
+		_priority - <Number> - the value which determines index in frontier array. Lowest first.
+		_item - <Anything> - The key of the item being placed in priority queue
+
+    Returns: 
+		<Array> - of nodes from start to goal
+	-----------------------------------------------------------------------------*/
 	["frontierAdd",compileFinal {
 		params [["_priority",nil,[0]],"_item"];
 
@@ -70,7 +132,16 @@ Flags:
 
 		_frontier insert [_i, [[_priority, _item]] ];
 	}],
+	/*----------------------------------------------------------------------------
+	Protected: frontierPullLowest
+    
+    	--- Prototype --- 
+    	call ["frontierPullLowest"]
+    	---
 
+    Returns: 
+		<Anything> - key of node that is at front of frontier queue. Item is removed from queue
+	-----------------------------------------------------------------------------*/
 	["frontierPullLowest",compileFinal {
 		private _frontier = _self get "frontier";
 		if (count _frontier > 0) then {
@@ -79,11 +150,38 @@ Flags:
 			_result = _self get "StartNode";
 		};
 	}],
-
+	/*----------------------------------------------------------------------------
+	Property: Nodes
+    
+    	--- Prototype --- 
+    	get "Nodes"
+    	---
+    
+    Returns: 
+		<HashmapObject> - A graph of nodes that implement the <XPS_typ_IAstarNodes> interface
+	-----------------------------------------------------------------------------*/
 	["Nodes",nil],
-
+	/*----------------------------------------------------------------------------
+	Property: Path
+    
+    	--- Prototype --- 
+    	get "Path"
+    	---
+    
+    Returns: 
+		<Array> - of Node keys from start to goal
+	-----------------------------------------------------------------------------*/
 	["Path",[]],
-
+	/*----------------------------------------------------------------------------
+	Method: ProcessNextNode
+    
+    	--- Prototype --- 
+    	call ["ProcessNextNode"]
+    	---
+    
+    Causes the AstarSearch object to process the next node in frontier queue and place
+	it onto the working graph.
+	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
 		private _nodes = _self get "Nodes";
 		private _endNode = _self get "EndNode";
