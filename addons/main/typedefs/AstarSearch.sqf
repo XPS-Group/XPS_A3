@@ -58,31 +58,6 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["frontier",nil], //part of working graph
 	/*----------------------------------------------------------------------------
-	Constructor: #create
-    
-    	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_startNodeKey*,_endNodeKey*]]
-    	---
-    
-    Optionals: 
-		_startNodeKey* - <Anything> - (Optional - Default : nil) 
-    	_endNodeKey* - <Anything> - (Optional - Default : nil) 
-
-	Returns:
-		_result - <HashmapObject>
-	-----------------------------------------------------------------------------*/
-	["#create",compileFinal {
-		params ["_nodes",["_startNodeKey",nil,[]],["_endNodeKey",nil,[]]];
-		_self set ["Nodes",_nodes];
-		_self set ["StartNode",_startNodeKey];
-		_self set ["EndNode",_endNodeKey];
-		_self set ["frontier",[]];
-		_self set ["costSoFar",createhashmap];
-		_self get "costSoFar" set [_startNodeKey,0];
-		_self set ["cameFrom",createhashmap];
-		_self set ["Path",[]];
-	}],
-	/*----------------------------------------------------------------------------
 	Protected: getPath
     
     	--- Prototype --- 
@@ -172,6 +147,31 @@ Flags:
 		<Array> - of Node keys from start to goal
 	-----------------------------------------------------------------------------*/
 	["Path",[]],
+	/*----------------------------------------------------------------------------
+	Constructor: #create
+    
+    	--- Prototype --- 
+    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_startNodeKey*,_endNodeKey*]]
+    	---
+    
+    Optionals: 
+		_startNodeKey* - <Anything> - (Optional - Default : nil) 
+    	_endNodeKey* - <Anything> - (Optional - Default : nil) 
+
+	Returns:
+		_result - <HashmapObject>
+	-----------------------------------------------------------------------------*/
+	["#create",compileFinal {
+		params ["_nodes",["_startNodeKey",nil,[]],["_endNodeKey",nil,[]]];
+		_self set ["Nodes",_nodes];
+		_self set ["StartNode",_startNodeKey];
+		_self set ["EndNode",_endNodeKey];
+		_self set ["frontier",[]];
+		_self set ["costSoFar",createhashmap];
+		_self get "costSoFar" set [_startNodeKey,0];
+		_self set ["cameFrom",createhashmap];
+		_self set ["Path",[]];
+	}],
 	/*----------------------------------------------------------------------------
 	Method: ProcessNextNode
     
