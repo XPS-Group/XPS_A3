@@ -169,17 +169,17 @@ Flags:
 			_layers set ["_layerName",_layer];
 		}],
 		["GetEstimatedDistance",{
-			//TODO Implement 
+			//TODO #1 MapGrid - Implement GetEstimatedDistance
 		}],
 		["GetNeighbors",{
-			//TODO Implement neighbor list
+			//TODO #2 MapGrid - Implement GetNeighbors
 
 			//Filter by CanTraverse?
 		}],
 		["GetMoveCost",{
-			//TODO
+			//TODO #3 MapGrid - Implement GetMoveCost
 		}],
 		["GetHeuristic",{
-			//TODO
+			//TODO #4 MapGrid - Implement GetHeuristic
 		}]
 	]
