@@ -12,7 +12,7 @@ Parent:
 	none
 
 Implements: 
-	<XPS_ifc_AstarNode>
+	<main.XPS_ifc_AstarNode>
 
 Flags: 
 	none

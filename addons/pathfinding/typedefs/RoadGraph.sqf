@@ -14,7 +14,7 @@ Parent:
 	none
 
 Implements: 
-	<XPS_ifc_IAstarNodes>
+	<main.XPS_ifc_IAstarNodes>
 
 Flags: 
 	none

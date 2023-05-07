@@ -10,10 +10,10 @@ Description:
 	Takes <XPS_typ_AstarSearch> items and processes them gradually on a per frame basis.
 
 Parent:
-	<XPS_typ_JobScheduler>
+	<main.XPS_typ_JobScheduler>
 
 Implements: 
-	<XPS_ifc_IJobScheduler>, <XPS_ifc_HashmapCollection>
+	<main.XPS_ifc_IJobScheduler>, <main.XPS_ifc_ICollection>
 
 Flags: 
 	none
