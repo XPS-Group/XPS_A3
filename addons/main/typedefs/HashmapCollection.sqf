@@ -37,6 +37,7 @@ Authors:
 [
 	["#str",{"XPS_typ_HashmapCollection"}],
     ["#interfaces",["XPS_ifc_ICollection"]],
+    ["AllowedTypes",[]],
 
     /* -----------------------------------------------------------------------
     Constructor: #create
@@ -55,8 +56,8 @@ Authors:
 
     -------------------------------------------------------------------------*/ 
     ["#create", compileFinal {
-        params [["_allowedTypes",[],[[]]]];
-        _self set ["AllowedTypes",_allowedTypes];
+        params [["_allowedTypes",nil,[[]]]];
+        if !(isNil "_allowedTypes") then {_self set ["AllowedTypes",_allowedTypes];};
         _self set ["Items",createhashmap];
     }],
 

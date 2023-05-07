@@ -22,5 +22,11 @@ Flags:
 [
 	["#str",{"XPS_PF_typ_PathfindingScheduler"}],
 	["#parent","XPS_typ_JobScheduler"],
-	
+	["AllowedTypes",["XPS_typ_AstarSearch"]],
+	["ProcessCurrent",compileFinal {
+		private _current = _self get "CurrentItem";
+		if !(isNil {_current}) then {
+			_current call ["ProcessNextNode"];
+		};
+	}]
 ]
