@@ -18,7 +18,10 @@ Authors:
 ---------------------------------------------------------------------------- */
 [
 	["CurrentItem","HASHMAP"],
-	["Queue","Array"],
+	["Queue","ARRAY"],
+	["ProcessesPerFrame","SCALAR"],
 	["ProcessCurrent","CODE"],
-	["FinalizeCurrent","CODE"]
+	["FinalizeCurrent","CODE"],
+	["Start","CODE"],
+	["Stop","CODE"]
 ]

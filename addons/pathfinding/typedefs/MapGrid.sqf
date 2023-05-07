@@ -169,10 +169,12 @@ Flags:
 			_layers set ["_layerName",_layer];
 		}],
 		["GetEstimatedDistance",{
-			//TODO
+			//TODO Implement 
 		}],
 		["GetNeighbors",{
-			//TODO
+			//TODO Implement neighbor list
+
+			//Filter by CanTraverse?
 		}],
 		["GetMoveCost",{
 			//TODO

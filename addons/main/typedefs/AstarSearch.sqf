@@ -1,18 +1,38 @@
 #include "script_component.hpp"
+/* -----------------------------------------------------------------------------
+TypeDef: folder. XPS_typ_AstarSearch
+	<TypeDefinition>
 
+Authors: 
+	Crashdome
 
+Description:
+	Traverses a <HashmapObject> which implements the <XPS_ifc_IAstarNodes> hasInterface
+	to find the shortest path.
+
+Parent:
+	none
+
+Implements: 
+	<XPS_ifc_IAstarNode>
+
+Flags: 
+	none
+
+--------------------------------------------------------------------------------*/
 [
 	["#str",{"XPS_typ_AstarSearch"}],
 
 	["#interfaces",[]],
 
 	["#create",compileFinal {
-		params [["_nodes"],["_startNodeKey"],["_endNodeKey"]];
+		params ["_nodes",["_startNodeKey",nil,[]],["_endNodeKey",nil,[]]];
 		_self set ["Nodes",_nodes];
-		_self set ["StartNode",_startNode];
-		_self set ["EndNode",_endNode];
+		_self set ["StartNode",_startNodeKey];
+		_self set ["EndNode",_endNodeKey];
 		_self set ["frontier",[]];
 		_self set ["costSoFar",createhashmap];
+		_self get "costSoFar" set [_startNodeKey,0];
 		_self set ["cameFrom",createhashmap];
 		_self set ["Path",[]];
 	}],
@@ -33,10 +53,12 @@
 			_path pushback _current;
 			_current = _cameFrom get _current;
 		};
+
+		_self set ["Path",reverse _path];
 	}],
 
 	["frontierAdd",compileFinal {
-		params [["_priority",nil,[0]],["_item",nil,[createhashmap]]];
+		params [["_priority",nil,[0]],"_item"];
 
 		private _frontier = _self get "frontier";
 		private _frontierSize = count _frontier;
@@ -68,16 +90,22 @@
 		private _currentNode = _self get "frontierPullLowest";
 		if (_endNode isEqualTo _currentNode) exitwith {
 			_self call ["getPath"];
-		}
+		};
+
 		private _neighbors = _nodes call ["GetNeighbors",[_currentNode]];
 		{
+			private _costSoFarMap = _self get "costSoFar";
 			private _estDist = _nodes call ["GetEstimatedDistance",[_currentNode,_endNode]];
-			private _moveCost = _nodes call ["GetMoveCost",[_currentNode]];
-			private _priority = _nodes call ["GetHeuristic",[_currentNode]];
+			private _moveCost = _nodes call ["GetMoveCost",[_currentNode,_x]];
+			private _costSofar = _costSoFarMap get _currentNode;
+			private _newCostSofar = _costSoFarMap get _currentNode + _moveCost;
+			private _priority = _nodes call ["GetHeuristic",[_currentNode,_x]] + _newCostSoFar + _estDist;
 
-			//TODO - maybe add "CurrentNode" property so we can get previous node
-
-			//TODO - score values and store in working graph
+			if (isNil "_costSoFar" ||  _newCostSoFar < _costSoFar) then {
+				_costSoFarMap set [_x, _newCostSoFar];
+				_self call ["frontierAdd",[_x,_priority]];
+				_self get "cameFrom" set [_x, _currentNode];
+			}
 
 		} foreach _neighbors;
 	}]
