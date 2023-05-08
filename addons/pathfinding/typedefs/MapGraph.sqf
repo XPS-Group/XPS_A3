@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: pathfinding. XPS_PF_typ_MapGrid
+TypeDef: pathfinding. XPS_PF_typ_MapGraph
 	<TypeDefinition>
 
 Authors: 
@@ -22,7 +22,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 	[
-		["#str",{"XPS_PF_typ_MapGrid"}],
+		["#str",{"XPS_PF_typ_MapGraph"}],
 		/*----------------------------------------------------------------------------
 		Protected: buildLayer
 		
@@ -126,7 +126,7 @@ Flags:
 		Constructor: #create
 		
 			--- Prototype --- 
-			_result = createHashmapObject ["XPS_PF_typ_MapGrid",[_sectorSize*]]
+			_result = createHashmapObject ["XPS_PF_typ_MapGraph",[_sectorSize*]]
 			---
 		
 		Optionals: 
@@ -169,17 +169,23 @@ Flags:
 			_layers set ["_layerName",_layer];
 		}],
 		["GetEstimatedDistance",{
-			//TODO #1 MapGrid - Implement GetEstimatedDistance
+			params ["_currentPos","_endPos"];
+			private pos1 = _currentPos get "PosCenter";
+			private pos2 = _endPos get "PosCenter";
+			_pos1 distance _pos2;
 		}],
 		["GetNeighbors",{
-			//TODO #2 MapGrid - Implement GetNeighbors
+			//TODO #2 MapGraph - Implement GetNeighbors
 
 			//Filter by CanTraverse?
 		}],
 		["GetMoveCost",{
-			//TODO #3 MapGrid - Implement GetMoveCost
+			params ["_currentPos","_nextPos"];
+			private pos1 = _currentPos get "PosCenter";
+			private pos2 = _nextPos get "PosCenter";
+			_pos1 distance _pos2;
 		}],
 		["GetHeuristic",{
-			//TODO #4 MapGrid - Implement GetHeuristic
+			//TODO #4 MapGraph - Implement GetHeuristic
 		}]
 	]

@@ -6,7 +6,7 @@ Authors:
 	Crashdome
 
 Description:
-	Represents an individual sector in the XPS_PF_typ_MapGrid <HashmapObject>
+	Represents an individual sector in the XPS_PF_typ_MapGraph <HashmapObject>
 
 Parent:
 	none
@@ -28,7 +28,7 @@ Flags:
 		implemented from <XPS_ifc_IAstarNode.Index>
 
     Returns: 
-		<Array> - Index position (key) in MapGrid
+		<Array> - Index position (key) in MapGraph
 	-----------------------------------------------------------------------------*/
 	["Index",nil],
 	/*----------------------------------------------------------------------------

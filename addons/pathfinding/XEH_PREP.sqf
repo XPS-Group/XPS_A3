@@ -10,5 +10,5 @@ PREP_F(checkCoastTravel);
 
 PREP_IFC(ILayerBuilder);
 
-PREP_TYP(MapGrid);
+PREP_TYP(MapGraph);
 PREP_TYP(TerrainLayerBuilder);

@@ -7,7 +7,7 @@ Authors:
 	Crashdome
 
 Description:
-	Creates a square grid map layer for a <XPS_PF_typ_MapGrid> by inspecting map/terrain 
+	Creates a square grid map layer for a <XPS_PF_typ_MapGraph> by inspecting map/terrain 
 
 Parent:
 	none
