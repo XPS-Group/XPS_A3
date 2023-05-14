@@ -14,7 +14,7 @@ Parent:
 	none
 
 Implements: 
-	<main.XPS_ifc_IAstarNodes>
+	<main.XPS_ifc_IAstarGraph>
 
 Flags: 
 	none
@@ -22,7 +22,7 @@ Flags:
 --------------------------------------------------------------------------------*/
 [
 	["#str",{"XPS_PF_typ_RoadGraph"}],
-	["#interfaces",["XPS_ifc_IAstarNodes"]],
+	["#interfaces",["XPS_ifc_IAstarGraph"]],
 	/*----------------------------------------------------------------------------
 	Protected: currentRoadObject
     
@@ -35,32 +35,32 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["currentRoadObject",nil],
 	/*----------------------------------------------------------------------------
-	Protected: endPos
+	Protected: endRoad
     
     	--- Prototype --- 
-    	get "endPos"
+    	get "endRoad"
     	---
     
     Returns: 
-		<Array> - final goal position 
+		<Object> - final goal position 
 	-----------------------------------------------------------------------------*/
-	["endPos",[]],
+	//["endRoad",[]],
 	/*----------------------------------------------------------------------------
-	Protected: startPos
+	Protected: startRoad
     
     	--- Prototype --- 
-    	get "startPos"
+    	get "startRoad"
     	---
     
     Returns: 
-		<Array> - starting position
+		<Object> - starting position
 	-----------------------------------------------------------------------------*/
-	["startPos",[]],
+	//["startRoad",[]],
 	/*----------------------------------------------------------------------------
-	Constructor: #create
+	Method: Init
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_typ_RoadGraph",[_startPos*,_endPos*]]
+    	call ["Init", [_startPos*,_endPos*]]
     	---
     
     Optionals: 
@@ -70,13 +70,7 @@ Flags:
 	Returns:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
-	["#create",compileFinal {
-		params [["_startPos",[0,0,0],[[]],[2,3]],["_endPos",[0,0,0],[[]],[2,3]]];
-		private _roads = nearestTerrainObjects [_startPos,["Main Road","Road","Track"],50,true];
-		_self set ["startPos",getpos _roads#0];
-		_self set ["currentRoadObject",_roads#0];
-		_roads = nearestTerrainObjects [_endPos,["Main Road","Road","Track"],50,true];
-		_self set ["endPos",getpos _roads#0];
+	["Init",compileFinal {
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
@@ -85,15 +79,15 @@ Flags:
     	call ["GetEstimatedDistance",[_currentPos,_endPos]]
     	---
 
-		<main.XPS_ifc_IAstarNodes>
+		<main.XPS_ifc_IAstarGraph>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_endPos - <Array> - goal position
 	-----------------------------------------------------------------------------*/
 	["GetEstimatedDistance",compileFinal {
-		params ["_currentPos","_endPos"];
-		_currentPos distance _endPos;
+		params ["_current","_end"];
+		(_current get "RoadObject") distance (_end get "RoadObject");
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNeighbors
@@ -102,20 +96,19 @@ Flags:
     	call ["GetNeighbors",[_currentPos,_endPos]]
     	---
 
-		<main.XPS_ifc_IAstarNodes>
+		<main.XPS_ifc_IAstarGraph>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_endPos - <Array> - goal position
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
-		params ["_currentPos"];
-		private _road = roadAt _currentPos;
-		private _neighbors = roadsConnectedTo _road;
+		params ["_current",["_prev",nil,[createhashmap]]];
+		private _neighbors = roadsConnectedTo (_current get "RoadObject");
 		private _result = [];
-		private _prevRoadObject = _self get "currentRoadObject";
-		_self set ["currentRoadObject",_road];
-		{if !(_x isEqualTo _prevRoadObject) then {_result pushback (getpos _x);}} foreach _neighbors;
+		private _prevRoadObject = if (isNil "_prev") then {objNull} else {_prev get "RoadObject"};
+		_self set ["currentRoadObject",_current get "RoadObject"];
+		{if !(_x isEqualTo _prevRoadObject) then {_result pushback (createhashmapfromarray [["Index",str _x],["RoadObject",_x]]);}} foreach _neighbors;
 		_result;
 	}],
 	/*----------------------------------------------------------------------------
@@ -125,15 +118,15 @@ Flags:
     	call ["GetMoveCost",[_currentPos,_nextPos]]
     	---
 
-		<main.XPS_ifc_IAstarNodes>
+		<main.XPS_ifc_IAstarGraph>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_nextPos - <Array> - connected road location
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
-		params ["_currentPos","_nextPos"];
-		_currentPos distance _nextPos;
+		params ["_current","_next"];
+		((_current get "RoadObject") distance (_next get "RoadObject")) * (_self call ["GetHeuristic",[_next]]);
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetHeuristic
@@ -142,23 +135,28 @@ Flags:
     	call ["GetHeuristic",[_currentPos,_nextPos]]
     	---
 
-		<main.XPS_ifc_IAstarNodes>
+		<main.XPS_ifc_IAstarGraph>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_nextPos - <Array> - connected road location
 	-----------------------------------------------------------------------------*/
 	["GetHeuristic",compileFinal {
-		params ["_currentPos","_nextPos"];
-		private _road = roadAt _nextPos;
-		private _info = gteRoadInfo _road;
-		private _result = 0;
+		params ["_next"];
+		private _road = _next get "RoadObject";
+		private _info = getRoadInfo _road;
+		private _result = 1.5;
 		switch (_info#0) do {
-			case "MAIN ROAD" : {_result = 0};
-			case "ROAD" : {_result = 1};
-			case "TRACK" : {_result = 2};
-			default {_result = 0};
+			case "MAIN ROAD" : {_result = 1};
+			case "ROAD" : {_result = 1.2};
+			// case "TRACK" : {_result = 10};
+			// default {_result = 10};
 		};
 		_result;
+	}],
+	["GetNodeAt",{
+		params [["_pos",[0,0,0],[[]],[2,3]]];
+		private _roads = nearestTerrainObjects [_pos,["Main Road","Road","Track"],50,true];
+		createhashmapfromarray [["Index",str (_roads#0)],["RoadObject",(_roads#0)]];
 	}]
 ]

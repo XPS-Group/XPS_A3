@@ -6,6 +6,7 @@
 //PREP_F(sub,myFunction);
 //SUBPREP_F(sub,myFunction);
 
+PREP_FNC(buildTree);
 
 PREP_IFC(INode);
 

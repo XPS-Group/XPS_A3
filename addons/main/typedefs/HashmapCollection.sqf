@@ -99,7 +99,7 @@ Authors:
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
-        if !(params [["_key",nil,[""]],["_item",nil,[hashmap]]]) exitwith {false;};
+        if !(params [["_key",nil,[""]],["_item",nil,[createhashmap]]]) exitwith {false;};
         if !("Items" in (keys _self)) exitwith {false;};
         if ((_key == "") || (_key in (keys (_self get "Items")))) exitwith {false;};
         private _allowlist = _self get "AllowedTypes";

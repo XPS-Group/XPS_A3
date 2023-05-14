@@ -89,11 +89,11 @@ Flags:
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
-        if !(params [["_item",nil,[hashmap]]]) exitwith {false;};
-        private _uid = call XPS_fnc_createUniqueID;
-        if (_self call ["XPS_type_HashmapCollection.AddItem",[_uid,_item]]) exitwith {
+        if !(params [["_item",nil,[createhashmap]]]) exitwith {false;};
+        private _uid = [] call XPS_fnc_createUniqueID;
+        if (_self call ["XPS_typ_HashmapCollection.AddItem",[_uid,_item]]) exitwith {
 			(_self get "Queue") pushback _item;
-			if (isNil {_self get "CurrentItem"} && count (_self get "Queue")>0) then {
+			if (isNil {_self get "CurrentItem"} && {count (_self get "Queue")>0}) then {
 				private _next = _queue deleteAt 0;
 				_self set ["CurrentItem",_next];
 			};
@@ -128,7 +128,7 @@ Flags:
     	---
     Must be Overridden
 	-----------------------------------------------------------------------------*/
-	["ProcessCurrent",{}]
+	["ProcessCurrent",{}],
     /* -----------------------------------------------------------------------
     Method: RegisterType
 		<XPS_typ_Hashmapcollection.RegisterType>
@@ -160,6 +160,7 @@ Flags:
 					_count = _count + 1;
 				};
 			}, [_self,0]];
+			_self set ["_handle",_handle];
 		} else {_self call ["Stop"]; _self call ["Start"];};
 	}],
 	/*----------------------------------------------------------------------------

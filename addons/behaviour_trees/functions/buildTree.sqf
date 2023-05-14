@@ -69,7 +69,7 @@ Authors:
 params [["_definition",nil,[]],["_blackboard",nil,[createhashmap]]];
 
 private _fnc_HandleChildren = compileFinal {
-	params ["_parentNode",["_children".[],[[]]]];
+	params ["_parentNode",["_children",[],[[]]]];
 	
 	private _nodeType = _parentNode get "NODETPYE";
 	if (_nodeType in ["COMPOSITE","DECORATOR"]) then {

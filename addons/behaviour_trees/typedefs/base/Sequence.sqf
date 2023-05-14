@@ -70,9 +70,9 @@ Protected: currentIndex
 				// Do Nothing - keep index and status same
 			};
 			default {_status = NODE_FAILURE};
-		}
+		};
 		_status;
-	}],
+	}]
 	/*----------------------------------------------------------------------------
 	Protected: postTick
 		<virtual. XPS_BT_typ_Composite. postTick>

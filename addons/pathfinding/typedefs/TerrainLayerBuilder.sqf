@@ -34,7 +34,7 @@ Flags:
 		_sectorSize - <Number> - the length/width of the sector
 	-----------------------------------------------------------------------------*/
 	["setDensityModifier",{
-		if !(params [["_sector",nil,[createhashmap]]],["_sectorSize",nil,[0]]) exitwith {false;};
+		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]]]) exitwith {false;};
 
 		private _densitySizeAdjust = (_sectorSize * _sectorSize) / 2500; // Normalize for 50 x 50 area
 		private _searchArray = ["tree","rock","house","building","fence","wall"];
@@ -124,7 +124,7 @@ Flags:
 		_sectorSize - <Number> - the length/width of the sector
 		_sectorRadius - <Number> - the radius of the sector 
 	-----------------------------------------------------------------------------*/
-	["BuildSector",[
+	["BuildSector",{
 		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]],["_sectorRadius",nil,[0]]]) exitwith {nil;};
 
 		[_sector,_sectorRadius] call xps_pf_fnc_setRoadModifiers;
@@ -137,5 +137,5 @@ Flags:
 		if (_sector get "HasBridge") then {_sector set ["Type","BRIDGE"];};
 
 		_sector;
-	]]
+	}]
 ]

@@ -227,6 +227,6 @@ Protected: currentIndex
 		_self call ["preTick"];
 		_self call ["postTick",
 			_self call ["processTick"]
-		]
-	}];
+		];
+	}]
 ]

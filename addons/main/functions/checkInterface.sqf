@@ -49,7 +49,7 @@ for "_i" from 0 to (count _interfaces -1) do {
 	private _key = _check#0;
 	if !(_key in keys _hashmap) exitwith {false;};
 	//Check value type
-	if !(_check#1 == "ANYTHING") then {
+	if !(_check#1 in ["ANYTHING","ANY"]) then {
 		private _type = typename (_hashmap get _key);
 		if (isNil {_type} && !_allowNils) exitwith {false;};
 		if !(_type == _check#1) exitwith {false;};

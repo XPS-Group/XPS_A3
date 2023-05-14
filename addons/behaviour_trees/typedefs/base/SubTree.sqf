@@ -62,7 +62,7 @@ Protecteds:
 		private _tree = _self get "tree";
 		if !(isNil "_tree") then {_status = _tree call ["Tick"];};
 		_status;
-	}]
+	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
 		<virtual. XPS_BT_typ_Leaf. postTick>

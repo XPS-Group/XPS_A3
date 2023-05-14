@@ -7,8 +7,8 @@ Authors:
 	Crashdome
 
 Description:
-	Traverses a <HashmapObject> which implements the <XPS_ifc_IAstarNodes> hasInterface
-	to find the shortest path.
+	Traverses a <HashmapObject> which implements the <XPS_ifc_IAstarGraph> interface
+	to find the best path.
 
 Parent:
 	none
@@ -57,6 +57,7 @@ Flags:
 		<Array> - of nodes from priority lowest to highest (higher is worse)
 	-----------------------------------------------------------------------------*/
 	["frontier",nil], //part of working graph
+	["lastNode",nil],
 	/*----------------------------------------------------------------------------
 	Protected: getPath
     
@@ -68,17 +69,24 @@ Flags:
 		<Array> - of nodes from start to goal
 	-----------------------------------------------------------------------------*/
 	["getPath",compileFinal {
+		private _status = "FAILED";
 		private _start = _self get "StartNode";
-		private _current = _self get "EndNode";
+		private _end = _self get "EndNode";
+		private _current = _end;
 		private _path = [];
 		private _cameFrom = _self get "cameFrom";
 
-		while {!(_current isEqualTo _start)} do {
+		if (isNil {_cameFrom get (_current get "Index")}) then {_current = _self get "lastNode";};
+
+		while {!(isNil "_current") && !(_current isEqualTo _start)} do {
 			_path pushback _current;
-			_current = _cameFrom get _current;
+			_current = _cameFrom get (_current get "Index");
 		};
 
+		if (_current isEqualTo _start) then {_status = "SUCCESS";};
+
 		_self set ["Path",reverse _path];
+		_self set ["Status",_status];
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: frontierAdd
@@ -119,23 +127,22 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["frontierPullLowest",compileFinal {
 		private _frontier = _self get "frontier";
-		if (count _frontier > 0) then {
-			_result = (_frontier deleteat 0) select 1;
-		} else {
-			_result = _self get "StartNode";
+		if (count _frontier > 0) exitwith {
+			(_frontier deleteat 0) # 1;
 		};
+		nil;
 	}],
 	/*----------------------------------------------------------------------------
-	Property: Nodes
+	Property: Graph
     
     	--- Prototype --- 
-    	get "Nodes"
+    	get "Graph"
     	---
     
     Returns: 
-		<HashmapObject> - A graph of nodes that implement the <XPS_typ_IAstarNodes> interface
+		<HashmapObject> - A graph of nodes that implement the <XPS_typ_IAstarGraph> interface
 	-----------------------------------------------------------------------------*/
-	["Nodes",nil],
+	["Graph",nil],
 	/*----------------------------------------------------------------------------
 	Property: Path
     
@@ -147,28 +154,45 @@ Flags:
 		<Array> - of Node keys from start to goal
 	-----------------------------------------------------------------------------*/
 	["Path",[]],
+	["Status","RUNNING"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_startNodeKey*,_endNodeKey*]]
+    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_startKey*,_endKey*]]
     	---
     
     Optionals: 
-		_startNodeKey* - <Anything> - (Optional - Default : nil) 
-    	_endNodeKey* - <Anything> - (Optional - Default : nil) 
+		_startKey* - <Anything> - (Optional - Default : nil) 
+    	_endKey* - <Anything> - (Optional - Default : nil) 
 
 	Returns:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params ["_nodes",["_startNodeKey",nil,[]],["_endNodeKey",nil,[]]];
-		_self set ["Nodes",_nodes];
-		_self set ["StartNode",_startNodeKey];
-		_self set ["EndNode",_endNodeKey];
-		_self set ["frontier",[]];
+		params ["_graph",["_startKey",nil,[]],["_endKey",nil,[]]];
+		_self set ["Graph",_graph];
+		_self set ["StartKey",_startKey];
+		_self set ["EndKey",_endKey];
+		_self call ["InitGraph"];
+	}],
+	/*----------------------------------------------------------------------------
+	Method: InitGraph
+    
+    	--- Prototype --- 
+    	call ["InitGraph"]
+    	---
+    
+    Calls the initialization of the associated graph with the start and end keys.
+	Can be used to reset pathfinding also.
+	-----------------------------------------------------------------------------*/
+	["InitGraph",{
+		private _graph = _self get "Graph";
+		_self set ["StartNode",_graph call ["GetNodeAt",[_self get "StartKey"]]];
+		_self set ["EndNode",_graph call ["GetNodeAt",[_self get "EndKey"]]];
+		_self set ["frontier",[[0,_self get "StartNode"]]];
 		_self set ["costSoFar",createhashmap];
-		_self get "costSoFar" set [_startNodeKey,0];
+		_self get "costSoFar" set [_self get "StartNode" get "Index",0];
 		_self set ["cameFrom",createhashmap];
 		_self set ["Path",[]];
 	}],
@@ -183,28 +207,36 @@ Flags:
 	it onto the working graph.
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
-		private _nodes = _self get "Nodes";
+		private _graph = _self get "Graph";
 		private _endNode = _self get "EndNode";
-		private _currentNode = _self get "frontierPullLowest";
-		if (_endNode isEqualTo _currentNode) exitwith {
+		private _currentNode = _self call ["frontierPullLowest"];
+		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
+		if (isNil "_currentNode" || _endNode isEqualTo _currentNode) exitwith {
 			_self call ["getPath"];
 		};
 
-		private _neighbors = _nodes call ["GetNeighbors",[_currentNode]];
+		private _m = createmarker [_currentNode get "Index",_currentNode get "RoadObject"];
+		_m setmarkercolor "ColorGreen";
+		_m setmarkertype "hd_dot";
+		_m setMarkerSize [0.5,0.5];
+
+		private _neighbors = _graph call ["GetNeighbors",[_currentNode,_prevNode]];
 		{
 			private _costSoFarMap = _self get "costSoFar";
-			private _estDist = _nodes call ["GetEstimatedDistance",[_currentNode,_endNode]];
-			private _moveCost = _nodes call ["GetMoveCost",[_currentNode,_x]];
-			private _costSofar = _costSoFarMap get _currentNode;
-			private _newCostSofar = _costSoFarMap get _currentNode + _moveCost;
-			private _priority = _nodes call ["GetHeuristic",[_currentNode,_x]] + _newCostSoFar + _estDist;
+			private _estDist = _graph call ["GetEstimatedDistance",[_x,_endNode]];
+			private _moveCost = _graph call ["GetMoveCost",[_currentNode,_x]];
+			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _moveCost;
+			private _priority = _costSoFar + _estDist;
+			private _costSoFarX = _costSoFarMap get (_x get "Index");
 
-			if (isNil "_costSoFar" ||  _newCostSoFar < _costSoFar) then {
-				_costSoFarMap set [_x, _newCostSoFar];
-				_self call ["frontierAdd",[_x,_priority]];
-				_self get "cameFrom" set [_x, _currentNode];
+			if (isNil {_costSoFarX} || {_costSoFar < _costSoFarX}) then {
+				_costSoFarMap set [_x get "Index", _costSoFar];
+				_self call ["frontierAdd",[_priority,_x]];
+				_self get "cameFrom" set [_x get "Index", _currentNode];
 			}
 
 		} foreach _neighbors;
+
+		_self set ["lastNode",_currentNode];
 	}]
 ]

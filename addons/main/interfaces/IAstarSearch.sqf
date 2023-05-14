@@ -6,24 +6,19 @@ Interface: main. XPS_ifc_IAstarSearch
 Authors:
     Crashdome
 
-	Property: EndNode
-		<HashmapObject>
-
-	Property: Nodes
+	Property: Graph
 		<HashmapObject>
 
 	Property: Path
 		<Array>
 
-	Property: StartNode
-		<HashmapObject>
+	Method: InitGraph
 
 	Method: ProcessNextNode
 ---------------------------------------------------------------------------- */
 [
-	["EndNode","HASHMAP"],
-	["Nodes","HASHMAP"],
+	["Graph","HASHMAP"],
 	["Path","ARRAY"],
-	["StartNode","HASHMAP"],
+	["InitGraph","CODE"],
 	["ProcessNextNode","CODE"]
 ]

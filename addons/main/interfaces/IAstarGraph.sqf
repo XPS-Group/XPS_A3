@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_IAstarNodes
+Interface: main. XPS_ifc_IAstarGraph
 <Interface>
 
 Authors:
@@ -13,10 +13,13 @@ Authors:
 	Method: GetMoveCost
 
 	Method: GetHeuristic
+
+	Method: Init
 ---------------------------------------------------------------------------- */
 [
 	["GetEstimatedDistance","CODE"],
 	["GetNeighbors","CODE"],
 	["GetMoveCost","CODE"],
-	["GetHeuristic","CODE"]
+	["GetHeuristic","CODE"],
+	["Init","CODE"]
 ]

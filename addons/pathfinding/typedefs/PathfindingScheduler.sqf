@@ -28,5 +28,8 @@ Flags:
 		if !(isNil {_current}) then {
 			_current call ["ProcessNextNode"];
 		};
+		if (_current get "Status" in ["SUCCESS","FAILED"]) then {
+			_self call ["FinalizeCurrent"];
+		};
 	}]
 ]
