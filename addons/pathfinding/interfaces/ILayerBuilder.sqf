@@ -8,5 +8,6 @@ Authors:
 	Method: BuildSector
 ---------------------------------------------------------------------------- */
 [
-	["BuildSector","CODE"]
+	["BuildSector","CODE"],
+	["Heuristic","CODE"]
 ]
