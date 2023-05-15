@@ -77,8 +77,12 @@ Flags:
 					_sectors set [_index,_sector];
 				};
 			};
+			_sector set ["Heuristic",+(_layerBuilder get "Heuristic")];
 			_sectors;
 		}],	
+		["heuristic",{
+			//TODO #4 MapGraph - Implement heuristic
+		}],
 		/*----------------------------------------------------------------------------
 		Property: SectorSize
 		
@@ -185,9 +189,6 @@ Flags:
 			//private pos1 = _currentPos get "PosCenter";
 			//private pos2 = _nextPos get "PosCenter";
 			//_pos1 distance _pos2;
-		}],
-		["heuristic",{
-			//TODO #4 MapGraph - Implement heuristic
 		}],
 		["Init",{true;}]
 	]
