@@ -35,27 +35,31 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["currentRoadObject",nil],
 	/*----------------------------------------------------------------------------
-	Protected: endRoad
+	Protected: heuristic
     
     	--- Prototype --- 
-    	get "endRoad"
+    	call ["heuristic",[_currentPos,_nextPos]]
     	---
+
+		<main.XPS_ifc_IAstarGraph>
     
-    Returns: 
-		<Object> - final goal position 
+    Optionals: 
+		_currentPos - <Array> - current position of working graph 
+		_nextPos - <Array> - connected road location
 	-----------------------------------------------------------------------------*/
-	//["endRoad",[]],
-	/*----------------------------------------------------------------------------
-	Protected: startRoad
-    
-    	--- Prototype --- 
-    	get "startRoad"
-    	---
-    
-    Returns: 
-		<Object> - starting position
-	-----------------------------------------------------------------------------*/
-	//["startRoad",[]],
+	["heuristic",compileFinal {
+		params ["_next"];
+		private _road = _next get "RoadObject";
+		private _info = getRoadInfo _road;
+		private _result = 1.5;
+		switch (_info#0) do {
+			case "MAIN ROAD" : {_result = 1};
+			case "ROAD" : {_result = 1.2};
+			// case "TRACK" : {_result = 10};
+			// default {_result = 10};
+		};
+		_result;
+	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
     
@@ -126,33 +130,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
 		params ["_current","_next"];
-		((_current get "RoadObject") distance (_next get "RoadObject")) * (_self call ["GetHeuristic",[_next]]);
-	}],
-	/*----------------------------------------------------------------------------
-	Method: GetHeuristic
-    
-    	--- Prototype --- 
-    	call ["GetHeuristic",[_currentPos,_nextPos]]
-    	---
-
-		<main.XPS_ifc_IAstarGraph>
-    
-    Optionals: 
-		_currentPos - <Array> - current position of working graph 
-		_nextPos - <Array> - connected road location
-	-----------------------------------------------------------------------------*/
-	["GetHeuristic",compileFinal {
-		params ["_next"];
-		private _road = _next get "RoadObject";
-		private _info = getRoadInfo _road;
-		private _result = 1.5;
-		switch (_info#0) do {
-			case "MAIN ROAD" : {_result = 1};
-			case "ROAD" : {_result = 1.2};
-			// case "TRACK" : {_result = 10};
-			// default {_result = 10};
-		};
-		_result;
+		((_current get "RoadObject") distance (_next get "RoadObject")) * (_self call ["heuristic",[_next]]);
 	}],
 	["GetNodeAt",{
 		params [["_pos",[0,0,0],[[]],[2,3]]];

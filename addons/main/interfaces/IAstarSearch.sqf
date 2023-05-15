@@ -19,6 +19,7 @@ Authors:
 [
 	["Graph","HASHMAP"],
 	["Path","ARRAY"],
+	["Status","STRING"],
 	["InitGraph","CODE"],
 	["ProcessNextNode","CODE"]
 ]

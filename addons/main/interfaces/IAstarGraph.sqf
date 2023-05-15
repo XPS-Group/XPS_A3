@@ -12,7 +12,7 @@ Authors:
 
 	Method: GetMoveCost
 
-	Method: GetHeuristic
+	Method: GetNodeAt
 
 	Method: Init
 ---------------------------------------------------------------------------- */
@@ -20,6 +20,6 @@ Authors:
 	["GetEstimatedDistance","CODE"],
 	["GetNeighbors","CODE"],
 	["GetMoveCost","CODE"],
-	["GetHeuristic","CODE"],
+	["GetNodeAt","CODE"],
 	["Init","CODE"]
 ]

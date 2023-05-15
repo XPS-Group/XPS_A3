@@ -30,6 +30,15 @@ Flags:
 	["#str",{"XPS_typ_JobScheduler"}],
 	["#parent","XPS_typ_HashmapCollection"],
 	["interfaces",["XPS_ifc_JobScheduler"]],
+	["popQueue",{
+		private _queue = _self get "Queue";
+		if (count _queue > 0) then {
+			private _next = _queue deleteAt 0;
+			_self set ["CurrentItem",_next];
+		} else {
+			_self set ["CurrentItem",nil];
+		};
+	}],
 	/*----------------------------------------------------------------------------
 	Property: CurrentItem
     
@@ -93,10 +102,6 @@ Flags:
         private _uid = [] call XPS_fnc_createUniqueID;
         if (_self call ["XPS_typ_HashmapCollection.AddItem",[_uid,_item]]) exitwith {
 			(_self get "Queue") pushback _item;
-			if (isNil {_self get "CurrentItem"} && {count (_self get "Queue")>0}) then {
-				private _next = _queue deleteAt 0;
-				_self set ["CurrentItem",_next];
-			};
 			true;
 		};
 		false;
@@ -112,13 +117,7 @@ Flags:
 	["FinalizeCurrent",compilefinal {
 		private _current = _self get "CurrentItem";
 		(_self get "Items") deleteAt _current;
-		private _queue = _self get "Queue";
-		if (count _queue > 0) then {
-			private _next = _queue deleteAt 0;
-			_self set ["CurrentItem",_next];
-		} else {
-			_self set ["CurrentItem",nil];
-		};
+		_self call ["popQueue"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: ProcessCurrent
@@ -128,7 +127,11 @@ Flags:
     	---
     Must be Overridden
 	-----------------------------------------------------------------------------*/
-	["ProcessCurrent",{}],
+	["ProcessCurrent",{
+		if (isNil {_self get "CurrentItem"}) then {
+			_self call ["popQueue"];
+		};
+	}],
     /* -----------------------------------------------------------------------
     Method: RegisterType
 		<XPS_typ_Hashmapcollection.RegisterType>

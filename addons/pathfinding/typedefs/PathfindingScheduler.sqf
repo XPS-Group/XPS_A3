@@ -24,12 +24,13 @@ Flags:
 	["#parent","XPS_typ_JobScheduler"],
 	["AllowedTypes",["XPS_typ_AstarSearch"]],
 	["ProcessCurrent",compileFinal {
+		_self call ["XPS_typ_JobScheduler.ProcessCurrent"];
 		private _current = _self get "CurrentItem";
 		if !(isNil {_current}) then {
 			_current call ["ProcessNextNode"];
-		};
-		if (_current get "Status" in ["SUCCESS","FAILED"]) then {
-			_self call ["FinalizeCurrent"];
+			if (_current get "Status" in ["SUCCESS","FAILED"]) then {
+				_self call ["FinalizeCurrent"];
+			};
 		};
 	}]
 ]

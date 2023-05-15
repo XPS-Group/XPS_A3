@@ -49,7 +49,7 @@ Flags:
 			for "_yAxis" from 0 to _gridWidth - 1 do {
 				for "_xAxis" from 0 to _gridWidth - 1 do {
 					//Set Index and Positions
-					private _sector = createhashmapobject [XPS_typ_MapSector,[_xAxis,_yAxis]];
+					private _sector = createhashmapobject [XPS_PF_typ_MapSector,[_xAxis,_yAxis]];
 					private _index = _sector get "Index";
 					private _posRef = _sector set ["PosRef", [_sectorSize * _xAxis,_sectorSize * _yAxis]];
 					_sector set ["PosCenter", [(_sectorSize * _xAxis)+_sectorRadius,(_sectorSize * _yAxis)+_sectorRadius]];
@@ -186,8 +186,8 @@ Flags:
 			//private pos2 = _nextPos get "PosCenter";
 			//_pos1 distance _pos2;
 		}],
-		["GetHeuristic",{
-			//TODO #4 MapGraph - Implement GetHeuristic
+		["heuristic",{
+			//TODO #4 MapGraph - Implement heuristic
 		}],
 		["Init",{true;}]
 	]

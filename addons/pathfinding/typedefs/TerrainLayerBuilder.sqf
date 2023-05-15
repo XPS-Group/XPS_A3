@@ -127,9 +127,9 @@ Flags:
 	["BuildSector",{
 		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]],["_sectorRadius",nil,[0]]]) exitwith {nil;};
 
-		[_sector,_sectorRadius] call xps_pf_fnc_setRoadModifiers;
-		[_sector] call xps_pf_fnc_setHeightModifiers;
-		[_sector,_sectorSize] call xps_pf_fnc_setDensityModifiers;
+		_self call ["setRoadModifier",[_sector,_sectorRadius]];
+		_self call ["setHeightModifier",[_sector]];
+		_self call ["setDensityModifier",[_sector,_sectorSize]];
 
 		_sector set ["Type", "LAND"];
 		if (_sector get "IsAllWater") then {_sector set ["Type","WATER"];};
