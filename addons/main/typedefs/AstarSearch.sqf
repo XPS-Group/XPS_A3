@@ -57,6 +57,16 @@ Flags:
 		<Array> - of nodes from priority lowest to highest (higher is worse)
 	-----------------------------------------------------------------------------*/
 	["frontier",nil], //part of working graph
+	/*----------------------------------------------------------------------------
+	Protected: lastNode
+    
+    	--- Prototype --- 
+    	get "lastNode"
+    	---
+    
+    Returns: 
+		<Hashmap> - returns last node processed in case path unsuccessfully reaches goal node
+	-----------------------------------------------------------------------------*/
 	["lastNode",nil],
 	/*----------------------------------------------------------------------------
 	Protected: getPath
@@ -84,9 +94,29 @@ Flags:
 		};
 
 		if (_current isEqualTo _start) then {_status = "SUCCESS";};
-
-		_self set ["Path",reverse _path];
+		reverse _path;
+		_self set ["Path",_path];
 		_self set ["Status",_status];
+
+		if (count _path > 0) then {
+			for "_i" from 1 to (count _path)-1 do {
+				private _roadInfoA = getRoadInfo (_path#(_i-1) get "RoadObject");;
+				private _roadInfoB = getRoadInfo (_path#(_i) get "RoadObject");
+				private _a0 = _roadInfoA#6;
+				private _a1 = _roadInfoA#7;
+				private _b0 = _roadInfoA#6;
+				private _b1 = _roadInfoA#7;
+				private _lowest = [_a0 distance _b0,_b0];
+				if ((_a0 distance _b1) < (_lowest#0)) then {_lowest = [_a0 distance _b1,_b1]};
+				if ((_a1 distance _b0) < (_lowest#0)) then {_lowest = [_a1 distance _b0,_b0]};
+				if ((_a1 distance _b1) < (_lowest#0)) then {_lowest = [_a1 distance _b1,_b1]};
+
+				private _m = createmarker [str str str (_lowest#1),_lowest#1];
+				_m setmarkercolor "ColorWhite";
+				_m setmarkertype "mil_circle";
+				_m setMarkerSize [0.25,0.25];
+			};
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: frontierAdd
@@ -154,6 +184,22 @@ Flags:
 		<Array> - of Node keys from start to goal
 	-----------------------------------------------------------------------------*/
 	["Path",[]],
+	/*----------------------------------------------------------------------------
+	Property: Status
+    
+    	--- Prototype --- 
+    	get "Status"
+    	---
+    
+    Returns: 
+		<String> - the current status of the search. 
+
+		Will be one of:
+		
+			- RUNNING
+			- SUCCESS
+			- FAILURE 
+	-----------------------------------------------------------------------------*/
 	["Status","RUNNING"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
@@ -215,12 +261,8 @@ Flags:
 			_self call ["getPath"];
 		};
 
-		private _m = createmarker [_currentNode get "Index",_currentNode get "RoadObject"];
-		_m setmarkercolor "ColorGreen";
-		_m setmarkertype "hd_dot";
-		_m setMarkerSize [0.5,0.5];
-
 		private _neighbors = _graph call ["GetNeighbors",[_currentNode,_prevNode]];
+
 		{
 			private _costSoFarMap = _self get "costSoFar";
 			private _estDist = _graph call ["GetEstimatedDistance",[_x,_endNode]];

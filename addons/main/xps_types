@@ -19,6 +19,7 @@ Description:
     Used to ensure a <TypeDefinition> contains keys that have values of a specific type
 
 See also: 
-    <TypeDefinition>
-    <XPS_fnc_checkInterface>
+
+    - <TypeDefinition>
+    - <main.XPS_fnc_checkInterface>
 ------------------------------------------------------------------------------*/

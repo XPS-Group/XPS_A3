@@ -34,9 +34,11 @@ Flags:
 		private _queue = _self get "Queue";
 		if (count _queue > 0) then {
 			private _next = _queue deleteAt 0;
-			_self set ["CurrentItem",_next];
+			_self set ["CurrentItem",_next#1];
+			_self set ["CurrentUID",_next#0];
 		} else {
 			_self set ["CurrentItem",nil];
+			_self set ["CurrentUID",nil];
 		};
 	}],
 	/*----------------------------------------------------------------------------
@@ -50,6 +52,17 @@ Flags:
 		<Hashmap> or <HashmapObject> - The item currently being processed
 	-----------------------------------------------------------------------------*/
 	["CurrentItem",nil],
+	/*----------------------------------------------------------------------------
+	Property: CurrentUID
+    
+    	--- Prototype --- 
+    	get "CurrentUID"
+    	---
+    
+    Returns: 
+		<String> - The key of the item currently being processed
+	-----------------------------------------------------------------------------*/
+	["CurrentUID",nil],
 	/*----------------------------------------------------------------------------
 	Property: ProcessesPerFrame
     
@@ -101,7 +114,7 @@ Flags:
         if !(params [["_item",nil,[createhashmap]]]) exitwith {false;};
         private _uid = [] call XPS_fnc_createUniqueID;
         if (_self call ["XPS_typ_HashmapCollection.AddItem",[_uid,_item]]) exitwith {
-			(_self get "Queue") pushback _item;
+			(_self get "Queue") pushback [_uid,_item];
 			true;
 		};
 		false;
@@ -115,7 +128,7 @@ Flags:
     
 	-----------------------------------------------------------------------------*/
 	["FinalizeCurrent",compilefinal {
-		private _current = _self get "CurrentItem";
+		private _current = _self get "CurrentUID";
 		(_self get "Items") deleteAt _current;
 		_self call ["popQueue"];
 	}],

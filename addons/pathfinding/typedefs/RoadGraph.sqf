@@ -7,7 +7,7 @@ Authors:
 	Crashdome
 
 Description:
-	Navigates a road path for <XPS_typ_AstarSearch> from a starting location to an
+	Navigates a road path using <main.XPS_typ_AstarSearch> from a starting location to an
 	end location.
 
 Parent:
@@ -34,48 +34,60 @@ Flags:
 		<Object> - the current road object to process 
 	-----------------------------------------------------------------------------*/
 	["currentRoadObject",nil],
+	["#create",compileFinal {
+		params [["_roadGraphDoctrine",createhashmapobject [XPS_PF_typ_RoadGraphDoctrine],[createhashmap]]];
+		_self set ["RoadGraphDoctrine",_roadGraphDoctrine];
+	}],
 	/*----------------------------------------------------------------------------
 	Protected: heuristic
     
     	--- Prototype --- 
-    	call ["heuristic",[_currentPos,_nextPos]]
+    	call ["heuristic",[_next]]
     	---
 
-		<main.XPS_ifc_IAstarGraph>
+		Gets the heuristic value for "move cost" based on road type.
     
     Optionals: 
-		_currentPos - <Array> - current position of working graph 
-		_nextPos - <Array> - connected road location
+		_next - <Hashmap> - road "node"
 	-----------------------------------------------------------------------------*/
 	["heuristic",compileFinal {
 		params ["_next"];
+		private _doctrineHeurs = _self get "RoadGraphDoctrine" get "Heuristics";
 		private _road = _next get "RoadObject";
 		private _info = getRoadInfo _road;
-		private _result = 1.5;
+		private _result = _doctrineHeurs#2;
 		switch (_info#0) do {
-			case "MAIN ROAD" : {_result = 1};
-			case "ROAD" : {_result = 1.2};
-			// case "TRACK" : {_result = 10};
-			// default {_result = 10};
+			case "MAIN ROAD" : {_result = _doctrineHeurs#0};
+			case "ROAD" : {_result = _doctrineHeurs#1};
+			// case "TRACK" : {_result = 1.20};
+			// default {_result = 1.20};
 		};
 		_result;
 	}],
 	/*----------------------------------------------------------------------------
+	Property: RoadGraphDoctrine
+    
+    	--- Prototype --- 
+    	get "RoadGraphDoctrine"
+    	---
+    
+    Returns: 
+		<Hashmapobject> - (Default: default XPS_PF_typ_RoadGraphDoctrine) 
+	-----------------------------------------------------------------------------*/
+	["RoadGraphDoctrine",nil],
+	/*----------------------------------------------------------------------------
 	Method: Init
     
     	--- Prototype --- 
-    	call ["Init", [_startPos*,_endPos*]]
+    	call ["Init"]
     	---
-    
-    Optionals: 
-		_startPos* - <Array> - (Optional - Default : [0,0,0]) 
-    	_endPos* - <Array> - (Optional - Default : [0,0,0]) 
+
+		Used to reset any working values if needed. Unused in this instance.
 
 	Returns:
-		_result - <HashmapObject>
+		<Nothing>
 	-----------------------------------------------------------------------------*/
-	["Init",compileFinal {
-	}],
+	["Init",compileFinal {}],
 	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
     
@@ -109,10 +121,27 @@ Flags:
 	["GetNeighbors",compileFinal {
 		params ["_current",["_prev",nil,[createhashmap]]];
 		private _neighbors = roadsConnectedTo (_current get "RoadObject");
+		private _includeUnconnectedNeighbors = nearestTerrainObjects [(_current get "RoadObject"),_self get "RoadGraphDoctrine" get "RoadTypes",25,true,true];
+		_neighbors insert [-1,_includeUnconnectedNeighbors,true]; //Unique Only
 		private _result = [];
 		private _prevRoadObject = if (isNil "_prev") then {objNull} else {_prev get "RoadObject"};
 		_self set ["currentRoadObject",_current get "RoadObject"];
-		{if !(_x isEqualTo _prevRoadObject) then {_result pushback (createhashmapfromarray [["Index",str _x],["RoadObject",_x]]);}} foreach _neighbors;
+		{if !(_x isEqualTo _prevRoadObject || _x isEqualTo (_current get "RoadObject")) then {_result pushback (createhashmapfromarray [["Index",str _x],["RoadObject",_x]]);}} foreach _neighbors;
+		
+
+		//Debug Markers
+		// if (count _result == 0) then {
+		// 	private _m = createmarker [_current get "Index",getpos (_current get "RoadObject")];
+		// 	_m setmarkercolor "ColorRed";
+		// 	_m setmarkertype "hd_dot";
+		// 	_m setMarkerSize [0.5,0.5];
+		// } else {
+		// 	private _m = createmarker [_current get "Index",getpos (_current get "RoadObject")];
+		// 	_m setmarkercolor "ColorGreen";
+		// 	_m setmarkertype "hd_dot";
+		// 	_m setMarkerSize [0.3,0.3];
+		// };
+
 		_result;
 	}],
 	/*----------------------------------------------------------------------------
@@ -132,9 +161,21 @@ Flags:
 		params ["_current","_next"];
 		((_current get "RoadObject") distance (_next get "RoadObject")) * (_self call ["heuristic",[_next]]);
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetNodeAt
+    
+    	--- Prototype --- 
+    	call ["GetNodeAt",[_pos]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph>
+    
+    Optionals: 
+		_pos - <Array> - current position to look for nearest road object (within 50m)
+	-----------------------------------------------------------------------------*/
 	["GetNodeAt",{
 		params [["_pos",[0,0,0],[[]],[2,3]]];
-		private _roads = nearestTerrainObjects [_pos,["Main Road","Road","Track"],50,true];
+		private _roads = nearestTerrainObjects [_pos,_self get "RoadGraphDoctrine" get "RoadTypes",50,true];
 		createhashmapfromarray [["Index",str (_roads#0)],["RoadObject",(_roads#0)]];
 	}]
 ]
