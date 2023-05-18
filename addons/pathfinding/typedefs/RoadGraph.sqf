@@ -23,17 +23,7 @@ Flags:
 [
 	["#str",{"XPS_PF_typ_RoadGraph"}],
 	["#interfaces",["XPS_ifc_IAstarGraph"]],
-	/*----------------------------------------------------------------------------
-	Protected: currentRoadObject
-    
-    	--- Prototype --- 
-    	get "currentRoadObject"
-    	---
-    
-    Returns: 
-		<Object> - the current road object to process 
-	-----------------------------------------------------------------------------*/
-	["currentRoadObject",nil],
+
 	["#create",compileFinal {
 		params [["_roadGraphDoctrine",createhashmapobject [XPS_PF_typ_RoadGraphDoctrine],[createhashmap]]];
 		_self set ["RoadGraphDoctrine",_roadGraphDoctrine];
@@ -120,27 +110,37 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
 		params ["_current",["_prev",nil,[createhashmap]]];
-		private _neighbors = roadsConnectedTo (_current get "RoadObject");
-		private _includeUnconnectedNeighbors = nearestTerrainObjects [(_current get "RoadObject"),_self get "RoadGraphDoctrine" get "RoadTypes",25,true,true];
+		if (isNil "_current") exitwith {nil};
+		private _road = _current get "RoadObject";
+		private _neighbors = roadsConnectedTo (_road);
+		private _includeUnconnectedNeighbors = nearestTerrainObjects [_road,_self get "RoadGraphDoctrine" get "RoadTypes",25,true,true];
 		_neighbors insert [-1,_includeUnconnectedNeighbors,true]; //Unique Only
 		private _result = [];
 		private _prevRoadObject = if (isNil "_prev") then {objNull} else {_prev get "RoadObject"};
-		_self set ["currentRoadObject",_current get "RoadObject"];
-		{if !(_x isEqualTo _prevRoadObject || _x isEqualTo (_current get "RoadObject")) then {_result pushback (createhashmapfromarray [["Index",str _x],["RoadObject",_x]]);}} foreach _neighbors;
+		
+		{
+			if !(_x isEqualTo _prevRoadObject || _x isEqualTo (_current get "RoadObject")) then {
+				_result pushback (createhashmapfromarray [
+					["Index",str _x],
+					["RoadObject",_x],
+					["Direction",(_road getDir _x)]
+				]);
+			};
+		} foreach _neighbors;
 		
 
 		//Debug Markers
-		// if (count _result == 0) then {
-		// 	private _m = createmarker [_current get "Index",getpos (_current get "RoadObject")];
-		// 	_m setmarkercolor "ColorRed";
-		// 	_m setmarkertype "hd_dot";
-		// 	_m setMarkerSize [0.5,0.5];
-		// } else {
-		// 	private _m = createmarker [_current get "Index",getpos (_current get "RoadObject")];
-		// 	_m setmarkercolor "ColorGreen";
-		// 	_m setmarkertype "hd_dot";
-		// 	_m setMarkerSize [0.3,0.3];
-		// };
+		if (count _result == 0) then {
+			private _m = createmarker [_current get "Index",getpos (_current get "RoadObject")];
+			_m setmarkercolor "ColorRed";
+			_m setmarkertype "hd_dot";
+			_m setMarkerSize [0.5,0.5];
+		} else {
+			private _m = createmarker [_current get "Index",getpos (_current get "RoadObject")];
+			_m setmarkercolor "ColorGreen";
+			_m setmarkertype "hd_dot";
+			_m setMarkerSize [0.3,0.3];
+		};
 
 		_result;
 	}],
@@ -159,7 +159,19 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
 		params ["_current","_next"];
-		((_current get "RoadObject") distance (_next get "RoadObject")) * (_self call ["heuristic",[_next]]);
+		private _cost = (_current get "RoadObject") distance (_next get "RoadObject");
+		private _dir = _current get "Direction";
+		if !(isNil "_dir") then {
+			private _dist = (_current get "RoadObject") distance (_next get "RoadObject");
+			private _dirH = (_current get "RoadObject") getdir (_next get "RoadObject");
+			private _angle = abs(_dir - _dirH);
+			if (_angle >= 90) then {
+				_angle = abs(_angle - 180);
+			};
+			_cost = (_cost * sin(_angle) ) + (_cost * cos(_angle));
+		};
+		_cost = _cost * (_self call ["heuristic",[_next]]);
+		_cost;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNodeAt
@@ -178,6 +190,7 @@ Flags:
 		private _roads = nearestTerrainObjects [_pos,_self get "RoadGraphDoctrine" get "RoadTypes",50,true];
 		createhashmapfromarray [["Index",str (_roads#0)],["RoadObject",(_roads#0)]];
 	}],
+	//TODO - Notnecessary anymore?
 	["SmoothPath",{
 		params [["_roadObjectArray",[],[[]]]];
 		private _finalPath = [];

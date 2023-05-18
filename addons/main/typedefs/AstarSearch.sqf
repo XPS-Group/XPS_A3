@@ -237,10 +237,10 @@ Flags:
 		private _graph = _self get "Graph";
 		private _endNode = _self get "EndNode";
 		private _currentNode = _self call ["frontierPullLowest"];
-		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
-		if (isNil "_currentNode" || _endNode isEqualTo _currentNode) exitwith {
+		if (isNil "_currentNode" || (_endNode get "Index") isEqualTo (_currentNode get "Index")) exitwith {
 			_self call ["getPath"];
 		};
+		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
 
 		private _neighbors = _graph call ["GetNeighbors",[_currentNode,_prevNode]];
 
