@@ -177,5 +177,31 @@ Flags:
 		params [["_pos",[0,0,0],[[]],[2,3]]];
 		private _roads = nearestTerrainObjects [_pos,_self get "RoadGraphDoctrine" get "RoadTypes",50,true];
 		createhashmapfromarray [["Index",str (_roads#0)],["RoadObject",(_roads#0)]];
+	}],
+	["SmoothPath",{
+		params [["_roadObjectArray",[],[[]]]];
+		private _finalPath = [];
+		if (count _roadObjectArray > 1) then {
+			for "_i" from 1 to (count _roadObjectArray)-1 do {
+				private _roadInfoA = getRoadInfo (_roadObjectArray#(_i-1));;
+				private _roadInfoB = getRoadInfo (_roadObjectArray#(_i));
+				private _a0 = _roadInfoA#6;
+				private _a1 = _roadInfoA#7;
+				private _b0 = _roadInfoA#6;
+				private _b1 = _roadInfoA#7;
+				private _lowest = [_a0 distance _b0,_b0];
+				if ((_a0 distance _b1) < (_lowest#0)) then {_lowest = [_a0 distance _b1,_b1]};
+				if ((_a1 distance _b0) < (_lowest#0)) then {_lowest = [_a1 distance _b0,_b0]};
+				if ((_a1 distance _b1) < (_lowest#0)) then {_lowest = [_a1 distance _b1,_b1]};
+
+				private _m = createmarker [str str str (_lowest#1),_lowest#1];
+				_m setmarkercolor "ColorWhite";
+				_m setmarkertype "mil_circle";
+				_m setMarkerSize [0.2,0.2];
+
+				_finalPath pushback _lowest#1;
+			};
+		} else {if (count _roadObjectArray == 1) then {_finalPath pushback getpos (_roadObjectArray#0)};};
+		_finalPath;
 	}]
 ]

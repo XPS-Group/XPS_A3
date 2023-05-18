@@ -89,7 +89,7 @@ Flags:
 		if (isNil {_cameFrom get (_current get "Index")}) then {_current = _self get "lastNode";};
 
 		while {!(isNil "_current") && !(_current isEqualTo _start)} do {
-			_path pushback _current;
+			_path pushback (_current get "RoadObject");
 			_current = _cameFrom get (_current get "Index");
 		};
 
@@ -98,25 +98,6 @@ Flags:
 		_self set ["Path",_path];
 		_self set ["Status",_status];
 
-		if (count _path > 0) then {
-			for "_i" from 1 to (count _path)-1 do {
-				private _roadInfoA = getRoadInfo (_path#(_i-1) get "RoadObject");;
-				private _roadInfoB = getRoadInfo (_path#(_i) get "RoadObject");
-				private _a0 = _roadInfoA#6;
-				private _a1 = _roadInfoA#7;
-				private _b0 = _roadInfoA#6;
-				private _b1 = _roadInfoA#7;
-				private _lowest = [_a0 distance _b0,_b0];
-				if ((_a0 distance _b1) < (_lowest#0)) then {_lowest = [_a0 distance _b1,_b1]};
-				if ((_a1 distance _b0) < (_lowest#0)) then {_lowest = [_a1 distance _b0,_b0]};
-				if ((_a1 distance _b1) < (_lowest#0)) then {_lowest = [_a1 distance _b1,_b1]};
-
-				private _m = createmarker [str str str (_lowest#1),_lowest#1];
-				_m setmarkercolor "ColorWhite";
-				_m setmarkertype "mil_circle";
-				_m setMarkerSize [0.25,0.25];
-			};
-		};
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: frontierAdd
