@@ -186,9 +186,12 @@ Flags:
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_startKey*,_endKey*]]
+    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_graph,_startKey*,_endKey*]]
     	---
     
+	Parameters:
+		_graph - <XPS_ifc_IAstarGraph> - the graph to perform the search on
+
     Optionals: 
 		_startKey* - <Anything> - (Optional - Default : nil) 
     	_endKey* - <Anything> - (Optional - Default : nil) 

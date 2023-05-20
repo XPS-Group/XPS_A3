@@ -28,6 +28,7 @@ Flags:
 		params [["_roadGraphDoctrine",createhashmapobject [XPS_PF_typ_RoadGraphDoctrine],[createhashmap]]];
 		_self set ["RoadGraphDoctrine",_roadGraphDoctrine];
 	}],
+	["unRadius",25],
 	/*----------------------------------------------------------------------------
 	Protected: heuristic
     
@@ -113,7 +114,7 @@ Flags:
 		if (isNil "_current") exitwith {nil};
 		private _road = _current get "RoadObject";
 		private _neighbors = roadsConnectedTo (_road);
-		private _includeUnconnectedNeighbors = nearestTerrainObjects [_road,_self get "RoadGraphDoctrine" get "RoadTypes",25,true,true];
+		private _includeUnconnectedNeighbors = nearestTerrainObjects [_road,_self get "RoadGraphDoctrine" get "RoadTypes",_self get "unRadius",true,true];
 		_neighbors insert [-1,_includeUnconnectedNeighbors,true]; //Unique Only
 		private _result = [];
 		private _prevRoadObject = if (isNil "_prev") then {objNull} else {_prev get "RoadObject"};
@@ -162,7 +163,6 @@ Flags:
 		private _cost = (_current get "RoadObject") distance (_next get "RoadObject");
 		private _dir = _current get "Direction";
 		if !(isNil "_dir") then {
-			private _dist = (_current get "RoadObject") distance (_next get "RoadObject");
 			private _dirH = (_current get "RoadObject") getdir (_next get "RoadObject");
 			private _angle = abs(_dir - _dirH);
 			if (_angle >= 90) then {
