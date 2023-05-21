@@ -9,4 +9,5 @@ PREP_TYP(MapSector);
 PREP_TYP(PathfindingScheduler);
 PREP_TYP(RoadGraphDoctrine);
 PREP_TYP(RoadGraph);
+PREP_TYP(RoadNode);
 PREP_TYP(TerrainLayerBuilder);
