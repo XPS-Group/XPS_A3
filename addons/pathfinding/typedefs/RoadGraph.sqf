@@ -94,7 +94,8 @@ Flags:
 		{
 			_hm = _x;
 			_color = "ColorBlack"; 
-			_rct = _hm get "ConnectedTo";
+			private _rct = [];
+			{_rct append values (_hm get "ConnectedTo" get _x);}foreach ["MAIN ROAD","ROAD","TRACK","TRAIL"];
 			if (count _rct < 2) then {_color = "ColorBlue"}; 
 			if (_hm get "IsBridge") then {_color = "ColorWhite"}; 
 			if (_hm get "Type" == "TRAIL") then {_color = "ColorOrange"};
