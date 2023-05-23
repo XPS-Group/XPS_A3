@@ -91,25 +91,12 @@ Flags:
 		{_self call ["addRoadToGraph",[_x]];} foreach _roads;
 		{_self call ["getConnected",[_x]];} foreach values (_self get "Items");
 		
-		{
-			_hm = _x;
-			_color = "ColorBlack"; 
-			private _rct = [];
-			{_rct append values (_hm get "ConnectedTo" get _x);}foreach ["MAIN ROAD","ROAD","TRACK","TRAIL"];
-			if (count _rct < 2) then {_color = "ColorBlue"}; 
-			if (_hm get "IsBridge") then {_color = "ColorWhite"}; 
-			if (_hm get "Type" == "TRAIL") then {_color = "ColorOrange"};
-			if (count _rct < 1) then {_color = "ColorRed"}; 
-			if (count _rct > 2) then {_color = "ColorGreen"};  
-			_m = createmarker [_hm get "Index",_hm get "RoadObject"]; 
-			_m setmarkertype "hd_dot"; 
-			_m setmarkercolor _color; 
-			_m setmarkersize [0.4,0.4];  
-		} foreach values (_self get "Items");
 	}],
 	["#create",compileFinal {
 		params [["_roadGraphDoctrine",createhashmapobject [XPS_PF_typ_RoadGraphDoctrine],[createhashmap]]];
 		_self set ["RoadGraphDoctrine",_roadGraphDoctrine];
+		_self set ["_graphMarkersEnabled",false];
+		_self set ["_graphMarkers",[]];
 		_self call ["buildGraph"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -210,17 +197,17 @@ Flags:
 		
 
 		//Debug Markers
-		if (count _result == 0) then {
-			private _m = createmarker [str str(_current get "Index"),_current get "RoadObject"];
-			_m setmarkercolor "ColorRed";
-			_m setmarkertype "hd_dot";
-			_m setMarkerSize [0.5,0.5];
-		} else {
-			private _m = createmarker [str str(_current get "Index"),_current get "RoadObject"];
-			_m setmarkercolor "ColorGrey";
-			_m setmarkertype "hd_dot";
-			_m setMarkerSize [0.3,0.3];
-		};
+		// if (count _result == 0) then {
+		// 	private _m = createmarker [str str(_current get "Index"),_current get "RoadObject"];
+		// 	_m setmarkercolor "ColorRed";
+		// 	_m setmarkertype "hd_dot";
+		// 	_m setMarkerSize [0.5,0.5];
+		// } else {
+		// 	private _m = createmarker [str str(_current get "Index"),_current get "RoadObject"];
+		// 	_m setmarkercolor "ColorGrey";
+		// 	_m setmarkertype "hd_dot";
+		// 	_m setMarkerSize [0.3,0.3];
+		// };
 
 		_result;
 	}],
@@ -240,15 +227,6 @@ Flags:
 	["GetMoveCost",compileFinal {
 		params ["_current","_next"];
 		private _cost = (_current get "RoadObject") distance (_next get "RoadObject");
-		// private _dir = _current get "Direction";
-		// if !(isNil "_dir") then {
-		// 	private _dirH = (_current get "RoadObject") getdir (_next get "RoadObject");
-		// 	private _angle = abs(_dir - _dirH);
-		// 	if (_angle >= 90) then {
-		// 		_angle = abs(_angle - 180);
-		// 	};
-		// 	_cost = (_cost * sin(_angle) ) + (_cost * cos(_angle));
-		// };
 		_cost = _cost * (_self call ["heuristic",[_next]]);
 		_cost;
 	}],
@@ -269,31 +247,55 @@ Flags:
 		private _roads = nearestTerrainObjects [_pos,_self get "RoadGraphDoctrine" get "RoadTypes",50,true];
 		_self get "Items" get (str (_roads#0));
 	}],
-	//TODO - Notnecessary anymore?
-	["SmoothPath",{
-		params [["_roadObjectArray",[],[[]]]];
-		private _finalPath = [];
-		if (count _roadObjectArray > 1) then {
-			for "_i" from 1 to (count _roadObjectArray)-1 do {
-				private _roadInfoA = getRoadInfo (_roadObjectArray#(_i-1));;
-				private _roadInfoB = getRoadInfo (_roadObjectArray#(_i));
-				private _a0 = _roadInfoA#6;
-				private _a1 = _roadInfoA#7;
-				private _b0 = _roadInfoA#6;
-				private _b1 = _roadInfoA#7;
-				private _lowest = [_a0 distance _b0,_b0];
-				if ((_a0 distance _b1) < (_lowest#0)) then {_lowest = [_a0 distance _b1,_b1]};
-				if ((_a1 distance _b0) < (_lowest#0)) then {_lowest = [_a1 distance _b0,_b0]};
-				if ((_a1 distance _b1) < (_lowest#0)) then {_lowest = [_a1 distance _b1,_b1]};
+	/*----------------------------------------------------------------------------
+	Method: ToggleGraphMarkers
+    
+    	--- Prototype --- 
+    	call ["ToggleGraphMarkers"]
+    	---
+    
+    Toggles markers on/off on the map for each road segment.
 
-				private _m = createmarker [str str str (_lowest#1),_lowest#1];
-				_m setmarkercolor "ColorWhite";
-				_m setmarkertype "mil_circle";
-				_m setMarkerSize [0.2,0.2];
+	Color Index
 
-				_finalPath pushback _lowest#1;
+		- Black : General Road segment with only 2 connecting roads
+		- Orange : TRAIL road segment with only 2 connecting roads
+		- White : BRIDGE segment with only 2 connecting roads 
+		- Green : A segment with more than 2 connecting roads (junction)
+		- Blue : A segment with 1 connecting road (end point)
+		- Red : A segment with no other connecting roads (possible error)
+	-----------------------------------------------------------------------------*/
+	["ToggleGraphMarkers",{
+		private _enabled = _self get "_graphMarkersEnabled";
+		private _markers = _self get "_graphMarkers";
+
+		switch (_enabled) do {
+			case false: {
+				{
+					private _hm = _x;
+					//Get which color it should be
+					private _color = "ColorBlack"; 
+					private _rct = [];
+					{_rct append values (_hm get "ConnectedTo" get _x);}foreach ["MAIN ROAD","ROAD","TRACK","TRAIL"];
+					if (count _rct < 2) then {_color = "ColorBlue"}; 
+					if (_hm get "IsBridge") then {_color = "ColorWhite"}; 
+					if (_hm get "Type" == "TRAIL") then {_color = "ColorOrange"};
+					if (count _rct < 1) then {_color = "ColorRed"}; 
+					if (count _rct > 2) then {_color = "ColorGreen"};  
+
+					//Create the marker
+					_m = createmarker [_hm get "Index",_hm get "RoadObject"]; 
+					_m setmarkertype "hd_dot"; 
+					_m setmarkercolor _color; 
+					_m setmarkersize [0.4,0.4];  
+					_markers pushback (_hm get "Index");
+				} foreach values (_self get "Items");
 			};
-		} else {if (count _roadObjectArray == 1) then {_finalPath pushback getpos (_roadObjectArray#0)};};
-		_finalPath;
+			default {
+				{deleteMarker _x} foreach _markers;
+				_markers resize 0;
+			};
+		};
+		_self set ["_graphMarkersEnabled",!_enabled];
 	}]
 ]
