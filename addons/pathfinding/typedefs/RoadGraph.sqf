@@ -21,14 +21,17 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_RoadGraph"}],
+	["#str",compileFinal {"XPS_PF_typ_RoadGraph"}],
 	["#interfaces",["XPS_ifc_IAstarGraph"]],
-	["addRoadToGraph",{
+	["addRoadToGraph",compileFinal {
 		params [["_object",objNull,[objNull]],["_typeDef",XPS_PF_typ_RoadNode,[[]]]];
 		if !(_object isEqualto objNull) then {
 			private _hmo = createhashmapobject [_typeDef,[str _object,_object]];
 			_self get "Items" set [str _object,_hmo];
 		};
+	}],
+	["setConnectedToPathData",compileFinal {
+		
 	}],
 	/*----------------------------------------------------------------------------
 	Proteccted: getAllConnected
@@ -42,18 +45,17 @@ Flags:
 	Parameters:
 		_node - <HashmapObject> - the node to check
 	-----------------------------------------------------------------------------*/
-	["getAllConnected",{
+	["getAllConnected",compileFinal {
 		params [["_node",nil,[createhashmap]]];
 		private _object = _node get "RoadObject";
 		private _ct = _node get "ConnectedTo";
+		private _roadArray = [];
 		{
-			private _type = (getroadinfo _x)#0;
-			private _ct1 = _ct get _type;
 			if !(_x isEqualto objNull || (str _x) == (str _object) || (str _x in (keys _ct1))) then {
-				_ct1 set [str _x,_x];
-				_self get "Items" get (str _x) get "ConnectedTo" get _type set [str _object,_object];
+				_roadArray pushbackunique _x;
 			};
 		} foreach roadsconnectedto _object;
+
 		private _pos = _node get "PosASL";
 		private _bPos = _node get "BeginPos";
 		private _ePos = _node get "EndPos";
@@ -66,13 +68,17 @@ Flags:
 		private _ePosR = _ePosC getpos [_width,(_pos getDir _ePosC)+90]; 
 		{
 			private _r = roadAt _x;
-			private _type = (getroadinfo _r)#0;
-			private _ct1 = _ct get _type;
 			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r in (keys _ct1))) then {
-				_ct1 set [str _r,_r];
-				_self get "Items" get (str _r) get "ConnectedTo" get _type set [str _object,_object];
+				_roadArray pushbackunique _r;
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
+
+		{
+			private _type = (getroadinfo _r)#0;
+			private _ct1 = _ct get _type;
+			_ct1 set [str _x,_x];
+			_self get "Items" get (str _x) get "ConnectedTo" get _type set [str _object,_object];
+		} foreach _roadAArray;
 		
 		// _m = createmarker [str _bPosC,_bPosC]; 
 		// _m setmarkershape "rectangle"; 
@@ -85,7 +91,7 @@ Flags:
 		// _m setmarkersize [_width,0.2]; 
 		// _m setmarkerdir (_pos getdir _ePosC);  
 	}],
-	["buildGraph",{
+	["buildGraph",compileFinal {
 		private _roads = nearestterrainobjects [[worldsize/2,worldsize/2],["MAIN ROAD","ROAD","TRACK","TRAIL"],worldSize,false,false];
 		_self set ["Items",createhashmap];
 		{_self call ["addRoadToGraph",[_x]];} foreach _roads;
@@ -242,7 +248,7 @@ Flags:
     Optionals: 
 		_pos - <Array> - current position to look for nearest road object (within 50m)
 	-----------------------------------------------------------------------------*/
-	["GetNodeAt",{
+	["GetNodeAt",compileFinal {
 		params [["_pos",[0,0,0],[[]],[2,3]]];
 		private _roads = nearestTerrainObjects [_pos,_self get "RoadGraphDoctrine" get "RoadTypes",50,true];
 		_self get "Items" get (str (_roads#0));
@@ -265,7 +271,7 @@ Flags:
 		- Blue : A segment with 1 connecting road (end point)
 		- Red : A segment with no other connecting roads (possible error)
 	-----------------------------------------------------------------------------*/
-	["ToggleGraphMarkers",{
+	["ToggleGraphMarkers",compileFinal {
 		private _enabled = _self get "_graphMarkersEnabled";
 		private _markers = _self get "_graphMarkers";
 

@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Condition"}],
+	["#str",compileFinal {"XPS_BT_typ_Condition"}],
 	["#parent","XPS_BT_typ_Leaf"],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard

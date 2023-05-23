@@ -20,7 +20,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_PathfindingScheduler"}],
+	["#str",compileFinal {"XPS_PF_typ_PathfindingScheduler"}],
 	["#parent","XPS_typ_JobScheduler"],
 	["AllowedTypes",["XPS_typ_AstarSearch"]],
 	["ProcessCurrent",compileFinal {

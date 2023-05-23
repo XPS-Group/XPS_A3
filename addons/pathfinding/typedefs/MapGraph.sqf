@@ -22,7 +22,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_MapGraph"}],
+	["#str",compileFinal {"XPS_PF_typ_MapGraph"}],
 	["#interfaces",["XPS_ifc_IAstarGraph"]],
 	/*----------------------------------------------------------------------------
 	Protected: buildLayer
@@ -38,7 +38,7 @@ Flags:
 	Returns: 
 		<Hashmap> - of sectors (each a <hashmap> in and of itself) where key is [x,y] index from [0,0] to [numXSectors,numYSectors] (not a world position)
 	-----------------------------------------------------------------------------*/
-	["buildLayer",{
+	["buildLayer",compileFinal {
 		params [["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]];
 
 		private _sectorSize = _self get "SectorSize";
@@ -80,7 +80,7 @@ Flags:
 		_sector set ["Heuristic",+(_layerBuilder get "Heuristic")];
 		_sectors;
 	}],	
-	["heuristic",{
+	["heuristic",compileFinal {
 		//TODO #4 MapGraph - Implement heuristic
 	}],
 	/*----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ Flags:
 	Returns:
 		_result - <HashmapObject> - the map grid
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create",compileFinal {
 		params [["_sectorSize",1000,[0]]];
 		_self set ["SectorSize",_sectorSize];
 		_self set ["SectorRadius",_sectorSize/2];
@@ -165,7 +165,7 @@ Flags:
 	Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["AddLayer",{
+	["AddLayer",compileFinal {
 		if !(params [["_layerName",nil,[""]],["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]]) exitwith {false};
 		if !([_layerBuilder,["XPS_PF_ifc_ILayerBuilder"]] call XPS_fnc_checkInterface) exitwith {false};
 		private _layers = _self get "Layers";
@@ -173,22 +173,22 @@ Flags:
 		private _layer = _self call ["buildLayer",[_layerBuilder]];
 		_layers set ["_layerName",_layer];
 	}],
-	["GetEstimatedDistance",{
+	["GetEstimatedDistance",compileFinal {
 		params ["_currentPos","_endPos"];
 		private pos1 = _currentPos get "PosCenter";
 		private pos2 = _endPos get "PosCenter";
 		_pos1 distance _pos2;
 	}],
-	["GetNeighbors",{
+	["GetNeighbors",compileFinal {
 		//TODO #2 MapGraph - Implement GetNeighbors
 
 		//Filter by CanTraverse?
 	}],
-	["GetMoveCost",{
+	["GetMoveCost",compileFinal {
 		params ["_currentPos","_nextPos"];
 		//private pos1 = _currentPos get "PosCenter";
 		//private pos2 = _nextPos get "PosCenter";
 		//_pos1 distance _pos2;
 	}],
-	["Init",{true;}]
+	["Init",compileFinal {true;}]
 ]

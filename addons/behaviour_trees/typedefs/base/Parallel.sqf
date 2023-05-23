@@ -28,7 +28,7 @@ Protected: currentIndex
 	
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Parallel"}],
+	["#str",compileFinal {"XPS_BT_typ_Parallel"}],
 	["#parent","XPS_BT_typ_Composite"],
 	/*----------------------------------------------------------------------------
 	Protected: preTick

@@ -23,7 +23,7 @@ Protecteds:
 	tree - <HashmapObject> - of a behaviour tree
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_SubTree"}],
+	["#str",compileFinal {"XPS_BT_typ_SubTree"}],
 	["#parent","XPS_BT_typ_Leaf"],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard

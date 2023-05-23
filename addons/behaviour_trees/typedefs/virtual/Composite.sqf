@@ -28,7 +28,7 @@ Protected: currentIndex
 	
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Composite"}],
+	["#str",compileFinal {"XPS_BT_typ_Composite"}],
 	["#interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
@@ -66,7 +66,7 @@ Protected: currentIndex
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
-	["processTick",{}],
+	["processTick",compileFinal {}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     

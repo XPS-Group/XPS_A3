@@ -19,7 +19,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [	
-	["#str",{"XPS_PF_typ_MapSector"}],
+	["#str",compileFinal {"XPS_PF_typ_MapSector"}],
 	["#interfaces",["XPS_ifc_AstarNode"]],
 	/*----------------------------------------------------------------------------
 	Property: Index
@@ -70,7 +70,7 @@ Flags:
 	Returns:
 		_result - <HashmapObject> - Sector Node
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create",compileFinal {
 		params [["_xAxis",0,[0]],["_yAxis",0,[0]]];
 		_self set ["Index",[_xAxis,_yAxis]];
 	}]

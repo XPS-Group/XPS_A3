@@ -19,7 +19,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_RoadNode"}],
+	["#str",compileFinal {"XPS_PF_typ_RoadNode"}],
 	["#interfaces",["XPS_ifc_IAstarNode"]],	
 	/*----------------------------------------------------------------------------
 	Property: Width
@@ -148,7 +148,7 @@ Flags:
 	Returns:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create",compileFinal {
 		params [["_index",nil,[""]],["_object",objNull,[objNull]]];
 		_self set ["Index",_index];
 		_self set ["RoadObject",_object];

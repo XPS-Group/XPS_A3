@@ -25,7 +25,7 @@ Property: Items
 
 
 [
-	["#str",{"XPS_typ_Collection"}],
+	["#str",compileFinal {"XPS_typ_Collection"}],
     ["#interfaces",["XPS_ifc_ICollection"]],
     /*
     Constructor: #create

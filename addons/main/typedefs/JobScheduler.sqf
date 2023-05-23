@@ -27,10 +27,10 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_typ_JobScheduler"}],
+	["#str",compileFinal {"XPS_typ_JobScheduler"}],
 	["#parent","XPS_typ_HashmapCollection"],
 	["interfaces",["XPS_ifc_JobScheduler"]],
-	["popQueue",{
+	["popQueue",compileFinal {
 		private _queue = _self get "Queue";
 		if (count _queue > 0) then {
 			private _next = _queue deleteAt 0;
@@ -140,7 +140,7 @@ Flags:
     	---
     Must be Overridden
 	-----------------------------------------------------------------------------*/
-	["ProcessCurrent",{
+	["ProcessCurrent",compileFinal {
 		if (isNil {_self get "CurrentItem"}) then {
 			_self call ["popQueue"];
 		};
@@ -168,7 +168,7 @@ Flags:
 	["Start",compileFinal {
 		private _handle = _self get "_handle";
 		if (isNil "_handle") then {
-			_handle = addMissionEventHandler ["EachFrame",{ 
+			_handle = addMissionEventHandler ["EachFrame",compileFinal { 
 				private _count = _thisArgs#1;
 				private _limit = _thisArgs#0 get "ProcessesPerFrame";
 				while {_count < _limit} do {

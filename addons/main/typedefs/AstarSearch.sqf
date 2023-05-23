@@ -21,7 +21,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_typ_AstarSearch"}],
+	["#str",compileFinal {"XPS_typ_AstarSearch"}],
 	["#interfaces",["XPS_ifc_IAstarSearch"]],
 
 	/*----------------------------------------------------------------------------
@@ -216,7 +216,7 @@ Flags:
     Calls the initialization of the associated graph with the start and end keys.
 	Can be used to reset pathfinding also.
 	-----------------------------------------------------------------------------*/
-	["InitGraph",{
+	["InitGraph",compileFinal {
 		private _graph = _self get "Graph";
 		_self set ["StartNode",_graph call ["GetNodeAt",[_self get "StartKey"]]];
 		_self set ["EndNode",_graph call ["GetNodeAt",[_self get "EndKey"]]];

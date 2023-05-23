@@ -33,7 +33,7 @@ Flags:
 		_sector - <Hashmap> - the sector to define
 		_sectorSize - <Number> - the length/width of the sector
 	-----------------------------------------------------------------------------*/
-	["setDensityModifier",{
+	["setDensityModifier",compileFinal {
 		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]]]) exitwith {false;};
 
 		private _densitySizeAdjust = (_sectorSize * _sectorSize) / 2500; // Normalize for 50 x 50 area
@@ -54,7 +54,7 @@ Flags:
     Parameters: 
 		_sector - <Hashmap> - the sector to define
 	-----------------------------------------------------------------------------*/
-	["setHeightModifier",{
+	["setHeightModifier",compileFinal {
 		if !(params [["_sector",nil,[createhashmap]]]) exitwith {false;};
 
 		private _subPositions = _sector get "SubPositions";
@@ -88,7 +88,7 @@ Flags:
 		_sector - <Hashmap> - the sector to define
 		_sectorRadius - <Number> - the radius of the sector 
 	-----------------------------------------------------------------------------*/
-	["setRoadModifier",{
+	["setRoadModifier",compileFinal {
 		if !(params [["_sector",nil,[createhashmap]],["_radius",nil,[0]]]) exitwith {false;};
 
 		{
@@ -124,7 +124,7 @@ Flags:
 		_sectorSize - <Number> - the length/width of the sector
 		_sectorRadius - <Number> - the radius of the sector 
 	-----------------------------------------------------------------------------*/
-	["BuildSector",{
+	["BuildSector",compileFinal {
 		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]],["_sectorRadius",nil,[0]]]) exitwith {nil;};
 
 		_self call ["setRoadModifier",[_sector,_sectorRadius]];

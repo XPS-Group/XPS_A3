@@ -24,7 +24,7 @@ Protected: child
 	<HashmapObject> - child node
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Decorator"}],
+	["#str",compileFinal {"XPS_BT_typ_Decorator"}],
 	["#interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
