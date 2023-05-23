@@ -89,7 +89,7 @@ Flags:
 		if (isNil {_cameFrom get (_current get "Index")}) then {_current = _self get "lastNode";};
 
 		while {!(isNil "_current") && !(_current isEqualTo _start)} do {
-			_path pushback (_current get "RoadObject");
+			_path pushback _current;
 			_current = _cameFrom get (_current get "Index");
 		};
 
