@@ -1,6 +1,7 @@
 
 
-PREP_FNC(checkCoastTravel);
+//PREP_FNC(checkCoastTravel);
+//PREP_FNC(lineIntersect);
 
 PREP_IFC(ILayerBuilder);
 
