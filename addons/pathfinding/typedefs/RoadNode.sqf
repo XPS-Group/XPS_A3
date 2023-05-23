@@ -89,6 +89,18 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["ConnectedTo",nil],
 	/*----------------------------------------------------------------------------
+	Property: ConnectedToPath
+    
+    	--- Prototype --- 
+    	get "ConnectedToPath"
+    	---
+    
+    Returns: 
+		<Hashmap> - contains a <Hashmap> of roads it is connected to and stores
+		a sequence of positions Start,Mid,End
+	-----------------------------------------------------------------------------*/
+	["ConnectedToPath",nil],
+	/*----------------------------------------------------------------------------
 	Property: Index
     
     	--- Prototype --- 
@@ -141,6 +153,7 @@ Flags:
 		_self set ["Index",_index];
 		_self set ["RoadObject",_object];
 		_self set ["ConnectedTo",createhashmapfromarray [["MAIN ROAD",createhashmap],["ROAD",createhashmap],["TRACK",createhashmap],["TRAIL",createhashmap]]];
+		_self set ["ConnectedToPath",createhashmap];
 		private _roadInfo = getRoadInfo _object;
 		_self set ["Type",_roadInfo#0]; 
 		_self set ["Width",_roadInfo#1]; 

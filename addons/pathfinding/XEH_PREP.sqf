@@ -1,7 +1,7 @@
 
 
 //PREP_FNC(checkCoastTravel);
-//PREP_FNC(lineIntersect);
+//PREP_FNC(lineIntersect2D);
 
 PREP_IFC(ILayerBuilder);
 

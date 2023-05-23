@@ -31,10 +31,10 @@ Flags:
 		};
 	}],
 	/*----------------------------------------------------------------------------
-	Proteccted: getConnected
+	Proteccted: getAllConnected
     
     	--- Prototype --- 
-    	call ["getConnected",[_node]]
+    	call ["getAllConnected",[_node]]
     	---
     
     	Sets ConnectedTo property with custom algorithm (as opposed to simply "roadsConnectedTo" command)
@@ -42,7 +42,7 @@ Flags:
 	Parameters:
 		_node - <HashmapObject> - the node to check
 	-----------------------------------------------------------------------------*/
-	["getConnected",{
+	["getAllConnected",{
 		params [["_node",nil,[createhashmap]]];
 		private _object = _node get "RoadObject";
 		private _ct = _node get "ConnectedTo";
@@ -74,22 +74,22 @@ Flags:
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 		
-		_m = createmarker [str _bPosC,_bPosC]; 
-		_m setmarkershape "rectangle"; 
-		_m setmarkercolor "ColorBlue"; 
-		_m setmarkersize [_width,0.2]; 
-		_m setmarkerdir (_pos getdir _bPosC); 
-		_m = createmarker [str _ePosC,_ePosC]; 
-		_m setmarkershape "rectangle"; 
-		_m setmarkercolor "ColorBlack"; 
-		_m setmarkersize [_width,0.2]; 
-		_m setmarkerdir (_pos getdir _ePosC);  
+		// _m = createmarker [str _bPosC,_bPosC]; 
+		// _m setmarkershape "rectangle"; 
+		// _m setmarkercolor "ColorBlue"; 
+		// _m setmarkersize [_width,0.2]; 
+		// _m setmarkerdir (_pos getdir _bPosC); 
+		// _m = createmarker [str _ePosC,_ePosC]; 
+		// _m setmarkershape "rectangle"; 
+		// _m setmarkercolor "ColorBlack"; 
+		// _m setmarkersize [_width,0.2]; 
+		// _m setmarkerdir (_pos getdir _ePosC);  
 	}],
 	["buildGraph",{
 		private _roads = nearestterrainobjects [[worldsize/2,worldsize/2],["MAIN ROAD","ROAD","TRACK","TRAIL"],worldSize,false,false];
 		_self set ["Items",createhashmap];
 		{_self call ["addRoadToGraph",[_x]];} foreach _roads;
-		{_self call ["getConnected",[_x]];} foreach values (_self get "Items");
+		{_self call ["getAllConnected",[_x]];} foreach values (_self get "Items");
 		
 	}],
 	["#create",compileFinal {
