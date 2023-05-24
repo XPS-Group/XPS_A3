@@ -175,8 +175,8 @@ Flags:
 	}],
 	["GetEstimatedDistance",compileFinal {
 		params ["_currentPos","_endPos"];
-		private pos1 = _currentPos get "PosCenter";
-		private pos2 = _endPos get "PosCenter";
+		private _pos1 = _currentPos get "PosCenter";
+		private _pos2 = _endPos get "PosCenter";
 		_pos1 distance _pos2;
 	}],
 	["GetNeighbors",compileFinal {
@@ -186,8 +186,8 @@ Flags:
 	}],
 	["GetMoveCost",compileFinal {
 		params ["_currentPos","_nextPos"];
-		//private pos1 = _currentPos get "PosCenter";
-		//private pos2 = _nextPos get "PosCenter";
+		//private _pos1 = _currentPos get "PosCenter";
+		//private _pos2 = _nextPos get "PosCenter";
 		//_pos1 distance _pos2;
 	}],
 	["Init",compileFinal {true;}]

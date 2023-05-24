@@ -31,7 +31,72 @@ Flags:
 		};
 	}],
 	["setConnectedToPathData",compileFinal {
+		if !(params [["_from",nil,[createhashmap]],["_to",nil,[createhashmap]]]) exitwith {diag_log ["setConnectedToPathData",_from,_to]};
 		
+		private _rhPath = [];
+		private _lhPath = [];
+		private _rhPathWalk = [];
+		private _lhPathWalk = [];
+
+		private _widthA = (_from get "Width")/5.5; if (_widthA == 0) then {_widthA=1.8;};
+		private _widthB = (_to get "Width")/5.5; if (_widthB == 0) then {_widthB=1.8;};
+		//private _widthWA = if (_from get "Type" == "TRAIL") then {0.5} else {(_from get "Width")/2.5};
+		//private _widthWB = if (_to get "Type" == "TRAIL") then {0.5} else {(_to get "Width")/2.5};
+
+		private _posA = _from get "PosASL";
+		private _bPosA = _from get "BeginPos";
+		private _ePosA = _from get "EndPos";
+
+		private _posB = _to get "PosASL";
+		private _bPosB = _to get "BeginPos";
+		private _ePosB = _to get "EndPos";
+
+		private _closest = [[0,0,0],[0,0,0]];
+		private _distance = 9999;
+		{
+			private _dist = (_x#0) distance (_x#1);
+			if (_dist < _distance) then {
+				_distance = _dist;
+				_closest = _x;
+			};
+		} foreach [[_bPosA,_bPosB],[_bPosA,_ePosB],[_ePosA,_bPosB],[_ePosA,_ePosB]];
+
+		if (_from get "IsBridge") then {
+			diag_log [[_posA,_bPosA,_ePosA],[_posB,_bPosB,_ePosB]];
+			diag_log [_closest#0,_closest#1];
+			} else {
+
+		private _headA = _posA getdir (_closest#0);
+		private _rhS = _posA getpos [_widthA , _headA + 90];
+		private _lhS = _posA getpos [_widthA , _headA - 90];
+		private _rhMS = (_closest#0) getpos [_widthA,_headA + 90];
+		private _lhMS = (_closest#0) getpos [_widthA,_headA - 90];
+		
+		private _headB = _posB getdir (_closest#1);
+		private _rhE = _posB getpos [_widthB,_headB-90];
+		private _lhE = _posB getpos [_widthB,_headB+90];
+		private _rhME = (_closest#1) getpos [_widthB,_headB-90];
+		private _lhME = (_closest#1) getpos [_widthB,_headB+90];
+
+		private _rhI = [_rhS,_rhMS,_rhME,_rhE] call XPS_PF_fnc_lineIntersect2D;
+		private _lhI = [_lhS,_lhMS,_lhME,_lhE] call XPS_PF_fnc_lineIntersect2D;
+
+		_rhPath pushback _rhS;
+		_lhPath pushback _lhS;
+		if !(count _rhI == 0) then {_rhPath pushback _rhI;};
+		if !(count _lhI == 0) then {_lhPath pushback _lhI;};
+		_rhPath pushback _rhE;
+		_lhPath pushback _lhE;
+
+		_from get "ConnectedToPath" get "RHDrive" set [_to get "Index",_rhPath];
+		_from get "ConnectedToPath" get "LHDrive" set [_to get "Index",_lhPath];
+		private _revLHPath = +_lhPath;
+		private _revRHPath = +_rhPath;
+		reverse _revLHPath;
+		reverse _revRHPath;
+		_to get "ConnectedToPath" get "RHDrive" set [_from get "Index",_revLHPath];
+		_to get "ConnectedToPath" get "LHDrive" set [_from get "Index",_revRHPath];
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Proteccted: getAllConnected
@@ -51,7 +116,9 @@ Flags:
 		private _ct = _node get "ConnectedTo";
 		private _roadArray = [];
 		{
-			if !(_x isEqualto objNull || (str _x) == (str _object) || (str _x in (keys _ct1))) then {
+			private _type = (getroadinfo _x)#0;
+			private _ct1 = _ct get _type;
+			if !(_x isEqualto objNull || (str _x) == (str _object) || (str _x) in keys _ct1) then {
 				_roadArray pushbackunique _x;
 			};
 		} foreach roadsconnectedto _object;
@@ -68,28 +135,33 @@ Flags:
 		private _ePosR = _ePosC getpos [_width,(_pos getDir _ePosC)+90]; 
 		{
 			private _r = roadAt _x;
-			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r in (keys _ct1))) then {
+			private _type = (getroadinfo _r)#0;
+			private _ct1 = _ct get _type;
+			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r) in keys _ct1) then {
 				_roadArray pushbackunique _r;
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 
 		{
-			private _type = (getroadinfo _r)#0;
+			private _type = (getroadinfo _x)#0;
 			private _ct1 = _ct get _type;
 			_ct1 set [str _x,_x];
-			_self get "Items" get (str _x) get "ConnectedTo" get _type set [str _object,_object];
-		} foreach _roadAArray;
+			private _rct = _self get "Items" get (str _x);
+			_rct get "ConnectedTo" get _type set [str _object,_object];
+
+			_self call ["setConnectedToPathData",[_node, _rct]];
+		} foreach _roadArray;
 		
-		// _m = createmarker [str _bPosC,_bPosC]; 
-		// _m setmarkershape "rectangle"; 
-		// _m setmarkercolor "ColorBlue"; 
-		// _m setmarkersize [_width,0.2]; 
-		// _m setmarkerdir (_pos getdir _bPosC); 
-		// _m = createmarker [str _ePosC,_ePosC]; 
-		// _m setmarkershape "rectangle"; 
-		// _m setmarkercolor "ColorBlack"; 
-		// _m setmarkersize [_width,0.2]; 
-		// _m setmarkerdir (_pos getdir _ePosC);  
+		_m = createmarker [str _bPosC,_bPosC]; 
+		_m setmarkershape "rectangle"; 
+		_m setmarkercolor "ColorBlue"; 
+		_m setmarkersize [_width,0.1]; 
+		_m setmarkerdir (_pos getdir _bPosC); 
+		_m = createmarker [str _ePosC,_ePosC]; 
+		_m setmarkershape "rectangle"; 
+		_m setmarkercolor "ColorBlack"; 
+		_m setmarkersize [_width,0.1]; 
+		_m setmarkerdir (_pos getdir _ePosC);  
 	}],
 	["buildGraph",compileFinal {
 		private _roads = nearestterrainobjects [[worldsize/2,worldsize/2],["MAIN ROAD","ROAD","TRACK","TRAIL"],worldSize,false,false];
