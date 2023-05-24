@@ -35,9 +35,11 @@ Flags:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_heuristics",[0.9, 1, 1.2],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]]];
+		params [["_heuristics",[0.9, 1, 1.2],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]],["_drive","RHDrive",[""]]];
 		_self set ["Heuristics",_heuristics];
 		_self set ["RoadTypes",_roadTypes];
+		if !(_drive in ["RHDrive","LHDrive"]) then {_drive = "RHDrive"};
+		_self set ["Drive",_drive];
 	}],
 	/*----------------------------------------------------------------------------
 	Property: Heuristics
@@ -64,5 +66,6 @@ Flags:
 		nearestTerrainObjects to filter types of roads when doing a search. Can include
 		"TRAIL" in array if searching path for walking units.
 	-----------------------------------------------------------------------------*/
-	["RoadTypes",["MAIN ROAD","ROAD","TRACK"]]
+	["RoadTypes",["MAIN ROAD","ROAD","TRACK"]],
+	["Drive",nil]
 ]

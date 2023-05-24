@@ -54,37 +54,32 @@ Flags:
 		private _closest = [[0,0,0],[0,0,0]];
 		private _distance = 9999;
 		{
-			private _dist = (_x#0) distance (_x#1);
+			private _dist = (_x#0) distance2D (_x#1);
 			if (_dist < _distance) then {
 				_distance = _dist;
 				_closest = _x;
 			};
 		} foreach [[_bPosA,_bPosB],[_bPosA,_ePosB],[_ePosA,_bPosB],[_ePosA,_ePosB]];
 
-		if (_from get "IsBridge") then {
-			diag_log [[_posA,_bPosA,_ePosA],[_posB,_bPosB,_ePosB]];
-			diag_log [_closest#0,_closest#1];
-			} else {
-
 		private _headA = _posA getdir (_closest#0);
-		private _rhS = _posA getpos [_widthA , _headA + 90];
-		private _lhS = _posA getpos [_widthA , _headA - 90];
-		private _rhMS = (_closest#0) getpos [_widthA,_headA + 90];
-		private _lhMS = (_closest#0) getpos [_widthA,_headA - 90];
+		private _rhS = _posA getpos [_widthA , _headA + 90];_rhS set [2,_posA#2];
+		private _lhS = _posA getpos [_widthA , _headA - 90];_lhS set [2,_posA#2];
+		private _rhMS = (_closest#0) getpos [_widthA,_headA + 90];_rhMS set [2,_closest#0#2];
+		private _lhMS = (_closest#0) getpos [_widthA,_headA - 90];_lhMS set [2,_closest#0#2];
 		
 		private _headB = _posB getdir (_closest#1);
-		private _rhE = _posB getpos [_widthB,_headB-90];
-		private _lhE = _posB getpos [_widthB,_headB+90];
-		private _rhME = (_closest#1) getpos [_widthB,_headB-90];
-		private _lhME = (_closest#1) getpos [_widthB,_headB+90];
+		private _rhE = _posB getpos [_widthB,_headB-90];_rhE set [2,_posB#2];
+		private _lhE = _posB getpos [_widthB,_headB+90];_lhE set [2,_posB#2];
+		private _rhME = (_closest#1) getpos [_widthB,_headB-90];_rhME set [2,_closest#1#2];
+		private _lhME = (_closest#1) getpos [_widthB,_headB+90];_lhME set [2,_closest#1#2];
 
 		private _rhI = [_rhS,_rhMS,_rhME,_rhE] call XPS_PF_fnc_lineIntersect2D;
 		private _lhI = [_lhS,_lhMS,_lhME,_lhE] call XPS_PF_fnc_lineIntersect2D;
 
 		_rhPath pushback _rhS;
 		_lhPath pushback _lhS;
-		if !(count _rhI == 0) then {_rhPath pushback _rhI;};
-		if !(count _lhI == 0) then {_lhPath pushback _lhI;};
+		if !(count _rhI == 0) then {_rhI set [2,_posB#2];_rhPath pushback _rhI;};
+		if !(count _lhI == 0) then {_lhI set [2,_posB#2];_lhPath pushback _lhI;};
 		_rhPath pushback _rhE;
 		_lhPath pushback _lhE;
 
@@ -96,7 +91,6 @@ Flags:
 		reverse _revRHPath;
 		_to get "ConnectedToPath" get "RHDrive" set [_from get "Index",_revLHPath];
 		_to get "ConnectedToPath" get "LHDrive" set [_from get "Index",_revRHPath];
-		};
 	}],
 	/*----------------------------------------------------------------------------
 	Proteccted: getAllConnected
@@ -127,12 +121,13 @@ Flags:
 		private _bPos = _node get "BeginPos";
 		private _ePos = _node get "EndPos";
 		private _width = (_node get "Width")/3;
-		private _bPosC = _pos getpos [(_pos distance _bPos)+0.75,(_pos getDir _bPos)]; 
-		private _bPosL = _bPosC getpos [_width,(_pos getDir _bPosC)-90]; 
-		private _bPosR = _bPosC getpos [_width,(_pos getDir _bPosC)+90]; 
+		if (_width == 0) then {_width = 5.5};
+		private _bPosC = _pos getpos [(_pos distance _bPos)+0.75,(_pos getDir _bPos)];
+		private _bPosL = _bPosC getpos [_width,(_pos getDir _bPosC)-90];
+		private _bPosR = _bPosC getpos [_width,(_pos getDir _bPosC)+90];
 		private _ePosC = _pos getpos [(_pos distance _ePos)+0.75,(_pos getDir _ePos)]; 
-		private _ePosL = _ePosC getpos [_width,(_pos getDir _ePosC)-90]; 
-		private _ePosR = _ePosC getpos [_width,(_pos getDir _ePosC)+90]; 
+		private _ePosL = _ePosC getpos [_width,(_pos getDir _ePosC)-90];
+		private _ePosR = _ePosC getpos [_width,(_pos getDir _ePosC)+90];
 		{
 			private _r = roadAt _x;
 			private _type = (getroadinfo _r)#0;
@@ -140,7 +135,8 @@ Flags:
 			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r) in keys _ct1) then {
 				_roadArray pushbackunique _r;
 			};
-		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
+			_x resize 2;
+		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR,_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 
 		{
 			private _type = (getroadinfo _x)#0;
@@ -243,7 +239,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetEstimatedDistance",compileFinal {
 		params ["_current","_end"];
-		(_current get "RoadObject") distance (_end get "RoadObject");
+		(_current get "RoadObject") distance2D (_end get "RoadObject");
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNeighbors
@@ -304,7 +300,10 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
 		params ["_current","_next"];
-		private _cost = (_current get "RoadObject") distance (_next get "RoadObject");
+		private _pathPoints = _current get "ConnectedToPath" get (_self get "RoadGraphDoctrine" get "Drive") get (_next get "Index");
+		if (isNil "_pathpoints") exitwith {diag_log ["RoadGraph:GetMoveCost:_pathpoints is nil from/to:",_current get "Index",_next get "Index"];99999;};
+		private _cost = 0;
+		for "_i" from 1 to (count _pathPoints)-1 do {_cost = _cost + (_pathPoints#(_i-1) distance2D _pathPoints#_i)};
 		_cost = _cost * (_self call ["heuristic",[_next]]);
 		_cost;
 	}],
@@ -375,5 +374,33 @@ Flags:
 			};
 		};
 		_self set ["_graphMarkersEnabled",!_enabled];
+	}],
+	["SmoothPath",{
+		params [["_path",[],[[]]]];
+
+		if (count _path < 3) exitwith {};
+
+		private _i = 1;
+		while {_i < (count _path)-1} do {
+
+			private _first = _path#(_i-1);
+			private _second = _path#(_i);
+			private _third = _path#(_i+1);
+
+			// First Check if cycling back
+			if ((_first get "RoadObject") isEqualTo (_third get "RoadObject")) then {_path deleteAt (_i+1);} else {
+				// Else check if C is actually closer than B
+				private _posA = _first get "PosASL";
+				private _posB = _second get "PosASL";
+				private _posC = _third get "PosASL";
+				private _checkPositions = [_third get "BeginPos",_third get "EndPos"];
+				
+				if ((_posA distance2D (_checkPositions#0)) < (_posA distance2D _posB) || (_posA distance2D (_checkPositions#1)) < (_posA distance2D _posB)) then {
+					_path deleteAt _i;
+				} else {
+					_i = _i + 1;
+				};
+			};
+		};
 	}]
 ]
