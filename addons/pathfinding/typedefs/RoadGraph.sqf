@@ -70,7 +70,7 @@ Flags:
 		_lhPath pushback _lhE;
 
 		[_rhPath,_lhPath];
-	}]
+	}],
 	/*----------------------------------------------------------------------------
 	Proteccted: addRoadToGraph
     
