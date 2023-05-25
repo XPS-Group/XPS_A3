@@ -50,7 +50,7 @@ Flags:
 		private _headA = _posA getdir (_closest#0);
 		private _rhS = _posA getpos [_fromWidth , _headA + 90];_rhS set [2,_posA#2];
 		private _lhS = _posA getpos [_fromWidth , _headA - 90];_lhS set [2,_posA#2];
-		private _rhMS = (_closest#0) getpos [_wi_fromWidthdthA,_headA + 90];_rhMS set [2,_closest#0#2];
+		private _rhMS = (_closest#0) getpos [_fromWidth,_headA + 90];_rhMS set [2,_closest#0#2];
 		private _lhMS = (_closest#0) getpos [_fromWidth,_headA - 90];_lhMS set [2,_closest#0#2];
 		
 		private _headB = _posB getdir (_closest#1);
