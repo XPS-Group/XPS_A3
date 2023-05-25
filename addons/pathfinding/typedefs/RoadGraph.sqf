@@ -281,6 +281,16 @@ Flags:
 		<Hashmapobject> - (Default: default XPS_PF_typ_RoadGraphDoctrine) 
 	-----------------------------------------------------------------------------*/
 	["RoadGraphDoctrine",nil],
+	/*----------------------------------------------------------------------------
+	Property: Items
+    
+    	--- Prototype --- 
+    	get "Items"
+    	---
+    
+    Returns: 
+		<Hashmap> - All <XPS_PF_typ_RoadNodes> represented in a searchable graph
+	-----------------------------------------------------------------------------*/
 	["Items",nil],
 	/*----------------------------------------------------------------------------
 	Method: Init
