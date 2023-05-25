@@ -186,7 +186,7 @@ Flags:
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_graph,_startKey*,_endKey*]]
+    	_result = createHashmapObject [XPS_typ_AstarSearch,[_graph,_startKey*,_endKey*]]
     	---
     
 	Parameters:
