@@ -59,7 +59,7 @@ Flags:
 		--- 
 	-----------------------------------------------------------------------------*/
 	["AttachToObject",compileFinal {
-		params [["_object",objNull,[object]],["_varName","XPS_Blackboard",[""]]];
+		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
 		private _prevObject = _self get "_attachedObject";
 		private _prevObjectVar = _self get "_attachedObjectVariable";
 		if !(isNull _prevObject) then {_prevObject setVariable [_prevObjectVar,nil]; };
