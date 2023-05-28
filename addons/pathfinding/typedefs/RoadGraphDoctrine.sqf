@@ -38,7 +38,7 @@ Flags:
 		params [["_heuristics",[0.9, 1, 1.2],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]],["_drive","RHDrive",[""]]];
 		_self set ["Heuristics",_heuristics];
 		_self set ["RoadTypes",_roadTypes];
-		if !(_drive in ["RHDrive","LHDrive"]) then {_drive = "RHDrive"};
+		if !(_drive in ["RHDrive","LHDrive","RHWalk","LHWalk"]) then {_drive = "RHDrive"};
 		_self set ["Drive",_drive];
 	}],
 	/*----------------------------------------------------------------------------

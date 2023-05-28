@@ -23,53 +23,66 @@ Flags:
 [
 	["#str",compileFinal {"XPS_PF_typ_RoadGraph"}],
 	["#interfaces",["XPS_ifc_IAstarGraph"]],
-	["_getConnectedToData",{
-		if !(params [["_from",nil,[createhashmap]],["_to",nil,[createhashmap]],["_fromWidth",nil,[0]],["_toWidth",nil,[0]]]) exitwith {diag_log ["_getConnectedToPathData",_from,_to]};
+	["_getConnectedToPath",compilefinal {
+		if !(params [["_fromPoint",nil,[[]],[3]],["_direction",nil,[0]],["_toObject",nil,[createhashmap]],["_toWidth",nil,[0]],["_nextObject",nil,[createhashmap]],["_nextWidth",nil,[0]],["_dirOffset",nil,[0]]]) exitwith {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
+		if (_fromPoint isEqualTo [0,0,0]) then {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
+
+		private _posA = _toObject get "PosASL";
+		private _bPosA = _toObject get "BeginPos";
+		private _ePosA = _toObject get "EndPos";
+
+		private _posB = _nextObject get "PosASL";
+		private _bPosB = _nextObject get "BeginPos";
+		private _ePosB = _nextObject get "EndPos";
+
+		private _headA = _bposA getdir _eposA;
+		private _headB = _bposB getdir _eposB;
+
+		if (abs (_headA - _direction) > 90) then {_headA = _eposA getdir _bposA}; 
+		if (abs (_headB - (_posA getdir _posB)) > 90) then {_headB = _eposB getdir _bposB}; 
+
+		private _posS = _posA getpos [_toWidth,_headA + _dirOffset]; _posS set [2,_posA#2];
+		private _posE = _posB getpos [_nextWidth,_headB + _dirOffset]; _posE set [2,_posB#2];
+
+		private _points = [];
+		if ((_posS distance2d _posE)*1.15 < (_fromPoint distance2d _posE)) then {_points pushback _posS;_fromPoint = _posS;};
+		private _p1 = _frompoint;
+		private _p2 = _frompoint getpos [5,_direction];
+		private _p3 = _bPosB getpos [_nextWidth,_headB + _dirOffset];
+		private _p4 = _ePosB getpos [_nextWidth,_headB + _dirOffset];
 		
-		private _rhPath = [];
-		private _lhPath = [];
+		_m = createmarker ["db"+ str _fromPoint,_fromPoint]; 
+		_m setmarkertype "mil_circle"; 
+		_m setmarkercolor "ColorOrange"; 
+		_m setmarkersize [0.25,0.25]; 
+		_m = createmarker ["db"+ str str _posE,_posE]; 
+		_m setmarkertype "mil_circle"; 
+		_m setmarkercolor "ColorBlack"; 
+		_m setmarkersize [0.25,0.25]; 
 
-		private _posA = _from get "PosASL";
-		private _bPosA = _from get "BeginPos";
-		private _ePosA = _from get "EndPos";
 
-		private _posB = _to get "PosASL";
-		private _bPosB = _to get "BeginPos";
-		private _ePosB = _to get "EndPos";
-
-		private _closest = [[0,0,0],[0,0,0]];
-		private _distance = 9999;
-		{
-			private _dist = (_x#0) distance2D (_x#1);
-			if (_dist < _distance) then {
-				_distance = _dist;
-				_closest = _x;
+		private _intersect = [_p1,_p2,_p3,_p4] call XPS_PF_fnc_lineIntersect2D;
+		private _intPoints = [];
+		if !(isNil "_intersect" || count _intersect == 0) then {
+			if ((_intersect distance2d _posE < _fromPoint distance2d _posE) && (_intersect distance2d _fromPoint < _fromPoint distance2d _posE)) then {
+				private _iB = _intersect getpos [(_intersect distance _frompoint)/2,_intersect getdir _frompoint]; 
+				private _iE = _intersect getpos [(_intersect distance _posE)/2,_intersect getdir _posE]; 
+				_intPoints pushback _iB;
+				_intPoints pushback _intersect;
+				_intPoints pushback _iE;
+				for "_p" from 0.1 to 1 step 0.1 do {
+					private _nPos = _p bezierInterpolation _intPoints;
+					//if !(roadAt _nPos isEqualTo (_toObject get "RoadObject")) then {
+						_points pushback _nPos;
+					//};
+				};
+				_m = createmarker ["db"+ str _intersect,_intersect]; 
+				_m setmarkertype "mil_circle"; 
+				_m setmarkercolor "ColorYellow"; 
+				_m setmarkersize [0.25,0.25]; 
 			};
-		} foreach [[_bPosA,_bPosB],[_bPosA,_ePosB],[_ePosA,_bPosB],[_ePosA,_ePosB]];
-
-		private _headA = _posA getdir (_closest#0);
-		private _rhS = _posA getpos [_fromWidth , _headA + 90];_rhS set [2,_posA#2];
-		private _lhS = _posA getpos [_fromWidth , _headA - 90];_lhS set [2,_posA#2];
-		private _rhMS = (_closest#0) getpos [_fromWidth,_headA + 90];_rhMS set [2,_closest#0#2];
-		private _lhMS = (_closest#0) getpos [_fromWidth,_headA - 90];_lhMS set [2,_closest#0#2];
-		
-		private _headB = _posB getdir (_closest#1);
-		private _rhE = _posB getpos [_toWidth,_headB-90];_rhE set [2,_posB#2];
-		private _lhE = _posB getpos [_toWidth,_headB+90];_lhE set [2,_posB#2];
-		private _rhME = (_closest#1) getpos [_toWidth,_headB-90];_rhME set [2,_closest#1#2];
-		private _lhME = (_closest#1) getpos [_toWidth,_headB+90];_lhME set [2,_closest#1#2];
-
-		private _rhI = [_rhS,_rhMS,_rhME,_rhE] call XPS_PF_fnc_lineIntersect2D;
-		private _lhI = [_lhS,_lhMS,_lhME,_lhE] call XPS_PF_fnc_lineIntersect2D;
-
-		_rhPath pushback _rhS;
-		_lhPath pushback _lhS;
-		if !(count _rhI == 0) then {_rhI set [2,_posB#2];_rhPath pushback _rhI;};
-		if !(count _lhI == 0) then {_lhI set [2,_posB#2];_lhPath pushback _lhI;};
-		_rhPath pushback _rhE;
-		_lhPath pushback _lhE;
-
-		[_rhPath,_lhPath];
+		};
+		_points;
 	}],
 	/*----------------------------------------------------------------------------
 	Proteccted: addRoadToGraph
@@ -102,43 +115,43 @@ Flags:
 		_from - <XPS_PF_typ_RoadNode> - the node coming from
 		_to - <XPS_PF_typ_RoadNode> - the node going to
 	-----------------------------------------------------------------------------*/
-	["setConnectedToPathData",compileFinal {
-		if !(params [["_from",nil,[createhashmap]],["_to",nil,[createhashmap]]]) exitwith {diag_log ["setConnectedToPathData",_from,_to]};
+	// ["setConnectedToPathData",compileFinal {
+	// 	if !(params [["_from",nil,[createhashmap]],["_to",nil,[createhashmap]]]) exitwith {diag_log ["setConnectedToPathData",_from,_to]};
 		
-		//Get Driving Data
-		private _fromWidth = (_from get "Width")/5.5; if (_widthA == 0) then {_widthA=1.8;};
-		private _toWidth = (_to get "Width")/5.5; if (_widthB == 0) then {_widthB=1.8;};
+	// 	//Get Driving Data
+	// 	private _fromWidth = (_from get "Width")/5.5; if (_fromWidth == 0) then {_fromWidth=1.8;};
+	// 	private _toWidth = (_to get "Width")/5.5; if (_toWidth == 0) then {_toWidth=1.8;};
 
-		_result = _self call ["_getConnectedToData",[_from,_to,_fromWidth,_toWidth]];
-		private _rhPath = _result#0;
-		private _lhPath = _result#1;
+	// 	_result = _self call ["_getConnectedToData",[_from,_to,_fromWidth,_toWidth]];
+	// 	private _rhPath = _result#0;
+	// 	private _lhPath = _result#1;
 
-		_from get "ConnectedToPath" get "RHDrive" set [_to get "Index",_rhPath];
-		_from get "ConnectedToPath" get "LHDrive" set [_to get "Index",_lhPath];
-		private _revLHPath = +_lhPath;
-		private _revRHPath = +_rhPath;
-		reverse _revLHPath;
-		reverse _revRHPath;
-		_to get "ConnectedToPath" get "RHDrive" set [_from get "Index",_revLHPath];
-		_to get "ConnectedToPath" get "LHDrive" set [_from get "Index",_revRHPath];
+	// 	_from get "ConnectedToPath" get "RHDrive" set [_to get "Index",_rhPath];
+	// 	_from get "ConnectedToPath" get "LHDrive" set [_to get "Index",_lhPath];
+	// 	private _revLHPath = +_lhPath;
+	// 	private _revRHPath = +_rhPath;
+	// 	reverse _revLHPath;
+	// 	reverse _revRHPath;
+	// 	_to get "ConnectedToPath" get "RHDrive" set [_from get "Index",_revLHPath];
+	// 	_to get "ConnectedToPath" get "LHDrive" set [_from get "Index",_revRHPath];
 		
-		//Get Walking Data
-		_fromWidth = if (_from get "Type" == "TRAIL") then {0.5} else {(_from get "Width")/2.5};
-		_toWidth = if (_to get "Type" == "TRAIL") then {0.5} else {(_to get "Width")/2.5};
+	// 	//Get Walking Data
+	// 	_fromWidth = if (_from get "Type" == "TRAIL") then {0.5} else {(_from get "Width")/2.5};if (_fromWidth == 0) then {_fromWidth=4;};
+	// 	_toWidth = if (_to get "Type" == "TRAIL") then {0.5} else {(_to get "Width")/2.5};if (_toWidth == 0) then {_toWidth=4;};
 
-		_result = _self call ["_getConnectedToData",[_from,_to,_fromWidth,_toWidth]];
-		private _rhPath = _result#0;
-		private _lhPath = _result#1;
+	// 	_result = _self call ["_getConnectedToData",[_from,_to,_fromWidth,_toWidth]];
+	// 	private _rhPath = _result#0;
+	// 	private _lhPath = _result#1;
 
-		_from get "ConnectedToPath" get "RHWalk" set [_to get "Index",_rhPath];
-		_from get "ConnectedToPath" get "LHWalk" set [_to get "Index",_lhPath];
-		private _revLHPath = +_lhPath;
-		private _revRHPath = +_rhPath;
-		reverse _revLHPath;
-		reverse _revRHPath;
-		_to get "ConnectedToPath" get "RHWalk" set [_from get "Index",_revLHPath];
-		_to get "ConnectedToPath" get "LHWalk" set [_from get "Index",_revRHPath];
-	}],
+	// 	_from get "ConnectedToPath" get "RHWalk" set [_to get "Index",_rhPath];
+	// 	_from get "ConnectedToPath" get "LHWalk" set [_to get "Index",_lhPath];
+	// 	private _revLHPath = +_lhPath;
+	// 	private _revRHPath = +_rhPath;
+	// 	reverse _revLHPath;
+	// 	reverse _revRHPath;
+	// 	_to get "ConnectedToPath" get "RHWalk" set [_from get "Index",_revLHPath];
+	// 	_to get "ConnectedToPath" get "LHWalk" set [_from get "Index",_revRHPath];
+	// }],
 	/*----------------------------------------------------------------------------
 	Proteccted: getAllConnected
     
@@ -167,34 +180,24 @@ Flags:
 		private _pos = _node get "PosASL";
 		private _bPos = _node get "BeginPos";
 		private _ePos = _node get "EndPos";
-		private _width = (_node get "Width")/3;
+		private _width = (_node get "Width")/2;
 		if (_width == 0) then {_width = 5.5};
-		private _bPosC = _pos getpos [(_pos distance _bPos)+0.75,(_pos getDir _bPos)];
+		private _bPosC = _pos getpos [(_pos distance _bPos)+0.02,(_pos getDir _bPos)];
 		private _bPosL = _bPosC getpos [_width,(_pos getDir _bPosC)-90];
 		private _bPosR = _bPosC getpos [_width,(_pos getDir _bPosC)+90];
-		private _ePosC = _pos getpos [(_pos distance _ePos)+0.75,(_pos getDir _ePos)]; 
+		private _ePosC = _pos getpos [(_pos distance _ePos)+0.02,(_pos getDir _ePos)];
 		private _ePosL = _ePosC getpos [_width,(_pos getDir _ePosC)-90];
 		private _ePosR = _ePosC getpos [_width,(_pos getDir _ePosC)+90];
 		{
+			_x resize 2;
 			private _r = roadAt _x;
 			private _type = (getroadinfo _r)#0;
 			private _ct1 = _ct get _type;
-			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r) in keys _ct1) then {
+			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r) in keys _ct1 || abs((getposASL _r)#2)-(_pos#2)>2) then {
 				_roadArray pushbackunique _r;
 			};
-			_x resize 2;
-		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR,_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
+		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 
-		{
-			private _type = (getroadinfo _x)#0;
-			private _ct1 = _ct get _type;
-			_ct1 set [str _x,_x];
-			private _rct = _self get "Items" get (str _x);
-			_rct get "ConnectedTo" get _type set [str _object,_object];
-
-			_self call ["setConnectedToPathData",[_node, _rct]];
-		} foreach _roadArray;
-		
 		_m = createmarker [str _bPosC,_bPosC]; 
 		_m setmarkershape "rectangle"; 
 		_m setmarkercolor "ColorBlue"; 
@@ -205,6 +208,17 @@ Flags:
 		_m setmarkercolor "ColorBlack"; 
 		_m setmarkersize [_width,0.1]; 
 		_m setmarkerdir (_pos getdir _ePosC);  
+
+		{
+			private _type = (getroadinfo _x)#0;
+			private _ct1 = _ct get _type;
+			_ct1 set [str _x,_x];
+			private _rct = _self get "Items" get (str _x);
+			_rct get "ConnectedTo" get _type set [str _object,_object];
+
+			//_self call ["setConnectedToPathData",[_node, _rct]];
+		} foreach _roadArray;
+		
 	}],
 	/*----------------------------------------------------------------------------
 	Proteccted: buildGraph
@@ -381,10 +395,11 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
 		params ["_current","_next"];
-		private _pathPoints = _current get "ConnectedToPath" get (_self get "RoadGraphDoctrine" get "Drive") get (_next get "Index");
-		if (isNil "_pathpoints") exitwith {diag_log ["RoadGraph:GetMoveCost:_pathpoints is nil from/to:",_current get "Index",_next get "Index"];99999;};
-		private _cost = 0;
-		for "_i" from 1 to (count _pathPoints)-1 do {_cost = _cost + (_pathPoints#(_i-1) distance2D _pathPoints#_i)};
+		//private _pathPoints = _current get "ConnectedToPath" get (_self get "RoadGraphDoctrine" get "Drive") get (_next get "Index");
+		//if (isNil "_pathpoints") exitwith {diag_log ["RoadGraph:GetMoveCost:_pathpoints is nil from/to:",_current get "Index",_next get "Index"];99999;};
+		//private _cost = 0;
+		//for "_i" from 1 to (count _pathPoints)-1 do {_cost = _cost + (_pathPoints#(_i-1) distance2D _pathPoints#_i)};
+		private _cost = (_current get "PosASL") distance (_next get "PosASL");
 		_cost = _cost * (_self call ["heuristic",[_next]]);
 		_cost;
 	}],
@@ -468,11 +483,15 @@ Flags:
 	Parameters:
 		_path - <Array> - An array of <RoadNodes> that represent a path
 	-----------------------------------------------------------------------------*/
-	["SmoothPath",{
-		params [["_path",[],[[]]]];
+	["CalculateDrivePath",{
+		params [["_start",nil,[[]],[2,3]],["_end",nil,[[]],[2,3]],["_path",[],[[]]],["_side","",[""]]];
 
-		if (count _path < 3) exitwith {};
+		if (isNil "_start") then {_start = (path deleteAt 0) get "PosASL"};
+		if (isNil "_end") then {_end = (path deleteAt -1) get "PosASL"};
+		if !(_side in ["RHDrive","LHDrive","RHWalk","LHWalk"]) then {_side = "RHDrive"};
+		if (count _path < 3) exitwith {/* TODO */};
 
+		// SMOOTH PATHING 
 		private _i = 1;
 		while {_i < (count _path)-1} do {
 
@@ -492,5 +511,44 @@ Flags:
 				_i = _i + 1;
 			};
 		};
+		private _mP = _start;
+		{
+			_m = createmarker [str str str str str (_x get "PosASL"),_x get "PosASL"];
+			_m setmarkertype "mil_arrow";
+			_m setmarkercolor "ColorRed";
+			_m setmarkersize [0.5,0.5];
+			_m setmarkerdir (_mP getdir (getmarkerpos _m));
+			_mP = getmarkerpos _m;
+		} foreach _path;
+
+		//CALCULATE PATH
+		private _fromPoint = +_start;
+		private _direction = _fromPoint getdir ((_path#0) get "PosASL");
+		private _result = [_fromPoint];
+		_i = 0;
+		while {_i < (count _path)-1} do {
+
+			private _toObject = _path#(_i);
+			private _nextObject = _path#(_i+1);
+			private _dirOffset = 0;
+			private _divisor = [];
+
+			switch (_side) do {
+				case "LHDrive" : {_dirOffset = -90; _divisor = [5.5,1.8];};
+				case "RHDrive" : {_dirOffset = 90; _divisor = [5.5,1.8];};
+				case "LHWalk" : {_dirOffset = -90; _divisor = [2.5,4];};
+				case "RHWalk" : {_dirOffset = 90; _divisor = [2.5,4];};
+			};
+
+			private _toWidth = (_toObject get "Width")/(_divisor#0); if (isnil "_toWidth" || _toWidth == 0) then {_toWidth=(_divisor#1);};
+			private _nextWidth = (_nextObject get "Width")/(_divisor#0); if (isnil "_nextWidth" || _nextWidth == 0) then {_nextWidth=(_divisor#1);};
+
+			_result append (_self call ["_getConnectedToPath",[_fromPoint,_direction,_toObject,_toWidth,_nextObject,_nextWidth,_dirOffset]]);
+			_fromPoint = _result select -1;
+			_direction = (_result select -2) getdir _fromPoint;
+			_i = _i + 1;
+		};
+		_result pushback _end;
+		_result;
 	}]
 ]

@@ -99,7 +99,7 @@ Flags:
 		<Hashmap> - contains a <Hashmap> of roads it is connected to and stores
 		a sequence of positions Start,Mid,End
 	-----------------------------------------------------------------------------*/
-	["ConnectedToPath",nil],
+	//["ConnectedToPath",nil],
 	/*----------------------------------------------------------------------------
 	Property: Index
     
@@ -160,6 +160,8 @@ Flags:
 		_self set ["BeginPos",_roadInfo#6]; 
 		_self set ["EndPos",_roadInfo#7]; 
 		_self set ["IsBridge",_roadInfo#8]; 
-		_self set ["PosASL",getPosASL _object]; 
+		private _aslPos = getposASL _object;
+		_aslPos set [2,((_roadInfo#7#2) + (_roadInfo#6#2))/2];
+		_self set ["PosASL",_aslPos]; 
 	}]
 ]
