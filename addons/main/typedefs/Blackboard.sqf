@@ -38,7 +38,7 @@ Flags:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_object",objNull,[object]],["_varName","XPS_Blackboard",[""]]];
+		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
 		_self call ["AttachToObject",[_object,_varName]];
 	}],
 	/*-----------------------------------------------------------------------------
