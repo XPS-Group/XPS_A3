@@ -1,0 +1,492 @@
+version=1;
+class GraphItems
+{
+	class Item0
+	{
+		Flags=250;
+		BasicText="";
+		Left=-210.50055;
+		Top=-181.18141;
+		Right=-120.50055;
+		Bottom=-131.18141;
+		BgColor=255;
+		class ItemInfo
+		{
+			Text="Start";
+			lStyle=-842150451;
+			Shape=6;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=700;
+			FontUnderline=1;
+			FontCharSet=0;
+			ItemType=0;
+			class ItemInfo
+			{
+				Id=1;
+				InitCode="private _b = _leader getvariable ""XPS_Blackboard"";" \n "private _path = _b get ""MovePath"";" \n "private _distThreshold = _b get ""DistanceThreshold"";" \n "if (isNil ""_distThreshold"") then {_distThreshold = 1};" \n "private _dir = 0;" \n "";
+			};
+		};
+	};
+	class Item1
+	{
+		Flags=250;
+		BasicText="";
+		Left=-388.3812;
+		Top=-178.22049;
+		Right=-298.38116;
+		Bottom=-128.2205;
+		BgColor=33023;
+		class ItemInfo
+		{
+			Text="Exit";
+			lStyle=-842150451;
+			Shape=6;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=700;
+			FontCharSet=0;
+			ItemType=1;
+			class ItemInfo
+			{
+				Id=2;
+			};
+		};
+	};
+	class Item2
+	{
+		Flags=250;
+		BasicText="";
+		Left=-116.595;
+		Top=-4.0258484;
+		Right=-26.594986;
+		Bottom=45.974152;
+		BgColor=16777215;
+		class ItemInfo
+		{
+			Text="Get Position";
+			lStyle=-842150451;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=2;
+			class ItemInfo
+			{
+				Id=3;
+				InitCode="private _nextpos = path#0;" \n "_leader moveto _nextpos;";
+			};
+		};
+	};
+	class Item3
+	{
+		Flags=250;
+		BasicText="";
+		Left=-262.48529;
+		Top=73.125214;
+		Right=-172.48528;
+		Bottom=123.12521;
+		BgColor=16777215;
+		class ItemInfo
+		{
+			Text="Check Next";
+			lStyle=-842150451;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=2;
+			class ItemInfo
+			{
+				Id=4;
+			};
+		};
+	};
+	class Item4
+	{
+		Flags=218;
+		BasicText="";
+		Left=-119.88429;
+		Top=-89.353683;
+		Right=-29.884308;
+		Bottom=-39.353683;
+		BgColor=8421440;
+		class ItemInfo
+		{
+			Text="";
+			lStyle=-842150451;
+			Shape=2;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=8;
+			class ItemInfo
+			{
+				Id=6;
+				Action="" \n "";
+				ConditionTab=1;
+			};
+		};
+	};
+	class Item5
+	{
+		Flags=4314;
+		BasicText="";
+		Left=-383.45938;
+		Top=-87.458832;
+		Right=-293.45938;
+		Bottom=-37.458832;
+		BgColor=65535;
+		class ItemInfo
+		{
+			Text="No Path";
+			lStyle=-842150451;
+			Shape=2;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=4;
+			class ItemInfo
+			{
+				Id=7;
+				Priority=1;
+				Condition="isnil ""_path"" || count _path == 0";
+				Action="_leader moveto _destination;";
+			};
+		};
+	};
+	class Item6
+	{
+		Flags=218;
+		BasicText="";
+		Left=-116.97336;
+		Top=74.835876;
+		Right=-26.973358;
+		Bottom=124.83588;
+		BgColor=65535;
+		class ItemInfo
+		{
+			Text="Far";
+			lStyle=-842150451;
+			Shape=2;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=4;
+			class ItemInfo
+			{
+				Id=8;
+				Priority=1;
+				Condition="_leader distance2d _nextpos > _distThreshold";
+				Action="_dir = _leader getdir _nextPos;";
+			};
+		};
+	};
+	class Item7
+	{
+		Flags=218;
+		BasicText="";
+		Left=-262.93213;
+		Top=157.33029;
+		Right=-172.93213;
+		Bottom=207.33029;
+		BgColor=8421440;
+		class ItemInfo
+		{
+			Text="";
+			lStyle=-842150451;
+			Shape=2;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=8;
+			class ItemInfo
+			{
+				Id=10;
+			};
+		};
+	};
+	class Item8
+	{
+		Flags=250;
+		BasicText="";
+		Left=-114.10614;
+		Top=162.64548;
+		Right=-24.106125;
+		Bottom=212.64548;
+		BgColor=16777215;
+		class ItemInfo
+		{
+			Text="Moving";
+			lStyle=-842150451;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=2;
+			class ItemInfo
+			{
+				Id=11;
+				InitCode="_leader setdestination [(getposatl _leader) getpos [1,_dir],(expecteddestination _leader)#1,true];";
+			};
+		};
+	};
+	class Item9
+	{
+		Flags=218;
+		BasicText="";
+		Left=-261.86908;
+		Top=-9.5674438;
+		Right=-171.86908;
+		Bottom=40.432556;
+		BgColor=8421440;
+		class ItemInfo
+		{
+			Text="Arrived";
+			lStyle=-842150451;
+			Shape=2;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=8;
+			class ItemInfo
+			{
+				Id=12;
+				Action="_path deleteat 0;";
+			};
+		};
+	};
+	class Item10
+	{
+		Flags=250;
+		BasicText="";
+		Left=-261.86908;
+		Top=-87.169525;
+		Right=-171.86908;
+		Bottom=-37.169525;
+		BgColor=16777215;
+		class ItemInfo
+		{
+			Text="Check Path Done";
+			lStyle=-842150451;
+			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=2;
+			class ItemInfo
+			{
+				Id=13;
+			};
+		};
+	};
+};
+class GraphLinks
+{
+	class Link0
+	{
+		From=0;
+		To=4;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link1
+	{
+		From=0;
+		To=5;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link2
+	{
+		From=2;
+		To=6;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link3
+	{
+		From=2;
+		To=9;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link4
+	{
+		From=3;
+		To=6;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link5
+	{
+		From=3;
+		To=9;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link6
+	{
+		From=4;
+		To=2;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link7
+	{
+		From=5;
+		To=1;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link8
+	{
+		From=6;
+		To=8;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link9
+	{
+		From=7;
+		To=3;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link10
+	{
+		From=8;
+		To=7;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link11
+	{
+		From=9;
+		To=10;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link12
+	{
+		From=10;
+		To=4;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link13
+	{
+		From=10;
+		To=5;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+};
+class Globals
+{
+	NextGroupID=1;
+	NextID=14;
+	FSMName="XPS_PF_fsm_MoveOnPath";
+	CompileConfig="D:\SteamLibrary\steamapps\common\Arma 3 Tools\FSMEditor\scriptedFSM.cfg";
+	class DefaultLink
+	{
+		ArrowSize=0;
+	};
+	DefaultLinkColor=6316128;
+	DefaultLinkColorFromSelected=6316287;
+	DefaultLinkColorToSelected=6356832;
+	DefaultLinkUseCustom=1;
+	PZoomLeft=-677.51941;
+	PZoomRight=288.78641;
+	PZoomBottom=309.34503;
+	PZoomTop=-308.28278;
+	Clxs=909;
+	Clys=581;
+	Aspect=1;
+};
+class Window
+{
+	Flags=0;
+	MaxPosX=-1;
+	MaxPosY=-1;
+	MinPosX=-1;
+	MinPosY=-1;
+	Left=2052;
+	Top=136;
+	Right=3492;
+	Bottom=889;
+	ShowCmd=1;
+	SplitPos=927;
+};

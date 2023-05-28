@@ -1,0 +1,221 @@
+/*%FSM<COMPILE "D:\SteamLibrary\steamapps\common\Arma 3 Tools\FSMEditor\scriptedFSM.cfg, XPS_PF_fsm_MoveOnPath">*/
+/*%FSM<HEAD>*/
+/*
+item0[] = {"Start",0,250,-210.500549,-181.181412,-120.500549,-131.181412,0.000000,"Start"};
+item1[] = {"Exit",1,250,-388.381195,-178.220490,-298.381165,-128.220505,0.000000,"Exit"};
+item2[] = {"Get_Position",2,250,-116.595001,-4.025848,-26.594986,45.974152,0.000000,"Get Position"};
+item3[] = {"Check_Next",2,250,-262.485291,73.125214,-172.485275,123.125214,0.000000,"Check Next"};
+item4[] = {"_",8,218,-119.884293,-89.353683,-29.884308,-39.353683,0.000000,""};
+item5[] = {"No_Path",4,4314,-383.459381,-87.458832,-293.459381,-37.458832,1.000000,"No Path"};
+item6[] = {"Far",4,218,-116.973358,74.835876,-26.973358,124.835876,1.000000,"Far"};
+item7[] = {"_",8,218,-262.932129,157.330292,-172.932129,207.330292,0.000000,""};
+item8[] = {"Moving",2,250,-114.106140,162.645477,-24.106125,212.645477,0.000000,"Moving"};
+item9[] = {"Arrived",8,218,-261.869080,-9.567444,-171.869080,40.432556,0.000000,"Arrived"};
+item10[] = {"Check_Path_Done",2,250,-261.869080,-87.169525,-171.869080,-37.169525,0.000000,"Check Path Done"};
+link0[] = {0,4};
+link1[] = {0,5};
+link2[] = {2,6};
+link3[] = {2,9};
+link4[] = {3,6};
+link5[] = {3,9};
+link6[] = {4,2};
+link7[] = {5,1};
+link8[] = {6,8};
+link9[] = {7,3};
+link10[] = {8,7};
+link11[] = {9,10};
+link12[] = {10,4};
+link13[] = {10,5};
+globals[] = {0.000000,0,0,0,0,640,480,1,14,6316128,1,-677.519409,288.786407,309.345032,-308.282776,909,581,1};
+window[] = {0,-1,-1,-1,-1,889,2052,3492,136,1,927};
+*//*%FSM</HEAD>*/
+class FSM
+{
+        fsmName = "XPS_PF_fsm_MoveOnPath";
+        class States
+        {
+                /*%FSM<STATE "Start">*/
+                class Start
+                {
+                        name = "Start";
+                        itemno = 0;
+                        init = /*%FSM<STATEINIT""">*/"private _b = _leader getvariable ""XPS_Blackboard"";" \n
+                         "private _path = _b get ""MovePath"";" \n
+                         "private _distThreshold = _b get ""DistanceThreshold"";" \n
+                         "if (isNil ""_distThreshold"") then {_distThreshold = 1};" \n
+                         "private _dir = 0;" \n
+                         ""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "No_Path">*/
+                                class No_Path
+                                {
+                                        itemno = 5;
+                                        priority = 1.000000;
+                                        to="Exit";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"isnil ""_path"" || count _path == 0"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_leader moveto _destination;"/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "_">*/
+                                class _
+                                {
+                                        itemno = 4;
+                                        priority = 0.000000;
+                                        to="Get_Position";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Exit">*/
+                class Exit
+                {
+                        name = "Exit";
+                        itemno = 1;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Get_Position">*/
+                class Get_Position
+                {
+                        name = "Get_Position";
+                        itemno = 2;
+                        init = /*%FSM<STATEINIT""">*/"private _nextpos = path#0;" \n
+                         "_leader moveto _nextpos;"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Far">*/
+                                class Far
+                                {
+                                        itemno = 6;
+                                        priority = 1.000000;
+                                        to="Moving";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_leader distance2d _nextpos > _distThreshold"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_dir = _leader getdir _nextPos;"/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Arrived">*/
+                                class Arrived
+                                {
+                                        itemno = 9;
+                                        priority = 0.000000;
+                                        to="Check_Path_Done";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_path deleteat 0;"/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Check_Next">*/
+                class Check_Next
+                {
+                        name = "Check_Next";
+                        itemno = 3;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "Far">*/
+                                class Far
+                                {
+                                        itemno = 6;
+                                        priority = 1.000000;
+                                        to="Moving";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_leader distance2d _nextpos > _distThreshold"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_dir = _leader getdir _nextPos;"/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "Arrived">*/
+                                class Arrived
+                                {
+                                        itemno = 9;
+                                        priority = 0.000000;
+                                        to="Check_Path_Done";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_path deleteat 0;"/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Moving">*/
+                class Moving
+                {
+                        name = "Moving";
+                        itemno = 8;
+                        init = /*%FSM<STATEINIT""">*/"_leader setdestination [(getposatl _leader) getpos [1,_dir],(expecteddestination _leader)#1,true];"/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "_">*/
+                                class _
+                                {
+                                        itemno = 7;
+                                        priority = 0.000000;
+                                        to="Check_Next";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+                /*%FSM<STATE "Check_Path_Done">*/
+                class Check_Path_Done
+                {
+                        name = "Check_Path_Done";
+                        itemno = 10;
+                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
+                        class Links
+                        {
+                                /*%FSM<LINK "No_Path">*/
+                                class No_Path
+                                {
+                                        itemno = 5;
+                                        priority = 1.000000;
+                                        to="Exit";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"isnil ""_path"" || count _path == 0"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_leader moveto _destination;"/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                                /*%FSM<LINK "_">*/
+                                class _
+                                {
+                                        itemno = 4;
+                                        priority = 0.000000;
+                                        to="Get_Position";
+                                        precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
+                                };
+                                /*%FSM</LINK>*/
+                        };
+                };
+                /*%FSM</STATE>*/
+        };
+        initState="Start";
+        finalStates[] =
+        {
+                "Exit",
+        };
+};
+/*%FSM</COMPILE>*/

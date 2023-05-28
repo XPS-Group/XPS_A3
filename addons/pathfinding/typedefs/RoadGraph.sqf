@@ -35,14 +35,28 @@ Flags:
 		private _bPosB = _nextObject get "BeginPos";
 		private _ePosB = _nextObject get "EndPos";
 
+		private _int = [_bPosA,_ePosA,_bPosB,_ePosB] call XPS_PF_fnc_lineIntersect2d;
+		private _dirA = 0;
+		private _dirB = 0;
+
+		if (isNil "_int" || count _int == 0) then {
+			_dirA = _posA getdir _posB;
+			_dirB = _posA getdir _posB;
+		} else {
+			_dirA = _posA getdir _int;
+			_dirB = _int getdir _posB;
+		}; 
+
 		private _headA = _bposA getdir _eposA;
 		private _headB = _bposB getdir _eposB;
+		private _posS = _posA;
+		private _posE = _eposB ;
 
-		if (abs (_headA - _direction) > 90) then {_headA = _eposA getdir _bposA}; 
-		if (abs (_headB - (_posA getdir _posB)) > 90) then {_headB = _eposB getdir _bposB}; 
+		if (abs (_headA - _dirA) > 90) then {_headA = _eposA getdir _bposA;}; 
+		if (abs (_headB - _dirB) > 90) then {_headB = _eposB getdir _bposB;_posE = _bPosB;}; 
 
-		private _posS = _posA getpos [_toWidth,_headA + _dirOffset]; _posS set [2,_posA#2];
-		private _posE = _posB getpos [_nextWidth,_headB + _dirOffset]; _posE set [2,_posB#2];
+		private _posS = _posS getpos [_toWidth,_headA + _dirOffset]; _posS set [2,_posA#2];
+		private _posE = _posE getpos [_nextWidth,_headB + _dirOffset]; _posE set [2,_posB#2];
 
 		private _points = [];
 		if ((_posS distance2d _posE)*1.15 < (_fromPoint distance2d _posE)) then {_points pushback _posS;_fromPoint = _posS;};
@@ -70,7 +84,7 @@ Flags:
 				_intPoints pushback _iB;
 				_intPoints pushback _intersect;
 				_intPoints pushback _iE;
-				for "_p" from 0.1 to 1 step 0.1 do {
+				for "_p" from 0.1 to 0.5 step 0.1 do {
 					private _nPos = _p bezierInterpolation _intPoints;
 					//if !(roadAt _nPos isEqualTo (_toObject get "RoadObject")) then {
 						_points pushback _nPos;
