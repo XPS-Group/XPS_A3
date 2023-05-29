@@ -15,7 +15,6 @@ class GraphItems
 			Text="Start";
 			lStyle=-842150451;
 			Shape=6;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=700;
@@ -24,8 +23,8 @@ class GraphItems
 			ItemType=0;
 			class ItemInfo
 			{
-				Id=1;
-				InitCode="private _b = _leader getvariable ""XPS_Blackboard"";" \n "private _path = _b get ""MovePath"";" \n "private _distThreshold = _b get ""DistanceThreshold"";" \n "if (isNil ""_distThreshold"") then {_distThreshold = 1};" \n "private _dir = 0;" \n "";
+				Id=0;
+				InitCode="_b = _leader getvariable ""XPS_Blackboard"";" \n "_movepath = _b get ""MovePath"";" \n "_distThreshold = _b get ""DistanceThreshold"";" \n "if (isNil ""_distThreshold"") then {_distThreshold = 1};" \n "_dir = 0;" \n "";
 			};
 		};
 	};
@@ -43,7 +42,6 @@ class GraphItems
 			Text="Exit";
 			lStyle=-842150451;
 			Shape=6;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=700;
@@ -51,7 +49,8 @@ class GraphItems
 			ItemType=1;
 			class ItemInfo
 			{
-				Id=2;
+				Id=1;
+				InitCode="_b set [""State"",""Exit""];";
 			};
 		};
 	};
@@ -60,7 +59,7 @@ class GraphItems
 		Flags=250;
 		BasicText="";
 		Left=-116.595;
-		Top=-4.0258484;
+		Top=-4.0258479;
 		Right=-26.594986;
 		Bottom=45.974152;
 		BgColor=16777215;
@@ -68,7 +67,31 @@ class GraphItems
 		{
 			Text="Get Position";
 			lStyle=-842150451;
-			Group=-842150451;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=2;
+			class ItemInfo
+			{
+				Id=2;
+				InitCode="_destination = _movepath select 0;" \n "_destination set [2,0];" \n "_b set [""State"",""GetPOS""];" \n "_b set [""NextPos"",_destination];";
+			};
+		};
+	};
+	class Item3
+	{
+		Flags=250;
+		BasicText="";
+		Left=-259.29614;
+		Top=79.503479;
+		Right=-169.29613;
+		Bottom=129.50348;
+		BgColor=16777215;
+		class ItemInfo
+		{
+			Text="Check Next";
+			lStyle=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=0;
@@ -77,32 +100,7 @@ class GraphItems
 			class ItemInfo
 			{
 				Id=3;
-				InitCode="private _nextpos = path#0;" \n "_leader moveto _nextpos;";
-			};
-		};
-	};
-	class Item3
-	{
-		Flags=250;
-		BasicText="";
-		Left=-262.48529;
-		Top=73.125214;
-		Right=-172.48528;
-		Bottom=123.12521;
-		BgColor=16777215;
-		class ItemInfo
-		{
-			Text="Check Next";
-			lStyle=-842150451;
-			Group=-842150451;
-			FontFace="Arial";
-			FontHeight=10;
-			FontWeight=0;
-			FontCharSet=0;
-			ItemType=2;
-			class ItemInfo
-			{
-				Id=4;
+				InitCode="_b set [""State"",""CheckNext""];";
 			};
 		};
 	};
@@ -110,17 +108,16 @@ class GraphItems
 	{
 		Flags=218;
 		BasicText="";
-		Left=-119.88429;
-		Top=-89.353683;
-		Right=-29.884308;
-		Bottom=-39.353683;
+		Left=-115.16986;
+		Top=-83.980774;
+		Right=-25.169861;
+		Bottom=-33.980774;
 		BgColor=8421440;
 		class ItemInfo
 		{
 			Text="";
 			lStyle=-842150451;
 			Shape=2;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=0;
@@ -128,15 +125,13 @@ class GraphItems
 			ItemType=8;
 			class ItemInfo
 			{
-				Id=6;
-				Action="" \n "";
-				ConditionTab=1;
+				Id=4;
 			};
 		};
 	};
 	class Item5
 	{
-		Flags=4314;
+		Flags=218;
 		BasicText="";
 		Left=-383.45938;
 		Top=-87.458832;
@@ -148,7 +143,6 @@ class GraphItems
 			Text="No Path";
 			lStyle=-842150451;
 			Shape=2;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=0;
@@ -156,10 +150,11 @@ class GraphItems
 			ItemType=4;
 			class ItemInfo
 			{
-				Id=7;
+				Id=5;
 				Priority=1;
-				Condition="isnil ""_path"" || count _path == 0";
+				Condition="(isnil ""_movepath"" || count _movepath == 0)";
 				Action="_leader moveto _destination;";
+				ConditionTab=1;
 			};
 		};
 	};
@@ -177,7 +172,6 @@ class GraphItems
 			Text="Far";
 			lStyle=-842150451;
 			Shape=2;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=0;
@@ -185,14 +179,41 @@ class GraphItems
 			ItemType=4;
 			class ItemInfo
 			{
-				Id=8;
+				Id=6;
 				Priority=1;
-				Condition="_leader distance2d _nextpos > _distThreshold";
-				Action="_dir = _leader getdir _nextPos;";
+				Condition="_leader distance2d _destination > _distThreshold";
+				ConditionTab=1;
 			};
 		};
 	};
 	class Item7
+	{
+		Flags=218;
+		BasicText="";
+		Left=-257.61755;
+		Top=-4.252533;
+		Right=-167.61755;
+		Bottom=45.747467;
+		BgColor=8421440;
+		class ItemInfo
+		{
+			Text="Arrived";
+			lStyle=-842150451;
+			Shape=2;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=8;
+			class ItemInfo
+			{
+				Id=7;
+				Action="_movepath deleteat 0;";
+				ConditionTab=1;
+			};
+		};
+	};
+	class Item8
 	{
 		Flags=218;
 		BasicText="";
@@ -206,7 +227,6 @@ class GraphItems
 			Text="";
 			lStyle=-842150451;
 			Shape=2;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=0;
@@ -214,13 +234,14 @@ class GraphItems
 			ItemType=8;
 			class ItemInfo
 			{
-				Id=10;
+				Id=8;
+				ConditionTab=1;
 			};
 		};
 	};
-	class Item8
+	class Item9
 	{
-		Flags=250;
+		Flags=4346;
 		BasicText="";
 		Left=-114.10614;
 		Top=162.64548;
@@ -231,7 +252,6 @@ class GraphItems
 		{
 			Text="Moving";
 			lStyle=-842150451;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=0;
@@ -239,35 +259,8 @@ class GraphItems
 			ItemType=2;
 			class ItemInfo
 			{
-				Id=11;
-				InitCode="_leader setdestination [(getposatl _leader) getpos [1,_dir],(expecteddestination _leader)#1,true];";
-			};
-		};
-	};
-	class Item9
-	{
-		Flags=218;
-		BasicText="";
-		Left=-261.86908;
-		Top=-9.5674438;
-		Right=-171.86908;
-		Bottom=40.432556;
-		BgColor=8421440;
-		class ItemInfo
-		{
-			Text="Arrived";
-			lStyle=-842150451;
-			Shape=2;
-			Group=-842150451;
-			FontFace="Arial";
-			FontHeight=10;
-			FontWeight=0;
-			FontCharSet=0;
-			ItemType=8;
-			class ItemInfo
-			{
-				Id=12;
-				Action="_path deleteat 0;";
+				Id=9;
+				InitCode="_dir = _leader getdir _destination;" \n "_leader moveto _destination;" \n "private _pos = (getposatl _leader) getpos [6,_dir];" \n "_leader setdestination [_pos,""LEADER PLANNED"",true];" \n "_b set [""State"",""Moving""];";
 			};
 		};
 	};
@@ -284,7 +277,6 @@ class GraphItems
 		{
 			Text="Check Path Done";
 			lStyle=-842150451;
-			Group=-842150451;
 			FontFace="Arial";
 			FontHeight=10;
 			FontWeight=0;
@@ -292,7 +284,8 @@ class GraphItems
 			ItemType=2;
 			class ItemInfo
 			{
-				Id=13;
+				Id=10;
+				InitCode="_b set [""State"",""CheckPathDone""];";
 			};
 		};
 	};
@@ -335,7 +328,7 @@ class GraphLinks
 	class Link3
 	{
 		From=2;
-		To=9;
+		To=7;
 		Color=6316128;
 		Flags=2;
 		class Extra
@@ -357,7 +350,7 @@ class GraphLinks
 	class Link5
 	{
 		From=3;
-		To=9;
+		To=7;
 		Color=6316128;
 		Flags=2;
 		class Extra
@@ -390,7 +383,7 @@ class GraphLinks
 	class Link8
 	{
 		From=6;
-		To=8;
+		To=9;
 		Color=6316128;
 		Flags=2;
 		class Extra
@@ -401,7 +394,7 @@ class GraphLinks
 	class Link9
 	{
 		From=7;
-		To=3;
+		To=10;
 		Color=6316128;
 		Flags=2;
 		class Extra
@@ -412,7 +405,7 @@ class GraphLinks
 	class Link10
 	{
 		From=8;
-		To=7;
+		To=3;
 		Color=6316128;
 		Flags=2;
 		class Extra
@@ -423,7 +416,7 @@ class GraphLinks
 	class Link11
 	{
 		From=9;
-		To=10;
+		To=8;
 		Color=6316128;
 		Flags=2;
 		class Extra
@@ -457,7 +450,7 @@ class GraphLinks
 class Globals
 {
 	NextGroupID=1;
-	NextID=14;
+	NextID=16;
 	FSMName="XPS_PF_fsm_MoveOnPath";
 	CompileConfig="D:\SteamLibrary\steamapps\common\Arma 3 Tools\FSMEditor\scriptedFSM.cfg";
 	class DefaultLink
@@ -470,8 +463,8 @@ class Globals
 	DefaultLinkUseCustom=1;
 	PZoomLeft=-677.51941;
 	PZoomRight=288.78641;
-	PZoomBottom=309.34503;
-	PZoomTop=-308.28278;
+	PZoomBottom=340.17365;
+	PZoomTop=-277.45416;
 	Clxs=909;
 	Clys=581;
 	Aspect=1;
@@ -483,10 +476,10 @@ class Window
 	MaxPosY=-1;
 	MinPosX=-1;
 	MinPosY=-1;
-	Left=2052;
-	Top=136;
-	Right=3492;
-	Bottom=889;
+	Left=1998;
+	Top=78;
+	Right=3438;
+	Bottom=831;
 	ShowCmd=1;
 	SplitPos=927;
 };

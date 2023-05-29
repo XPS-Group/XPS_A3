@@ -4,30 +4,30 @@
 item0[] = {"Start",0,250,-210.500549,-181.181412,-120.500549,-131.181412,0.000000,"Start"};
 item1[] = {"Exit",1,250,-388.381195,-178.220490,-298.381165,-128.220505,0.000000,"Exit"};
 item2[] = {"Get_Position",2,250,-116.595001,-4.025848,-26.594986,45.974152,0.000000,"Get Position"};
-item3[] = {"Check_Next",2,250,-262.485291,73.125214,-172.485275,123.125214,0.000000,"Check Next"};
-item4[] = {"_",8,218,-119.884293,-89.353683,-29.884308,-39.353683,0.000000,""};
-item5[] = {"No_Path",4,4314,-383.459381,-87.458832,-293.459381,-37.458832,1.000000,"No Path"};
+item3[] = {"Check_Next",2,250,-259.296143,79.503479,-169.296127,129.503479,0.000000,"Check Next"};
+item4[] = {"_",8,218,-115.169861,-83.980774,-25.169861,-33.980774,0.000000,""};
+item5[] = {"No_Path",4,218,-383.459381,-87.458832,-293.459381,-37.458832,1.000000,"No Path"};
 item6[] = {"Far",4,218,-116.973358,74.835876,-26.973358,124.835876,1.000000,"Far"};
-item7[] = {"_",8,218,-262.932129,157.330292,-172.932129,207.330292,0.000000,""};
-item8[] = {"Moving",2,250,-114.106140,162.645477,-24.106125,212.645477,0.000000,"Moving"};
-item9[] = {"Arrived",8,218,-261.869080,-9.567444,-171.869080,40.432556,0.000000,"Arrived"};
+item7[] = {"Arrived",8,218,-257.617554,-4.252533,-167.617554,45.747467,0.000000,"Arrived"};
+item8[] = {"_",8,218,-262.932129,157.330292,-172.932129,207.330292,0.000000,""};
+item9[] = {"Moving",2,4346,-114.106140,162.645477,-24.106125,212.645477,0.000000,"Moving"};
 item10[] = {"Check_Path_Done",2,250,-261.869080,-87.169525,-171.869080,-37.169525,0.000000,"Check Path Done"};
 link0[] = {0,4};
 link1[] = {0,5};
 link2[] = {2,6};
-link3[] = {2,9};
+link3[] = {2,7};
 link4[] = {3,6};
-link5[] = {3,9};
+link5[] = {3,7};
 link6[] = {4,2};
 link7[] = {5,1};
-link8[] = {6,8};
-link9[] = {7,3};
-link10[] = {8,7};
-link11[] = {9,10};
+link8[] = {6,9};
+link9[] = {7,10};
+link10[] = {8,3};
+link11[] = {9,8};
 link12[] = {10,4};
 link13[] = {10,5};
-globals[] = {0.000000,0,0,0,0,640,480,1,14,6316128,1,-677.519409,288.786407,309.345032,-308.282776,909,581,1};
-window[] = {0,-1,-1,-1,-1,889,2052,3492,136,1,927};
+globals[] = {0.000000,0,0,0,0,640,480,1,16,6316128,1,-677.519409,288.786407,340.173645,-277.454163,909,581,1};
+window[] = {0,-1,-1,-1,-1,831,1998,3438,78,1,927};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -39,11 +39,11 @@ class FSM
                 {
                         name = "Start";
                         itemno = 0;
-                        init = /*%FSM<STATEINIT""">*/"private _b = _leader getvariable ""XPS_Blackboard"";" \n
-                         "private _path = _b get ""MovePath"";" \n
-                         "private _distThreshold = _b get ""DistanceThreshold"";" \n
+                        init = /*%FSM<STATEINIT""">*/"_b = _leader getvariable ""XPS_Blackboard"";" \n
+                         "_movepath = _b get ""MovePath"";" \n
+                         "_distThreshold = _b get ""DistanceThreshold"";" \n
                          "if (isNil ""_distThreshold"") then {_distThreshold = 1};" \n
-                         "private _dir = 0;" \n
+                         "_dir = 0;" \n
                          ""/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
@@ -55,7 +55,7 @@ class FSM
                                         priority = 1.000000;
                                         to="Exit";
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-                                        condition=/*%FSM<CONDITION""">*/"isnil ""_path"" || count _path == 0"/*%FSM</CONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"(isnil ""_movepath"" || count _movepath == 0)"/*%FSM</CONDITION""">*/;
                                         action=/*%FSM<ACTION""">*/"_leader moveto _destination;"/*%FSM</ACTION""">*/;
                                 };
                                 /*%FSM</LINK>*/
@@ -78,7 +78,7 @@ class FSM
                 {
                         name = "Exit";
                         itemno = 1;
-                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        init = /*%FSM<STATEINIT""">*/"_b set [""State"",""Exit""];"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {
@@ -90,8 +90,10 @@ class FSM
                 {
                         name = "Get_Position";
                         itemno = 2;
-                        init = /*%FSM<STATEINIT""">*/"private _nextpos = path#0;" \n
-                         "_leader moveto _nextpos;"/*%FSM</STATEINIT""">*/;
+                        init = /*%FSM<STATEINIT""">*/"_destination = _movepath select 0;" \n
+                         "_destination set [2,0];" \n
+                         "_b set [""State"",""GetPOS""];" \n
+                         "_b set [""NextPos"",_destination];"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {
@@ -102,19 +104,19 @@ class FSM
                                         priority = 1.000000;
                                         to="Moving";
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-                                        condition=/*%FSM<CONDITION""">*/"_leader distance2d _nextpos > _distThreshold"/*%FSM</CONDITION""">*/;
-                                        action=/*%FSM<ACTION""">*/"_dir = _leader getdir _nextPos;"/*%FSM</ACTION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_leader distance2d _destination > _distThreshold"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
                                 };
                                 /*%FSM</LINK>*/
                                 /*%FSM<LINK "Arrived">*/
                                 class Arrived
                                 {
-                                        itemno = 9;
+                                        itemno = 7;
                                         priority = 0.000000;
                                         to="Check_Path_Done";
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
                                         condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
-                                        action=/*%FSM<ACTION""">*/"_path deleteat 0;"/*%FSM</ACTION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_movepath deleteat 0;"/*%FSM</ACTION""">*/;
                                 };
                                 /*%FSM</LINK>*/
                         };
@@ -125,7 +127,7 @@ class FSM
                 {
                         name = "Check_Next";
                         itemno = 3;
-                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        init = /*%FSM<STATEINIT""">*/"_b set [""State"",""CheckNext""];"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {
@@ -136,19 +138,19 @@ class FSM
                                         priority = 1.000000;
                                         to="Moving";
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-                                        condition=/*%FSM<CONDITION""">*/"_leader distance2d _nextpos > _distThreshold"/*%FSM</CONDITION""">*/;
-                                        action=/*%FSM<ACTION""">*/"_dir = _leader getdir _nextPos;"/*%FSM</ACTION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"_leader distance2d _destination > _distThreshold"/*%FSM</CONDITION""">*/;
+                                        action=/*%FSM<ACTION""">*/""/*%FSM</ACTION""">*/;
                                 };
                                 /*%FSM</LINK>*/
                                 /*%FSM<LINK "Arrived">*/
                                 class Arrived
                                 {
-                                        itemno = 9;
+                                        itemno = 7;
                                         priority = 0.000000;
                                         to="Check_Path_Done";
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
                                         condition=/*%FSM<CONDITION""">*/""/*%FSM</CONDITION""">*/;
-                                        action=/*%FSM<ACTION""">*/"_path deleteat 0;"/*%FSM</ACTION""">*/;
+                                        action=/*%FSM<ACTION""">*/"_movepath deleteat 0;"/*%FSM</ACTION""">*/;
                                 };
                                 /*%FSM</LINK>*/
                         };
@@ -158,15 +160,19 @@ class FSM
                 class Moving
                 {
                         name = "Moving";
-                        itemno = 8;
-                        init = /*%FSM<STATEINIT""">*/"_leader setdestination [(getposatl _leader) getpos [1,_dir],(expecteddestination _leader)#1,true];"/*%FSM</STATEINIT""">*/;
+                        itemno = 9;
+                        init = /*%FSM<STATEINIT""">*/"_dir = _leader getdir _destination;" \n
+                         "_leader moveto _destination;" \n
+                         "private _pos = (getposatl _leader) getpos [6,_dir];" \n
+                         "_leader setdestination [_pos,""LEADER PLANNED"",true];" \n
+                         "_b set [""State"",""Moving""];"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {
                                 /*%FSM<LINK "_">*/
                                 class _
                                 {
-                                        itemno = 7;
+                                        itemno = 8;
                                         priority = 0.000000;
                                         to="Check_Next";
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
@@ -182,7 +188,7 @@ class FSM
                 {
                         name = "Check_Path_Done";
                         itemno = 10;
-                        init = /*%FSM<STATEINIT""">*/""/*%FSM</STATEINIT""">*/;
+                        init = /*%FSM<STATEINIT""">*/"_b set [""State"",""CheckPathDone""];"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {
@@ -193,7 +199,7 @@ class FSM
                                         priority = 1.000000;
                                         to="Exit";
                                         precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
-                                        condition=/*%FSM<CONDITION""">*/"isnil ""_path"" || count _path == 0"/*%FSM</CONDITION""">*/;
+                                        condition=/*%FSM<CONDITION""">*/"(isnil ""_movepath"" || count _movepath == 0)"/*%FSM</CONDITION""">*/;
                                         action=/*%FSM<ACTION""">*/"_leader moveto _destination;"/*%FSM</ACTION""">*/;
                                 };
                                 /*%FSM</LINK>*/
