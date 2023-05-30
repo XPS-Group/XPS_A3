@@ -23,7 +23,7 @@ Flags:
 [
 	["#str",{"XPS_typ_Blackboard"}],
 	["#type","XPS_typ_Blackboard"],
-	["#interfaces",["XPS_ifc_IBlackboard"]],
+	["@interfaces",["XPS_ifc_IBlackboard"]],
 	/*-----------------------------------------------------------------------------
 	Constructor: #create
     

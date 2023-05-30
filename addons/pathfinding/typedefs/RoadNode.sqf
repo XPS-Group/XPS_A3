@@ -21,7 +21,7 @@ Flags:
 [
 	["#str",{"XPS_PF_typ_RoadNode"}],
 	["#type","XPS_PF_typ_RoadNode"],
-	["#interfaces",["XPS_ifc_IAstarNode"]],	
+	["@interfaces",["XPS_ifc_IAstarNode"]],	
 	/*----------------------------------------------------------------------------
 	Property: Width
     

@@ -23,7 +23,7 @@ Flags:
 [
 	["#str",{"XPS_typ_AstarSearch"}],
 	["#type","XPS_typ_AstarSearch"],
-	["#interfaces",["XPS_ifc_IAstarSearch"]],
+	["@interfaces",["XPS_ifc_IAstarSearch"]],
 
 	/*----------------------------------------------------------------------------
 	Protected: cameFrom
