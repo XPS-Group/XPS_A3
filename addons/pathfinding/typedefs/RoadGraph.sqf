@@ -23,7 +23,7 @@ Flags:
 [
 	["#str",{"XPS_PF_typ_RoadGraph"}],
 	["#type","XPS_PF_typ_RoadGraph"],
-	["#interfaces",["XPS_ifc_IAstarGraph"]],
+	["@interfaces",["XPS_ifc_IAstarGraph"]],
 	["_getConnectedToPath",compilefinal {
 		if !(params [["_fromPoint",nil,[[]],[3]],["_direction",nil,[0]],["_toObject",nil,[createhashmap]],["_toWidth",nil,[0]],["_nextObject",nil,[createhashmap]],["_nextWidth",nil,[0]],["_dirOffset",nil,[0]]]) exitwith {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
 		if (_fromPoint isEqualTo [0,0,0]) then {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
@@ -119,54 +119,6 @@ Flags:
 			_self get "Items" set [str _object,_hmo];
 		};
 	}],
-	/*----------------------------------------------------------------------------
-	Proteccted: setConnectedToPathData
-    
-    	--- Prototype --- 
-    	call ["setConnectedToPathData",[_from,_to]]
-    	---
-    
-	Parameters:
-		_from - <XPS_PF_typ_RoadNode> - the node coming from
-		_to - <XPS_PF_typ_RoadNode> - the node going to
-	-----------------------------------------------------------------------------*/
-	// ["setConnectedToPathData",compileFinal {
-	// 	if !(params [["_from",nil,[createhashmap]],["_to",nil,[createhashmap]]]) exitwith {diag_log ["setConnectedToPathData",_from,_to]};
-		
-	// 	//Get Driving Data
-	// 	private _fromWidth = (_from get "Width")/5.5; if (_fromWidth == 0) then {_fromWidth=1.8;};
-	// 	private _toWidth = (_to get "Width")/5.5; if (_toWidth == 0) then {_toWidth=1.8;};
-
-	// 	_result = _self call ["_getConnectedToData",[_from,_to,_fromWidth,_toWidth]];
-	// 	private _rhPath = _result#0;
-	// 	private _lhPath = _result#1;
-
-	// 	_from get "ConnectedToPath" get "RHDrive" set [_to get "Index",_rhPath];
-	// 	_from get "ConnectedToPath" get "LHDrive" set [_to get "Index",_lhPath];
-	// 	private _revLHPath = +_lhPath;
-	// 	private _revRHPath = +_rhPath;
-	// 	reverse _revLHPath;
-	// 	reverse _revRHPath;
-	// 	_to get "ConnectedToPath" get "RHDrive" set [_from get "Index",_revLHPath];
-	// 	_to get "ConnectedToPath" get "LHDrive" set [_from get "Index",_revRHPath];
-		
-	// 	//Get Walking Data
-	// 	_fromWidth = if (_from get "Type" == "TRAIL") then {0.5} else {(_from get "Width")/2.5};if (_fromWidth == 0) then {_fromWidth=4;};
-	// 	_toWidth = if (_to get "Type" == "TRAIL") then {0.5} else {(_to get "Width")/2.5};if (_toWidth == 0) then {_toWidth=4;};
-
-	// 	_result = _self call ["_getConnectedToData",[_from,_to,_fromWidth,_toWidth]];
-	// 	private _rhPath = _result#0;
-	// 	private _lhPath = _result#1;
-
-	// 	_from get "ConnectedToPath" get "RHWalk" set [_to get "Index",_rhPath];
-	// 	_from get "ConnectedToPath" get "LHWalk" set [_to get "Index",_lhPath];
-	// 	private _revLHPath = +_lhPath;
-	// 	private _revRHPath = +_rhPath;
-	// 	reverse _revLHPath;
-	// 	reverse _revRHPath;
-	// 	_to get "ConnectedToPath" get "RHWalk" set [_from get "Index",_revLHPath];
-	// 	_to get "ConnectedToPath" get "LHWalk" set [_from get "Index",_revRHPath];
-	// }],
 	/*----------------------------------------------------------------------------
 	Proteccted: getAllConnected
     
@@ -498,34 +450,41 @@ Flags:
 	Parameters:
 		_path - <Array> - An array of <RoadNodes> that represent a path
 	-----------------------------------------------------------------------------*/
+	["SmoothPath",{
+		params [["_path",[],[[]]]];
+
+		if (count _path > 3) then {
+			private _i = 1;
+			while {_i < (count _path)-1} do {
+
+				private _first = _path#(_i-1);
+				private _second = _path#(_i);
+				private _third = _path#(_i+1);
+
+				private _posA = _first get "PosASL";
+				private _posB = _second get "PosASL";
+				private _posC = _third get "PosASL";
+				private _checkPositions = [_third get "BeginPos",_third get "EndPos"];
+				
+				// Check if C is actually closer than B and delete if so
+				if ((_posA distance2D (_checkPositions#0)) < (_posA distance2D _posB) || (_posA distance2D (_checkPositions#1)) < (_posA distance2D _posB)) then {
+					_path deleteAt _i;
+				} else {
+					_i = _i + 1;
+				};
+			};		
+		};
+	}],
+	//TDOD : Move this to Formation AI because it can only work in that situation
 	["CalculateDrivePath",{
 		params [["_start",nil,[[]],[2,3]],["_end",nil,[[]],[2,3]],["_path",[],[[]]],["_side","",[""]]];
 
 		if (isNil "_start") then {_start = (path deleteAt 0) get "PosASL"};
 		if (isNil "_end") then {_end = (path deleteAt -1) get "PosASL"};
 		if !(_side in ["RHDrive","LHDrive","RHWalk","LHWalk"]) then {_side = "RHDrive"};
-		if (count _path < 3) exitwith {/* TODO */};
 
-		// SMOOTH PATHING 
-		private _i = 1;
-		while {_i < (count _path)-1} do {
+		_self call ["SmoothPath",[_path]];
 
-			private _first = _path#(_i-1);
-			private _second = _path#(_i);
-			private _third = _path#(_i+1);
-
-			// Else check if C is actually closer than B
-			private _posA = _first get "PosASL";
-			private _posB = _second get "PosASL";
-			private _posC = _third get "PosASL";
-			private _checkPositions = [_third get "BeginPos",_third get "EndPos"];
-			
-			if ((_posA distance2D (_checkPositions#0)) < (_posA distance2D _posB) || (_posA distance2D (_checkPositions#1)) < (_posA distance2D _posB)) then {
-				_path deleteAt _i;
-			} else {
-				_i = _i + 1;
-			};
-		};
 		private _mP = _start;
 		{
 			_m = createmarker [str str str str str (_x get "PosASL"),_x get "PosASL"];

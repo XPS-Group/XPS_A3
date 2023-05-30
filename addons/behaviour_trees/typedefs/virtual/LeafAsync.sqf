@@ -23,7 +23,7 @@ Flags:
 [
 	["#str",{"XPS_BT_typ_LeafAsync"}],
 	["#type","XPS_BT_typ_LeafAsync"],
-	["#interfaces",["XPS_BT_ifc_INode"]],
+	["@interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
 	Protected: callback
     

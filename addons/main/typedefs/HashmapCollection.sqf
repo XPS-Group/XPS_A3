@@ -37,9 +37,9 @@ Authors:
 [
 	["#str",{"XPS_typ_HashmapCollection"}],
 	["#type","XPS_typ_HashmapCollection"],
-    ["#interfaces",["XPS_ifc_ICollection"]],
+    ["@interfaces",["XPS_ifc_ICollection"]],
     ["AllowedTypes",[]],
-
+    ["Items",nil],
     /* -----------------------------------------------------------------------
     Constructor: #create
 

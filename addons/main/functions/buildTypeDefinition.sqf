@@ -15,11 +15,11 @@ Description:
 
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
-	#parent - <Array> - the type definition of the parent object in the format [[key1,value],[key2,value]...] 
+	#base - <Array> - the type definition of the parent object in the format [[key1,value],[key2,value]...] 
 
-	#interfaces - <Array> - an <array> of <arrays> in the format [[key1,type],[key2,type]...] where type is the <string> of the native type
+	@interfaces - <Array> - an <array> of <Strings> where each string is a global representing a <interface> definition array
 
-	Note: Multiple interface arrays can be appended together to allow for multiple interface contracts
+	Note: Multiple <interface> arrays can be appended together to allow for multiple <interface> contracts
 
 Parameter: _type 
 
@@ -46,11 +46,11 @@ Example: Implements Interface
 		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
 		
 		//This FAILS because PropertyA and Method do not exist
-		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["#interfaces","MyInterface"],["PropertyB",10]];
+		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["@interfaces",["MyInterface"]],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
 		//Does not fail because PropertyA and Method exist
-		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["#interfaces","MyInterface"],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
 		private _myObjA = createhashmapobject [TypeA];
@@ -61,10 +61,10 @@ Example: Implements Interface with Inheritance
     --- Code
 		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
 
-		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["#interfaces","MyInterface"],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
-		MyTypeDefB = [["#str",compileFinal {"TAG_TypeB"}],["#parent","MyTypeDefA"],["PropertyA","Goodbye"],["Method",compileFinal {hint "Bye"}]];
+		MyTypeDefB = [["#str",compileFinal {"TAG_TypeB"}],["#base", MyTypeDefA ],["PropertyA","Goodbye"],["Method",compileFinal {hint "Bye"}]];
         TAG_TypeB = ["MyTypeDefB"] call XPS_fnc_buildTypeDefinition; 
 
 		// Both TypeA and TypeB will implement interface from inheritance but PropertyA and Method are overridden in TypeB 
@@ -84,40 +84,44 @@ if !(params [["_type",nil,[[]]],"_allowNils"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
 
 private _hashmap = createhashmapfromarray _type;
+private _Ihashmap = _hashmap; //used to check interfaces along with any base types
 
 // Check for parent type
-//if ("#parent" in keys _hashmap) then {
+//if ("#base" in keys _hashmap) then {
 if ("#base" in keys _hashmap) then {
-	// private _pTypeName = _hashmap get "#parent";
+	// private _pTypeName = _hashmap get "#base";
 	// private _pType = call compile _pTypeName;
 	private _pType = _hashmap get "#base";
+	if (isNil "_pType" || _pType isEqualType false) exitwith {
+		diag_log "XPS_fnc_buildTypeDefinition: ";
+		diag_log (format ["Type:%1 - %2:type is not a valid type definition to use as base",_hashmap get "#type",_hashmap get "#base"]);
+	};
 	private _parent = createhashmapfromarray _pType;
 	private _pTypeName = _parent get "#type";
-	_hashmap set ["1",_pTypeName];
 	// Create base methods as "ParentType.MethodString"
 	private _keys = keys _hashmap;
 	{
 		if (_x in _keys && typename _x == "STRING" && typename _y == "CODE") then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];}
 	} foreach _parent;
 	// Merge Interfaces
-	private _pIfcs = if ("#interfaces" in keys _parent) then {_parent get "#interfaces"} else {[]};
-	private _Ifcs = if ("#interfaces" in keys _hashmap) then {_hashmap get "#interfaces"} else {[]};
+	private _pIfcs = if ("@interfaces" in keys _parent) then {_parent get "@interfaces"} else {[]};
+	private _Ifcs = if ("@interfaces" in keys _hashmap) then {_hashmap get "@interfaces"} else {[]};
 	_Ifcs insert [0,_pIfcs,true];
-	_hashmap set ["2",_Ifcs];
 
-	//No longer need this since "#base" exists
-	//_parent merge [_hashmap,true];
-	//_hashmap = +_parent;
+	_parent merge [_hashmap,true];
+	_Ihashmap = +_parent;
 };
 
 // Check Interfaces are implemented
-private _interfaces = if ("#interfaces" in keys _hashmap) then {_hashmap get "#interfaces"} else {[]};
+private _interfaces = if ("@interfaces" in keys _hashmap) then {_hashmap get "@interfaces"} else {[]};
 
-if ([_hashmap,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
+if ([_Ihashmap,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	// Ok pushhback out to an array
 	call compile (str _hashmap);
 } else {
-	false;
+	diag_log "XPS_fnc_buildTypeDefinition: ";
+	diag_log (format ["Type:%1 - %2:type did not pass Interface Check",_hashmap get "#type",_hashmap get "#base"]);
+	[];
 };
 
 

@@ -30,7 +30,7 @@ Flags:
 	["#str",compileFinal {"XPS_typ_JobScheduler"}],
 	["#type","XPS_typ_JobScheduler"],
 	["#base",XPS_typ_HashmapCollection],
-	["#interfaces",["XPS_ifc_JobScheduler"]],
+	["@interfaces",["XPS_ifc_IJobScheduler"]],
 	["popQueue",compileFinal {
 		private _queue = _self get "Queue";
 		if (count _queue > 0) then {

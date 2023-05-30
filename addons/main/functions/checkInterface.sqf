@@ -43,16 +43,32 @@ Authors:
 if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNils"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
 
-for "_i" from 0 to (count _interfaces -1) do {
-	private _check = call compile (_interfaces#_i);
-	//Check key exists
-	private _key = _check#0;
-	if !(_key in keys _hashmap) exitwith {false;};
-	//Check value type
-	if !(_check#1 in ["ANYTHING","ANY"]) then {
-		private _type = typename (_hashmap get _key);
-		if (isNil {_type} && !_allowNils) exitwith {false;};
-		if !(_type == _check#1) exitwith {false;};
+private _result = true;
+for "_a" from 0 to (count _interfaces -1) do {
+	private _interface = call compile (_interfaces#_a);
+	for "_i" from 0 to (count _interface -1) do {
+		private _check = _interface#_i;
+		//Check key exists
+		private _key = _check#0;
+		if !(_key in keys _hashmap) then {
+			diag_log "XPS_fnc_checkInterface: ";
+			diag_log (format ["Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
+			_result = false;
+		};
+		//Check value type
+		if !(_check#1 in ["ANYTHING","ANY"]) then {
+			private _type = typename (_hashmap get _key);
+			if (isNil {_type} && !_allowNils) then {
+				diag_log "XPS_fnc_checkInterface: ";
+				diag_log (format ["Type:%1 - %2 key is nil during a check where they are not allowed",_hashmap get "#type",_key]);
+				_result = false;
+			};
+			if !(_type == _check#1) then {
+				diag_log "XPS_fnc_checkInterface: ";
+				diag_log (format ["Type:%1 - %2 key has a value type %2. Type %3 expected",_hashmap get "#type",_key,_type,_check#1]);
+				_result = false;
+			};
+		};
 	};
 };
-true;
+_result;
