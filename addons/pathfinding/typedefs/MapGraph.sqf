@@ -22,7 +22,8 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_MapGraph"}],
+	["#str",{"XPS_PF_typ_MapGraph"}],
+	["#type","XPS_PF_typ_MapGraph"],
 	["#interfaces",["XPS_ifc_IAstarGraph"]],
 	/*----------------------------------------------------------------------------
 	Protected: buildLayer

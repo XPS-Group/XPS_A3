@@ -23,8 +23,9 @@ Protecteds:
 	tree - <HashmapObject> - of a behaviour tree
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_SubTree"}],
-	["#parent","XPS_BT_typ_Leaf"],
+	["#str",{"XPS_BT_typ_SubTree"}],
+	["#type","XPS_BT_typ_SubTree"],
+	["#base",XPS_BT_typ_Leaf],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
 		<virtual. XPS_BT_typ_Leaf. Blackboard>

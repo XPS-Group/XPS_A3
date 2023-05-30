@@ -21,7 +21,8 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Leaf"}],
+	["#str",{"XPS_BT_typ_Leaf"}],
+	["#type","XPS_BT_typ_Leaf"],
 	["#interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
 	Protected: preTick

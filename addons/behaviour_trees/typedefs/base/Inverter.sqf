@@ -24,8 +24,9 @@ Protected: child
 	<HashmapObject> - child node
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Inverter"}],
-	["#parent","XPS_BT_typ_Decorator"],
+	["#str",{"XPS_BT_typ_Inverter"}],
+	["#type","XPS_BT_typ_Inverter"],
+	["#base",XPS_BT_typ_Decorator],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
 		<virtual. XPS_BT_typ_Decorator. Blackboard>

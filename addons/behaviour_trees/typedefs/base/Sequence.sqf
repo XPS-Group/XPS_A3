@@ -28,8 +28,9 @@ Protected: currentIndex
 	
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Sequence"}],
-	["#parent","XPS_BT_typ_Composite"],
+	["#str",{"XPS_BT_typ_Sequence"}],
+	["#type","XPS_BT_typ_Sequence"],
+	["#base",XPS_BT_typ_Composite],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
 		<virtual. XPS_BT_typ_Composite. preTick>

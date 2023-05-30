@@ -20,7 +20,8 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",["XPS_PF_typ_TerrainLayerBuilder"]],
+	["#str",{"XPS_PF_typ_TerrainLayerBuilder"}],
+	["#type","XPS_PF_typ_TerrainLayerBuilder"],
 	["#interfaces",["XPS_PF_ifc_ILayerBuilder"]],
 	/*----------------------------------------------------------------------------
 	Protected: setDensityModifier
