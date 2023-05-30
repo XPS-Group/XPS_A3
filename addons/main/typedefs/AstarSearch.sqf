@@ -80,7 +80,7 @@ Flags:
 		<Array> - of nodes from start to goal
 	-----------------------------------------------------------------------------*/
 	["getPath",compileFinal {
-		private _status = "FAILED";
+		private _status = "FAILURE";
 		private _start = _self get "StartNode";
 		private _end = _self get "EndNode";
 		private _current = _end;
@@ -178,11 +178,12 @@ Flags:
 
 		Will be one of:
 		
+			- INITIALIZED
 			- RUNNING
 			- SUCCESS
 			- FAILURE 
 	-----------------------------------------------------------------------------*/
-	["Status","RUNNING"],
+	["Status",nil],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -226,6 +227,7 @@ Flags:
 		_self get "costSoFar" set [_self get "StartNode" get "Index",0];
 		_self set ["cameFrom",createhashmap];
 		_self set ["Path",[]];
+		_self set ["Status","INITIALIZED"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: ProcessNextNode
@@ -265,5 +267,6 @@ Flags:
 		} foreach _neighbors;
 
 		_self set ["lastNode",_currentNode];
+		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
 	}]
 ]
