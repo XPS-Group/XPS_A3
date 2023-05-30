@@ -68,16 +68,19 @@
 Source Folder: ..\..\addons\main
    Name: Main
 
-Source Folder 2: ..\..\addons\behaviour_trees
+Source Folder 2: ..\..\addons\action_planning
+   Name: Action Planning
+
+Source Folder 3: ..\..\addons\behaviour_trees
    Name: Behaviour Trees
 
-Source Folder 3: ..\..\addons\pathfinding
+Source Folder 4: ..\..\addons\pathfinding
    Name: Pathfinding
 
-Source Folder 4: ..\..\optionals\dangerAI
+Source Folder 5: ..\..\optionals\dangerAI
    Name: Danger AI
 
-Source Folder 5: ..\..\optionals\formationAI
+Source Folder 6: ..\..\optionals\formationAI
    Name: Formation AI
 
 
@@ -204,5 +207,4 @@ HTML Output Folder: ..\..\..\XPS-Group.github.io
 #
 # Auto Group: [yes|no]
 #    Whether groups should automatically apply to you code.  Defaults to yes.
-
 
