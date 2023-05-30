@@ -17,7 +17,7 @@ Authors:
 	Method: FinalizeCurrent
 ---------------------------------------------------------------------------- */
 [
-	["CurrentItem","HASHMAP"],
+	["CurrentItem","STRING"],
 	["Queue","ARRAY"],
 	["ProcessesPerFrame","SCALAR"],
 	["ProcessCurrent","CODE"],

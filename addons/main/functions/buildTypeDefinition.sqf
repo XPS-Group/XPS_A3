@@ -84,6 +84,7 @@ if !(params [["_type",nil,[[]]],"_allowNils"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
 
 private _hashmap = createhashmapfromarray _type;
+private _Ihashmap = _hashmap; //used to check interfaces along with any base types
 
 // Check for parent type
 //if ("#base" in keys _hashmap) then {
@@ -91,9 +92,12 @@ if ("#base" in keys _hashmap) then {
 	// private _pTypeName = _hashmap get "#base";
 	// private _pType = call compile _pTypeName;
 	private _pType = _hashmap get "#base";
+	if (isNil "_pType" || _pType isEqualType false) exitwith {
+		diag_log "XPS_fnc_buildTypeDefinition: ";
+		diag_log (format ["Type:%1 - %2:type is not a valid type definition to use as base",_hashmap get "#type",_hashmap get "#base"]);
+	};
 	private _parent = createhashmapfromarray _pType;
 	private _pTypeName = _parent get "#type";
-	_hashmap set ["1",_pTypeName];
 	// Create base methods as "ParentType.MethodString"
 	private _keys = keys _hashmap;
 	{
@@ -103,21 +107,21 @@ if ("#base" in keys _hashmap) then {
 	private _pIfcs = if ("@interfaces" in keys _parent) then {_parent get "@interfaces"} else {[]};
 	private _Ifcs = if ("@interfaces" in keys _hashmap) then {_hashmap get "@interfaces"} else {[]};
 	_Ifcs insert [0,_pIfcs,true];
-	_hashmap set ["2",_Ifcs];
 
-	//No longer need this since "#base" exists
-	//_parent merge [_hashmap,true];
-	//_hashmap = +_parent;
+	_parent merge [_hashmap,true];
+	_Ihashmap = +_parent;
 };
 
 // Check Interfaces are implemented
 private _interfaces = if ("@interfaces" in keys _hashmap) then {_hashmap get "@interfaces"} else {[]};
 
-if ([_hashmap,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
+if ([_Ihashmap,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	// Ok pushhback out to an array
 	call compile (str _hashmap);
 } else {
-	false;
+	diag_log "XPS_fnc_buildTypeDefinition: ";
+	diag_log (format ["Type:%1 - %2:type did not pass Interface Check",_hashmap get "#type",_hashmap get "#base"]);
+	[];
 };
 
 

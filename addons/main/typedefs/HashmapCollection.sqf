@@ -39,7 +39,7 @@ Authors:
 	["#type","XPS_typ_HashmapCollection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
     ["AllowedTypes",[]],
-
+    ["Items",nil],
     /* -----------------------------------------------------------------------
     Constructor: #create
 
