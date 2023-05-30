@@ -35,7 +35,8 @@ Authors:
         <Hashmap> - Storage of <HashmapObjects> for this collection
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_HashmapCollection"}],
+	["#str",{"XPS_typ_HashmapCollection"}],
+	["#type","XPS_typ_HashmapCollection"],
     ["#interfaces",["XPS_ifc_ICollection"]],
     ["AllowedTypes",[]],
 
@@ -49,7 +50,7 @@ Authors:
     Parameters: 
         _allowedTypes - <Array> of <Strings> - used to limit which types of
         <HashmapObjects> are allowed to be added to the Items store. Checks against
-        the '#str' result of item added
+        the '#type' result of item added
 
     Returns:
         <HashmapObject>
@@ -103,7 +104,8 @@ Authors:
         if !("Items" in (keys _self)) exitwith {false;};
         if ((_key == "") || (_key in (keys (_self get "Items")))) exitwith {false;};
         private _allowlist = _self get "AllowedTypes";
-        if !(_item call ["#str"] in _allowlist) exitwith {false;};
+        private _types = _item get ["#type"];
+        if !(count (_types arrayIntersect _allowlist) > 0) exitwith {false;};
         (_self get "Items") set [_key,_item];
         true;
     }],

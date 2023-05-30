@@ -21,7 +21,8 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_Blackboard"}],
+	["#str",{"XPS_typ_Blackboard"}],
+	["#type","XPS_typ_Blackboard"],
 	["#interfaces",["XPS_ifc_IBlackboard"]],
 	/*-----------------------------------------------------------------------------
 	Constructor: #create

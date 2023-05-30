@@ -85,27 +85,36 @@ _allowNils = [_allowNils] param [0,true,[true]];
 
 private _hashmap = createhashmapfromarray _type;
 
-//Check for parent type
-if ("#parent" in keys _hashmap) then {
-	private _pTypeName = _hashmap get "#parent";
-	private _pType = call compile _pTypeName;
+// Check for parent type
+//if ("#parent" in keys _hashmap) then {
+if ("#base" in keys _hashmap) then {
+	// private _pTypeName = _hashmap get "#parent";
+	// private _pType = call compile _pTypeName;
+	private _pType = _hashmap get "#base";
 	private _parent = createhashmapfromarray _pType;
-	private _pIfcs = if ("#interfaces" in keys _parent) then {_parent get "#interfaces"} else {[]};
-	private _Ifcs = if ("#interfaces" in keys _hashmap) then {_hashmap get "#interfaces"} else {[]};
-	_pIfcs insert [-1,_Ifcs,true];
-	//Create base methods as "ParentType.MethodString"
+	private _pTypeName = _parent get "#type";
+	_hashmap set ["1",_pTypeName];
+	// Create base methods as "ParentType.MethodString"
 	private _keys = keys _hashmap;
 	{
 		if (_x in _keys && typename _x == "STRING" && typename _y == "CODE") then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];}
 	} foreach _parent;
-	_parent merge [_hashmap,true];
-	//if (count keys _pIfcs > 0) then {_parent set ["#interfaces",call compile (str _pIfcs)]};
-	_hashmap = +_parent;
+	// Merge Interfaces
+	private _pIfcs = if ("#interfaces" in keys _parent) then {_parent get "#interfaces"} else {[]};
+	private _Ifcs = if ("#interfaces" in keys _hashmap) then {_hashmap get "#interfaces"} else {[]};
+	_Ifcs insert [0,_pIfcs,true];
+	_hashmap set ["2",_Ifcs];
+
+	//No longer need this since "#base" exists
+	//_parent merge [_hashmap,true];
+	//_hashmap = +_parent;
 };
 
+// Check Interfaces are implemented
 private _interfaces = if ("#interfaces" in keys _hashmap) then {_hashmap get "#interfaces"} else {[]};
 
 if ([_hashmap,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
+	// Ok pushhback out to an array
 	call compile (str _hashmap);
 } else {
 	false;

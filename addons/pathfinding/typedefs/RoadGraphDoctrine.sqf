@@ -19,7 +19,8 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_RoadGraphDoctrine"}],	
+	["#str",{"XPS_PF_typ_RoadGraphDoctrine"}],
+	["#type","XPS_PF_typ_RoadGraphDoctrine"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     

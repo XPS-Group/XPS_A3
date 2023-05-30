@@ -21,8 +21,9 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_ActionAsync"}],
-	["#parent","XPS_BT_typ_LeafAsync"],
+	["#str",{"XPS_BT_typ_ActionAsync"}],
+	["#type","XPS_BT_typ_ActionAsync"],
+	["#base",XPS_BT_typ_LeafAsync],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
 		<virtual. XPS_BT_typ_Leaf. Blackboard>

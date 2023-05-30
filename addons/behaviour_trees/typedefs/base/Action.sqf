@@ -21,8 +21,9 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Action"}],
-	["#parent","XPS_BT_typ_Leaf"],
+	["#str",{"XPS_BT_typ_Action"}],
+	["#type","XPS_BT_typ_Action"],
+	["#base",XPS_BT_typ_Leaf],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
 		<virtual. XPS_BT_typ_Leaf. Blackboard>
