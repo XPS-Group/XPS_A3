@@ -15,11 +15,12 @@ Description:
 
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
-	#base - <Array> - the type definition of the parent object in the format [[key1,value],[key2,value]...] 
+	_<String> - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
+	a unique identifier every time the type definition is rebuilt. See <XPS_fnc_preprocessTypeDefinition> for more info
 
-	@interfaces - <Array> - an <array> of <Strings> where each string is a global representing a <interface> definition array
-
-	Note: Multiple <interface> arrays can be appended together to allow for multiple <interface> contracts
+	@<String> - any key named as such with an @ symbol and also has an <array> value type, will be appended. For example, "@MyArray" key in parent
+	with a value of [1,2,3] and a child type which inherits but has a value of [4,5,6] will become [1,2,3,4,5,6]. The most common usage 
+	will be the special "@interfaces" key which is used in checking Method/Property compliance. 
 
 Parameter: _type 
 
@@ -28,6 +29,10 @@ Parameter: _type
 Optional: _allowNils* 
 
 <Boolean> - (optional) default: true - used to allow keys with nil values when checking interface validity
+
+Optional: _obfuscation* 
+
+<Boolean> - (optional) default: true - used to allow <string> keys starting with and underscore to be obfuscated/protectedw
 
 Return: _typeDefinition
 	<TypeDefinition> - or False if error
@@ -80,48 +85,48 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 
-if !(params [["_type",nil,[[]]],"_allowNils"]) exitwith {false;};
+if !(params [["_type",nil,[[]]],"_allowNils","_obfuscation"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
+_obfuscation = [_obfuscation] param [0,true,[true]];
+
+if (_obfuscation) then {[_type] call XPS_fnc_preprocessTypeDefinition;};
 
 private _hashmap = createhashmapfromarray _type;
-private _Ihashmap = _hashmap; //used to check interfaces along with any base types
+private _modified = _hashmap; // In case it doesn't have a parent
 
 // Check for parent type
-//if ("#base" in keys _hashmap) then {
 if ("#base" in keys _hashmap) then {
-	// private _pTypeName = _hashmap get "#base";
-	// private _pType = call compile _pTypeName;
 	private _pType = _hashmap get "#base";
-	if (isNil "_pType" || _pType isEqualType false) exitwith {
-		diag_log "XPS_fnc_buildTypeDefinition: ";
-		diag_log (format ["Type:%1 - %2:type is not a valid type definition to use as base",_hashmap get "#type",_hashmap get "#base"]);
+	if (isNil "_pType" || !(typename _pType == "ARRAY")) exitwith {
+		diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
 	};
-	private _parent = createhashmapfromarray _pType;
-	private _pTypeName = _parent get "#type";
+
+	_modified = createhashmapfromarray _pType;
+	private _pTypeName = _modified get "#type";
 	// Create base methods as "ParentType.MethodString"
 	private _keys = keys _hashmap;
 	{
-		if (_x in _keys && typename _x == "STRING" && typename _y == "CODE") then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];}
-	} foreach _parent;
+		if (_x in _keys && typename _x == "STRING" && typename _y == "CODE") then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
+		if (_x in _keys && typename _x == "STRING" && _x find "@" == 0 && typename _y == "ARRAY") then {
+			private _a = if (_x in keys _hashmap) then {_hashmap get _x} else {_hashmap set [_x,_y];};
+			if (typename _a == "ARRAY") then {
+				if (_x == "@interfaces") then {_h insert [0,_y,true]} else {_h insert [0,_y]};
+			};
+		};
+	} foreach _modified;
 	// Merge Interfaces
-	private _pIfcs = if ("@interfaces" in keys _parent) then {_parent get "@interfaces"} else {[]};
-	private _Ifcs = if ("@interfaces" in keys _hashmap) then {_hashmap get "@interfaces"} else {[]};
-	_Ifcs insert [0,_pIfcs,true];
-
-	_parent merge [_hashmap,true];
-	_Ihashmap = +_parent;
+	_modified merge [_hashmap,true];
 };
 
 // Check Interfaces are implemented
-private _interfaces = if ("@interfaces" in keys _hashmap) then {_hashmap get "@interfaces"} else {[]};
+private _interfaces = if ("@interfaces" in keys _modified) then {_modified get "@interfaces"} else {[]};
 
-if ([_Ihashmap,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
-	// Ok pushhback out to an array
+if ([_modified,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
+	// Passes all checks and is Ok to push out definition
 	call compile (str _hashmap);
 } else {
-	diag_log "XPS_fnc_buildTypeDefinition: ";
-	diag_log (format ["Type:%1 - %2:type did not pass Interface Check",_hashmap get "#type",_hashmap get "#base"]);
-	[];
+	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
+	format ["Type Invalid: %1",_hashmap get "_type"];
 };
 
 
