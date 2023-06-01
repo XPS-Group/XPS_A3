@@ -16,7 +16,7 @@ Description:
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
 	_<String> - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
-	a unique identifier every time the type definition is rebuilt. See <XPS_fnc_preprocessTypeDefinition> for more info
+	a unique identifier every time the type definition is rebuilt. See <XPS_fnc_preprocessinition> for more info
 
 	@<String> - any key named as such with an @ symbol and also has an <array> value type, will be appended. For example, "@MyArray" key in parent
 	with a value of [1,2,3] and a child type which inherits but has a value of [4,5,6] will become [1,2,3,4,5,6]. The most common usage 
@@ -30,10 +30,10 @@ Optional: _allowNils*
 
 <Boolean> - (optional) default: true - used to allow keys with nil values when checking interface validity
 
-Optional: _preprocessTypeDef* 
+Optional: _preprocess* 
 
 <Boolean> - (optional) default: true - determines if array should be preprocessed. 
-See <XPS_fnc_preprocessTypeDefinition> for more info.
+See <XPS_fnc_preprocessinition> for more info.
 
 Return: _typeDefinition
 	<TypeDefinition> - or False if error
@@ -86,11 +86,13 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 
-if !(params [["_type",nil,[[]]],"_allowNils","_preprocessTypeDef"]) exitwith {false;};
+if !(params [["_type",nil,[[]]],"_allowNils","_preprocess"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
-_preprocessTypeDef = [_preprocessTypeDef] param [0,true,[true]];
+_preprocess = [_preprocess] param [0,true,[true]];
 
-if (_preprocessTypeDef) then {[_type] call XPS_fnc_preprocessTypeDefinition;};
+private _continue = false;
+if (_preprocess) then {_continue = [_type] call XPS_fnc_preprocessinition;};
+if !(_continue) exitwith {nil;};
 
 private _hashmap = createhashmapfromarray _type;
 private _modified = _hashmap; // In case it doesn't have a parent
@@ -127,5 +129,5 @@ if ([_modified,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	call compile (str _hashmap);
 } else {
 	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
-	format ["Type Invalid: %1",_hashmap get "_type"];
+	nil;
 };

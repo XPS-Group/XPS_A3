@@ -47,58 +47,72 @@ Authors:
 params [["_array",[],[[]]]];
 
 private _privateKeys = [];
+private _result = true;
 
-//Process Keys
-private _i = 0;
-while { _i < (count _array)-1} do {
-	scopeName "ATTRIBUTE_CHECK";
-	if (count _array#_i > 2) then {
-		private _attributes = toUpperANSI _array#_i#2;
-		if !(typename _attributes == "ARRAY") then {_attributes = [_attributes];};
-		for "_x" from 0 to (count _attributes)-1 do {
-			private _attribute = _attribute#_x;
-			if !(typename _attribute == "ARRAY") then {_attribute = [_attribute];};
-			switch (_attribute#0) do {
-				case "OBSOLETE" : {
-					_array deleteat _i; 
-					breakOut "ATTRIBUTE_CHECK";
-				};
-				case "CONDITIONAL" : {
-					if !(call _attribute#1) then {
+try 
+{
+	//Process Keys
+	private _i = 0;
+	while { _i < (count _array)-1} do {
+		scopeName "ATTRIBUTE_CHECK";
+		if (count _array#_i > 2) then {
+			private _attributes = toUpperANSI _array#_i#2;
+			if !(typename _attributes == "ARRAY") then {_attributes = [_attributes];};
+			for "_x" from 0 to (count _attributes)-1 do {
+				private _attribute = _attribute#_x;
+				if !(typename _attribute == "ARRAY") then {_attribute = [_attribute];};
+				if !(typename _attribute#0 == "STRING") then {throw format ["Attribute %1 for Key %2 is not a string.",_attribute#0,_array#_i#0]};
+				switch (_attribute#0) do {
+					case "OBSOLETE" : {
 						_array deleteat _i; 
 						breakOut "ATTRIBUTE_CHECK";
 					};
-				};
-				case "VALIDATE_RPT" : {
-					private _params = _attribute#1;
-					private _value = _array#_i#1;
-					if !([_value] params [_params]) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_array#_i#0,_array#_i#1];
+					case "CONDITIONAL" : {
+						if !(typename _attribute#1 == "CODE") then {throw format ["Conditional Attribute for Key %2 contains %1. Expected code block.",_attribute#1,_array#_i#0]};
+						if !(call _attribute#1) then {
+							_array deleteat _i; 
+							breakOut "ATTRIBUTE_CHECK";
+						};
 					};
-					_i = _i + 1;
+					case "VALIDATE" : {
+						private _params = _attribute#1;
+						private _value = _array#_i#1;
+						if !(typename _params == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",_attribute#1,_array#_i#0]};
+						if !([_value] params [_params]) then {
+							diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_array#_i#0,_array#_i#1];
+							_result = false;
+						};
+						_i = _i + 1;
+					};
+					default {_i = _i + 1};
 				};
-				default {_i = _i + 1};
 			};
 		};
+		private _key = _array#_i#0;
+		if (_key find "_" == 0) then {
+			private _uid = [8] call XPS_fnc_createUniqueID;
+			_privateKeys pushback [_key,_uid];
+			_array#_i set [0,_uid]
+		};
 	};
-	private _key = _array#_i#0;
-	if (_key find "_" == 0) then {
-		private _uid = [8] call XPS_fnc_createUniqueID;
-		_privateKeys pushback [_key,_uid];
-		_array#_i set [0,_uid]
-	};
-};
 
-//Replace code blocks that reference the private key with the UID
-for "_i" from 0 to (count _array)-1 do {
-	private _value = _array#_i#1;
-	if (typename _value == "CODE") then {
-		private _str = str _value;
-		{
-			private _find = """" insert [2,_x#0];
-			private _replace = """" insert [2,_x#1];
-			_str regexreplace [_find,_replace];
-			_array#_i set [1,call compile _str];
-		} foreach _privateKeys;
+	//Replace code blocks that reference the private key with the UID
+	for "_i" from 0 to (count _array)-1 do {
+		private _value = _array#_i#1;
+		if (typename _value == "CODE") then {
+			private _str = str _value;
+			{
+				private _find = """" insert [2,_x#0];
+				private _replace = """" insert [2,_x#1];
+				_str regexreplace [_find,_replace];
+				_array#_i set [1,call compile _str];
+			} foreach _privateKeys;
+		};
 	};
+
+	_result;
+
+} catch {
+	diag_log format ["XPS_fnc_preprocessTypeDefinition: Encountered the follwing exception: %1",_exception];
+	false;
 };

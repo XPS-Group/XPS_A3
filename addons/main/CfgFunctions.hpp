@@ -4,6 +4,7 @@ class CfgFunctions {
 		class TypeHandlers {
 			PATHTO_FNC_F(buildTypeDefinition);
 			PATHTO_FNC_F(checkInterface);
+			PATHTO_FNC_F(preprocessTypeDefinition);
 		};
 		class General {
 			PATHTO_FNC_F(createObjectNamespace);

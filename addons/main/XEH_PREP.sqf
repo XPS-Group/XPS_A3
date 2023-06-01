@@ -1,10 +1,10 @@
 
-PREPMAIN_FNC(buildTypeDefinition);
-PREPMAIN_FNC(checkInterface);
-PREPMAIN_FNC(createObjectNamespace);
-PREPMAIN_FNC(createUniqueID);
-PREPMAIN_FNC(deleteObjectNamespace);
-PREPMAIN_FNC(logError);
+// PREPMAIN_FNC(buildTypeDefinition);
+// PREPMAIN_FNC(checkInterface);
+// PREPMAIN_FNC(createObjectNamespace);
+// PREPMAIN_FNC(createUniqueID);
+// PREPMAIN_FNC(deleteObjectNamespace);
+// PREPMAIN_FNC(logError);
 
 PREPMAIN_IFC(IAstarNode);
 PREPMAIN_IFC(IAstarSearch);
