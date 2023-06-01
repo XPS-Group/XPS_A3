@@ -38,7 +38,7 @@
     var = Q(VARNAME(pref,typ,typName));\
 }
 
-#define XPS_CFG_TYP_SUB(pref,sub,fncName) class typName {\
+#define XPS_CFG_TYP_SUB(pref,sub,typName) class typName {\
     file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
     var = Q(VARNAME(pref,typ,typName));\
 }
