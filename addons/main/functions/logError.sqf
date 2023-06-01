@@ -3,14 +3,18 @@
 Function: main. XPS_fnc_logError
 
     --- prototype
-    [_message] call XPS_fnc_logError
+    [_message,_args*] call XPS_fnc_logError
     ---
 
 Description:
     Puts string into rpt file
 
-Parameters: _message
-    <String> - message to put in rpt
+Parameters: 
+
+    _message - <String> - message to put in rpt
+
+    _args* - <Array> - (Optional - Default: []) - if supplied, message string will
+    be expected to be same as Format command (with %1, %2, etc..)
 
 Returns: Nothing
 
