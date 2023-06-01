@@ -1,10 +1,10 @@
 class CfgFunctions {
 	class ADDON {
 		class Geometry {
-			PATHTO_FNC_F(lineIntersect2D);
+			XPS_CFG_FNC(lineIntersect2D);
 		};
 		class Terrain {
-			PATHTO_FNC_F(checkCoastTravel);
+			XPS_CFG_FNC(checkCoastTravel);
 		};
 	};
 };

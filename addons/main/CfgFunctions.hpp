@@ -2,15 +2,20 @@ class CfgFunctions {
 	class PREFIX {
 		TAG = "xps";
 		class TypeHandlers {
-			PATHTO_FNC_F(buildTypeDefinition);
-			PATHTO_FNC_F(checkInterface);
-			PATHTO_FNC_F(preprocessTypeDefinition);
+			class xps_fnc_compileTypes {
+				file = "\x\xps\addons\main\functions\compileTypes.sqf";
+				preInit = 1;
+				preStart = 1;
+			};
+			XPS_CFG_FNC(buildTypeDefinition);
+			XPS_CFG_FNC(checkInterface);
+			XPS_CFG_FNC(preprocessTypeDefinition);
 		};
 		class General {
-			PATHTO_FNC_F(createObjectNamespace);
-			PATHTO_FNC_F(createUniqueID);
-			PATHTO_FNC_F(deleteObjectNamespace);
-			PATHTO_FNC_F(logError);
+			//XPS_CFG_FNC(createObjectNamespace);
+			XPS_CFG_FNC(createUniqueID);
+			//XPS_CFG_FNC(deleteObjectNamespace);
+			XPS_CFG_FNC(logError);
 		};
 	};
 };

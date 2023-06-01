@@ -8,8 +8,8 @@
 
 // PREP_FNC(buildTree);
 
-// PREP_IFC(INode);
+// XPS_ADDON_IFC(INode);
 
-// SUBPREP_TYP(virtual,Composite);
+// XPS_ADDON_TYP_SUB(virtual,Composite);
 
-// SUBPREP_TYP(base,Action);
+// XPS_ADDON_TYP_SUB(base,Action);

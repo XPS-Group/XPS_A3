@@ -1,4 +1,4 @@
-#define MAINPREFIX x
+#define ROOT x
 #define PREFIX xps
 
 #include "script_version.hpp"

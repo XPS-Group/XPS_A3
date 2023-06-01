@@ -1,34 +1,44 @@
-#include "\x\cba\addons\main\script_macros_common.hpp"
-#define COMPONENT_DIR QUOTE(##@##ADDON)
+//#include "\x\cba\addons\main\script_macros_common.hpp"
+#define Q(var1) #var1
 
-#define FNC_ISFINAL false
-#define PREP_FNC(fncName) TRIPLES(ADDON,fnc,fncName) = compileScript [QPATHTOF(functions\fncName.sqf),FNC_ISFINAL]
-#define PREPMAIN_FNC(fncName) TRIPLES(PREFIX,fnc,fncName) = compileScript [QPATHTOF(functions\fncName.sqf),FNC_ISFINAL]
-#define SUBPREP_FNC(sub,fncName) TRIPLES(ADDON,fnc,fncName) = compileScript [QPATHTOF(functions\sub\fncName.sqf),FNC_ISFINAL]
-#define SUBPREPMAIN_FNC(sub,fncName) TRIPLES(PREFIX,fnc,fncName) = compileScript [QPATHTOF(functions\sub\fncName.sqf),FNC_ISFINAL]
+#define ADDON PREFIX##_##COMPONENT
 
-#define IFC_ISFINAL false
-#define PREP_IFC(ifcName) TRIPLES(ADDON,ifc,ifcName) = call compileScript [QPATHTOF(interfaces\ifcName.sqf),IFC_ISFINAL]
-#define PREPMAIN_IFC(ifcName) TRIPLES(PREFIX,ifc,ifcName) = call compileScript [QPATHTOF(interfaces\ifcName.sqf),IFC_ISFINAL]
-#define SUBPREP_IFC(sub,ifcName) TRIPLES(ADDON,ifc,ifcName) = call compileScript [QPATHTOF(interfaces\sub\ifcName.sqf),IFC_ISFINAL]
-#define SUBPREPMAIN_IFC(sub,ifcName) TRIPLES(PREFIX,ifc,ifcName) = call compileScript [QPATHTOF(interfaces\sub\ifcName.sqf),IFC_ISFINAL]
+#define VARNAME(var1,var2,var3) var1##_##var2##_##var3
 
-#define PREP_TYP(typName) TRIPLES(ADDON,typ,typName) = [call compileScript [QPATHTOF(typedefs\typName.sqf)]] call XPS_fnc_buildTypeDefinition
-#define PREPMAIN_TYP(typName) TRIPLES(PREFIX,typ,typName) = [call compileScript [QPATHTOF(typedefs\typName.sqf)]] call XPS_fnc_buildTypeDefinition
-#define SUBPREP_TYP(sub,typName) TRIPLES(ADDON,typ,typName) = [call compileScript [QPATHTOF(typedefs\sub\typName.sqf)]] call XPS_fnc_buildTypeDefinition
-#define SUBPREPMAIN_TYP(sub,typName) TRIPLES(PREFIX,typ,typName) = [call compileScript [QPATHTOF(typedefs\sub\typName)sqf)]] call XPS_fnc_buildTypeDefinition
-#define PREP_TYP_FINAL(typName) compileFinal (PREP_TYP(typName))
-#define PREPMAIN_TYP_FINAL(typName) compileFinal (PREPMAIN_TYP(typName))
-#define SUBPREP_TYP_FINAL(sub,typName) compileFinal (SUBPREP_TYP(sub,typName))
-#define SUBPREPMAIN_TYP_FINAL(sub,typName) compileFinal (SUBPREPMAIN_TYP(sub,typName))
+#define FILEPATH(var1,var2,var3) \ROOT\var1\addons\var2\var3
+#define FILEPATH_C(var1) FILEPATH(PREFIX,COMPONENT,var1)
+#define FILEPATH_C_Q(var1) Q(FILEPATH_C(var1))
 
-#define PATHTO_FNC_F(fncName) class fncName {\
-    file = QPATHTOF(functions\fncName.sqf);\
-    CFGFUNCTION_HEADER;\
-    RECOMPILE;\
+#define COMPONENT_DIR Q(##@##ADDON)
+
+#define XPS_CFG_FNC(fncName) class fncName {\
+    file = FILEPATH_C_Q(functions\fncName.sqf);\
+    headerType = 0;\
+    recompile = 1;\
 }
-#define SUBPATHTO_FNC_F(sub,fncName) class fncName {\
-    file = QPATHTOF(functions\sub\fncName.sqf);\
-    CFGFUNCTION_HEADER;\
-    RECOMPILE;\
+
+#define XPS_CFG_FNC_SUB(sub,fncName) class fncName {\
+    file = FILEPATH_C_Q(functions\sub\fncName.sqf);\
+    headerType = 0;\
+    recompile = 1;\
+}
+
+#define XPS_CFG_IFC(pref,ifcName) class ifcName {\
+    file = FILEPATH_C_Q(interfaces\ifcName.sqf);\
+    var = Q(VARNAME(pref,ifc,ifcName));\
+}
+
+#define XPS_CFG_IFC_SUB(pref,sub,ifcName) class ifcName {\
+    file = FILEPATH_C_Q(interfaces\sub\ifcName.sqf);\
+    var = Q(VARNAME(pref,ifc,ifcName));\
+}
+
+#define XPS_CFG_TYP(pref,typName) class typName {\
+    file = FILEPATH_C_Q(typedefs\typName.sqf);\
+    var = Q(VARNAME(pref,typ,typName));\
+}
+
+#define XPS_CFG_TYP_SUB(pref,sub,fncName) class typName {\
+    file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
+    var = Q(VARNAME(pref,typ,typName));\
 }
