@@ -1,4 +1,4 @@
-class XPS_Type_Definitions {
+class Enhanced_XPS_Type_Definitions {
 	class ADDON {				
 		XPS_CFG_IFC(ADDON,INode);
 
