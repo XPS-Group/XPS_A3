@@ -1,7 +1,7 @@
 class CfgFunctions {
 	class ADDON {
 		class Testing {
-			PATHTO_FNC_F(wpScriptTest);
+			XPS_CFG_FNC(wpScriptTest);
 
 		};
 		class Geometry {
