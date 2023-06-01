@@ -30,9 +30,10 @@ Optional: _allowNils*
 
 <Boolean> - (optional) default: true - used to allow keys with nil values when checking interface validity
 
-Optional: _obfuscation* 
+Optional: _preprocessTypeDef* 
 
-<Boolean> - (optional) default: true - used to allow <string> keys starting with and underscore to be obfuscated/protectedw
+<Boolean> - (optional) default: true - determines if array should be preprocessed. 
+See <XPS_fnc_preprocessTypeDefinition> for more info.
 
 Return: _typeDefinition
 	<TypeDefinition> - or False if error
@@ -85,11 +86,11 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 
-if !(params [["_type",nil,[[]]],"_allowNils","_obfuscation"]) exitwith {false;};
+if !(params [["_type",nil,[[]]],"_allowNils","_preprocessTypeDef"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
-_obfuscation = [_obfuscation] param [0,true,[true]];
+_preprocessTypeDef = [_preprocessTypeDef] param [0,true,[true]];
 
-if (_obfuscation) then {[_type] call XPS_fnc_preprocessTypeDefinition;};
+if (_preprocessTypeDef) then {[_type] call XPS_fnc_preprocessTypeDefinition;};
 
 private _hashmap = createhashmapfromarray _type;
 private _modified = _hashmap; // In case it doesn't have a parent
@@ -128,6 +129,3 @@ if ([_modified,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	format ["Type Invalid: %1",_hashmap get "_type"];
 };
-
-
-

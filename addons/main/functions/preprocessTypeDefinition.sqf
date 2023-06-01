@@ -46,19 +46,50 @@ Authors:
 ---------------------------------------------------------------------------- */
 params [["_array",[],[[]]]];
 
-private _keys = [];
+private _privateKeys = [];
 
-//Find Keys with underscore
-for "_i" from 0 to (count _array)-1 do {
+//Process Keys
+private _i = 0;
+while { _i < (count _array)-1} do {
+	scopeName "ATTRIBUTE_CHECK";
+	if (count _array#_i > 2) then {
+		private _attributes = toUpperANSI _array#_i#2;
+		if !(typename _attributes == "ARRAY") then {_attributes = [_attributes];};
+		for "_x" from 0 to (count _attributes)-1 do {
+			private _attribute = _attribute#_x;
+			if !(typename _attribute == "ARRAY") then {_attribute = [_attribute];};
+			switch (_attribute#0) do {
+				case "OBSOLETE" : {
+					_array deleteat _i; 
+					breakOut "ATTRIBUTE_CHECK";
+				};
+				case "CONDITIONAL" : {
+					if !(call _attribute#1) then {
+						_array deleteat _i; 
+						breakOut "ATTRIBUTE_CHECK";
+					};
+				};
+				case "VALIDATE_RPT" : {
+					private _params = _attribute#1;
+					private _value = _array#_i#1;
+					if !([_value] params [_params]) then {
+						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_array#_i#0,_array#_i#1];
+					};
+					_i = _i + 1;
+				};
+				default {_i = _i + 1};
+			};
+		};
+	};
 	private _key = _array#_i#0;
 	if (_key find "_" == 0) then {
 		private _uid = [8] call XPS_fnc_createUniqueID;
-		_keys pushback [_key,_uid];
+		_privateKeys pushback [_key,_uid];
 		_array#_i set [0,_uid]
 	};
 };
 
-//Replace code blocks that reference that key with the UID
+//Replace code blocks that reference the private key with the UID
 for "_i" from 0 to (count _array)-1 do {
 	private _value = _array#_i#1;
 	if (typename _value == "CODE") then {
@@ -68,6 +99,6 @@ for "_i" from 0 to (count _array)-1 do {
 			private _replace = """" insert [2,_x#1];
 			_str regexreplace [_find,_replace];
 			_array#_i set [1,call compile _str];
-		} foreach _keys;
+		} foreach _privateKeys;
 	};
 };
