@@ -13,7 +13,7 @@ class CfgMods {
 class CfgPatches {
 	class ADDON {
 			// Meta information for editor
-			name = CSTRING(component);
+        	name = "XPS - Extensible Project System";
 			author = "Crashdome";
 			url = "";
 	
@@ -21,8 +21,7 @@ class CfgPatches {
 			requiredVersion = REQUIRED_VERSION; 
 			// Required addons, used for setting load order.
 			// When any of the addons is missing, pop-up warning will appear when launching the game.
-			requiredAddons[] = { "cba_main" };
-        	VERSION_CONFIG;
+			requiredAddons[] = {};
 			// List of objects (CfgVehicles classes) contained in the addon. Important also for Zeus content (units and groups) unlocking.
 			units[] = {};
 			// List of weapons (CfgWeapons classes) contained in the addon.
@@ -31,4 +30,4 @@ class CfgPatches {
 };
 
 #include "CfgFunctions.hpp"
-#include "CfgEventhandlers.hpp"
+#include "CfgTypeDefinitions.hpp"

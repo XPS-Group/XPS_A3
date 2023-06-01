@@ -1,7 +1,7 @@
 class CfgFunctions {
 	class ADDON {
 		class TreeHandlers {
-			PATHTO_FNC_F(buildTree);
+			XPS_CFG_FNC(buildTree);
 		};
 	};
 };

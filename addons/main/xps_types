@@ -1,4 +1,3 @@
-#! SQF
 /* ----------------------------------------------------------------------------
 Type: TypeDefinition
     <Array> of <arrays> in format: [[key1,value1],[key2,value2]...]
@@ -8,7 +7,13 @@ Description:
     features such as the preset keys "#str" and "#create" for use in 
     <HashmapObjects> 
 
-See also: <HashmapObjects>
+See also: 
+
+	- <HashmapObjects>
+    - <main.XPS_fnc_buildTypeDefinition>
+    - <main.XPS_fnc_preprocessTypeDefinition>
+---------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------
 
 Type: Interface
     <Array> of <arrays> in format: [[key1,type1],[key2,type2]...] where

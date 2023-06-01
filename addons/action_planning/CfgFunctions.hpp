@@ -1,7 +1,7 @@
 class CfgFunctions {
 	class ADDON {
 		class category {
-			//PATHTO_FNC_F(functionName);
+			//XPS_CFG_FNC(functionName);
 		};
 	};
 };
