@@ -21,4 +21,4 @@ private _fnc_parseClass = {
 
 {
 		if (isClass _x) then {[_x] call _fnc_parseClass;};
-} foreach configProperties [configFile >> "XPS_Type_Definitions"];
+} foreach configProperties [configFile >> "Enhanced_XPS_Type_Definitions"];
