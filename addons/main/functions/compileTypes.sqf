@@ -7,7 +7,7 @@ private _fnc_parseClass = {
 	if (isText _var && isText _file && isText _type) then {
 		//if (isNil {uiNamespace getVariable _var}) then {
 			private _statement = "";
-			switch (_type) do {
+			switch (gettext _type) do {
 				case "ifc" : {_statement = "call compileScript [""%1"",%2];"};
 				case "typ" : {_statement = "[call compileScript [""%1"",%2]] call XPS_fnc_buildTypeDefinition;"};
 			};
