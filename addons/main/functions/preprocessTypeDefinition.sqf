@@ -74,11 +74,39 @@ try
 							breakOut "ATTRIBUTE_CHECK";
 						};
 					};
-					case "VALIDATE" : {
+					case "VALIDATE_ANY" : {
 						private _params = _attribute#1;
 						private _value = _array#_i#1;
 						if !(typename _params == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",_attribute#1,_array#_i#0]};
-						if !([_value] params [_params]) then {
+						if !(_value isEqualTypeAny _params) then {
+							diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_array#_i#0,_array#_i#1];
+							_result = false;
+						};
+						_i = _i + 1;
+					};
+					case "VALIDATE_ALL" : {
+						private _params = _attribute#1;
+						private _value = _array#_i#1;
+						if !(_value isEqualTypeALL _params) then {
+							diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_array#_i#0,_array#_i#1];
+							_result = false;
+						};
+						_i = _i + 1;
+					};
+					case "VALIDATE_PARAMS" : {
+						private _params = _attribute#1;
+						private _value = _array#_i#1;
+						if !(typename _params == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",_attribute#1,_array#_i#0]};
+						if !(_value isEqualTypeParams _params) then {
+							diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_array#_i#0,_array#_i#1];
+							_result = false;
+						};
+						_i = _i + 1;
+					};
+					case "VALIDATE_TYPE" : {
+						private _params = _attribute#1;
+						private _value = _array#_i#1;
+						if !(_value isEqualType _params) then {
 							diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_array#_i#0,_array#_i#1];
 							_result = false;
 						};
