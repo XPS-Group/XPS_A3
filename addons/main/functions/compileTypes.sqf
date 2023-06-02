@@ -4,7 +4,8 @@ private _fnc_parseClass = {
 	private _var = _class >> "var";
 	private _type = _class >> "type";
 	if (isText _var && isText _file && isText _type) then {
-		//if (isNil {uiNamespace getVariable _var}) then {
+		private _typeDefinition = uiNamespace getVariable _var;
+		if (isNil {_typeDefinition}) then {
 			private _statement = "";
 			switch (gettext _type) do {
 				case "ifc" : {_statement = "call compileScript [""%1"",false];"};
@@ -14,10 +15,9 @@ private _fnc_parseClass = {
 			private _result = call compile _code;
 			uiNamespace setvariable [getText _var,_result];
 			missionNamespace setvariable [getText _var,_result];
-			//call compile format["%1 = uiNamespace getvariable ""%1""; ",gettext _var];
-		// } else {
-		// 	missionNamespace setvariable [_var,_result];
-		// };
+		} else {
+		 	missionNamespace setvariable [_var,_typeDefinition];
+		};
 	};
 	{
 			if (isClass _x) then {[_x] call _fnc_parseClass;};
