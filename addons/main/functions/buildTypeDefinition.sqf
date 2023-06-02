@@ -129,6 +129,6 @@ if ([_modified,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	// Passes all checks and is Ok to push out definition
 	call compile (str _hashmap);
 } else {
-	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
+	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check: %2",_hashmap get "#type",_hashmap]);
 	nil;
 };

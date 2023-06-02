@@ -55,6 +55,7 @@ try
 	private _i = 0;
 	while { _i < (count _array)-1} do {
 		scopeName "ATTRIBUTE_CHECK";
+		if !(typename _array#_i == "ARRAY") then {throw format ["Not a valid key/value array %1 in %2",_array#_i,_array]};
 		if (count _array#_i > 2) then {
 			private _attributes = toUpperANSI _array#_i#2;
 			if !(typename _attributes == "ARRAY") then {_attributes = [_attributes];};
