@@ -90,13 +90,11 @@ _allowNils = [_allowNils] param [0,true,[true]];
 _preprocess = [_preprocess] param [0,true,[true]];
 
 if (_preprocess) then {
-	private _continue = false;
-	_continue = [_type] call XPS_fnc_preprocessTypeDefinition;
-	if !(_continue) exitwith {nil;};
+	if !([_type] call XPS_fnc_preprocessTypeDefinition) exitwith {nil;};
 };
 
 private _hashmap = createhashmapfromarray _type;
-private _modified = _hashmap; // In case it doesn't have a parent
+private _modified = _hashmap; // In case it doesn't have a parent, we need this for merge later
 
 // Check for parent type
 if ("#base" in keys _hashmap) then {
@@ -106,18 +104,20 @@ if ("#base" in keys _hashmap) then {
 	};
 
 	_modified = createhashmapfromarray _pType;
+
 	private _pTypeName = _modified get "#type";
-	// Create base methods as "ParentType.MethodString"
+	// Create base methods as "ParentType.Method"
 	private _keys = keys _hashmap;
 	{
-		if (_x in _keys && typename _x == "STRING" && typename _y == "CODE") then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
-		if (_x in _keys && typename _x == "STRING" && _x find "@" == 0 && typename _y == "ARRAY") then {
-			private _a = if (_x in keys _hashmap) then {_hashmap get _x} else {_hashmap set [_x,_y];};
-			if (typename _a == "ARRAY") then {
-				if (_x == "@interfaces") then {_h insert [0,_y,true]} else {_h insert [0,_y]};
+		if (_x in _keys && typename _x == "STRING" && typename _y == "CODE" && !(_x == "#str")) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
+		if (_x in _keys && typename _x == "STRING" && (_x find "@") == 0 && typename _y == "ARRAY") then {
+			private _hmArray = if (_x in keys _hashmap) then {_hashmap get _x} else {false};
+			if (typename _hmArray == "ARRAY") then {
+				if (_x == "@interfaces") then {_hmArray insert [0,_y,true]} else {_hmArray insert [0,_y]};
 			};
 		};
 	} foreach _modified;
+
 	// Merge Interfaces
 	_modified merge [_hashmap,true];
 };
@@ -129,6 +129,6 @@ if ([_modified,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	// Passes all checks and is Ok to push out definition
 	call compile (str _hashmap);
 } else {
-	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check: %2",_hashmap get "#type",_hashmap]);
+	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	nil;
 };
