@@ -26,19 +26,23 @@
 #define XPS_CFG_IFC(pref,ifcName) class ifcName {\
     file = FILEPATH_C_Q(interfaces\ifcName.sqf);\
     var = Q(VARNAME(pref,ifc,ifcName));\
+    type = "ifc";\
 }
 
 #define XPS_CFG_IFC_SUB(pref,sub,ifcName) class ifcName {\
     file = FILEPATH_C_Q(interfaces\sub\ifcName.sqf);\
     var = Q(VARNAME(pref,ifc,ifcName));\
+    type = "ifc";\
 }
 
 #define XPS_CFG_TYP(pref,typName) class typName {\
     file = FILEPATH_C_Q(typedefs\typName.sqf);\
     var = Q(VARNAME(pref,typ,typName));\
+    type = "typ";\
 }
 
 #define XPS_CFG_TYP_SUB(pref,sub,typName) class typName {\
     file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
     var = Q(VARNAME(pref,typ,typName));\
+    type = "typ";\
 }
