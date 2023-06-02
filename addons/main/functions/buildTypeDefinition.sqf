@@ -89,9 +89,11 @@ if !(params [["_type",nil,[[]]],"_allowNils","_preprocess"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
 _preprocess = [_preprocess] param [0,false,[true]];
 
-private _continue = false;
-if (_preprocess) then {_continue = [_type] call XPS_fnc_preprocessTypeDefinition;};
-if !(_continue) exitwith {nil;};
+if (_preprocess) then {
+	private _continue = false;
+	_continue = [_type] call XPS_fnc_preprocessTypeDefinition;
+	if !(_continue) exitwith {nil;};
+};
 
 private _hashmap = createhashmapfromarray _type;
 private _modified = _hashmap; // In case it doesn't have a parent
