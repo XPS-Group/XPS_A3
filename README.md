@@ -2,11 +2,11 @@
 eXtensible Project System for Arma 3
 
 Based off a project called the eXtensible Planning System, a project that was intended to introduce a AI framework for the following:
-  - An object-oriented framework using Hashmaps as a sort of 'object' for extensibility of features
+  - An object-oriented framework using Hashmap Objects (v2.14) for extensibility of features
   - Behavio(u)r Trees for Arma 3
   - Goal-Oriented Action Planning for use with AI
   - Pathfinding for Terrain, Action Planning Nodes, and other AI related searches that benefit from A* searching
-  - Danger/Formation FSM possibilities
+  - Danger/Formation FSM replacement possibilities
   - K-Dimensional Trees for fast searching of large amounts of data
 
 All goals meant to enhance and extend AI possibilities by implementing this core framework but, without the need to encompass those possibilities into a single 'mod'
