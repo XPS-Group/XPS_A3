@@ -1,22 +1,22 @@
 class CfgFunctions {
 	class PREFIX {
 		TAG = "xps";
-		class Initialization {
+		class Preprocessing {
 			class preInit {
-				file = "\x\xps\addons\main\functions\preInit.sqf";
+				file = "\x\xps\addons\main\functions\typeHandlers\preInit.sqf";
 				preInit = 1;
 			};
 			class preStart {
-				file = "\x\xps\addons\main\functions\preStart.sqf";
+				file = "\x\xps\addons\main\functions\typeHandlers\preStart.sqf";
 				preStart = 1;
 			};
 		};
 		class TypeHandlers {
-			XPS_CFG_FNC(buildTypeDefinition);
-			XPS_CFG_FNC(comileTypes);
-			XPS_CFG_FNC(findReplaceKeyinCode);
-			XPS_CFG_FNC(checkInterface);
-			XPS_CFG_FNC(preprocessTypeDefinition);
+			XPS_CFG_FNC_SUB(typeHandlers,buildTypeDefinition);
+			XPS_CFG_FNC_SUB(typeHandlers,compileTypes);
+			XPS_CFG_FNC_SUB(typeHandlers,findReplaceKeyinCode);
+			XPS_CFG_FNC_SUB(typeHandlers,checkInterface);
+			XPS_CFG_FNC_SUB(typeHandlers,preprocessTypeDefinition);
 		};
 		class General {
 			//XPS_CFG_FNC(createObjectNamespace);
