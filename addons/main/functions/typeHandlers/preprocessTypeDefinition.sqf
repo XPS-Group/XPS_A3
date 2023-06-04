@@ -20,6 +20,7 @@ Return:
 Example:
 
 	The array :
+
 	---
 	[
 		["_propertyA",10],
@@ -29,6 +30,7 @@ Example:
 	---
 
 	After calling this function would modify the original array to something like:
+	
 	---
 	[
 		["f372a1c1",10],

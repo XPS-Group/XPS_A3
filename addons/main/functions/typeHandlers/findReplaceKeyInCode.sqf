@@ -28,7 +28,7 @@ Return: _result
 
 Example:
 	
-	---prototype
+	---
 	private _code = {_self call "_privateKey"}; // note _privateKey is in quotes
 	private _find = "_privateKey";
 	private _replace = "ABCD";
