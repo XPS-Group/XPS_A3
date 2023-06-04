@@ -17,7 +17,7 @@ Parameter: _type
 Return: 
 	Nothing
 
-Example:
+Example: Private Properties
 
 	The array :
 
@@ -41,6 +41,59 @@ Example:
 
 	Which can then be converted to a <HashmapObject> preventing "_propertyA" or 
 	"_propertyB" to be called by an external function or method.
+
+Example: Obsolete Method
+
+	The array :
+
+	---
+	[
+		["MethodA",{ "some old code here"},[["OBSOLETE]]],
+		["MethodA",{ "some new code here"}]
+	]
+	---
+
+	After calling this function would modify the original array to something like:
+	
+	---
+	[
+		["MethodA",{ "some new code here"}]
+	]
+	---
+
+Example: Obsolete Method
+
+	The array :
+
+	---
+	[
+		["MethodA",{ "some old code here"},[["OBSOLETE]]],
+		["MethodA",{ "some new code here"}]
+	]
+	---
+
+	After calling this function would modify the original array to something like:
+	
+	---
+	[
+		["MethodA",{ "some new code here"}]
+	]
+	---
+
+Example: Conditional
+
+	The array :
+
+	---
+	[
+		["MethodA",{ "some code dependant on MyVar being >= 10"},[["CONDITIONAL",{}]
+	After calling this function would modify the original array to something like:
+	
+	---
+	[
+		["MethodA",{ "some new code here"}]
+	]
+	---
 
 Authors: 
 	Crashdome

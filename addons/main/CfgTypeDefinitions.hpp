@@ -1,4 +1,4 @@
-class Enhanced_XPS_Type_Definitions {
+class XPS_CFG_BASECLASSNAME {
 	class ADDON {
 		XPS_CFG_IFC(PREFIX,IAstarNode);
 		XPS_CFG_IFC(PREFIX,IAstarSearch);

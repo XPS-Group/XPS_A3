@@ -1,4 +1,3 @@
-//#include "\x\cba\addons\main\script_macros_common.hpp"
 #define Q(var1) #var1
 
 #define ADDON PREFIX##_##COMPONENT
@@ -10,6 +9,9 @@
 #define FILEPATH_C_Q(var1) Q(FILEPATH_C(var1))
 
 #define COMPONENT_DIR Q(##@##ADDON)
+
+#define XPS_CFG_BASECLASSNAME Enhanced_XPS_Type_Definitions
+#define QXPS_CFG_BASECLASSNAME Q(XPS_CFG_BASECLASSNAME)
 
 #define XPS_CFG_FNC(fncName) class fncName {\
     file = FILEPATH_C_Q(functions\fncName.sqf);\
@@ -39,10 +41,14 @@
     file = FILEPATH_C_Q(typedefs\typName.sqf);\
     var = Q(VARNAME(pref,typ,typName));\
     type = "typ";\
+    preprocess = 1;\
+    allowNils = 1;\
 }
 
 #define XPS_CFG_TYP_SUB(pref,sub,typName) class typName {\
     file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
     var = Q(VARNAME(pref,typ,typName));\
     type = "typ";\
+    preprocess = 1;\
+    allowNils = 1;\
 }
