@@ -87,7 +87,7 @@ Authors:
 ---------------------------------------------------------------------------- */
 if !(params [["_type",nil,[[]]],"_allowNils","_preprocess"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
-_preprocess = [_preprocess] param [0,false,[true]];
+_preprocess = [_preprocess] param [0,true,[true]];
 
 if (_preprocess) then {
 	if !([_type] call XPS_fnc_preprocessTypeDefinition) exitwith {nil;};

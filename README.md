@@ -1,6 +1,8 @@
 # XPS_A3
 eXtensible Project System for Arma 3
 
+### *** This Mod is currently a WIP (pre-Alpha) as of June, 2023 ***
+
 Based off a project called the eXtensible Planning System, a project that was intended to introduce a AI framework for the following:
   - An object-oriented framework using Hashmap Objects (v2.14) for extensibility of features
   - Behavio(u)r Trees for Arma 3
