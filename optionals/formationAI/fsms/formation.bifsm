@@ -1,0 +1,117 @@
+version=1;
+class GraphItems
+{
+	class Item0
+	{
+		Flags=250;
+		BasicText="";
+		Left=-271.65967;
+		Top=-90.533569;
+		Right=-181.65967;
+		Bottom=-40.533569;
+		BgColor=255;
+		class ItemInfo
+		{
+			Text="";
+			lStyle=-842150451;
+			Shape=6;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=700;
+			FontUnderline=1;
+			FontCharSet=0;
+			ItemType=0;
+			class ItemInfo
+			{
+				Id=0;
+				InitCode=" " \n "//private _dc = XPS_D_CAUSES get str _this;" \n "//{" \n "//	_dc insert [0,[[diag_ticktime,_x#0,_x#1,_x#2,_x#3]]];" \n "//} foreach _queue;" \n "//XPS_D_CAUSES set [str _this,_dc]; " \n "//_queue resize 0;";
+			};
+		};
+	};
+	class Item1
+	{
+		Flags=218;
+		BasicText="";
+		Left=-272.72195;
+		Top=18.454315;
+		Right=-182.72195;
+		Bottom=68.454315;
+		BgColor=8421440;
+		class ItemInfo
+		{
+			Text="";
+			lStyle=-842150451;
+			Shape=2;
+			FontFace="Arial";
+			FontHeight=10;
+			FontWeight=0;
+			FontCharSet=0;
+			ItemType=8;
+			class ItemInfo
+			{
+				Id=1;
+			};
+		};
+	};
+};
+class GraphLinks
+{
+	class Link0
+	{
+		From=0;
+		To=1;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+	class Link1
+	{
+		From=1;
+		To=0;
+		Color=6316128;
+		Flags=2;
+		class Extra
+		{
+			ArrowSize=0;
+		};
+	};
+};
+class Globals
+{
+	NextGroupID=1;
+	NextID=3;
+	FSMName="formation";
+	CompileConfig="D:\SteamLibrary\steamapps\common\Arma 3 Tools\FSMEditor\scriptedFSM.cfg";
+	class DefaultLink
+	{
+		ArrowSize=0;
+	};
+	DefaultLinkColor=6316128;
+	DefaultLinkColorFromSelected=6316287;
+	DefaultLinkColorToSelected=6356832;
+	DefaultLinkUseCustom=1;
+	PZoomLeft=-540.23016;
+	PZoomRight=45.650574;
+	PZoomBottom=282.82281;
+	PZoomTop=-272.28821;
+	Clxs=684;
+	Clys=587;
+	Aspect=1;
+};
+class Window
+{
+	Flags=0;
+	MaxPosX=-1;
+	MaxPosY=-1;
+	MinPosX=-1;
+	MinPosY=-1;
+	Left=1946;
+	Top=26;
+	Right=3386;
+	Bottom=785;
+	ShowCmd=1;
+	SplitPos=702;
+};
