@@ -1,18 +1,19 @@
 class XPS_CFG_BASECLASSNAME {
 	class ADDON {
-		XPS_CFG_IFC(PREFIX,IAstarNode);
-		XPS_CFG_IFC(PREFIX,IAstarSearch);
-		XPS_CFG_IFC(PREFIX,IBlackboard);
-		XPS_CFG_IFC(PREFIX,ICollection);
-		XPS_CFG_IFC(PREFIX,IJobScheduler);
-		XPS_CFG_IFC(PREFIX,ITestObject);
+		tag = "xps";
+		XPS_CFG_IFC(IAstarNode);
+		XPS_CFG_IFC(IAstarSearch);
+		XPS_CFG_IFC(IBlackboard);
+		XPS_CFG_IFC(ICollection);
+		XPS_CFG_IFC(IJobScheduler);
+		XPS_CFG_IFC(ITestObject);
 
-		XPS_CFG_TYP(PREFIX,AstarSearch);
-		XPS_CFG_TYP(PREFIX,Blackboard);
-		XPS_CFG_TYP(PREFIX,Collection);
-		XPS_CFG_TYP(PREFIX,HashmapCollection);
-		XPS_CFG_TYP(PREFIX,JobScheduler);
-		XPS_CFG_TYP(PREFIX,TestObjectA);
-		XPS_CFG_TYP(PREFIX,TestObjectB);
+		XPS_CFG_TYP(AstarSearch);
+		XPS_CFG_TYP(Blackboard);
+		XPS_CFG_TYP(Collection);
+		XPS_CFG_TYP(HashmapCollection);
+		XPS_CFG_TYP(JobScheduler);
+		XPS_CFG_TYP(TestObjectA);
+		XPS_CFG_TYP(TestObjectB);
 	};
 };

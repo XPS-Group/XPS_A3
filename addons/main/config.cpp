@@ -31,3 +31,4 @@ class CfgPatches {
 
 #include "CfgFunctions.hpp"
 #include "CfgTypeDefinitions.hpp"
+#include "Cfg3DEN.hpp"

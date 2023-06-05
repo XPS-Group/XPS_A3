@@ -1,9 +1,9 @@
 class Enhanced_XPS_Type_Definitions {
 	class ADDON {				
-		XPS_CFG_IFC(ADDON,IAction);
+		XPS_CFG_IFC(IAction);
 
-		//XPS_CFG_TYP_SUB(ADDON,virtual,Composite);
+		// XPS_CFG_TYP_SUB(virtual,Composite);
 
-		//XPS_CFG_TYP_SUB(ADDON,base,Action);
+		// XPS_CFG_TYP_SUB(base,Action);
 	};
 };
