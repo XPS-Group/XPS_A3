@@ -89,12 +89,21 @@ if !(params [["_type",nil,[[]]],"_allowNils","_preprocess"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
 _preprocess = [_preprocess] param [0,true,[true]];
 
+private _fnc_recurseBases = {
+	params ["_hashmap"];
+	if ("#base" in keys _hashmap) then {
+		private _base = createhashmapfromarray (_hashmap get "#base");
+		[_base] call _fnc_recurseBases;
+		_hashmap merge _base;
+	};
+};
+
 if (_preprocess) then {
 	if !([_type] call XPS_fnc_preprocessTypeDefinition) exitwith {nil;};
 };
 
 private _hashmap = createhashmapfromarray _type;
-private _modified = _hashmap; // In case it doesn't have a parent, we need this for merge later
+private _preCompiled = _hashmap; // In case it doesn't have a parent, we need this for merge later
 
 // Check for parent type
 if ("#base" in keys _hashmap) then {
@@ -103,9 +112,9 @@ if ("#base" in keys _hashmap) then {
 		diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
 	};
 
-	_modified = createhashmapfromarray _pType;
+	_preCompiled = createhashmapfromarray _pType;
 
-	private _pTypeName = _modified get "#type";
+	private _pTypeName = _preCompiled get "#type";
 	// Create base methods as "ParentType.Method"
 	private _keys = keys _hashmap;
 	{
@@ -116,16 +125,16 @@ if ("#base" in keys _hashmap) then {
 				if (_x == "@interfaces") then {_hmArray insert [0,_y,true]} else {_hmArray insert [0,_y]};
 			};
 		};
-	} foreach _modified;
+	} foreach _preCompiled;
 
-	// Merge Interfaces
-	_modified merge [_hashmap,true];
+	[_preCompiled] call _fnc_recurseBases;
+	_preCompiled merge [_hashmap,true];
 };
 
 // Check Interfaces are implemented
-private _interfaces = if ("@interfaces" in keys _modified) then {_modified get "@interfaces"} else {[]};
+private _interfaces = if ("@interfaces" in keys _preCompiled) then {_preCompiled get "@interfaces"} else {[]};
 
-if ([_modified,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
+if ([_preCompiled,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	// Passes all checks and is Ok to push out definition
 	call compile (str _hashmap);
 } else {

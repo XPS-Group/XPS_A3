@@ -4,7 +4,7 @@ if !(params [["_class",nil,[configFile]],"_tag"]) exitwith {false;};
 
 _tag = [_tag] param [0,configName _class,[""]];
 if (isText (_class >> "tag")) then {
-	diag_log format ["[XPS TD parser]  changing TAG: %1",_tag];
+	//diag_log format ["[XPS TD parser] : changing TAG: %1",_tag];
 	_tag = getText (_class >> "tag");
 };
 
@@ -19,7 +19,7 @@ private _fnc_loadFile = {
 	call compile _code;
 };
 
-diag_log format ["[XPS TD parser]  parsing TAG: %1 - CLASS: %2",_tag, configName _class];
+//diag_log format ["[XPS TD parser] : parsing TAG: %1 - CLASS: %2",_tag, configName _class];
 private _file = _class >> "file";
 private _type = _class >> "type";
 
@@ -33,17 +33,17 @@ if (isText _file && isText _type) then {
 	private _allowNils = if (isNumber (_class >> "allowNils")) then {getNumber (_class >> "allowNils")} else {1};
 	private _recompile = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "recompile")} else {0};
 
-	diag_log format ["[XPS TD parser]  : var: %1 - recompile: %2",_varname,_recompile];
+	//diag_log format ["[XPS TD parser]  : var: %1 - recompile: %2",_varname,_recompile];
 	if (isNil {_typeDefinition}) then {
-		diag_log "[XPS TD parser]  : init namespace variables";
+		//diag_log "[XPS TD parser]  : init namespace variables";
 		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1)] call _fnc_loadFile];
 		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 	} else {
-		if (_recompile == 1) then {
-			diag_log "[XPS TD parser]  : recompiling";
+		if (_recompile == 1 || isFilePatchingEnabled) then {
+			//diag_log "[XPS TD parser]  : recompiling";
 			missionNamespace setvariable [_varName,[_type,_file,(_allowNils==1),(_preprocess==1)] call _fnc_loadFile];
 		} else {
-			diag_log "[XPS TD parser]  : using cached";
+			//diag_log "[XPS TD parser]  : using cached";
 			missionNamespace setvariable [_varName,_typeDefinition];
 		};
 	};
