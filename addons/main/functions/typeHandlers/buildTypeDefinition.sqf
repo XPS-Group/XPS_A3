@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. XPS_fnc_buildTypeDefinition
+Function: typeHandlers. XPS_fnc_buildTypeDefinition
 	
 	---prototype
 	_typeDefintion = [_type] call XPS_fnc_buildTypeDefinition

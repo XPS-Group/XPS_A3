@@ -1,5 +1,30 @@
 #include "script_component.hpp"
+/* ----------------------------------------------------------------------------
+Function: typeHandlers. XPS_fnc_parseTypeDefClass
+	
+	---prototype
+	_result = [_class,_tag*] call XPS_fncparseTypeDefClass
+	---
 
+Description:
+    Internal only. Reads a Type Definition config entry from the configfile and stores the 
+	data in the UI and Mission namespace for caching purposes. This function 
+	is recursive.
+
+Authors: 
+	Crashdome
+------------------------------------------------------------------------------
+
+	Parameter: _class
+		<Config> - the class and assocaiated subclasses to parse 
+
+	Optional: _tag*
+		<string> - (Optiona - Default is configName of class)  
+
+	Return: _result
+		<Boolean> - True is successful, otherwise false
+
+---------------------------------------------------------------------------- */
 if !(params [["_class",nil,[configFile]],"_tag"]) exitwith {false;};
 
 _tag = [_tag] param [0,configName _class,[""]];

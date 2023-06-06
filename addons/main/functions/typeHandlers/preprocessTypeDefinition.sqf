@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. XPS_fnc_preprocessTypeDefinition
+Function: typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
 	_typeDefintion = [_type] call XPS_fnc_preprocessTypeDefinition
@@ -8,7 +8,11 @@ Function: main. XPS_fnc_preprocessTypeDefinition
 
 Description:
     
-	Takes a type definition array and obfuscates the private Methods/Properties. 
+	Preprocesses a Type Definition array and alters the code based on the following:
+
+	Obfuscates the private Methods/Properties. 
+
+	Takes base Array Properties with an "@" symbol and appends them together.
 	
 	It also has support for "Attributes" of the Methods/Properties. You can classify an Attribute
 	by making it the third element of the Key/Value Pair. These Attributes do not exist once the 
@@ -30,7 +34,8 @@ Description:
 
 	However, you can define any Attribute as long as it is in an array. The preprocessor will
 	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
-	run your own custom preprocesser before instantiating a type with createHashmapPObject.
+	run your own custom preprocesser (or extend this one) before instantiating a type with 
+	createHashmapPObject command.
 
 Parameter: _type 
 
