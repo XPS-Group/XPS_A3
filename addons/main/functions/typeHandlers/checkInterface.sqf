@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: typeHandlers. XPS_fnc_checkInterface
+Function: main. typeHandlers. XPS_fnc_checkInterface
 	
 	---prototype
 	_result = [_type, _interfaces] call XPS_fnc_checkInterface

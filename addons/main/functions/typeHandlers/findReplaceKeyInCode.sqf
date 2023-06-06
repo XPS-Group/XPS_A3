@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: typeHandlers. XPS_fnc_findReplaceKeyInCode
+Function: main. typeHandlers. XPS_fnc_findReplaceKeyInCode
 	
 	---prototype
 	_result = [_find,_replace,_code] call XPS_fnc_preprXPS_fnc_findReplaceKeyInCodeocessTypeDefinition

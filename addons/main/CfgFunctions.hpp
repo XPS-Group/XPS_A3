@@ -15,11 +15,11 @@ class CfgFunctions {
 		
 		class Init {
 			class preInit {
-				file = FILEPATH_C_Q(functions\internal\preInit.sqf);
+				file = FILEPATH_C_Q(preInit.sqf);
 				preInit = 1;
 			};
 			class preStart {
-				file = FILEPATH_C_Q(functions\internal\preStart.sqf);
+				file = FILEPATH_C_Q(preStart.sqf);
 				preStart = 1;
 			};
 		};

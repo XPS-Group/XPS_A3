@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: typeHandlers. XPS_fnc_preprocessTypeDefinition
+Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
 	_typeDefintion = [_type] call XPS_fnc_preprocessTypeDefinition

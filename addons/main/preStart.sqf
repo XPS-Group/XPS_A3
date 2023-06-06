@@ -1,5 +1,4 @@
 #include "script_component.hpp"
-//Internal Only - Do Not Use
 
 with uiNamespace do{
 	//diag_log "[XPS preStart]";

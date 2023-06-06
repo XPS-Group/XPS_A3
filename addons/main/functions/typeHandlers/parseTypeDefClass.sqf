@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: typeHandlers. XPS_fnc_parseTypeDefClass
+Function: main. typeHandlers. XPS_fnc_parseTypeDefClass
 	
 	---prototype
 	_result = [_class,_tag*] call XPS_fncparseTypeDefClass
