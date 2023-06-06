@@ -1,21 +1,30 @@
 # XPS_A3
 eXtensible Project System for Arma 3
 
-### *** This Mod is currently a WIP (pre-Alpha) as of June, 2023 ***
+An Arma 3 Framework Mod 
 
-Based off a project called the eXtensible Planning System, a project that was intended to introduce a AI framework for the following:
-  - An object-oriented framework using Hashmap Objects (v2.14) for extensibility of features
-  - Behavio(u)r Trees for Arma 3
-  - Goal-Oriented Action Planning for use with AI
-  - Pathfinding for Terrain, Action Planning Nodes, and other AI related searches that benefit from A* searching
-  - Danger/Formation FSM replacement possibilities
-  - K-Dimensional Trees for fast searching of large amounts of data
+### *** This Mod is currently a WIP (pre-Alpha) as of June, 2023 and is Dev branch only as it is dependant on the 2.14 release ***
+
+## Features:
+  - Bring an Object-Oriented Structure to your Mod
+    - Interface Contracts
+    - Type Definition Preprocessor
+    - Type Definition Caching Support
+  - Use Built-in types for common utiltiies
+    - A* Searching
+    - Job Scheduling
+    - Collections
+    - Map and Road Pathfinding
+    - K-Dimensional Searching
+  - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
+  - Use Action Planning / Utility AI for short or long term planning
+  - Replace the Danger/Formation FSM behaviors
+
+Since the announcement to introduce a new hashmap command 'createHashmapObject' for v2.14, this project has been rewritten to include additional features to the framework:
+  - A better OOP approach (an example is to include an Interface-style contract system for building objects) and a general framework to foster Mod compatibility at the scripting level using those objects.
 
 All goals meant to enhance and extend AI possibilities by implementing this core framework but, without the need to encompass those possibilities into a single 'mod'
  
-Since the announcement to introduce a new hashmap command 'createHashmapObject' for v2.14, this project is being rewritten to include not only the above but also these additional features to the framework:
-  - A better OOP approach (an example is to include an Interface-style contract system for building objects) and a general framework to foster Mod compatibility at the scripting level using those objects.
- 
- Ultimately, it is my hope and goal to provide a bit more creativity in the community. All constructive criticism and ideas are welcome here.
+Ultimately, it is my hope and goal to provide more creativity in the community. All constructive criticism and ideas are welcome here.
  
  -Crashdome
