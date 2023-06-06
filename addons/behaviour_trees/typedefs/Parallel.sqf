@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. base. XPS_BT_typ_Parallel
+TypeDef: behaviour_trees. XPS_BT_typ_Parallel
 	<TypeDefinition>
 
 Authors: 

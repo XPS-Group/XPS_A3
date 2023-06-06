@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. base. XPS_BT_typ_ActionAsync
+TypeDef: behaviour_trees. XPS_BT_typ_ActionAsync
 	<TypeDefinition>
 
 Authors: 

@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. base. XPS_BT_typ_Condition
+TypeDef: behaviour_trees. XPS_BT_typ_Condition
 	<TypeDefinition>
 
 Authors: 
