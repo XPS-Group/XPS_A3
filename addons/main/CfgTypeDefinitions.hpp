@@ -13,7 +13,5 @@ class XPS_CFG_BASECLASSNAME {
 		XPS_CFG_TYP(Collection);
 		XPS_CFG_TYP(HashmapCollection);
 		XPS_CFG_TYP(JobScheduler);
-		XPS_CFG_TYP(TestObjectA);
-		XPS_CFG_TYP(TestObjectB);
 	};
 };
