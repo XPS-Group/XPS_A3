@@ -13,7 +13,7 @@ Parent:
 	XPS_typ_HashmapCollection
 
 Implements: 
-	XPS_ifc_IJobScheduler
+	<XPS_ifc_IJobScheduler>
 
 Flags: 
 	none
