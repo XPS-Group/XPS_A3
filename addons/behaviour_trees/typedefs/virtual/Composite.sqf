@@ -180,7 +180,7 @@ Protected: currentIndex
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
 		if (isNil "_childNode") exitwith {false};
-		if !([_childNode, ["XPS_ifc_INode"], true] call XPS_fnc_checkInterface) exitwith {false};
+		if !([_childNode, ["XPS_ifc_INode"]] call XPS_fnc_checkInterface) exitwith {false};
 		private _children = _self get "children";
 		private _count = count (_children);
 		if (_index < 0 ||_index >= _count) then {_index = -1};

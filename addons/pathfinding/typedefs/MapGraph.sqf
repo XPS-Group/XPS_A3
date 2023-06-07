@@ -168,7 +168,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["AddLayer",compileFinal {
 		if !(params [["_layerName",nil,[""]],["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]]) exitwith {false};
-		if !([_layerBuilder,["XPS_PF_ifc_ILayerBuilder"],true] call XPS_fnc_checkInterface) exitwith {false};
+		if !([_layerBuilder,["XPS_PF_ifc_ILayerBuilder"]] call XPS_fnc_checkInterface) exitwith {false};
 		private _layers = _self get "Layers";
 		if (_layerName in keys _layers) then {_layers deleteAt _layerName;};
 		private _layer = _self call ["buildLayer",[_layerBuilder]];
