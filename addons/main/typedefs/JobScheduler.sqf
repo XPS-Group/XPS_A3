@@ -13,7 +13,7 @@ Parent:
 	XPS_typ_HashmapCollection
 
 Implements: 
-	XPS_ifc_IJobScheduler
+	<XPS_ifc_IJobScheduler>
 
 Flags: 
 	none
@@ -31,6 +31,17 @@ Flags:
 	["#type","XPS_typ_JobScheduler"],
 	["#base",XPS_typ_HashmapCollection],
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
+	["_handle",nil],
+	/*----------------------------------------------------------------------------
+	Protected: popQueue
+    
+    	--- Prototype --- 
+    	call ["popQueue"]
+    	---
+
+    Returns: 
+		<Nothing> 
+	-----------------------------------------------------------------------------*/
 	["popQueue",compileFinal {
 		private _queue = _self get "Queue";
 		if (count _queue > 0) then {

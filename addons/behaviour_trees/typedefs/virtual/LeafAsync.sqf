@@ -54,7 +54,7 @@ Flags:
     	---
     
     Returns: 
-		<Script Handle> - the handle of the executing script called asynchronously.
+		<Number> - the handle of the executing script called asynchronously.
 		Nil if not executing.
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------

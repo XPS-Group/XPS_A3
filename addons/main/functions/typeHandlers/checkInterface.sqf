@@ -41,7 +41,7 @@ Authors:
 ---------------------------------------------------------------------------- */
 
 if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNils"]) exitwith {false;};
-_allowNils = [_allowNils] param [0,true,[true]];
+_allowNils = [_allowNils] param [0,false,[true]];
 
 private _result = true;
 for "_a" from 0 to (count _interfaces -1) do {
