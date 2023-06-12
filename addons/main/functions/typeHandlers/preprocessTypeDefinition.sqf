@@ -143,7 +143,7 @@ private _result = true;
 
 try 
 {
-	//Process Keys
+	//Process Key Attributes
 	private _i = 0;
 	while { _i < (count _typeDef)} do {
 
@@ -217,7 +217,7 @@ try
 			};
 		};
 
-		// Finally
+		// Finally record private keys
 		if (_key find "_" == 0) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
