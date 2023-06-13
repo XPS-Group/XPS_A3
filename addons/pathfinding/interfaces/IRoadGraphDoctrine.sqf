@@ -1,18 +1,17 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_IBlackboard
+Interface: pathfinding. XPS_PF_ifc_IRoadGraphDoctrine
 <Interface>
+
+Adds additional properties required by the RoadGraph to pathfind on roads
 
 Authors:
     Crashdome
 
-	Method: AttachToObject
-
-	Recommended Parameters:
+	Property: Heuristics
 	
-		_object - <Object>
-		_varName - <String>
+	<Array>
 ---------------------------------------------------------------------------- */
 [
-	["AttachToObject","CODE"]
+	["RoadTypes","ARRAY"]
 ]

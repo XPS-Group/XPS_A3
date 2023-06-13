@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-TypeDef: pathfinding. XPS_PF_typ_MapSector
+TypeDef: pathfinding. XPS_PF_typ_MapNode
 	<TypeDefinition>
 
 Authors: 
@@ -12,15 +12,18 @@ Parent:
 	none
 
 Implements: 
-	<main.XPS_ifc_AstarNode>
+
+	<XPS_PF_ifc_IMapNode>
+
+	<main. XPS_ifc_IAstarNode>
 
 Flags: 
 	none
 
 --------------------------------------------------------------------------------*/
 [	
-	["#str",{"XPS_PF_typ_MapSector"}],
-	["#type","XPS_PF_typ_MapSector"],
+	["#str",compileFinal {"XPS_PF_typ_MapNode"}],
+	["#type","XPS_PF_typ_MapNode"],
 	["@interfaces",["XPS_ifc_AstarNode"]],
 	/*----------------------------------------------------------------------------
 	Property: Index
@@ -29,7 +32,7 @@ Flags:
     	get "Index"
     	---
     
-		implemented from <XPS_ifc_IAstarNode.Index>
+		<main. XPS_ifc_IAstarNode.Index>
 
     Returns: 
 		<Array> - Index position (key) in MapGraph
@@ -41,6 +44,8 @@ Flags:
     	--- Prototype --- 
     	get "PosRef"
     	---
+
+		<XPS_PF_ifc_IMapNode.PosRef>
     
     Returns: 
 		<Array> - lower bound [x,y] position in world (bottom left corner)
@@ -52,6 +57,8 @@ Flags:
     	--- Prototype --- 
     	get "PosCenter"
     	---
+
+		<XPS_PF_ifc_IMapNode.PosCenter>
     
     Returns: 
 		<Array> - center [x,y] position of square in world

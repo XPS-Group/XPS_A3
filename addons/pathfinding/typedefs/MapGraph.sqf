@@ -15,6 +15,9 @@ Parent:
 	none
 
 Implements: 
+
+	<pathfinding.XPS_PF_ifc_IMapGraph>
+
 	<main.XPS_ifc_IAstarGraph>
 
 Flags: 
@@ -22,9 +25,62 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_MapGraph"}],
+	["#str",compileFinal {"XPS_PF_typ_MapGraph"}],
 	["#type","XPS_PF_typ_MapGraph"],
-	["@interfaces",["XPS_ifc_IAstarGraph"]],
+	["@interfaces",["XPS_PF_ifc_IMapGraph","XPS_ifc_IAstarGraph"]],
+	/*----------------------------------------------------------------------------
+	Protected: buildGraph
+	
+		--- Prototype --- 
+		call ["buildGraph"]
+		---
+	
+	Parameters: 
+		none
+	
+	Returns: 
+		<Hashmap> - of sectors (each a <hashmap> in and of itself) where key is [x,y] index from [0,0] to [numXSectors,numYSectors] (not a world position)
+	-----------------------------------------------------------------------------*/
+	["buildGraph",compileFinal {
+
+		private _sectors = _self get "Sectors";
+		private _sectorSize = _self get "SectorSize";
+		private _sectorRadius = _self get "SectorRadius";
+		private _gridWidth = _self get "GridWidth";
+
+		for "_yAxis" from 0 to _gridWidth - 1 do {
+			for "_xAxis" from 0 to _gridWidth - 1 do {
+				//Set Index and Positions
+				private _sector = _sectors get [_xAxis,_yAxis];
+
+				if (isNil "_sector") then {
+					_sector = createhashmapobject [XPS_PF_typ_MapNode,[_xAxis,_yAxis]];
+					private _index = _sector get "Index";
+					private _posRef = _sector set ["PosRef", [_sectorSize * _xAxis,_sectorSize * _yAxis]];
+					_sector set ["PosCenter", [(_sectorSize * _xAxis)+_sectorRadius,(_sectorSize * _yAxis)+_sectorRadius]];
+
+					//Set SubPositions - Cereates a 3x3 grid within sector with Indices of:
+					// -------
+					// |6|7|8|
+					// -------
+					// |3|4|5|
+					// -------
+					// |0|1|2|
+					// -------
+					private _subPosSize = _sectorRadius/2;
+					private _subPositions = [];
+					for "_spY" from 1 to 3 do {
+						for "_spX" from 1 to 3 do {
+							_subPositions pushback [_posRef#0+(_subPosSize*_spX),_posRef#1+(_subPosSize*_spY)]
+						};
+					};
+					_sector set ["SubPositions",_subPositions];
+
+					_sectors set [_index,_sector];
+				};
+			};
+		};
+	}],	
 	/*----------------------------------------------------------------------------
 	Protected: buildLayer
 	
@@ -40,46 +96,19 @@ Flags:
 		<Hashmap> - of sectors (each a <hashmap> in and of itself) where key is [x,y] index from [0,0] to [numXSectors,numYSectors] (not a world position)
 	-----------------------------------------------------------------------------*/
 	["buildLayer",compileFinal {
-		params [["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]];
+		params [["_layerBuilder",nil,[createhashmap]]];
 
+		private _sectors = _self get "Sectors";
 		private _sectorSize = _self get "SectorSize";
 		private _sectorRadius = _self get "SectorRadius";
 		private _gridWidth = _self get "GridWidth";
 
-		private _sectors = createhashmap;
 		for "_yAxis" from 0 to _gridWidth - 1 do {
 			for "_xAxis" from 0 to _gridWidth - 1 do {
-				//Set Index and Positions
-				private _sector = createhashmapobject [XPS_PF_typ_MapSector,[_xAxis,_yAxis]];
-				private _index = _sector get "Index";
-				private _posRef = _sector set ["PosRef", [_sectorSize * _xAxis,_sectorSize * _yAxis]];
-				_sector set ["PosCenter", [(_sectorSize * _xAxis)+_sectorRadius,(_sectorSize * _yAxis)+_sectorRadius]];
-
-				//Set SubPositions - Cereates a 3x3 grid within sector with Indices of:
-				// -------
-				// |6|7|8|
-				// -------
-				// |3|4|5|
-				// -------
-				// |0|1|2|
-				// -------
-				if (_useSubpositions) then {
-					private _subPosSize = _sectorRadius/2;
-					private _subPositions = [];
-					for "_spY" from 1 to 3 do {
-						for "_spX" from 1 to 3 do {
-							_subPositions pushback [_posRef#0+(_subPosSize*_spX),_posRef#1+(_subPosSize*_spY)]
-						};
-					};
-					_sector set ["SubPositions",_subPositions];
-				};
-
-				_layerBuilder call ["BuildSector",[_sector,_sectorSize,_sectorRadius]];
-				_sectors set [_index,_sector];
+				private _sector = _sectors get [_xAxis,_yAxis];
+				_layerBuilder call ["AddLayerData",[_sector,_sectorSize,_sectorRadius]];
 			};
 		};
-		_sector set ["Heuristic",+(_layerBuilder get "Heuristic")];
-		_sectors;
 	}],	
 	["heuristic",compileFinal {
 		//TODO #4 MapGraph - Implement heuristic
@@ -118,16 +147,29 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GridWidth",nil],
 	/*----------------------------------------------------------------------------
-	Property: Layers
+	Property: Sectors
 	
 		--- Prototype --- 
-		get "Layers"
+		get "Sectors"
 		---
+
+		<pathfinding.XPS_PF_ifc_IMapGraph.Sectors>
 	
 	Returns: 
 		<Hashmap> - a Multidimensional <hashmap> where key is [x,y] index of sector and value is a <hashmap> of sub-values
 	-----------------------------------------------------------------------------*/
-	["Layers",nil],
+	["Sectors",nil],
+	/*----------------------------------------------------------------------------
+	Property: Heuristics
+	
+		--- Prototype --- 
+		get "Heuristics"
+		---
+	
+	Returns: 
+		<Hashmap> - a Multidimensional <hashmap> where key is Layer Name and value is a <hashmap> of heuristic methods
+	-----------------------------------------------------------------------------*/
+	["Heuristics",nil],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
 	
@@ -146,17 +188,20 @@ Flags:
 		_self set ["SectorSize",_sectorSize];
 		_self set ["SectorRadius",_sectorSize/2];
 		_self set ["GridWidth", ceil(worldSize/_sectorSize)];
-		_self set ["Layers",createhashmap];
+		_self set ["Sectors",createhashmap];
+		_self call ["buildGraph"];
 	}],	
 	/*----------------------------------------------------------------------------
-	Method: AddLayer
+	Method: AddLayerData
 	
 		--- Prototype --- 
-		call ["AddLayer",[_layerName, _layerBuilder, _useSubPositions*]]
+		call ["AddLayerData",[_layerName, _layerBuilder, _useSubPositions*]]
 		---
 
+		<pathfinding.XPS_PF_ifc_IMapGraph.AddLayerData>
+
 	Description:
-		Adds a new layer to the <Layer> <hashmap>
+		Adds a new layer to Sector Data and Heuristics
 	
 	Parameters: 
 		_layerName - <String> - a name for the layer to use as key. If already exists, will overwrite.
@@ -166,30 +211,99 @@ Flags:
 	Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["AddLayer",compileFinal {
-		if !(params [["_layerName",nil,[""]],["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]]) exitwith {false};
-		if !([_layerBuilder,["XPS_PF_ifc_ILayerBuilder"]] call XPS_fnc_checkInterface) exitwith {false};
-		private _layers = _self get "Layers";
-		if (_layerName in keys _layers) then {_layers deleteAt _layerName;};
-		private _layer = _self call ["buildLayer",[_layerBuilder]];
-		_layers set ["_layerName",_layer];
+	["AddLayerData",compileFinal {
+		if !(params [["_layerBuilder",nil,[createhashmap]]]) exitwith {false};
+		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitwith {false};
+		private _layer = _self call ["buildLayer",[_sectors,_layerBuilder]];
+
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetEstimatedDistance
+    
+    	--- Prototype --- 
+    	call ["GetEstimatedDistance",[_currentPos,_endPos]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetEstimatedDistance>
+    
+    Optionals: 
+		_currentPos - <Array> - current position of working graph 
+		_endPos - <Array> - goal position
+	-----------------------------------------------------------------------------*/
 	["GetEstimatedDistance",compileFinal {
 		params ["_currentPos","_endPos"];
 		private _pos1 = _currentPos get "PosCenter";
 		private _pos2 = _endPos get "PosCenter";
 		_pos1 distance _pos2;
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetNeighbors
+    
+    	--- Prototype --- 
+    	call ["GetNeighbors",[_currentPos,_endPos,_doctrine]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetNeighbors>
+    
+    Optionals: 
+		_currentPos - <Array> - current position of working graph 
+		_endPos - <Array> - goal position
+		_doctrine - <Hashmap> - doctrine to use
+	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
+		params ["_currentPos","_prevPos","_doctrine"];
 		//TODO #2 MapGraph - Implement GetNeighbors
 
 		//Filter by CanTraverse?
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetMoveCost
+    
+    	--- Prototype --- 
+    	call ["GetMoveCost",[_currentPos,_nextPos,_doctrine]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetMoveCost>
+    
+    Optionals: 
+		_currentPos - <Array> - current position of working graph 
+		_nextPos - <Array> - connected grid square
+		_doctrine - <Hashmap> - doctrine to use
+	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
-		params ["_currentPos","_nextPos"];
+		params ["_currentPos","_nextPos","_doctrine"];
 		//private _pos1 = _currentPos get "PosCenter";
 		//private _pos2 = _nextPos get "PosCenter";
 		//_pos1 distance _pos2;
 	}],
-	["Init",compileFinal {true;}]
+	/*----------------------------------------------------------------------------
+	Method: GetNodeAt
+    
+    	--- Prototype --- 
+    	call ["GetNodeAt",[_pos]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetNodeAt>
+    
+    Optionals: 
+		_pos - <Array> - current position to search
+	-----------------------------------------------------------------------------*/
+	["GetNodeAt",compileFinal {
+		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
+		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
+		
+	}],
+	/*----------------------------------------------------------------------------
+	Method: Init
+    
+    	--- Prototype --- 
+    	call ["Init"]
+    	---
+		<main.XPS_ifc_IAstarGraph.Init>
+	Used to reset any working values if needed. Unused in this instance.
+
+	Returns:
+		<Nothing>
+	-----------------------------------------------------------------------------*/
+	["Init",compileFinal {}]
 ]

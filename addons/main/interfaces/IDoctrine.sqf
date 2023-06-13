@@ -1,18 +1,15 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_IBlackboard
+Interface: main. XPS_ifc_IDoctrine
 <Interface>
 
 Authors:
     Crashdome
 
-	Method: AttachToObject
-
-	Recommended Parameters:
+	Property: Heuristics
 	
-		_object - <Object>
-		_varName - <String>
+	<Array>
 ---------------------------------------------------------------------------- */
 [
-	["AttachToObject","CODE"]
+	["Heuristics","ARRAY"]
 ]

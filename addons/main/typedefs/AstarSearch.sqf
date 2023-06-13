@@ -21,7 +21,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_typ_AstarSearch"}],
+	["#str",compileFinal {"XPS_typ_AstarSearch"}],
 	["#type","XPS_typ_AstarSearch"],
 	["@interfaces",["XPS_ifc_IAstarSearch"]],
 
@@ -155,6 +155,17 @@ Flags:
 		<HashmapObject> - A graph of nodes that implement the <XPS_typ_IAstarGraph> interface
 	-----------------------------------------------------------------------------*/
 	["Graph",nil],
+	/*----------------------------------------------------------------------------
+	Property: Doctrine
+    
+    	--- Prototype --- 
+    	get "Doctrine"
+    	---
+    
+    Returns: 
+		<HashmapObject> - A <HashmapObject> of heuristical values to apply to the graph
+	-----------------------------------------------------------------------------*/
+	["Doctrine",nil],
 	/*----------------------------------------------------------------------------
 	Property: Path
     

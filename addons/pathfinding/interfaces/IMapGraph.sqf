@@ -1,20 +1,15 @@
 /* ----------------------------------------------------------------------------
-Interface: pathfinding. XPS_PF_ifc_ILayerBuilder
+Interface: pathfinding. XPS_PF_ifc_IMapGraph
 <Interface>
 
 Authors:
     Crashdome
 
-	Property: LayerName
+	Property: Sectors
 
 	Method: AddLayerData
-
-	Method: AddHeuristic
-
-	Method: AddDoctrine
 ---------------------------------------------------------------------------- */
 [
-	["LayerName","STRING"]
+	["Sectors","HASHMAP"]
 	["AddLayerData","CODE"],
-	["AddHeuristic","CODE"]
 ]

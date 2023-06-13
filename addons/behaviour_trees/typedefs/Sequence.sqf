@@ -28,7 +28,7 @@ Protected: currentIndex
 	
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Sequence"}],
+	["#str",compileFinal {"XPS_BT_typ_Sequence"}],
 	["#type","XPS_BT_typ_Sequence"],
 	["#base",XPS_BT_typ_Composite],
 	/*----------------------------------------------------------------------------
