@@ -450,7 +450,7 @@ Flags:
 	Parameters:
 		_path - <Array> - An array of <RoadNodes> that represent a path
 	-----------------------------------------------------------------------------*/
-	["SmoothPath",{
+	["SmoothPath", compileFinal {
 		params [["_path",[],[[]]]];
 
 		if (count _path > 3) then {
@@ -475,8 +475,8 @@ Flags:
 			};		
 		};
 	}],
-	//TDOD : Move this to Formation AI because it can only work in that situation
-	["CalculateDrivePath",{
+	//TODO : Move this to Formation AI because it can only work in that situation
+	["CalculateDrivePath", compileFinal {
 		params [["_start",nil,[[]],[2,3]],["_end",nil,[[]],[2,3]],["_path",[],[[]]],["_side","",[""]]];
 
 		if (isNil "_start") then {_start = (path deleteAt 0) get "PosASL"};

@@ -24,7 +24,7 @@ Protected: child
 	<HashmapObject> - child node
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Inverter"}],
+	["#str",compileFinal {"XPS_BT_typ_Inverter"}],
 	["#type","XPS_BT_typ_Inverter"],
 	["#base",XPS_BT_typ_Decorator],
 	/*----------------------------------------------------------------------------

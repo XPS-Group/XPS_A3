@@ -19,7 +19,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_RoadNode"}],
+	["#str",compileFinal {"XPS_PF_typ_RoadNode"}],
 	["#type","XPS_PF_typ_RoadNode"],
 	["@interfaces",["XPS_ifc_IAstarNode"]],	
 	/*----------------------------------------------------------------------------
@@ -89,18 +89,6 @@ Flags:
 		key/value pair of connected roads in format ["name",road object]
 	-----------------------------------------------------------------------------*/
 	["ConnectedTo",nil],
-	/*----------------------------------------------------------------------------
-	Property: ConnectedToPath
-    
-    	--- Prototype --- 
-    	get "ConnectedToPath"
-    	---
-    
-    Returns: 
-		<Hashmap> - contains a <Hashmap> of roads it is connected to and stores
-		a sequence of positions Start,Mid,End
-	-----------------------------------------------------------------------------*/
-	//["ConnectedToPath",nil],
 	/*----------------------------------------------------------------------------
 	Property: Index
     

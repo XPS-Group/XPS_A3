@@ -28,7 +28,7 @@ Protected: currentIndex
 	
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Composite"}],
+	["#str",compileFinal {"XPS_BT_typ_Composite"}],
 	["#type","XPS_BT_typ_Composite"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------

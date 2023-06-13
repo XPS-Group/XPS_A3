@@ -19,7 +19,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [	
-	["#str",{"XPS_PF_typ_MapSector"}],
+	["#str",compileFinal {"XPS_PF_typ_MapSector"}],
 	["#type","XPS_PF_typ_MapSector"],
 	["@interfaces",["XPS_ifc_AstarNode"]],
 	/*----------------------------------------------------------------------------
