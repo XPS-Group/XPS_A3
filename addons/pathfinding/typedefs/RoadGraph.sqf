@@ -263,19 +263,6 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Items",nil],
 	/*----------------------------------------------------------------------------
-	Method: Init
-    
-    	--- Prototype --- 
-    	call ["Init"]
-    	---
-		<main.XPS_ifc_IAstarGraph.Init>
-	Used to reset any working values if needed. Unused in this instance.
-
-	Returns:
-		<Nothing>
-	-----------------------------------------------------------------------------*/
-	["Init",compileFinal {}],
-	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
     
     	--- Prototype --- 
@@ -296,7 +283,7 @@ Flags:
 	Method: GetNeighbors
     
     	--- Prototype --- 
-    	call ["GetNeighbors",[_currentPos,_endPos]]
+    	call ["GetNeighbors",[_currentPos,_endPos,_doctrine]]
     	---
 
 		<main.XPS_ifc_IAstarGraph.GetNeighbors>
@@ -304,6 +291,7 @@ Flags:
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_endPos - <Array> - goal position
+		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
 		if !(params [["_current",nil,[createhashmap]],["_prev",nil,[createhashmap]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
@@ -327,7 +315,7 @@ Flags:
 	Method: GetMoveCost
     
     	--- Prototype --- 
-    	call ["GetMoveCost",[_currentPos,_nextPos]]
+    	call ["GetMoveCost",[_currentPos,_nextPos,_doctrine]]
     	---
 
 		<main.XPS_ifc_IAstarGraph.GetMoveCost>
@@ -335,6 +323,7 @@ Flags:
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_nextPos - <Array> - connected road location
+		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
 		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
@@ -356,11 +345,23 @@ Flags:
 		_pos - <Array> - current position to look for nearest road object (within 50m)
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
-		if !(params [["_pos",nil,[[]],[2,3]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
-		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
-		private _roads = nearestTerrainObjects [_pos,_doctrine get "RoadTypes",50,true];
+		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
+		private _roads = nearestTerrainObjects [_pos,["MAIN ROAD","ROAD","TRACK","TRAIL"],50,true];
 		_self get "Items" get (str (_roads#0));
 	}],
+	/*----------------------------------------------------------------------------
+	Method: Init
+    
+    	--- Prototype --- 
+    	call ["Init"]
+    	---
+		<main.XPS_ifc_IAstarGraph.Init>
+	Used to reset any working values if needed. Unused in this instance.
+
+	Returns:
+		<Nothing>
+	-----------------------------------------------------------------------------*/
+	["Init",compileFinal {}],
 	/*----------------------------------------------------------------------------
 	Method: ToggleGraphMarkers
     

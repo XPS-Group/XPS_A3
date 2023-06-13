@@ -15,7 +15,9 @@ Parent:
 	none
 
 Implements: 
-	<main.XPS_ifc_IMapGraph>
+
+	<pathfinding.XPS_PF_ifc_IMapGraph>
+
 	<main.XPS_ifc_IAstarGraph>
 
 Flags: 
@@ -103,9 +105,7 @@ Flags:
 
 		for "_yAxis" from 0 to _gridWidth - 1 do {
 			for "_xAxis" from 0 to _gridWidth - 1 do {
-				//Set Index and Positions
 				private _sector = _sectors get [_xAxis,_yAxis];
-				
 				_layerBuilder call ["AddLayerData",[_sector,_sectorSize,_sectorRadius]];
 			};
 		};
@@ -147,11 +147,13 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GridWidth",nil],
 	/*----------------------------------------------------------------------------
-	Property: Layers
+	Property: Sectors
 	
 		--- Prototype --- 
-		get "Layers"
+		get "Sectors"
 		---
+
+		<pathfinding.XPS_PF_ifc_IMapGraph.Sectors>
 	
 	Returns: 
 		<Hashmap> - a Multidimensional <hashmap> where key is [x,y] index of sector and value is a <hashmap> of sub-values
@@ -196,8 +198,10 @@ Flags:
 		call ["AddLayerData",[_layerName, _layerBuilder, _useSubPositions*]]
 		---
 
+		<pathfinding.XPS_PF_ifc_IMapGraph.AddLayerData>
+
 	Description:
-		Adds a new layer to the <Layer> <hashmap>
+		Adds a new layer to Sector Data and Heuristics
 	
 	Parameters: 
 		_layerName - <String> - a name for the layer to use as key. If already exists, will overwrite.
@@ -208,36 +212,98 @@ Flags:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["AddLayerData",compileFinal {
-		if !(params [["_layerName",nil,[""]],["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]]) exitwith {false};
+		if !(params [["_layerBuilder",nil,[createhashmap]]]) exitwith {false};
 		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitwith {false};
-		private _layers = _self get "Layers";
-		if !(_layerName in keys _layers) then {
-			_sectors = createhashmap;
-		} else {
-			private _layer = _self call ["buildLayer",[_sectors,_layerBuilder]];
-			_layers set ["_layerName",_layer];
-		};
+		private _layer = _self call ["buildLayer",[_sectors,_layerBuilder]];
+
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetEstimatedDistance
+    
+    	--- Prototype --- 
+    	call ["GetEstimatedDistance",[_currentPos,_endPos]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetEstimatedDistance>
+    
+    Optionals: 
+		_currentPos - <Array> - current position of working graph 
+		_endPos - <Array> - goal position
+	-----------------------------------------------------------------------------*/
 	["GetEstimatedDistance",compileFinal {
 		params ["_currentPos","_endPos"];
 		private _pos1 = _currentPos get "PosCenter";
 		private _pos2 = _endPos get "PosCenter";
 		_pos1 distance _pos2;
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetNeighbors
+    
+    	--- Prototype --- 
+    	call ["GetNeighbors",[_currentPos,_endPos,_doctrine]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetNeighbors>
+    
+    Optionals: 
+		_currentPos - <Array> - current position of working graph 
+		_endPos - <Array> - goal position
+		_doctrine - <Hashmap> - doctrine to use
+	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
 		params ["_currentPos","_prevPos","_doctrine"];
 		//TODO #2 MapGraph - Implement GetNeighbors
 
 		//Filter by CanTraverse?
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetMoveCost
+    
+    	--- Prototype --- 
+    	call ["GetMoveCost",[_currentPos,_nextPos,_doctrine]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetMoveCost>
+    
+    Optionals: 
+		_currentPos - <Array> - current position of working graph 
+		_nextPos - <Array> - connected grid square
+		_doctrine - <Hashmap> - doctrine to use
+	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
 		params ["_currentPos","_nextPos","_doctrine"];
 		//private _pos1 = _currentPos get "PosCenter";
 		//private _pos2 = _nextPos get "PosCenter";
 		//_pos1 distance _pos2;
 	}],
-	["Init",compileFinal {
-		_self call ["buildGraph"];
-		_self set ["Heuristics",createhashmap];
-	}]
+	/*----------------------------------------------------------------------------
+	Method: GetNodeAt
+    
+    	--- Prototype --- 
+    	call ["GetNodeAt",[_pos]]
+    	---
+
+		<main.XPS_ifc_IAstarGraph.GetNodeAt>
+    
+    Optionals: 
+		_pos - <Array> - current position to search
+	-----------------------------------------------------------------------------*/
+	["GetNodeAt",compileFinal {
+		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
+		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
+		
+	}],
+	/*----------------------------------------------------------------------------
+	Method: Init
+    
+    	--- Prototype --- 
+    	call ["Init"]
+    	---
+		<main.XPS_ifc_IAstarGraph.Init>
+	Used to reset any working values if needed. Unused in this instance.
+
+	Returns:
+		<Nothing>
+	-----------------------------------------------------------------------------*/
+	["Init",compileFinal {}]
 ]

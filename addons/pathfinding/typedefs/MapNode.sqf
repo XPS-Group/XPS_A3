@@ -12,7 +12,10 @@ Parent:
 	none
 
 Implements: 
-	<main. XPS_ifc_AstarNode>
+
+	<XPS_PF_ifc_IMapNode>
+
+	<main. XPS_ifc_IAstarNode>
 
 Flags: 
 	none
@@ -41,6 +44,8 @@ Flags:
     	--- Prototype --- 
     	get "PosRef"
     	---
+
+		<XPS_PF_ifc_IMapNode.PosRef>
     
     Returns: 
 		<Array> - lower bound [x,y] position in world (bottom left corner)
@@ -52,6 +57,8 @@ Flags:
     	--- Prototype --- 
     	get "PosCenter"
     	---
+
+		<XPS_PF_ifc_IMapNode.PosCenter>
     
     Returns: 
 		<Array> - center [x,y] position of square in world

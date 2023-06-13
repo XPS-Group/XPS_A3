@@ -7,6 +7,11 @@ Authors:
     Crashdome
 
 	Method: AttachToObject
+
+	Recommended Parameters:
+	
+		_object - <Object>
+		_varName - <String>
 ---------------------------------------------------------------------------- */
 [
 	["AttachToObject","CODE"]

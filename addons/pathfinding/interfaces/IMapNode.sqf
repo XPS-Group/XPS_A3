@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: pathfinding. XPS_ifc_IMapNode
+Interface: pathfinding. XPS_PF_ifc_IMapNode
 <Interface>
 
 Adds additional Proeprties and Methods to <main. XPS_ifc_IAstarNode>
