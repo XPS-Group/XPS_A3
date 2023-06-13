@@ -5,6 +5,7 @@ An Arma 3 Framework Mod
 
 [ [Road Map](https://xps-group.notion.site/6182e1ad293b4572bec60726a997e279?v=58732b82ad9f4ea2a6e86446ea4031fd&pvs=4) ] 
 [ [Wiki](https://xps-group.notion.site/0f5270147d434c9387d49a3b16311a75?v=6b8b37e55002438893964177eec15bca&pvs=4) ] 
+[ [Discord](https://discord.gg/ryXZjDY7En) ] 
 [ [Source Documentation](https://xps-group.github.io/) ] 
 
 ### *** This Mod is currently a WIP (pre-Alpha) as of June, 2023 and is Dev branch only as it is dependant on the 2.14 release ***
