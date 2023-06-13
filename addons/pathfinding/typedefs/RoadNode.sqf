@@ -12,14 +12,14 @@ Parent:
 	none
 
 Implements: 
-	XPS_ifc_IAstarNode
+	<main. XPS_ifc_IAstarNode>
 
 Flags: 
 	none
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_RoadNode"}],
+	["#str",compileFinal {"XPS_PF_typ_RoadNode"}],
 	["#type","XPS_PF_typ_RoadNode"],
 	["@interfaces",["XPS_ifc_IAstarNode"]],	
 	/*----------------------------------------------------------------------------
@@ -90,24 +90,14 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["ConnectedTo",nil],
 	/*----------------------------------------------------------------------------
-	Property: ConnectedToPath
-    
-    	--- Prototype --- 
-    	get "ConnectedToPath"
-    	---
-    
-    Returns: 
-		<Hashmap> - contains a <Hashmap> of roads it is connected to and stores
-		a sequence of positions Start,Mid,End
-	-----------------------------------------------------------------------------*/
-	//["ConnectedToPath",nil],
-	/*----------------------------------------------------------------------------
 	Property: Index
     
     	--- Prototype --- 
     	get "Index"
     	---
-    
+
+		<main. XPS_ifc_IAstarNode>
+
     Returns: 
 		<String> - the key used to store this in a <XPS_PF_typ_RoadGraph>
 	-----------------------------------------------------------------------------*/

@@ -2,6 +2,8 @@
 
 #define ADDON PREFIX##_##COMPONENT
 
+/* ---------------------------------------*/
+//Type Definitions and Interfaces
 #define VARNAME(var1,var2,var3) var1##_##var2##_##var3
 
 #define FILEPATH(var1,var2,var3) \ROOT\var1\addons\var2\var3
@@ -53,3 +55,9 @@
     preprocess = 1;\
     allowNils = 1;\
 }
+
+/* ---------------------------------------*/
+//Interface Checcking
+#define CHECK_IFC1(var1,ifc1) [var1,[Q(ifc1)]] call XPS_fnc_checkInterface
+#define CHECK_IFC2(var1,ifc1,ifc2) [var1,[Q(ifc1),Q(ifc2)]] call XPS_fnc_checkInterface
+#define CHECK_IFC2(var1,ifc1,ifc2,ifc3) [var1,[Q(ifc1),Q(ifc2),Q(ifc3)]] call XPS_fnc_checkInterface

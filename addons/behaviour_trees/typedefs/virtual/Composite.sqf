@@ -28,7 +28,7 @@ Protected: currentIndex
 	
 ---------------------------------------------------------------------------- */
 [
-	["#str",{"XPS_BT_typ_Composite"}],
+	["#str",compileFinal {"XPS_BT_typ_Composite"}],
 	["#type","XPS_BT_typ_Composite"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
@@ -180,7 +180,8 @@ Protected: currentIndex
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
 		if (isNil "_childNode") exitwith {false};
-		if !([_childNode, ["XPS_ifc_INode"]] call XPS_fnc_checkInterface) exitwith {false};
+		if !( CHECK_IFC1(_childNode,XPS_ifc_INode) ) exitwith {false};
+
 		private _children = _self get "children";
 		private _count = count (_children);
 		if (_index < 0 ||_index >= _count) then {_index = -1};

@@ -20,9 +20,10 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_TerrainLayerBuilder"}],
+	["#str",compileFinal {"XPS_PF_typ_TerrainLayerBuilder"}],
 	["#type","XPS_PF_typ_TerrainLayerBuilder"],
 	["@interfaces",["XPS_PF_ifc_ILayerBuilder"]],
+	["LayerName","Terrain"],
 	/*----------------------------------------------------------------------------
 	Protected: setDensityModifier
     
@@ -41,7 +42,7 @@ Flags:
 		private _searchArray = ["tree","rock","house","building","fence","wall"];
 		private _densityModifier = count nearestTerrainObjects [_sector get "PosCenter", _searchArray, _sectorSize/2, false];
 
-		_sector set ["DensityModifier",_densityModifier * _densitySizeAdjust];
+		_sector get (_self get "LayerName") set ["DensityModifier",_densityModifier * _densitySizeAdjust];
 
 		true;
 	}],
@@ -70,11 +71,12 @@ Flags:
 			if (_height < 0.3) then {_hasWater = true;_numWaterAreas = _numWaterAreas + 1;} else {_hasLand = true;_isAllWater = false;};
 		} foreach _subPositions;
 
-		_sector set ["IsAllWater",_isAllWater];
-		_sector set ["HasWater",_hasWater];
-		_sector set ["HasLand",_hasLand];
-		_sector set ["HeightModifier",_heightTotal/(count _subPositions)];
-		_sector set ["WaterModifier",_numWaterAreas/(count _subPositions)];
+		private _layer = _sector get (_self get "LayerName");
+		_layer set ["IsAllWater",_isAllWater];
+		_layer set ["HasWater",_hasWater];
+		_layer set ["HasLand",_hasLand];
+		_layer set ["HeightModifier",_heightTotal/(count _subPositions)];
+		_layer set ["WaterModifier",_numWaterAreas/(count _subPositions)];
 
 		true;
 	}],
@@ -101,10 +103,10 @@ Flags:
 				case "MAIN ROAD";
 				case "ROAD";
 				case "TRACK": {
-					_sector set ["HasRoads",true];
+					_sector get (_self get "LayerName") set ["HasRoads",true];
 				};
 				case "TRAIL": {
-					_sector set ["HasTrails",true];
+					_sector get (_self get "LayerName") set ["HasTrails",true];
 				};
 			};
 		} foreach nearestTerrainObjects [_sector get "PosCenter", ["MAIN ROAD","ROAD","TRACK","TRAIL"], _radius * 1.175, false, true];
@@ -112,31 +114,40 @@ Flags:
 		true;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: BuildSector
+	Method: AddLayerData
     
     	--- Prototype --- 
-    	call ["BuildSector",[_sector,_sectorSize,_sectorRadius]]
+    	call ["AddLayerData",[_sector,_sectorSize,_sectorRadius]]
     	---
 
-		<XPS_PF_ifc_ILayerBuilder.BuildSector>
+		<XPS_PF_ifc_ILayerBuilder.AddLayerData>
     
     Parameters: 
 		_sector - <Hashmap> - the sector to define
 		_sectorSize - <Number> - the length/width of the sector
 		_sectorRadius - <Number> - the radius of the sector 
 	-----------------------------------------------------------------------------*/
-	["BuildSector",compileFinal {
+	["AddLayerData",compileFinal {
 		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]],["_sectorRadius",nil,[0]]]) exitwith {nil;};
+
+		_sector set [_self get "LayerName",createhashmap];
 
 		_self call ["setRoadModifier",[_sector,_sectorRadius]];
 		_self call ["setHeightModifier",[_sector]];
 		_self call ["setDensityModifier",[_sector,_sectorSize]];
 
-		_sector set ["Type", "LAND"];
-		if (_sector get "IsAllWater") then {_sector set ["Type","WATER"];};
-		if (_sector get "HasWater" && _sector get "HasLand") then {_sector set ["Type","COAST"];};
-		if (_sector get "HasBridge") then {_sector set ["Type","BRIDGE"];};
+		private _layer = _sector get (_self get "LayerName");
+		_layer set ["Type", "LAND"];
+		if (_layer get "IsAllWater") then {_layer set ["Type","WATER"];};
+		if (_layer get "HasWater" && _layer get "HasLand") then {_layer set ["Type","COAST"];};
+		if (_layer get "HasBridge") then {_layer set ["Type","BRIDGE"];};
 
 		_sector;
-	}]
+	}],
+	["AddHeuristic",[
+		if !(params [["_graph",nil,[createhashmap]]]) exitwith {nil;};
+
+		private _heuristics = _graph get "Heuristics";
+		_heuristics set [(_self get "LayerName"),//TODO];
+	]]
 ]
