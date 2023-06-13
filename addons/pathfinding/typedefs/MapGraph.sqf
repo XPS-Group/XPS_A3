@@ -52,7 +52,7 @@ Flags:
 				private _sector = _sectors get [_xAxis,_yAxis];
 
 				if (isNil "_sector") then {
-					_sector = createhashmapobject [XPS_PF_typ_MapSectorNode,[_xAxis,_yAxis]];
+					_sector = createhashmapobject [XPS_PF_typ_MapNode,[_xAxis,_yAxis]];
 					private _index = _sector get "Index";
 					private _posRef = _sector set ["PosRef", [_sectorSize * _xAxis,_sectorSize * _yAxis]];
 					_sector set ["PosCenter", [(_sectorSize * _xAxis)+_sectorRadius,(_sectorSize * _yAxis)+_sectorRadius]];

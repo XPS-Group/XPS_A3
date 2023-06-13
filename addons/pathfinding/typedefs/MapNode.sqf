@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-TypeDef: pathfinding. XPS_PF_typ_MapSectorNode
+TypeDef: pathfinding. XPS_PF_typ_MapNode
 	<TypeDefinition>
 
 Authors: 
@@ -19,8 +19,8 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [	
-	["#str",compileFinal {"XPS_PF_typ_MapSectorNode"}],
-	["#type","XPS_PF_typ_MapSectorNode"],
+	["#str",compileFinal {"XPS_PF_typ_MapNode"}],
+	["#type","XPS_PF_typ_MapNode"],
 	["@interfaces",["XPS_ifc_AstarNode"]],
 	/*----------------------------------------------------------------------------
 	Property: Index
