@@ -12,7 +12,7 @@ Parent:
 	none
 
 Implements: 
-	XPS_ifc_IAstarNode
+	<main. XPS_ifc_IAstarNode>
 
 Flags: 
 	none
@@ -95,7 +95,9 @@ Flags:
     	--- Prototype --- 
     	get "Index"
     	---
-    
+
+		<main. XPS_ifc_IAstarNode>
+
     Returns: 
 		<String> - the key used to store this in a <XPS_PF_typ_RoadGraph>
 	-----------------------------------------------------------------------------*/

@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-TypeDef: pathfinding. XPS_PF_typ_MapSector
+TypeDef: pathfinding. XPS_PF_typ_MapSectorNode
 	<TypeDefinition>
 
 Authors: 
@@ -12,15 +12,15 @@ Parent:
 	none
 
 Implements: 
-	<main.XPS_ifc_AstarNode>
+	<main. XPS_ifc_AstarNode>
 
 Flags: 
 	none
 
 --------------------------------------------------------------------------------*/
 [	
-	["#str",compileFinal {"XPS_PF_typ_MapSector"}],
-	["#type","XPS_PF_typ_MapSector"],
+	["#str",compileFinal {"XPS_PF_typ_MapSectorNode"}],
+	["#type","XPS_PF_typ_MapSectorNode"],
 	["@interfaces",["XPS_ifc_AstarNode"]],
 	/*----------------------------------------------------------------------------
 	Property: Index
@@ -29,7 +29,7 @@ Flags:
     	get "Index"
     	---
     
-		implemented from <XPS_ifc_IAstarNode.Index>
+		<main. XPS_ifc_IAstarNode.Index>
 
     Returns: 
 		<Array> - Index position (key) in MapGraph
