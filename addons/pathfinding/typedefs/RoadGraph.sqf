@@ -238,8 +238,8 @@ Flags:
 		_next - <Hashmap> - road "node"
 	-----------------------------------------------------------------------------*/
 	["heuristic",compileFinal {
-		params ["_next"];
-		private _doctrineHeurs = _self get "RoadGraphDoctrine" get "Heuristics";
+		params ["_next","_doctrine"];
+		private _doctrineHeurs = _doctrine get "Heuristics";
 		private _road = _next get "RoadObject";
 		private _info = getRoadInfo _road;
 		private _result = _doctrineHeurs#2;
@@ -251,17 +251,6 @@ Flags:
 		};
 		_result;
 	}],
-	/*----------------------------------------------------------------------------
-	Property: RoadGraphDoctrine
-    
-    	--- Prototype --- 
-    	get "RoadGraphDoctrine"
-    	---
-    
-    Returns: 
-		<Hashmapobject> - (Default: default XPS_PF_typ_RoadGraphDoctrine) 
-	-----------------------------------------------------------------------------*/
-	["RoadGraphDoctrine",nil],
 	/*----------------------------------------------------------------------------
 	Property: Items
     
@@ -317,12 +306,13 @@ Flags:
 		_endPos - <Array> - goal position
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
-		params ["_current",["_prev",nil,[createhashmap]]];
-		if (isNil "_current") exitwith {nil};
-		private _road = _current get "RoadObject";
+		if !(params [["_current",nil,[createhashmap]],["_prev",nil,[createhashmap]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
+		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
+		
 		private _result = [];
 		private _neighbors = [];
-		{_neighbors append (values (_current get "ConnectedTo" get _x));} foreach (_self get "RoadGraphDoctrine" get "RoadTypes");
+		private _road = _current get "RoadObject";
+		{_neighbors append (values (_current get "ConnectedTo" get _x));} foreach (_doctrine" get "RoadTypes");
 		private _prevRoadObject = if (isNil "_prev") then {objNull} else {_prev get "RoadObject"};
 		
 		{
@@ -330,20 +320,6 @@ Flags:
 				_result pushback (_self get "Items" get str _x);
 			};
 		} foreach _neighbors;
-		
-
-		//Debug Markers
-		// if (count _result == 0) then {
-		// 	private _m = createmarker [str str(_current get "Index"),_current get "RoadObject"];
-		// 	_m setmarkercolor "ColorRed";
-		// 	_m setmarkertype "hd_dot";
-		// 	_m setMarkerSize [0.5,0.5];
-		// } else {
-		// 	private _m = createmarker [str str(_current get "Index"),_current get "RoadObject"];
-		// 	_m setmarkercolor "ColorGrey";
-		// 	_m setmarkertype "hd_dot";
-		// 	_m setMarkerSize [0.3,0.3];
-		// };
 
 		_result;
 	}],
@@ -361,13 +337,10 @@ Flags:
 		_nextPos - <Array> - connected road location
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
-		params ["_current","_next"];
-		//private _pathPoints = _current get "ConnectedToPath" get (_self get "RoadGraphDoctrine" get "Drive") get (_next get "Index");
-		//if (isNil "_pathpoints") exitwith {diag_log ["RoadGraph:GetMoveCost:_pathpoints is nil from/to:",_current get "Index",_next get "Index"];99999;};
-		//private _cost = 0;
-		//for "_i" from 1 to (count _pathPoints)-1 do {_cost = _cost + (_pathPoints#(_i-1) distance2D _pathPoints#_i)};
+		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
+		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
 		private _cost = (_current get "PosASL") distance (_next get "PosASL");
-		_cost = _cost * (_self call ["heuristic",[_next]]);
+		_cost = _cost * (_self call ["heuristic",[_next,_doctrine]]);
 		_cost;
 	}],
 	/*----------------------------------------------------------------------------
@@ -383,8 +356,9 @@ Flags:
 		_pos - <Array> - current position to look for nearest road object (within 50m)
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
-		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
-		private _roads = nearestTerrainObjects [_pos,_self get "RoadGraphDoctrine" get "RoadTypes",50,true];
+		if !(params [["_pos",nil,[[]],[2,3]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
+		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
+		private _roads = nearestTerrainObjects [_pos,_doctrine get "RoadTypes",50,true];
 		_self get "Items" get (str (_roads#0));
 	}],
 	/*----------------------------------------------------------------------------

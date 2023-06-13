@@ -156,7 +156,7 @@ Protected: child
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]]];
 		if (isNil "_childNode") exitwith {false};
-		if !([_childNode, XPS_ifc_INode] call XPS_fnc_checkInterface) exitwith {false};
+		if !(CHECK_IFC1(_childNode,XPS_ifc_INode)) exitwith {false};
 		_self set ["child",_childNode];
 		_childNode set ["Blackboard",_self get "Blackboard"];
 		true;

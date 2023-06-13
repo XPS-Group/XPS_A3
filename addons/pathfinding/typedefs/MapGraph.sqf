@@ -15,6 +15,7 @@ Parent:
 	none
 
 Implements: 
+	<main.XPS_ifc_IMapGraph>
 	<main.XPS_ifc_IAstarGraph>
 
 Flags: 
@@ -24,24 +25,23 @@ Flags:
 [
 	["#str",compileFinal {"XPS_PF_typ_MapGraph"}],
 	["#type","XPS_PF_typ_MapGraph"],
-	["@interfaces",["XPS_ifc_IAstarGraph"]],
+	["@interfaces",["XPS_PF_ifc_IMapGraph","XPS_ifc_IAstarGraph"]],
 	/*----------------------------------------------------------------------------
-	Protected: buildLayer
+	Protected: buildGraph
 	
 		--- Prototype --- 
-		call ["buildLayer",[_layerBuilder,_useSubpositions*]]
+		call ["buildGraph"]
 		---
 	
 	Parameters: 
-		_layerBuilder - <HashmapObject> - which implements the <XPS_PF_ifc_ILayerBuilder> interface
-		_useSubpositions* - <Boolean> - (Optional - Default : false) creates a 3x3 grid within the sector
+		none
 	
 	Returns: 
 		<Hashmap> - of sectors (each a <hashmap> in and of itself) where key is [x,y] index from [0,0] to [numXSectors,numYSectors] (not a world position)
 	-----------------------------------------------------------------------------*/
-	["buildLayer",compileFinal {
-		params [["_sectors",createhashmap,[createhashmap]],["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]];
+	["buildGraph",compileFinal {
 
+		private _sectors = _self get "Sectors";
 		private _sectorSize = _self get "SectorSize";
 		private _sectorRadius = _self get "SectorRadius";
 		private _gridWidth = _self get "GridWidth";
@@ -65,25 +65,50 @@ Flags:
 					// -------
 					// |0|1|2|
 					// -------
-					if (_useSubpositions) then {
-						private _subPosSize = _sectorRadius/2;
-						private _subPositions = [];
-						for "_spY" from 1 to 3 do {
-							for "_spX" from 1 to 3 do {
-								_subPositions pushback [_posRef#0+(_subPosSize*_spX),_posRef#1+(_subPosSize*_spY)]
-							};
+					private _subPosSize = _sectorRadius/2;
+					private _subPositions = [];
+					for "_spY" from 1 to 3 do {
+						for "_spX" from 1 to 3 do {
+							_subPositions pushback [_posRef#0+(_subPosSize*_spX),_posRef#1+(_subPosSize*_spY)]
 						};
-						_sector set ["SubPositions",_subPositions];
 					};
+					_sector set ["SubPositions",_subPositions];
 
 					_sectors set [_index,_sector];
 				};
-				
-				_layerBuilder call ["BuildSector",[_sector,_sectorSize,_sectorRadius]];
-				_sector set ["Heuristic",+(_layerBuilder get "Heuristic")];
 			};
 		};
-		_sectors;
+	}],	
+	/*----------------------------------------------------------------------------
+	Protected: buildLayer
+	
+		--- Prototype --- 
+		call ["buildLayer",[_layerBuilder,_useSubpositions*]]
+		---
+	
+	Parameters: 
+		_layerBuilder - <HashmapObject> - which implements the <XPS_PF_ifc_ILayerBuilder> interface
+		_useSubpositions* - <Boolean> - (Optional - Default : false) creates a 3x3 grid within the sector
+	
+	Returns: 
+		<Hashmap> - of sectors (each a <hashmap> in and of itself) where key is [x,y] index from [0,0] to [numXSectors,numYSectors] (not a world position)
+	-----------------------------------------------------------------------------*/
+	["buildLayer",compileFinal {
+		params [["_layerBuilder",nil,[createhashmap]]];
+
+		private _sectors = _self get "Sectors";
+		private _sectorSize = _self get "SectorSize";
+		private _sectorRadius = _self get "SectorRadius";
+		private _gridWidth = _self get "GridWidth";
+
+		for "_yAxis" from 0 to _gridWidth - 1 do {
+			for "_xAxis" from 0 to _gridWidth - 1 do {
+				//Set Index and Positions
+				private _sector = _sectors get [_xAxis,_yAxis];
+				
+				_layerBuilder call ["AddLayerData",[_sector,_sectorSize,_sectorRadius]];
+			};
+		};
 	}],	
 	["heuristic",compileFinal {
 		//TODO #4 MapGraph - Implement heuristic
@@ -131,7 +156,18 @@ Flags:
 	Returns: 
 		<Hashmap> - a Multidimensional <hashmap> where key is [x,y] index of sector and value is a <hashmap> of sub-values
 	-----------------------------------------------------------------------------*/
-	["Layers",nil],
+	["Sectors",nil],
+	/*----------------------------------------------------------------------------
+	Property: Heuristics
+	
+		--- Prototype --- 
+		get "Heuristics"
+		---
+	
+	Returns: 
+		<Hashmap> - a Multidimensional <hashmap> where key is Layer Name and value is a <hashmap> of heuristic methods
+	-----------------------------------------------------------------------------*/
+	["Heuristics",nil],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
 	
@@ -150,13 +186,14 @@ Flags:
 		_self set ["SectorSize",_sectorSize];
 		_self set ["SectorRadius",_sectorSize/2];
 		_self set ["GridWidth", ceil(worldSize/_sectorSize)];
-		_self set ["Layers",createhashmap];
+		_self set ["Sectors",createhashmap];
+		_self call ["buildGraph"];
 	}],	
 	/*----------------------------------------------------------------------------
-	Method: AddLayer
+	Method: AddLayerData
 	
 		--- Prototype --- 
-		call ["AddLayer",[_layerName, _layerBuilder, _useSubPositions*]]
+		call ["AddLayerData",[_layerName, _layerBuilder, _useSubPositions*]]
 		---
 
 	Description:
@@ -170,13 +207,16 @@ Flags:
 	Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["AddLayer",compileFinal {
+	["AddLayerData",compileFinal {
 		if !(params [["_layerName",nil,[""]],["_layerBuilder",nil,[createhashmap]],["_useSubpositions",false,[true]]]) exitwith {false};
-		if !([_layerBuilder,["XPS_PF_ifc_ILayerBuilder"]] call XPS_fnc_checkInterface) exitwith {false};
+		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitwith {false};
 		private _layers = _self get "Layers";
-		if !(_layerName in keys _layers) then {_sectors = createhashmap;} else {};
-		private _layer = _self call ["buildLayer",[_sectors,_layerBuilder]];
-		_layers set ["_layerName",_layer];
+		if !(_layerName in keys _layers) then {
+			_sectors = createhashmap;
+		} else {
+			private _layer = _self call ["buildLayer",[_sectors,_layerBuilder]];
+			_layers set ["_layerName",_layer];
+		};
 	}],
 	["GetEstimatedDistance",compileFinal {
 		params ["_currentPos","_endPos"];
@@ -185,15 +225,19 @@ Flags:
 		_pos1 distance _pos2;
 	}],
 	["GetNeighbors",compileFinal {
+		params ["_currentPos","_prevPos","_doctrine"];
 		//TODO #2 MapGraph - Implement GetNeighbors
 
 		//Filter by CanTraverse?
 	}],
 	["GetMoveCost",compileFinal {
-		params ["_currentPos","_nextPos"];
+		params ["_currentPos","_nextPos","_doctrine"];
 		//private _pos1 = _currentPos get "PosCenter";
 		//private _pos2 = _nextPos get "PosCenter";
 		//_pos1 distance _pos2;
 	}],
-	["Init",compileFinal {true;}]
+	["Init",compileFinal {
+		_self call ["buildGraph"];
+		_self set ["Heuristics",createhashmap];
+	}]
 ]

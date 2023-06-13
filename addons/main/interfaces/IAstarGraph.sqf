@@ -17,9 +17,9 @@ Authors:
 	Method: Init
 ---------------------------------------------------------------------------- */
 [
-	["GetEstimatedDistance","CODE"],
-	["GetNeighbors","CODE"],
-	["GetMoveCost","CODE"],
-	["GetNodeAt","CODE"],
+	["GetEstimatedDistance","CODE"], // params [_current,_end]
+	["GetNeighbors","CODE"], // params [_current,_prev,_doctrine]
+	["GetMoveCost","CODE"], // params [_current,_next,_doctrine]
+	["GetNodeAt","CODE"], // params [_pos,_doctrine]
 	["Init","CODE"]
 ]
