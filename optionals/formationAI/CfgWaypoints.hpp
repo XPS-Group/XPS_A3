@@ -1,6 +1,6 @@
 class CfgWaypoints {
 	class ADDON {
-		displayName = "XPS Waypoints";
+		displayName = "XPS Formation Waypoints";
 		class WP_Test {
 			displayName = "TEST";
 			displayNameDebug = "XPS_WP_Test";
