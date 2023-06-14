@@ -300,7 +300,7 @@ Flags:
 		private _result = [];
 		private _neighbors = [];
 		private _road = _current get "RoadObject";
-		{_neighbors append (values (_current get "ConnectedTo" get _x));} foreach (_doctrine" get "RoadTypes");
+		{_neighbors append (values (_current get "ConnectedTo" get _x));} foreach (_doctrine get "RoadTypes");
 		private _prevRoadObject = if (isNil "_prev") then {objNull} else {_prev get "RoadObject"};
 		
 		{

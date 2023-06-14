@@ -12,7 +12,7 @@ Parent:
 	none
 
 Implements: 
-	none
+	<XPS_PF_ifc_IRoadGraphDoctrine>
 
 Flags: 
 	none
@@ -21,6 +21,7 @@ Flags:
 [
 	["#str",compileFinal {"XPS_PF_typ_RoadGraphDoctrine"}],
 	["#type","XPS_PF_typ_RoadGraphDoctrine"],
+	["@interfaces",["XPS_PF_ifc_IRoadGraphDoctrine"]],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
