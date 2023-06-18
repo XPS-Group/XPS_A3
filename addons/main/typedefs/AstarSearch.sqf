@@ -14,7 +14,7 @@ Parent:
 	none
 
 Implements: 
-	<XPS_ifc_IAstarNode>
+	<XPS_ifc_IAstarSearch>
 
 Flags: 
 	none
@@ -213,23 +213,70 @@ Flags:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params ["_graph",["_startKey",nil,[]],["_endKey",nil,[]]];
+		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]]]) exitwith {nil;};
+		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
+
 		_self set ["Graph",_graph];
 		_self set ["StartKey",_startKey];
 		_self set ["EndKey",_endKey];
-		_self call ["InitGraph"];
+		_self call ["Init"];
 	}],
 	/*----------------------------------------------------------------------------
-	Method: InitGraph
+	Method: AdjustEstimatedDistance
     
     	--- Prototype --- 
-    	call ["InitGraph"]
+    	call ["AdjustEstimatedDistance",[_estDist]]
+    	---
+
+		<main.XPS_ifc_IAstarSearch.AdjustEstimatedDistance>
+    
+    Optionals: 
+		_estDist - <Number> 
+	-----------------------------------------------------------------------------*/
+	["AdjustEstimatedDistance",compileFinal {
+		params ["_estDist"];
+	}],
+	/*----------------------------------------------------------------------------
+	Method: AdjustMoveCost
+    
+    	--- Prototype --- 
+    	call ["AdjustMoveCost",[_moveCost]]
+    	---
+
+		<main.XPS_ifc_IAstarSearch.AdjustMoveCost>
+    
+    Optionals: 
+		_moveCost - <Number> 
+	-----------------------------------------------------------------------------*/
+	["AdjustMoveCost",compileFinal {
+		params ["_moveCost"];
+	}],
+	/*----------------------------------------------------------------------------
+	Method: FilterNeighbors
+    
+    	--- Prototype --- 
+    	call ["FilterNeighbors",[_neighbors]]
+    	---
+
+		<main.XPS_ifc_IAstarSearch.FilterNeighbors>
+    
+    Optionals: 
+		_neighbors - <Array> 
+	-----------------------------------------------------------------------------*/
+	["FilterNeighbors",compileFinal {
+		params ["_neighbors"];
+	}],
+	/*----------------------------------------------------------------------------
+	Method: Init
+    
+    	--- Prototype --- 
+    	call ["Init"]
     	---
     
     Calls the initialization of the associated graph with the start and end keys.
 	Can be used to reset pathfinding also.
 	-----------------------------------------------------------------------------*/
-	["InitGraph",compileFinal {
+	["Init",compileFinal {
 		private _graph = _self get "Graph";
 		_self set ["StartNode",_graph call ["GetNodeAt",[_self get "StartKey"]]];
 		_self set ["EndNode",_graph call ["GetNodeAt",[_self get "EndKey"]]];
@@ -259,12 +306,12 @@ Flags:
 		};
 		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
 
-		private _neighbors = _graph call ["GetNeighbors",[_currentNode,_prevNode]];
+		private _neighbors = _self call ["FilterNieghbors",_graph call ["GetNeighbors",[_currentNode,_prevNode]]];
 
 		{
 			private _costSoFarMap = _self get "costSoFar";
-			private _estDist = _graph call ["GetEstimatedDistance",[_x,_endNode]];
-			private _moveCost = _graph call ["GetMoveCost",[_currentNode,_x]];
+			private _estDist = _self call ["AdjustEstimatedDistance",_graph call ["GetEstimatedDistance",[_x,_endNode]]];
+			private _moveCost = _self call ["AdjustMoveCost",_graph call ["GetMoveCost",[_currentNode,_x]]];
 			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _moveCost;
 			private _priority = _costSoFar + _estDist;
 			private _costSoFarX = _costSoFarMap get (_x get "Index");

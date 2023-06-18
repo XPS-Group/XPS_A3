@@ -37,7 +37,7 @@ Flags:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_heuristics",[0.9, 1, 1.2],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]],["_drive","RHDrive",[""]]];
+		params [["_heuristics",[0.9, 1, 1.2],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]]];
 		_self set ["Heuristics",_heuristics];
 		_self set ["RoadTypes",_roadTypes];
 	}],

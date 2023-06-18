@@ -6,12 +6,16 @@ Authors:
 	Crashdome
 
 Description:
-	Represents a road object with extra meta data for pathfinding and navigation
+	<HashmapObject> which represents a road object with extra meta data 
+	for pathfinding and navigation
 
 Parent:
 	none
 
 Implements: 
+
+	<XPS_PF_ifc_IRoadNode>
+
 	<main. XPS_ifc_IAstarNode>
 
 Flags: 
@@ -21,18 +25,7 @@ Flags:
 [
 	["#str",compileFinal {"XPS_PF_typ_RoadNode"}],
 	["#type","XPS_PF_typ_RoadNode"],
-	["@interfaces",["XPS_ifc_IAstarNode"]],	
-	/*----------------------------------------------------------------------------
-	Property: Width
-    
-    	--- Prototype --- 
-    	get "Width"
-    	---
-    
-    Returns: 
-		<Number> - Width of road object
-	-----------------------------------------------------------------------------*/
-	["Width",nil],
+	["@interfaces",["XPS_PF_ifc_IRoadNode","XPS_ifc_IAstarNode"]],	
 	/*----------------------------------------------------------------------------
 	Property: BeginPos
     
@@ -43,40 +36,7 @@ Flags:
     Returns: 
 		<Array> - beginning position in ASL
 	-----------------------------------------------------------------------------*/
-	["BeginPos",nil],
-	/*----------------------------------------------------------------------------
-	Property: EndPos
-    
-    	--- Prototype --- 
-    	get "EndPos"
-    	---
-    
-    Returns: 
-		<Array> - end Position in ASL
-	-----------------------------------------------------------------------------*/
-	["EndPos",nil],
-	/*----------------------------------------------------------------------------
-	Property: IsBridge
-    
-    	--- Prototype --- 
-    	get "IsBridge"
-    	---
-    
-    Returns: 
-		<Boolean> - true if object is a bridge object
-	-----------------------------------------------------------------------------*/
-	["IsBridge",nil],
-	/*----------------------------------------------------------------------------
-	Property: PosASL
-    
-    	--- Prototype --- 
-    	get "PosASL"
-    	---
-    
-    Returns: 
-		<Array> - position in ASL
-	-----------------------------------------------------------------------------*/
-	["PosASL",nil],
+	["BeginPos",[]],
 	/*----------------------------------------------------------------------------
 	Property: ConnectedTo
     
@@ -88,7 +48,40 @@ Flags:
 		<Hashmap> - contains 4 keys: MAIN ROAD, ROAD, TRACK, and TRAIL. Each holds a <Hashmap> of 
 		key/value pair of connected roads in format ["name",road object]
 	-----------------------------------------------------------------------------*/
-	["ConnectedTo",nil],
+	["ConnectedTo",[createhashmap]],
+	/*----------------------------------------------------------------------------
+	Property: EndPos
+    
+    	--- Prototype --- 
+    	get "EndPos"
+    	---
+    
+    Returns: 
+		<Array> - end Position in ASL
+	-----------------------------------------------------------------------------*/
+	["EndPos",[]],
+	/*----------------------------------------------------------------------------
+	Property: IsBridge
+    
+    	--- Prototype --- 
+    	get "IsBridge"
+    	---
+    
+    Returns: 
+		<Boolean> - true if object is a bridge object
+	-----------------------------------------------------------------------------*/
+	["IsBridge",false],
+	/*----------------------------------------------------------------------------
+	Property: PosASL
+    
+    	--- Prototype --- 
+    	get "PosASL"
+    	---
+    
+    Returns: 
+		<Array> - position in ASL
+	-----------------------------------------------------------------------------*/
+	["PosASL",[]],
 	/*----------------------------------------------------------------------------
 	Property: Index
     
@@ -103,7 +96,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Index",nil],
 	/*----------------------------------------------------------------------------
-	Property: Object
+	Property: RoadObject
     
     	--- Prototype --- 
     	get "RoadObject"
@@ -112,7 +105,7 @@ Flags:
     Returns: 
 		<Object> - the road object associated with this node
 	-----------------------------------------------------------------------------*/
-	["RoadObject",nil],
+	["RoadObject",objNull],
 	/*----------------------------------------------------------------------------
 	Property: Type
     
@@ -124,7 +117,18 @@ Flags:
 		<String> - the type of road object associated with this node. Can be one of
 		"MAIN ROAD", "ROAD", "TRACK", "TRAIL"
 	-----------------------------------------------------------------------------*/
-	["Type",nil],
+	["Type",""],
+	/*----------------------------------------------------------------------------
+	Property: Width
+    
+    	--- Prototype --- 
+    	get "Width"
+    	---
+    
+    Returns: 
+		<Number> - Width of road object
+	-----------------------------------------------------------------------------*/
+	["Width",0],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -144,7 +148,7 @@ Flags:
 		_self set ["Index",_index];
 		_self set ["RoadObject",_object];
 		_self set ["ConnectedTo",createhashmapfromarray [["MAIN ROAD",createhashmap],["ROAD",createhashmap],["TRACK",createhashmap],["TRAIL",createhashmap]]];
-		_self set ["ConnectedToPath",createhashmapfromarray [["RHDrive",createhashmap],["RHWalk",createhashmap],["LHDrive",createhashmap],["LHWalk",createhashmap]]];
+		//_self set ["ConnectedToPath",createhashmapfromarray [["RHDrive",createhashmap],["RHWalk",createhashmap],["LHDrive",createhashmap],["LHWalk",createhashmap]]];
 		private _roadInfo = getRoadInfo _object;
 		_self set ["Type",_roadInfo#0]; 
 		_self set ["Width",_roadInfo#1]; 

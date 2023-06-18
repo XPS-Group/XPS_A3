@@ -59,7 +59,7 @@ Flags:
 					private _posRef = _sector set ["PosRef", [_sectorSize * _xAxis,_sectorSize * _yAxis]];
 					_sector set ["PosCenter", [(_sectorSize * _xAxis)+_sectorRadius,(_sectorSize * _yAxis)+_sectorRadius]];
 
-					//Set SubPositions - Cereates a 3x3 grid within sector with Indices of:
+					//Set SubPositions - Creates a 3x3 grid within sector with Indices of:
 					// -------
 					// |6|7|8|
 					// -------
@@ -110,8 +110,64 @@ Flags:
 			};
 		};
 	}],	
-	["heuristic",compileFinal {
-		//TODO #4 MapGraph - Implement heuristic
+	/*----------------------------------------------------------------------------
+	Protected: posToIndex
+	
+		--- Prototype --- 
+		call ["posToIndex",[_pos]]
+		---
+	
+	Parameters: 
+		_pos - <Array> - 2D or 3D position array
+	
+	Returns: 
+		<Array> - Index of sector containing position
+	-----------------------------------------------------------------------------*/
+	["posToIndex",compileFinal {
+        if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil;};
+
+        private _sectorSize = _self get "SectorSize";
+
+        private _x = floor ((_pos select 0) / _sectorSize);
+        private _y = floor ((_pos select 1) / _sectorSize);
+
+        _result = [_x,_y];
+
+	}],
+	/*----------------------------------------------------------------------------
+	Protected: posToSubIndex
+	
+		--- Prototype --- 
+		call ["posToSubIndex",[_pos]]
+		---
+		SubPositions - a 3x3 grid within sector with Indices of:
+		
+			-------
+			|6|7|8|
+			-------
+			|3|4|5|
+			-------
+			|0|1|2|
+			-------
+	
+	Parameters: 
+		_pos - <Array> - 2D or 3D position array
+	
+	Returns: 
+		<Number> - Index of subposition in sector containing position (0 to 8)
+	-----------------------------------------------------------------------------*/
+	["posToSubIndex",compileFinal {
+        if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil;};
+
+		private _sector = _self get "Sectors" get (_self call ["posToIndex",_pos]);
+		private _posRef = _sector get "PosRef";
+        private _subSectorSize = (_self get "SectorSize")/2;
+
+        private _x = floor ((_pos select 0) - (_posRef select 0));
+        private _y = floor ((_pos select 1) - (_posRef select 1));
+
+		floor (_x / _subsectorSize) + floor (_y / _subSectorSize)*3; 
+
 	}],
 	/*----------------------------------------------------------------------------
 	Property: SectorSize
@@ -160,17 +216,6 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Sectors",nil],
 	/*----------------------------------------------------------------------------
-	Property: Heuristics
-	
-		--- Prototype --- 
-		get "Heuristics"
-		---
-	
-	Returns: 
-		<Hashmap> - a Multidimensional <hashmap> where key is Layer Name and value is a <hashmap> of heuristic methods
-	-----------------------------------------------------------------------------*/
-	["Heuristics",nil],
-	/*----------------------------------------------------------------------------
 	Constructor: #create
 	
 		--- Prototype --- 
@@ -191,17 +236,14 @@ Flags:
 		_self set ["Sectors",createhashmap];
 		_self call ["buildGraph"];
 	}],	
-	["canTraverseSector",{
-		params ["_current","_prev","_doctrine"];
-	}],
 	/*----------------------------------------------------------------------------
-	Method: AddLayerData
+	Method: AddLayer
 	
 		--- Prototype --- 
-		call ["AddLayerData",[_layerName, _layerBuilder, _useSubPositions*]]
+		call ["AddLayer",[_layerName, _layerBuilder, _useSubPositions*]]
 		---
 
-		<pathfinding.XPS_PF_ifc_IMapGraph.AddLayerData>
+		<pathfinding.XPS_PF_ifc_IMapGraph.AddLayer>
 
 	Description:
 		Adds a new layer to Sector Data and Heuristics
@@ -214,11 +256,10 @@ Flags:
 	Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["AddLayerData",compileFinal {
+	["AddLayer",compileFinal {
 		if !(params [["_layerBuilder",nil,[createhashmap]]]) exitwith {false};
 		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitwith {false};
-		private _layer = _self call ["buildLayer",[_sectors,_layerBuilder]];
-
+		private _layer = _self call ["buildLayer",[_layerBuilder]];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
@@ -254,8 +295,7 @@ Flags:
 		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
-		params ["_current","_prev","_doctrine"];
-		//TODO #2 MapGraph - Implement GetNeighbors
+		params ["_current","_prev"];
 
 		private _result = [];
 		private _neighbors = [];
@@ -265,9 +305,7 @@ Flags:
             private _b = (_index#1) + (_x#1);
 			if !([_a,_b] isEqualTo (_prev get "Index")) then {
 				private _neighbor = _self get "Sectors" get [_a,_b];
-				if (_self call ["canTraverse",[_current,_prev,_doctrine]]) then {
-					_neighbors pushback _neighbor;
-				};
+				_neighbors pushback _neighbor;
 			};
         } foreach [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 
@@ -288,10 +326,10 @@ Flags:
 		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
-		params ["_current","_next","_doctrine"];
-		//private _pos1 = _current get "PosCenter";
-		//private _pos2 = _next get "PosCenter";
-		//_pos1 distance _pos2;
+		params ["_current","_next"];
+		private _pos1 = _current get "PosCenter";
+		private _pos2 = _next get "PosCenter";
+		_pos1 distance _pos2;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNodeAt
@@ -307,7 +345,12 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
 		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
-		_self get "Sectors" get [_pos#0._pos#1];
+		private "_sector";
+		if ([_pos#0,_pos#1] in keys (_self get "Sectors")) then {
+			_sector = _self get "Sectors" get [_pos#0,_pos#1];
+		} else {
+			_sector = _self get "Sectors" get (_self call ["posToIndex",_pos]);
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init

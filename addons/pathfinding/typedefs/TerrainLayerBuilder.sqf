@@ -143,11 +143,5 @@ Flags:
 		if (_layer get "HasBridge") then {_layer set ["Type","BRIDGE"];};
 
 		_sector;
-	}],
-	["AddHeuristic",[
-		if !(params [["_graph",nil,[createhashmap]]]) exitwith {nil;};
-
-		private _heuristics = _graph get "Heuristics";
-		_heuristics set [(_self get "LayerName"),//TODO];
-	]]
+	}]
 ]

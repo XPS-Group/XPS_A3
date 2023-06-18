@@ -1,16 +1,13 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: pathfinding. XPS_PF_ifc_IMapGraph
+Interface: pathfinding. XPS_PF_ifc_IRoadGraph
 <Interface>
 
 Authors:
     Crashdome
 
-	Property: Sectors
-
-	Method: AddLayerData
+	Property: Roads
 ---------------------------------------------------------------------------- */
 [
-	["Sectors","HASHMAP"]
-	["AddLayer","CODE"],
+	["Roads","HASHMAP"]
 ]

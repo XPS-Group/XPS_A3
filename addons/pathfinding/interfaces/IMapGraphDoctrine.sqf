@@ -47,6 +47,6 @@ Authors:
     ["CanUseRoads","BOOL"],
     ["CanUseWater","BOOL"],
     ["CanUseAir","BOOL"],
-    ["MaxSlope","NUMBER"],
-    ["MaxDensity","NUMBER"]
+    ["MaxSlope","SCALAR"],
+    ["MaxDensity","SCALAR"]
 ]

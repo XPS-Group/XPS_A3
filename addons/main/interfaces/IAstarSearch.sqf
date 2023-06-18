@@ -12,7 +12,13 @@ Authors:
 	Property: Path
 		<Array>
 
-	Method: InitGraph
+	Method: AdjustEstimatedDistance
+
+	Method: AdjustMoveCost
+
+	Method: FilterNeighbors
+
+	Method: Init
 
 	Method: ProcessNextNode
 ---------------------------------------------------------------------------- */
@@ -20,6 +26,9 @@ Authors:
 	["Graph","HASHMAP"],
 	["Path","ARRAY"],
 	["Status","STRING"],
-	["InitGraph","CODE"],
+	["AdjustEstimatedDistance","CODE"], 
+	["AdjustMoveCost","CODE"], 
+	["FilterNeighbors","CODE"], 
+	["Init","CODE"],
 	["ProcessNextNode","CODE"]
 ]

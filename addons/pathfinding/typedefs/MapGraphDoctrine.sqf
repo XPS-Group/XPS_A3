@@ -30,16 +30,21 @@ Flags:
     	---
     
     Optionals: 
-		_heuristics* - <Array> - (Optional - Default : [0.9, 1, 1.2]) 
-    	_roadTypes* - <Array> - (Optional - Default : ["MAIN ROAD","ROAD","TRACK"]) 
+		_heuristics* - <Array> - (Optional - Default : [0,0,0,0]) - an array of values in format [a,b,c,d]
 
 	Returns:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_heuristics",[0,0,0,0],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]],["_drive","RHDrive",[""]]];
+		params [["_heuristics",[0,0,0,0],[[]],[3]]];
 		_self set ["Heuristics",_heuristics];
-		_self set ["MapTypes",_roadTypes];
+		_self set ["CanUseLand",true],
+		_self set ["CanUseTrails",true],
+		_self set ["CanUseRoads",true],
+		_self set ["CanUseWater",true],
+		_self set ["CanUseAir",true],
+		_self set ["MaxSlope",0],
+		_self set ["MaxDensity",0]
 	}],
 	/*----------------------------------------------------------------------------
 	Property: Heuristics
@@ -57,5 +62,12 @@ Flags:
 			- Height Modifier
 			- Density Modifier
 	-----------------------------------------------------------------------------*/
-	["Heuristics",nil]
+	["Heuristics",nil],
+    ["CanUseLand",nil],
+    ["CanUseTrails",nil],
+    ["CanUseRoads",nil],
+    ["CanUseWater",nil],
+    ["CanUseAir",nil],
+    ["MaxSlope",nil],
+    ["MaxDensity",nil]
 ]

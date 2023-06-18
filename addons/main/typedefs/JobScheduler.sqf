@@ -17,13 +17,6 @@ Implements:
 
 Flags: 
 	none
-	
--------------------------------------------------------------------------------
-    Property: AllowedTypes
-		<XPS_typ_Hashmapcollection.AllowedTypes>
-
-    Property: Items
-		<XPS_typ_Hashmapcollection.Items>
 
 ---------------------------------------------------------------------------- */
 [
@@ -54,6 +47,13 @@ Flags:
 		};
 	}],
 	/*----------------------------------------------------------------------------
+    Property: AllowedTypes
+		<XPS_typ_Hashmapcollection.AllowedTypes>
+
+    Property: Items
+		<XPS_typ_Hashmapcollection.Items>
+
+	-------------------------------------------------------------------------------
 	Property: CurrentItem
     
     	--- Prototype --- 
