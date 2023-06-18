@@ -196,10 +196,33 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
+	Property: StartKey
+    
+    	--- Prototype --- 
+    	get "StartKey"
+    	---
+    
+    Returns: 
+		<Anything> - the start of the search. Usually an index or position.
+		
+	-----------------------------------------------------------------------------*/
+	["StartKey",nil],
+	/*----------------------------------------------------------------------------
+	Property: EndKey
+    
+    	--- Prototype --- 
+    	get "EndKey"
+    	---
+    
+    Returns: 
+		<Anything> - the end of the search. Usually an index or position.
+	-----------------------------------------------------------------------------*/
+	["EndKey",nil],
+	/*----------------------------------------------------------------------------
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createHashmapObject [XPS_typ_AstarSearch,[_graph,_startKey*,_endKey*]]
+    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_graph,_startKey*,_endKey*]]
     	---
     
 	Parameters:

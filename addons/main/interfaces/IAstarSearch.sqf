@@ -12,6 +12,10 @@ Authors:
 	Property: Path
 		<Array>
 
+	Property: StartKey
+
+	Property: EndKey
+
 	Method: AdjustEstimatedDistance
 
 	Method: AdjustMoveCost
@@ -26,6 +30,8 @@ Authors:
 	["Graph","HASHMAP"],
 	["Path","ARRAY"],
 	["Status","STRING"],
+	["StartKey","ANYTHING"],
+	["EndKey","ANYTHING"],
 	["AdjustEstimatedDistance","CODE"], 
 	["AdjustMoveCost","CODE"], 
 	["FilterNeighbors","CODE"], 
