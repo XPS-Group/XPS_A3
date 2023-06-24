@@ -8,13 +8,8 @@ Authors:
 	Property: LayerName
 
 	Method: AddLayerData
-
-	Method: AddHeuristic
-
-	Method: AddDoctrine
 ---------------------------------------------------------------------------- */
 [
 	["LayerName","STRING"]
-	["AddLayerData","CODE"],
-	["AddHeuristic","CODE"]
+	["AddLayerData","CODE"]
 ]

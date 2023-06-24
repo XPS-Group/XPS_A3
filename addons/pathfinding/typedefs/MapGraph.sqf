@@ -354,12 +354,12 @@ Flags:
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
-    
+
     	--- Prototype --- 
     	call ["Init"]
     	---
+
 		<main.XPS_ifc_IAstarGraph.Init>
-	Used to reset any working values if needed. Unused in this instance.
 
 	Returns:
 		<Nothing>

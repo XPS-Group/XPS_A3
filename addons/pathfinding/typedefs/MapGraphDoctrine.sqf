@@ -26,48 +26,70 @@ Flags:
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_PF_typ_MapGraphDoctrine",[_heuristics*,_roadTypes*]]
+    	_result = createHashmapObject ["XPS_PF_typ_MapGraphDoctrine",[_modifiers*,_capabilities*,_limits*]]
     	---
     
     Optionals: 
-		_heuristics* - <Array> - (Optional - Default : [0,0,0,0]) - an array of values in format [a,b,c,d]
+		_modifiers* - <Array> - (Optional - Default : [0,0,0,0]) - an array of values in format [a,b,c,d]
+		_capabilities* - <Array> - (Optional - Default : [true,true,true,true,true]) - an array of values in format [a,b,c,d,e]
+		_limits* - <Array> - (Optional - Default : [0,0,0]) - an array of values in format [a,b,c]
 
 	Returns:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_heuristics",[0,0,0,0],[[]],[3]]];
-		_self set ["Heuristics",_heuristics];
-		_self set ["CanUseLand",true],
-		_self set ["CanUseTrails",true],
-		_self set ["CanUseRoads",true],
-		_self set ["CanUseWater",true],
-		_self set ["CanUseAir",true],
-		_self set ["MaxSlope",0],
-		_self set ["MaxDensity",0]
+		if !(params [["_modifiers",[0,0,0,0],[[]],[4]],["_capabilities",[true,true,true,true,true],[[]],[5]],["_limits",[0,0,0],[[]],[3]]]) exitwith {nil;};
+
+		_self set ["Modifiers",["RoadWeight","WaterWeight","HeightWeight","DensityWeight"] createhashmapfromarray _modifiers];
+		_self set ["Capabilities",["CanUseLand","CanUseTrails","CanUseRoads","CanUseWater","CanUseAir"] createhashmapfromarray _capabilities];
+		_self set ["Limits",["MaxSlope","MaxDensity","MaxWaterDistance"] createhashmapfromarray _limits];
 	}],
 	/*----------------------------------------------------------------------------
-	Property: Heuristics
+	Property: Modifiers
     
     	--- Prototype --- 
-    	get "Heuristics"
+    	get "Modifiers"
     	---
     
     Returns: 
-		<Array> - (Default : [0,0,0,0]) - an array of values in format [a,b,c,d]
-		where first to last is: 
+		<Hashmap> - (Default : [0,0,0,0]) where keys from first to last are: 
 		
-			- Road Modifier
-			- Water Modifier
-			- Height Modifier
-			- Density Modifier
+		- RoadWeight - <Number> - normalized value from -1 to 1
+		- WaterWeight - <Number> - normalized value from -1 to 1
+		- HeightWeight - <Number> - normalized value from -1 to 1
+		- DensityWeight - <Number> - normalized value from -1 to 1
 	-----------------------------------------------------------------------------*/
-	["Heuristics",nil],
-    ["CanUseLand",nil],
-    ["CanUseTrails",nil],
-    ["CanUseRoads",nil],
-    ["CanUseWater",nil],
-    ["CanUseAir",nil],
-    ["MaxSlope",nil],
-    ["MaxDensity",nil]
+	["Modifiers",createhashmap],
+	/*----------------------------------------------------------------------------
+	Property: Capabilities
+    
+    	--- Prototype --- 
+    	get "Capabilities"
+    	---
+    
+    Returns: 
+		<Hashmap> - (Default : [true,true,true,true,true]) where keys from first to last are: 
+		
+    	- CanUseLand - <Boolean>
+    	- CanUseTrails - <Boolean>
+    	- CanUseRoads - <Boolean>
+    	- CanUseWater - <Boolean>
+    	- CanUseAir - <Boolean>
+	-----------------------------------------------------------------------------*/
+	["Capabilities",createhashmap],
+	/*----------------------------------------------------------------------------
+	Property: Limits
+    
+    	--- Prototype --- 
+    	get "Limits"
+    	---
+    
+    Returns: 
+		<Hashmap> - (Default : [0,0]) where keys from first to last are: 
+		
+		- MaxSlope - <Number> - value from 0 to 1
+		- MaxDensity - <Number> - value from 0 to 100
+		- MaxWaterDistance- <Number> - value from 0 to Infinity (WorldSize?)
+	-----------------------------------------------------------------------------*/
+	["Limits",createhashmap]
 ]

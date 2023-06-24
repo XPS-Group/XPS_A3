@@ -8,45 +8,20 @@ Adds additional properties required by the MapGraph to pathfind
 Authors:
     Crashdome
 
-	Property: CanUseLand
+	Property: Modifiers
 	
-	<Boolean>
+	<Hashmap>
 
-	Property: CanUseTrails
+	Property: Capabilities
 	
-	<Boolean>
+	<Hashmap>
 
-	Property: CanUseRoads
+	Property: Limits
 	
-	<Boolean>
-
-	Property: CanUseWater
-	
-	<Boolean>
-
-	Property: CanUseAir
-	
-	<Boolean>
-
-	Property: MaxSlope
-	
-	<Number>
-
-	Property: MaxDensity
-	
-	<Number>
-
-	Property: Heuristics
-	
-	<Number>
+	<Hashmap>
 ---------------------------------------------------------------------------- */
 [
-	["Heuristics","ARRAY"]
-    ["CanUseLand","BOOL"],
-    ["CanUseTrails","BOOL"],
-    ["CanUseRoads","BOOL"],
-    ["CanUseWater","BOOL"],
-    ["CanUseAir","BOOL"],
-    ["MaxSlope","SCALAR"],
-    ["MaxDensity","SCALAR"]
+	["Modifiers","HASHMAP"],
+	["Capabilities","HASHMAP"],
+	["Limits","HASHMAP"]
 ]
