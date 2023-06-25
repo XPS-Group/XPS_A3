@@ -6,6 +6,7 @@ Authors:
     Crashdome
 
 	Property: LayerName
+		<String>
 
 	Method: AddLayerData
 ---------------------------------------------------------------------------- */

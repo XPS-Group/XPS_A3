@@ -7,8 +7,11 @@ Authors:
     Crashdome
 
 	Property: Sectors
+		<Hashmap>
 
-	Method: AddLayerData
+	Method: AddLayer
+
+	Method: CheckWaterTravel
 ---------------------------------------------------------------------------- */
 [
 	["Sectors","HASHMAP"],

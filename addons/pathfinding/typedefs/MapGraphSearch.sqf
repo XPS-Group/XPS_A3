@@ -73,7 +73,21 @@ Flags:
 	["#str",compileFinal {"XPS_PF_typ_MapGraphSearch"}],
 	["#type","XPS_PF_typ_MapGraphSearch"],
 	["#base",XPS_typ_AstarSearch],
-	["currentIsWaterTravel",false],
+	["_currentIsWaterTravel",false],
+	/*----------------------------------------------------------------------------
+	Protected: canTraverse
+	
+		---prototype
+		_result = _self call ["canTraverse",[_toNode,_fromNode]];
+		---
+
+	Parameters:
+		_toNode - <HashmapObject> - the node traversing to
+		_fromNode - <HashmapObject> - the node traversing from
+
+	Returns:
+		_result - <Boolean> - if node to node traversal is capable using the property <main.XPS_typ_AstarSearch.Doctrine>
+	-----------------------------------------------------------------------------*/
 	["canTraverse",compileFinal {
 		params [["_toNode",nil,[createhashmap]]],["_fromNode",nil,[createhashmap]];
 
@@ -144,7 +158,7 @@ Flags:
         } else {
             _canTraverse = [true,false];
         };
-		_self set ["currentIsWaterTravel",_isWaterCrossing];
+		_self set ["_currentIsWaterTravel",_isWaterCrossing];
         _canTraverse#0;
 	}],
 	/*----------------------------------------------------------------------------
