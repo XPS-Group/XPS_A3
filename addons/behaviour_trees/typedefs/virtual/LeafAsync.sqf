@@ -43,7 +43,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["callback",compileFinal {
 		params [["_self",nil,[createhashmap]],["_status",nil,[""]]];
-		_self call ["postTick",_status];
+		_self call ["postTick",[_status]];
 		_self set ["handle",nil];
 	}],
 	/*----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ Flags:
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",_status]
+    	_status = _self call ["postTick",[_status]]
     	---
 
 	Description:
@@ -204,6 +204,6 @@ Flags:
 		private _status = _self get "Status";	
 		_handle = [_self, _status, _self get ["callback"]] spawn (_self get ["processTick"]);
 		_self set ["handle",_handle];
-		_self call ["postTick",_status];
+		_self call ["postTick",[_status]];
 	}]
 ]

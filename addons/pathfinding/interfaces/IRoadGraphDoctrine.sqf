@@ -8,10 +8,15 @@ Adds additional properties required by the RoadGraph to pathfind on roads
 Authors:
     Crashdome
 
-	Property: Heuristics
-	
-	<Array>
+Property: Weights
+
+<Array>
+
+Property: RoadTypes
+
+<Array>
 ---------------------------------------------------------------------------- */
 [
+	["Weights","ARRAY"],
 	["RoadTypes","ARRAY"]
 ]

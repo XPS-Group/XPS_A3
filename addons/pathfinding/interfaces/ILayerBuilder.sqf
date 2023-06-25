@@ -6,15 +6,11 @@ Authors:
     Crashdome
 
 	Property: LayerName
+		<String>
 
 	Method: AddLayerData
-
-	Method: AddHeuristic
-
-	Method: AddDoctrine
 ---------------------------------------------------------------------------- */
 [
-	["LayerName","STRING"]
-	["AddLayerData","CODE"],
-	["AddHeuristic","CODE"]
+	["LayerName","STRING"],
+	["AddLayerData","CODE"]
 ]
