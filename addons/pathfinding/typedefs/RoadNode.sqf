@@ -48,7 +48,7 @@ Flags:
 		<Hashmap> - contains 4 keys: MAIN ROAD, ROAD, TRACK, and TRAIL. Each holds a <Hashmap> of 
 		key/value pair of connected roads in format ["name",road object]
 	-----------------------------------------------------------------------------*/
-	["ConnectedTo",[createhashmap]],
+	["ConnectedTo",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: EndPos
     
@@ -105,7 +105,7 @@ Flags:
     Returns: 
 		<Object> - the road object associated with this node
 	-----------------------------------------------------------------------------*/
-	["RoadObject",objNull],
+	["RoadObject",nil],
 	/*----------------------------------------------------------------------------
 	Property: Type
     

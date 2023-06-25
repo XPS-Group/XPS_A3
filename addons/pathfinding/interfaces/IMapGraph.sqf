@@ -11,7 +11,7 @@ Authors:
 	Method: AddLayerData
 ---------------------------------------------------------------------------- */
 [
-	["Sectors","HASHMAP"]
+	["Sectors","HASHMAP"],
 	["AddLayer","CODE"],
 	["CheckWaterTravel","CODE"]
 ]

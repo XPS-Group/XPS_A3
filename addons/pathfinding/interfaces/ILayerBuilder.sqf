@@ -10,6 +10,6 @@ Authors:
 	Method: AddLayerData
 ---------------------------------------------------------------------------- */
 [
-	["LayerName","STRING"]
+	["LayerName","STRING"],
 	["AddLayerData","CODE"]
 ]

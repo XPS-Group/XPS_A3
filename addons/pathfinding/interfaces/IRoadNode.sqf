@@ -37,8 +37,8 @@ Authors:
 	["BeginPos","ARRAY"],
 	["EndPos","ARRAY"],
 	["IsBridge","BOOL"],
-	["PosASL","ARRAY"]
+	["PosASL","ARRAY"],
 	["ConnectedTo","HASHMAP"],
-	["RoadObject","OBJECT"],
+	["RoadObject","ANY"],
 	["Type","STRING"]
 ]

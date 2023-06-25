@@ -56,7 +56,8 @@ Flags:
 				if (isNil "_sector") then {
 					_sector = createhashmapobject [XPS_PF_typ_MapNode,[_xAxis,_yAxis]];
 					private _index = _sector get "Index";
-					private _posRef = _sector set ["PosRef", [_sectorSize * _xAxis,_sectorSize * _yAxis]];
+					private _posRef = [_sectorSize * _xAxis,_sectorSize * _yAxis];
+					_sector set ["PosRef", _posRef];
 					_sector set ["PosCenter", [(_sectorSize * _xAxis)+_sectorRadius,(_sectorSize * _yAxis)+_sectorRadius]];
 
 					//Set SubPositions - Creates a 3x3 grid within sector with Indices of:
@@ -131,7 +132,7 @@ Flags:
         private _x = floor ((_pos select 0) / _sectorSize);
         private _y = floor ((_pos select 1) / _sectorSize);
 
-        _result = [_x,_y];
+        [_x,_y];
 
 	}],
 	/*----------------------------------------------------------------------------
@@ -280,7 +281,7 @@ Flags:
 		};
 		
 		[_waterTravel,_waterDistance];
-	};],
+	}],
 	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
     
@@ -365,12 +366,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
 		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
-		private "_sector";
-		if ([_pos#0,_pos#1] in keys (_self get "Sectors")) then {
-			_sector = _self get "Sectors" get [_pos#0,_pos#1];
-		} else {
-			_sector = _self get "Sectors" get (_self call ["posToIndex",_pos]);
-		};
+		_self get "Sectors" get (_self call ["posToIndex",[_pos]]);
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init

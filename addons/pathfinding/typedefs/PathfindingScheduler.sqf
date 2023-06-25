@@ -78,7 +78,7 @@ Flags:
     Returns: 
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["AllowedTypes",["XPS_typ_AstarSearch"]],
+	["AllowedTypes",["XPS_PF_typ_MapGraphSearch","XPS_PF_typ_RoadGraphSearch","XPS_typ_AstarSearch"]],
 	/*----------------------------------------------------------------------------
 	Property: ProcessCurrent
     

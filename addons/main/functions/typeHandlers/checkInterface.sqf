@@ -62,7 +62,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 				_result = false;
 			};
 			if !(_type == _check#1) then {
-				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %2. Type %3 expected",_hashmap get "#type",_key,_type,_check#1]);
+				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_check#1]);
 				_result = false;
 			};
 		};

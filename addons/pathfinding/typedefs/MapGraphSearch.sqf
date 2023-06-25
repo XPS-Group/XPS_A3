@@ -72,7 +72,7 @@ Flags:
 [
 	["#str",compileFinal {"XPS_PF_typ_MapGraphSearch"}],
 	["#type","XPS_PF_typ_MapGraphSearch"],
-	["#base",XPS_typ_AstarSearch"],
+	["#base",XPS_typ_AstarSearch],
 	["currentIsWaterTravel",false],
 	["canTraverse",compileFinal {
 		params [["_toNode",nil,[createhashmap]]],["_fromNode",nil,[createhashmap]];
@@ -165,27 +165,21 @@ Flags:
 				private _roadWeight = _weights get "RoadWeight";
 				private _densityWeight = _weights get "DensityWeight";
 
-		// Exempt Air Units
+		// Exempt Air Units with no bias
 		if (_capabilities get "CanUseAir" && ((values _weights) isEqualTo [0,0,0,0]) ) exitwith {_moveCost}; 
 
 		private _toTerrain = _toNode get "Terrain";
 			private _typeTo = _toTerrain get "Type";
+        	private _toHeight = _toTerrain get "heightModifier";   
 			
 		private _fromTerrain = _fromNode get "Terrain";
-			private _typeFrom = _fromTerrain get "Type";
+			//private _typeFrom = _fromTerrain get "Type";
+        	private _fromHeight = _fromTerrain get "heightModifier";
 
         private _adjustedCost = _moveCost;
 
 		private _isWaterTravel = _self get "curentisWaterTravel";
-
-        // private _road = _weights select 0;
-        // _road params  ["_hasRoads","_hasTrails","_hasBridge","_roadModifier"];
-        // private _water = _weights select 1;
-        // _water params ["_hasWater","_waterModifier"];
-        // private _densityModifier = _weights select 3;
-
-        private _toHeight = _toTerrain get "heightModifier";        
-        private _fromHeight = _fromTerrain get "heightModifier";
+     
 
         switch (_typeTo) do {
             case "WATER": {
@@ -254,7 +248,7 @@ Flags:
 
 		private _fromNode = _self get "currentNode";
 		for "_i" from 0 to (count _neighbors)-1 do {
-			private _canTraverse = _self call ["canTraverse",[_neighbors#_i , _fromNode]]
+			private _canTraverse = _self call ["canTraverse",[_neighbors#_i , _fromNode]];
 			if !(_canTraverse) then {
 				_neighbors deleteat _i;
 			};

@@ -72,7 +72,7 @@ Flags:
 [
 	["#str",compileFinal {"XPS_PF_typ_RoadGraphSearch"}],
 	["#type","XPS_PF_typ_RoadGraphSearch"],
-	["#base",XPS_typ_AstarSearch"],
+	["#base",XPS_typ_AstarSearch],
 	/*----------------------------------------------------------------------------
 	Method: AdjustMoveCost
     

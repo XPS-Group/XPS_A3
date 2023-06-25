@@ -17,6 +17,6 @@ Property: RoadTypes
 <Array>
 ---------------------------------------------------------------------------- */
 [
-	["Weights","ARRAY"]
+	["Weights","ARRAY"],
 	["RoadTypes","ARRAY"]
 ]

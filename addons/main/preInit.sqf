@@ -13,7 +13,7 @@ ADDON = false;
 
 //diag_log "[XPS preInit]";
 {
-	if (isClass _x) then {diag_log _x;_result = [_x] call XPS_fnc_parseTypeDefClass;diag_log [_result]};
+	if (isClass _x) then {;_result = [_x] call XPS_fnc_parseTypeDefClass;};
 } foreach configProperties [configFile >> QXPS_CFG_BASECLASSNAME];
 
 ADDON = true;
