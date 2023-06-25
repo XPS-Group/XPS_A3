@@ -6,13 +6,13 @@ Authors:
 	Crashdome
 
 Description:
-	Provides Heuristics and Road Type conditions for a search of a <XPS_PF_typ_RoadGraph> object
+	Provides Weights and Road Type conditions for a search of a <XPS_PF_typ_RoadGraph> object
 
 Parent:
 	none
 
 Implements: 
-	none
+	<XPS_PF_ifc_IRoadGraphDoctrine>
 
 Flags: 
 	none
@@ -21,6 +21,7 @@ Flags:
 [
 	["#str",compileFinal {"XPS_PF_typ_RoadGraphDoctrine"}],
 	["#type","XPS_PF_typ_RoadGraphDoctrine"],
+	["@interfaces",["XPS_PF_ifc_IRoadGraphDoctrine"]],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -36,15 +37,15 @@ Flags:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_heuristics",[0.9, 1, 1.2],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]],["_drive","RHDrive",[""]]];
-		_self set ["Heuristics",_heuristics];
+		params [["_heuristics",[0.9, 1, 1.2],[[]],[3]],["_roadTypes",["MAIN ROAD","ROAD","TRACK"],[[]],[1,2,3,4]]];
+		_self set ["Weights",_heuristics];
 		_self set ["RoadTypes",_roadTypes];
 	}],
 	/*----------------------------------------------------------------------------
-	Property: Heuristics
+	Property: Weights
     
     	--- Prototype --- 
-    	get "Heuristics"
+    	get "Weights"
     	---
     
     Returns: 
@@ -52,7 +53,7 @@ Flags:
 		where first value is for type "MAINROAD", second type is for "ROAD", and third 
 		value is for "TRACK" and also "TRAIL" if included
 	-----------------------------------------------------------------------------*/
-	["Heuristics",nil],
+	["Weights",nil],
 	/*----------------------------------------------------------------------------
 	Property: RoadTypes
     

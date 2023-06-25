@@ -72,7 +72,7 @@ Protected: currentIndex
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",_status]
+    	_status = _self call ["postTick",[_status]]
     	---
 
 	Description:

@@ -14,6 +14,9 @@ Parent:
 	none
 
 Implements: 
+
+	<XPS_PF_ifc_IRoadGraph>
+	
 	<main.XPS_ifc_IAstarGraph>
 
 Flags: 
@@ -23,7 +26,7 @@ Flags:
 [
 	["#str",{"XPS_PF_typ_RoadGraph"}],
 	["#type","XPS_PF_typ_RoadGraph"],
-	["@interfaces",["XPS_ifc_IAstarGraph"]],
+	["@interfaces",["XPS_PF_ifc_IRoadGraph","XPS_ifc_IAstarGraph"]],
 	["_getConnectedToPath",compilefinal {
 		if !(params [["_fromPoint",nil,[[]],[3]],["_direction",nil,[0]],["_toObject",nil,[createhashmap]],["_toWidth",nil,[0]],["_nextObject",nil,[createhashmap]],["_nextWidth",nil,[0]],["_dirOffset",nil,[0]]]) exitwith {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
 		if (_fromPoint isEqualTo [0,0,0]) then {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
@@ -116,7 +119,7 @@ Flags:
 		params [["_object",objNull,[objNull]],["_typeDef",XPS_PF_typ_RoadNode,[[]]]];
 		if !(_object isEqualto objNull) then {
 			private _hmo = createhashmapobject [_typeDef,[str _object,_object]];
-			_self get "Items" set [str _object,_hmo];
+			_self get "Roads" set [str _object,_hmo];
 		};
 	}],
 	/*----------------------------------------------------------------------------
@@ -137,9 +140,7 @@ Flags:
 		private _ct = _node get "ConnectedTo";
 		private _roadArray = [];
 		{
-			private _type = (getroadinfo _x)#0;
-			private _ct1 = _ct get _type;
-			if !(_x isEqualto objNull || (str _x) == (str _object) || (str _x) in keys _ct1) then {
+			if !(_x isEqualto objNull || (str _x) == (str _object) || (str _x) in keys _ct) then {
 				_roadArray pushbackunique _x;
 			};
 		} foreach roadsconnectedto _object;
@@ -158,9 +159,7 @@ Flags:
 		{
 			_x resize 2;
 			private _r = roadAt _x;
-			private _type = (getroadinfo _r)#0;
-			private _ct1 = _ct get _type;
-			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r) in keys _ct1 || abs((getposASL _r)#2)-(_pos#2)>2) then {
+			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r) in keys _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
 				_roadArray pushbackunique _r;
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
@@ -177,13 +176,10 @@ Flags:
 		_m setmarkerdir (_pos getdir _ePosC);  
 
 		{
-			private _type = (getroadinfo _x)#0;
-			private _ct1 = _ct get _type;
 			_ct1 set [str _x,_x];
-			private _rct = _self get "Items" get (str _x);
-			_rct get "ConnectedTo" get _type set [str _object,_object];
+			private _rct = _self get "Roads" get (str _x);
+			_rct get "ConnectedTo" set [str _object,_object];
 
-			//_self call ["setConnectedToPathData",[_node, _rct]];
 		} foreach _roadArray;
 		
 	}],
@@ -198,9 +194,9 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["buildGraph",compileFinal {
 		private _roads = nearestterrainobjects [[worldsize/2,worldsize/2],["MAIN ROAD","ROAD","TRACK","TRAIL"],worldSize,false,false];
-		_self set ["Items",createhashmap];
+		_self set ["Roads",createhashmap];
 		{_self call ["addRoadToGraph",[_x]];} foreach _roads;
-		{_self call ["getAllConnected",[_x]];} foreach values (_self get "Items");
+		{_self call ["getAllConnected",[_x]];} foreach values (_self get "Roads");
 		
 	}],
 	/*----------------------------------------------------------------------------
@@ -211,57 +207,27 @@ Flags:
     	---
 
 	Parameters:
-		_roadGraphDoctrine* - <RoadGraphDoctrine> - (Optional - Default : default 
-		<RoadGraphDoctrine>) - A <HashmapObject> which injects heuristics
-		and other properties for pathfinding 
+		_roadGraphDoctrine* - <XPS_PF_typ_RoadGraphDoctrine> - (Optional - Default : default <XPS_PF_typ_RoadGraphDoctrine>) - A <HashmapObject> which injects heuristics and other properties for pathfinding 
 
 	Returns:
 		_result - <HashmapObject> 
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_roadGraphDoctrine",createhashmapobject [XPS_PF_typ_RoadGraphDoctrine],[createhashmap]]];
-		_self set ["RoadGraphDoctrine",_roadGraphDoctrine];
 		_self set ["_graphMarkersEnabled",false];
 		_self set ["_graphMarkers",[]];
 		_self call ["buildGraph"];
 	}],
 	/*----------------------------------------------------------------------------
-	Protected: heuristic
+	Property: Roads
     
     	--- Prototype --- 
-    	call ["heuristic",[_next]]
-    	---
-
-		Gets the heuristic value for "move cost" based on road type.
-    
-    Optionals: 
-		_next - <Hashmap> - road "node"
-	-----------------------------------------------------------------------------*/
-	["heuristic",compileFinal {
-		params ["_next","_doctrine"];
-		private _doctrineHeurs = _doctrine get "Heuristics";
-		private _road = _next get "RoadObject";
-		private _info = getRoadInfo _road;
-		private _result = _doctrineHeurs#2;
-		switch (_info#0) do {
-			case "MAIN ROAD" : {_result = _doctrineHeurs#0};
-			case "ROAD" : {_result = _doctrineHeurs#1};
-			// case "TRACK" : {_result = 1.20};
-			// default {_result = 1.20};
-		};
-		_result;
-	}],
-	/*----------------------------------------------------------------------------
-	Property: Items
-    
-    	--- Prototype --- 
-    	get "Items"
+    	get "Roads"
     	---
     
     Returns: 
 		<Hashmap> - All <XPS_PF_typ_RoadNodes> represented in a searchable graph
 	-----------------------------------------------------------------------------*/
-	["Items",nil],
+	["Roads",nil],
 	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
     
@@ -283,7 +249,7 @@ Flags:
 	Method: GetNeighbors
     
     	--- Prototype --- 
-    	call ["GetNeighbors",[_currentPos,_endPos,_doctrine]]
+    	call ["GetNeighbors",[_currentPos,_endPos]]
     	---
 
 		<main.XPS_ifc_IAstarGraph.GetNeighbors>
@@ -291,21 +257,19 @@ Flags:
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_endPos - <Array> - goal position
-		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
-		if !(params [["_current",nil,[createhashmap]],["_prev",nil,[createhashmap]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
-		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
+		if !(params [["_current",nil,[createhashmap]],["_prev",nil,[createhashmap]]]) exitwith {nil};
 		
 		private _result = [];
 		private _neighbors = [];
 		private _road = _current get "RoadObject";
-		{_neighbors append (values (_current get "ConnectedTo" get _x));} foreach (_doctrine" get "RoadTypes");
+		_neighbors append (values (_current get "ConnectedTo"));
 		private _prevRoadObject = if (isNil "_prev") then {objNull} else {_prev get "RoadObject"};
 		
 		{
 			if !(_x isEqualTo _prevRoadObject || _x isEqualTo (_current get "RoadObject")) then {
-				_result pushback (_self get "Items" get str _x);
+				_result pushback (_self get "Roads" get str _x);
 			};
 		} foreach _neighbors;
 
@@ -315,7 +279,7 @@ Flags:
 	Method: GetMoveCost
     
     	--- Prototype --- 
-    	call ["GetMoveCost",[_currentPos,_nextPos,_doctrine]]
+    	call ["GetMoveCost",[_currentPos,_nextPos]]
     	---
 
 		<main.XPS_ifc_IAstarGraph.GetMoveCost>
@@ -323,14 +287,11 @@ Flags:
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_nextPos - <Array> - connected road location
-		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
 	["GetMoveCost",compileFinal {
-		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]],["_doctrine",nil,[createhashmap]]]) exitwith {nil};
-		if !( CHECK_IFC2(_doctrine,XPS_PF_ifc_IRoadGraphDoctrine,XPS_ifc_IDoctrine) ) then {diag_log "XPS_PF_type_RoadGraph - GetMoveCost: Doctrine supplied not of type XPS_PF_ifc_IRoadGraphDoctrine",[]};
-		private _cost = (_current get "PosASL") distance (_next get "PosASL");
-		_cost = _cost * (_self call ["heuristic",[_next,_doctrine]]);
-		_cost;
+		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]]]) exitwith {nil};
+		
+		(_current get "PosASL") distance (_next get "PosASL");
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNodeAt
@@ -347,7 +308,10 @@ Flags:
 	["GetNodeAt",compileFinal {
 		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
 		private _roads = nearestTerrainObjects [_pos,["MAIN ROAD","ROAD","TRACK","TRAIL"],50,true];
-		_self get "Items" get (str (_roads#0));
+		if (count _roads > 0) exitwith {
+			_self get "Roads" get (str (_roads#0));
+		};
+		nil;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -404,7 +368,7 @@ Flags:
 					_m setmarkercolor _color; 
 					_m setmarkersize [0.4,0.4];  
 					_markers pushback (_hm get "Index");
-				} foreach values (_self get "Items");
+				} foreach values (_self get "Roads");
 			};
 			default {
 				{deleteMarker _x} foreach _markers;

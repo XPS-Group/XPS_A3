@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /* ----------------------------------------------------------------------------
 Interface: pathfinding. XPS_PF_ifc_IMapGraph
 <Interface>
@@ -6,10 +7,14 @@ Authors:
     Crashdome
 
 	Property: Sectors
+		<Hashmap>
 
-	Method: AddLayerData
+	Method: AddLayer
+
+	Method: CheckWaterTravel
 ---------------------------------------------------------------------------- */
 [
-	["Sectors","HASHMAP"]
-	["AddLayerData","CODE"],
+	["Sectors","HASHMAP"],
+	["AddLayer","CODE"],
+	["CheckWaterTravel","CODE"]
 ]
