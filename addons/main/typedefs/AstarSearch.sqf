@@ -48,6 +48,17 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["costSoFar",nil], //part of working graph
 	/*----------------------------------------------------------------------------
+	Protected: currentNode
+    
+    	--- Prototype --- 
+    	get "currentNode"
+    	---
+    
+    Returns: 
+		<Hashmap> - returns current node being processed
+	-----------------------------------------------------------------------------*/
+	["currentNode",nil],
+	/*----------------------------------------------------------------------------
 	Protected: frontier
     
     	--- Prototype --- 
@@ -248,31 +259,35 @@ Flags:
 	Method: AdjustEstimatedDistance
     
     	--- Prototype --- 
-    	call ["AdjustEstimatedDistance",[_estDist]]
+    	call ["AdjustEstimatedDistance",[_estDist,_fromNode,_toNode]]
     	---
 
 		<main.XPS_ifc_IAstarSearch.AdjustEstimatedDistance>
     
     Optionals: 
 		_estDist - <Number> 
+		_fromNode - <HashmapObject>
+		_toNode - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["AdjustEstimatedDistance",compileFinal {
-		params ["_estDist"];
+		params ["_estDist","_fromNode","_toNode"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: AdjustMoveCost
     
     	--- Prototype --- 
-    	call ["AdjustMoveCost",[_moveCost]]
+    	call ["AdjustMoveCost",[_moveCost,_fromNode,_toNode]]
     	---
 
 		<main.XPS_ifc_IAstarSearch.AdjustMoveCost>
     
-    Optionals: 
+    Parameters: 
 		_moveCost - <Number> 
+		_fromNode - <HashmapObject>
+		_toNode - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["AdjustMoveCost",compileFinal {
-		params ["_moveCost"];
+		params ["_moveCost","_fromNode","_toNode"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: FilterNeighbors
@@ -324,6 +339,7 @@ Flags:
 		private _graph = _self get "Graph";
 		private _endNode = _self get "EndNode";
 		private _currentNode = _self call ["frontierPullLowest"];
+		_self set ["currentNode",_currentNode];
 		if (isNil "_currentNode" || (_endNode get "Index") isEqualTo (_currentNode get "Index")) exitwith {
 			_self call ["getPath"];
 		};
@@ -333,8 +349,8 @@ Flags:
 
 		{
 			private _costSoFarMap = _self get "costSoFar";
-			private _estDist = _self call ["AdjustEstimatedDistance",_graph call ["GetEstimatedDistance",[_x,_endNode]]];
-			private _moveCost = _self call ["AdjustMoveCost",_graph call ["GetMoveCost",[_currentNode,_x]]];
+			private _estDist = _self call ["AdjustEstimatedDistance",[_graph call ["GetEstimatedDistance",[_x,_endNode]],_x,_endNode]];
+			private _moveCost = _self call ["AdjustMoveCost",[_graph call ["GetMoveCost",[_currentNode,_x]],_currentNode,_x]];
 			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _moveCost;
 			private _priority = _costSoFar + _estDist;
 			private _costSoFarX = _costSoFarMap get (_x get "Index");

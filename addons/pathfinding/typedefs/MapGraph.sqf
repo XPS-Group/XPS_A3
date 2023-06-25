@@ -261,6 +261,26 @@ Flags:
 		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitwith {false};
 		private _layer = _self call ["buildLayer",[_layerBuilder]];
 	}],
+	["CheckWaterTravel", compileFinal {
+
+		params ["_sectorAPos","_sectorBPos"];
+		private _waterTravel = false;
+		private _dist = _sectorAPos distance _sectorBPos;
+		private _inc = ceil(_dist / 15);
+		private _waterDistance = 0;
+		_a = ((_sectorBPos select 0) - (_sectorAPos select 0))/_inc;
+		_b = ((_sectorBPos select 1) - (_sectorAPos select 1))/_inc;
+
+		for "_i" from 0 to _inc do {
+			_heightASL = getTerrainHeightASL [(_sectorAPos select 0) + (_a*_i),(_sectorAPos select 1) + (_b*_i)];
+			if (_heightASL < -0.3) then {
+				_waterTravel = true;
+				_waterDistance = _waterDistance + _inc;
+			};
+		};
+		
+		[_waterTravel,_waterDistance];
+	};],
 	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
     

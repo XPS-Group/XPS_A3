@@ -8,7 +8,7 @@ Adds additional properties required by the MapGraph to pathfind
 Authors:
     Crashdome
 
-	Property: Modifiers
+	Property: Weights
 	
 	<Hashmap>
 
@@ -21,7 +21,7 @@ Authors:
 	<Hashmap>
 ---------------------------------------------------------------------------- */
 [
-	["Modifiers","HASHMAP"],
+	["Weights","HASHMAP"],
 	["Capabilities","HASHMAP"],
 	["Limits","HASHMAP"]
 ]

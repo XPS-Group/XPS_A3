@@ -40,15 +40,15 @@ Flags:
 	["#create",compileFinal {
 		if !(params [["_modifiers",[0,0,0,0],[[]],[4]],["_capabilities",[true,true,true,true,true],[[]],[5]],["_limits",[0,0,0],[[]],[3]]]) exitwith {nil;};
 
-		_self set ["Modifiers",["RoadWeight","WaterWeight","HeightWeight","DensityWeight"] createhashmapfromarray _modifiers];
+		_self set ["Weights",["RoadWeight","WaterWeight","HeightWeight","DensityWeight"] createhashmapfromarray _modifiers];
 		_self set ["Capabilities",["CanUseLand","CanUseTrails","CanUseRoads","CanUseWater","CanUseAir"] createhashmapfromarray _capabilities];
 		_self set ["Limits",["MaxSlope","MaxDensity","MaxWaterDistance"] createhashmapfromarray _limits];
 	}],
 	/*----------------------------------------------------------------------------
-	Property: Modifiers
+	Property: Weights
     
     	--- Prototype --- 
-    	get "Modifiers"
+    	get "Weights"
     	---
     
     Returns: 
@@ -59,7 +59,7 @@ Flags:
 		- HeightWeight - <Number> - normalized value from -1 to 1
 		- DensityWeight - <Number> - normalized value from -1 to 1
 	-----------------------------------------------------------------------------*/
-	["Modifiers",createhashmap],
+	["Weights",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: Capabilities
     

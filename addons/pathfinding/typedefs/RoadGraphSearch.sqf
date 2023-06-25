@@ -81,13 +81,13 @@ Flags:
 	["AdjustMoveCost",compileFinal {
 		params ["_moveCost"];
 
-		private _doctrineHeurs = _self get "Doctrine" get "Heuristics";
+		private _weights = _self get "Doctrine" get "Weights";
 		private _road = _next get "RoadObject";
 		private _info = getRoadInfo _road;
-		private _modifier = _doctrineHeurs#2;
+		private _modifier = _weights#2;
 		switch (_info#0) do {
-			case "MAIN ROAD" : {_modifier = _doctrineHeurs#0};
-			case "ROAD" : {_modifier = _doctrineHeurs#1};
+			case "MAIN ROAD" : {_modifier = _weights#0};
+			case "ROAD" : {_modifier = _weights#1};
 		};
 		_moveCost * _modifier;
 	}],
