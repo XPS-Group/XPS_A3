@@ -378,7 +378,7 @@ Flags:
     		if (_index#_i >= worldSize) then {_index set [_i,worldSize - 1];};
 		};
     
-		_self get "Sectors" get ();
+		_self get "Sectors" get _index;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
