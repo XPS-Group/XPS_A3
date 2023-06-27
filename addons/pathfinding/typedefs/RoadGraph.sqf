@@ -176,7 +176,7 @@ Flags:
 		_m setmarkerdir (_pos getdir _ePosC);  
 
 		{
-			_ct1 set [str _x,_x];
+			_ct set [str _x,_x];
 			private _rct = _self get "Roads" get (str _x);
 			_rct get "ConnectedTo" set [str _object,_object];
 
@@ -259,7 +259,7 @@ Flags:
 		_endPos - <Array> - goal position
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
-		if !(params [["_current",nil,[createhashmap]],["_prev",nil,[createhashmap]]]) exitwith {nil};
+		if !(params [["_current",nil,[createhashmap]],"_prev"]) exitwith {nil};
 		
 		private _result = [];
 		private _neighbors = [];
@@ -272,7 +272,6 @@ Flags:
 				_result pushback (_self get "Roads" get str _x);
 			};
 		} foreach _neighbors;
-
 		_result;
 	}],
 	/*----------------------------------------------------------------------------
@@ -355,7 +354,7 @@ Flags:
 					//Get which color it should be
 					private _color = "ColorBlack"; 
 					private _rct = [];
-					{_rct append values (_hm get "ConnectedTo" get _x);}foreach ["MAIN ROAD","ROAD","TRACK","TRAIL"];
+					_rct append values (_hm get "ConnectedTo");
 					if (count _rct < 2) then {_color = "ColorBlue"}; 
 					if (_hm get "IsBridge") then {_color = "ColorWhite"}; 
 					if (_hm get "Type" == "TRAIL") then {_color = "ColorOrange"};

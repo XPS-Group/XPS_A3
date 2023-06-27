@@ -87,6 +87,8 @@ Flags:
     	--- Prototype --- 
     	get "Blackboard"
     	---
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
@@ -98,6 +100,8 @@ Flags:
     	--- Prototype --- 
     	get "NodeType"
     	---
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<String> - "LEAF"
@@ -109,6 +113,8 @@ Flags:
     	--- Prototype --- 
     	get "Status"
     	---
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<String> - should only return "SUCCESS", "FAILED", "RUNNING", or <nil>
@@ -120,6 +126,8 @@ Flags:
     	--- Prototype --- 
     	call ["Init"]
     	---
+
+		<XPS_BT_ifc_INode>
 
 	Description:
 		Initialization code usually called to reset the node.
@@ -136,6 +144,8 @@ Flags:
     	--- Prototype --- 
     	call ["Tick"]
     	---
+
+		<XPS_BT_ifc_INode>
 
 	Description:
 		The code that begins the entire Tick cycle process.

@@ -7,7 +7,7 @@ Adds additional properties required by the MapGraph to pathfind
 
 Authors:
     Crashdome
-
+----------------------------------------------------------------------------
 	Property: Weights
 	
 	<Hashmap>

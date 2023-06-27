@@ -5,15 +5,22 @@ Interface: action_planning. XPS_AP_ifc_IAction
 
 Authors:
     Crashdome
-
-	Property: ActionType
-	<String> - 
+----------------------------------------------------------------------------
 
 	Property: Blackboard
 	<HashmapObject>
 
 	Property: Considerations
 	<HashmapObject>
+
+	Property: Preconditions
+	<Array>
+
+	Property: Postconditions
+	<Array>
+
+	Property: Status
+	<String>
 
 	Method: Init
 	

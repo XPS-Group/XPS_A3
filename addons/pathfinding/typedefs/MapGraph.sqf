@@ -316,21 +316,24 @@ Flags:
 		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
-		params ["_current","_prev"];
+		params [["_current",nil,[createhashmap]],"_prev"];
 
-		private _result = [];
 		private _neighbors = [];
-		private _index = _sector get "Index";
+		private _index = _current get "Index";
         { 
             private _a = (_index#0) + (_x#0);
             private _b = (_index#1) + (_x#1);
-			if !([_a,_b] isEqualTo (_prev get "Index")) then {
+			private _isPrev = false;
+			if !(isNil "_prev") then {_isPrev = ([_a,_b] isEqualTo (_prev get "Index"))};
+			if !(_isPrev) then {
 				private _neighbor = _self get "Sectors" get [_a,_b];
-				_neighbors pushback _neighbor;
+				if !(isNil "_neighbor") then {
+					_neighbors pushback _neighbor;
+				};
 			};
         } foreach [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 
-		_result;
+		_neighbors;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetMoveCost
@@ -366,7 +369,16 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
 		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
-		_self get "Sectors" get (_self call ["posToIndex",[_pos]]);
+		
+		private _index = _self call ["posToIndex",[_pos]];
+
+		// If out of bounds, clamp to edge
+		for "_i" from 0 to 1 do {
+    		if (_index#_i <= 0) then {_index set [_i,1];};
+    		if (_index#_i >= worldSize) then {_index set [_i,worldSize - 1];};
+		};
+    
+		_self get "Sectors" get ();
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init

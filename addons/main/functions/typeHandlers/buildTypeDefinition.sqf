@@ -22,6 +22,10 @@ Description:
 	with a value of [1,2,3] and a child type which inherits but has a value of [4,5,6] will become [1,2,3,4,5,6]. The most common usage 
 	will be the special "@interfaces" key which is used in checking Method/Property compliance. 
 
+Authors: 
+	Crashdome
+----------------------------------------------------------------------------
+
 Parameter: _type 
 
 <Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
@@ -80,9 +84,6 @@ Example: Implements Interface with Inheritance
 		private _myObjB = createhashmapobject [TypeB];
 		_myObj call ["Method"] //hints 'Bye'
     ---
-
-Authors: 
-	Crashdome
 
 ---------------------------------------------------------------------------- */
 if !(params [["_type",nil,[[]]],"_allowNils","_preprocess"]) exitwith {false;};

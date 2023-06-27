@@ -161,6 +161,8 @@ Flags:
     	--- Prototype --- 
     	get "Graph"
     	---
+		
+		<XPS_ifc_IAstarSearch>
     
     Returns: 
 		<HashmapObject> - A graph of nodes that implement the <XPS_typ_IAstarGraph> interface
@@ -183,6 +185,8 @@ Flags:
     	--- Prototype --- 
     	get "Path"
     	---
+		
+		<XPS_ifc_IAstarSearch>
     
     Returns: 
 		<Array> - of Node keys from start to goal
@@ -194,6 +198,8 @@ Flags:
     	--- Prototype --- 
     	get "Status"
     	---
+		
+		<XPS_ifc_IAstarSearch>
     
     Returns: 
 		<String> - the current status of the search. 
@@ -212,6 +218,8 @@ Flags:
     	--- Prototype --- 
     	get "StartKey"
     	---
+		
+		<XPS_ifc_IAstarSearch>
     
     Returns: 
 		<Anything> - the start of the search. Usually an index or position.
@@ -224,6 +232,8 @@ Flags:
     	--- Prototype --- 
     	get "EndKey"
     	---
+		
+		<XPS_ifc_IAstarSearch>
     
     Returns: 
 		<Anything> - the end of the search. Usually an index or position.
@@ -261,8 +271,8 @@ Flags:
     	--- Prototype --- 
     	call ["AdjustEstimatedDistance",[_estDist,_fromNode,_toNode]]
     	---
-
-		<main.XPS_ifc_IAstarSearch.AdjustEstimatedDistance>
+		
+		<XPS_ifc_IAstarSearch>
     
     Optionals: 
 		_estDist - <Number> 
@@ -271,6 +281,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["AdjustEstimatedDistance",compileFinal {
 		params ["_estDist","_fromNode","_toNode"];
+		_estDist;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: AdjustMoveCost
@@ -278,8 +289,8 @@ Flags:
     	--- Prototype --- 
     	call ["AdjustMoveCost",[_moveCost,_fromNode,_toNode]]
     	---
-
-		<main.XPS_ifc_IAstarSearch.AdjustMoveCost>
+		
+		<XPS_ifc_IAstarSearch>
     
     Parameters: 
 		_moveCost - <Number> 
@@ -288,6 +299,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["AdjustMoveCost",compileFinal {
 		params ["_moveCost","_fromNode","_toNode"];
+		_moveCost;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: FilterNeighbors
@@ -295,14 +307,15 @@ Flags:
     	--- Prototype --- 
     	call ["FilterNeighbors",[_neighbors]]
     	---
-
-		<main.XPS_ifc_IAstarSearch.FilterNeighbors>
+		
+		<XPS_ifc_IAstarSearch>
     
     Optionals: 
 		_neighbors - <Array> 
 	-----------------------------------------------------------------------------*/
 	["FilterNeighbors",compileFinal {
 		params ["_neighbors"];
+		_neighbors;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -310,6 +323,8 @@ Flags:
     	--- Prototype --- 
     	call ["Init"]
     	---
+		
+		<XPS_ifc_IAstarSearch>
     
     Calls the initialization of the associated graph with the start and end keys.
 	Can be used to reset pathfinding also.
@@ -331,9 +346,11 @@ Flags:
     	--- Prototype --- 
     	call ["ProcessNextNode"]
     	---
+		
+		<XPS_ifc_IAstarSearch>
     
     Causes the AstarSearch object to process the next node in frontier queue and place
-	it onto the working graph.
+	it on to the working graph.
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
 		private _graph = _self get "Graph";
@@ -345,7 +362,8 @@ Flags:
 		};
 		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
 
-		private _neighbors = _self call ["FilterNieghbors",_graph call ["GetNeighbors",[_currentNode,_prevNode]]];
+		private _neighbors = _graph call ["GetNeighbors",[_currentNode,_prevNode]];
+		_self call ["FilterNeighbors",[_neighbors]];
 
 		{
 			private _costSoFarMap = _self get "costSoFar";

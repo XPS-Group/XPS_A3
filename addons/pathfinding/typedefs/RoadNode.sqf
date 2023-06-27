@@ -147,7 +147,7 @@ Flags:
 		params [["_index",nil,[""]],["_object",objNull,[objNull]]];
 		_self set ["Index",_index];
 		_self set ["RoadObject",_object];
-		_self set ["ConnectedTo",createhashmapfromarray [["MAIN ROAD",createhashmap],["ROAD",createhashmap],["TRACK",createhashmap],["TRAIL",createhashmap]]];
+		_self set ["ConnectedTo",createhashmap];
 		//_self set ["ConnectedToPath",createhashmapfromarray [["RHDrive",createhashmap],["RHWalk",createhashmap],["LHDrive",createhashmap],["LHWalk",createhashmap]]];
 		private _roadInfo = getRoadInfo _object;
 		_self set ["Type",_roadInfo#0]; 

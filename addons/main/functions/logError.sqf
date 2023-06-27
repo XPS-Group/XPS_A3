@@ -9,11 +9,15 @@ Function: main. XPS_fnc_logError
 Description:
     Puts string into rpt file
 
-Parameters: 
+Authors: 
+	Crashdome
+----------------------------------------------------------------------------
 
-    _message - <String> - message to put in rpt
+Parameter: _message 
+    <String> - message to put in rpt
 
-    _args* - <Array> - (Optional - Default: []) - if supplied, message string will
+Optional: _args* 
+    <Array> - (Optional - Default: []) - if supplied, message string will
     be expected to be same as Format command (with %1, %2, etc..)
 
 Returns: Nothing
@@ -22,9 +26,6 @@ Example: Typical
     --- Code
     ["Hello"] call XPS_fnc_logError; 
     ---
-
-Authors:
-     Crashdome
 
 ---------------------------------------------------------------------------- */
 

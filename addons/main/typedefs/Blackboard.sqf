@@ -48,12 +48,14 @@ Flags:
     	--- Prototype --- 
     	call ["AttachToObject ",[_object*,_varName*]]
     	---
+		
+		<XPS_ifc_IBlackboard>
     
     Optionals: 
-		_object* - <Object> - (Optional - Default : objNull) Object to attach this blackboard to. 
+		_object* - <Object> - (Optional - Default : objNull) - Object to attach this blackboard to. 
 	Subsequent calls to this method will remove it from an object if already attached.
 	To remove it completely from an object without attaching to another, call without any argument
-    	_varName* - <String> - (Optional - Default : "XPS_Blackboard") Variable Name 
+    	_varName* - <String> - (Optional - Default : "XPS_Blackboard") - Variable Name 
 	to use when attaching to object with setVariable. Blackboard can then be retrieved from the object by using 
 		---code
 		_object getVariable _varName;
