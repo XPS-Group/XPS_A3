@@ -369,7 +369,16 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
 		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
-		_self get "Sectors" get (_self call ["posToIndex",[_pos]]);
+		
+		private _index = _self call ["posToIndex",[_pos]];
+
+		// If out of bounds, clamp to edge
+		for "_i" from 0 to 1 do {
+    		if (_index#_i <= 0) then {_index set [_i,1];};
+    		if (_index#_i >= worldSize) then {_index set [_i,worldSize - 1];};
+		};
+    
+		_self get "Sectors" get ();
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
