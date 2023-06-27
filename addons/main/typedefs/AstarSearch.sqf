@@ -347,13 +347,10 @@ Flags:
 			_self call ["getPath"];
 		};
 		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
-		diag_log _prevNode;
 		diag_log (_currentNode get "Index");
 
 		private _neighbors = _graph call ["GetNeighbors",[_currentNode,_prevNode]];
-		diag_log _neighbors;
 		_self call ["FilterNeighbors",[_neighbors]];
-		diag_log _neighbors;
 
 		{
 			diag_log (_x get "Index");
@@ -366,9 +363,7 @@ Flags:
 
 			if (isNil {_costSoFarX} || {_costSoFar < _costSoFarX}) then {
 				_costSoFarMap set [_x get "Index", _costSoFar];
-				diag_log _priority;
 				_self call ["frontierAdd",[_priority,_x]];
-				diag_log (_self get "frontier");
 				_self get "cameFrom" set [_x get "Index", _currentNode];
 			}
 

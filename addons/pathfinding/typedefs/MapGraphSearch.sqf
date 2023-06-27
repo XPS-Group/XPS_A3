@@ -261,13 +261,14 @@ Flags:
 		params [["_neighbors",nil,[[]]]];
 		
 		if (count _neighbors < 1) exitwith {[]};
-		
+
 		private _fromNode = _self get "currentNode";
-		for "_i" from 0 to (count _neighbors)-1 do {
+		private _i = 0;
+		while { _i < count _neighbors } do {
 			private _canTraverse = _self call ["canTraverse",[_neighbors#_i , _fromNode]];
 			if !(_canTraverse) then {
 				_neighbors deleteat _i;
-			};
+			} else {_i = _i + 1;};
 		};
 	}]
 ]
