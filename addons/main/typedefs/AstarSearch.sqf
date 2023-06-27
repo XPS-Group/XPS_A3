@@ -347,13 +347,11 @@ Flags:
 			_self call ["getPath"];
 		};
 		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
-		diag_log (_currentNode get "Index");
 
 		private _neighbors = _graph call ["GetNeighbors",[_currentNode,_prevNode]];
 		_self call ["FilterNeighbors",[_neighbors]];
 
 		{
-			diag_log (_x get "Index");
 			private _costSoFarMap = _self get "costSoFar";
 			private _estDist = _self call ["AdjustEstimatedDistance",[_graph call ["GetEstimatedDistance",[_x,_endNode]],_x,_endNode]];
 			private _moveCost = _self call ["AdjustMoveCost",[_graph call ["GetMoveCost",[_currentNode,_x]],_currentNode,_x]];
