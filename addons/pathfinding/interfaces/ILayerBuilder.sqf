@@ -4,7 +4,7 @@ Interface: pathfinding. XPS_PF_ifc_ILayerBuilder
 
 Authors:
     Crashdome
-
+----------------------------------------------------------------------------
 	Property: LayerName
 		<String>
 

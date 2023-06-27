@@ -5,16 +5,23 @@ Interface: main. XPS_ifc_IJobScheduler
 
 Authors:
     Crashdome
-
+----------------------------------------------------------------------------
 	Property: CurrentItem
 	<Hashmap> or <HashmapObject>
 
 	Property: Queue
 	<Array>
 
+	Property: ProcessesPerFrame
+	<Number>
+
 	Method: ProcessCurrent
 	
 	Method: FinalizeCurrent
+	
+	Method: Start
+	
+	Method: Stop
 ---------------------------------------------------------------------------- */
 [
 	["CurrentItem","STRING"],

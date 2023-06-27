@@ -59,6 +59,8 @@ Flags:
     	--- Prototype --- 
     	get "CurrentItem"
     	---
+
+        <XPS_ifc_IJobScheduler>
     
     Returns: 
 		<Hashmap> or <HashmapObject> - The item currently being processed
@@ -81,6 +83,8 @@ Flags:
     	--- Prototype --- 
     	get "ProcessesPerFrame"
     	---
+
+        <XPS_ifc_IJobScheduler>
     
     Returns: 
 		<Number> - Number of times <ProcessCurrent> is called per frame
@@ -92,6 +96,8 @@ Flags:
     	--- Prototype --- 
     	get "Queue"
     	---
+
+        <XPS_ifc_IJobScheduler>
     
     Returns: 
 		<Array> - an ordered array of items to process
@@ -137,6 +143,8 @@ Flags:
     	--- Prototype --- 
     	call ["FinalizeCurrent"]
     	---
+
+        <XPS_ifc_IJobScheduler>
     
 	-----------------------------------------------------------------------------*/
 	["FinalizeCurrent",compilefinal {
@@ -150,7 +158,24 @@ Flags:
     	--- Prototype --- 
     	call ["ProcessCurrent"]
     	---
-    Must be Overridden
+
+        <XPS_ifc_IJobScheduler>
+
+    Must be Overridden by child type. This method simply pops the top item in the queue
+	to <CurrentItem>. Your child type should can call this method. Example override:
+
+	---code
+	["ProcessCurrent",compileFinal {
+		// uses base object method to pop queue to CurrentItem
+		_self call ["XPS_typ_JobScheduler.ProcessCurrent"];
+
+		//Process the CurrentItem
+		private _current = _self get "CurrentItem";
+		if !(isNil {_current}) then {
+			// do stuff.... 
+		};
+	}]
+	---
 	-----------------------------------------------------------------------------*/
 	["ProcessCurrent",compileFinal {
 		if (isNil {_self get "CurrentItem"}) then {
@@ -175,7 +200,10 @@ Flags:
     	call ["Start"]
     	---
 
-		Starts processing queued items on a <ProcessesPerFrame> basis
+        <XPS_ifc_IJobScheduler>
+
+		Starts processing queued items. Number of items processed per frame is set
+		by <ProcessesPerFrame>
 	-----------------------------------------------------------------------------*/
 	["Start",compileFinal {
 		private _handle = _self get "_handle";
@@ -197,6 +225,8 @@ Flags:
     	--- Prototype --- 
     	call ["Stop"]
     	---
+
+        <XPS_ifc_IJobScheduler>
 
 		Stops processing queue
 	-----------------------------------------------------------------------------*/

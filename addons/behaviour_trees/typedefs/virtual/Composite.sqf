@@ -19,23 +19,37 @@ Flags:
     none
 
 ---------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------
-Protected: children 
-	<Array> - of child nodes
-
-Protected: currentIndex
-	<Number> - current tasked index of children nodes
-	
----------------------------------------------------------------------------- */
 [
 	["#str",compileFinal {"XPS_BT_typ_Composite"}],
 	["#type","XPS_BT_typ_Composite"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
+	/* ----------------------------------------------------------------------------
+	Protected: children 
+    
+    	--- Prototype --- 
+    	get "children"
+    	---
+
+	Returns:
+		<Array> - of child nodes		
+	---------------------------------------------------------------------------- */
+	["children",[]],
+	/* ----------------------------------------------------------------------------
+	Protected: currentIndex
+    
+    	--- Prototype --- 
+    	get "currentIndex"
+    	---
+
+	Returns:
+		<Number> - current tasked index of child nodes
+	---------------------------------------------------------------------------- */
+	["currentIndex",0],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
     	--- Prototype --- 
-    	_self call ["preTick"]
+    	_status = _self call ["preTick"]
     	---
 
 	Description:
@@ -118,6 +132,8 @@ Protected: currentIndex
     	--- Prototype --- 
     	get "Blackboard"
     	---
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
@@ -129,6 +145,8 @@ Protected: currentIndex
     	--- Prototype --- 
     	get "NodeType"
     	---
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<String> - "COMPOSITE"
@@ -140,6 +158,8 @@ Protected: currentIndex
     	--- Prototype --- 
     	get "Status"
     	---
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<String> - should only return "SUCCESS", "FAILED", "RUNNING", or <nil>
@@ -196,6 +216,8 @@ Protected: currentIndex
     	call ["Init"]
     	---
 
+		<XPS_BT_ifc_INode>
+
 	Description:
 		Initialization code usually called to reset the node.
 
@@ -218,6 +240,8 @@ Protected: currentIndex
     	--- Prototype --- 
     	call ["Tick"]
     	---
+
+		<XPS_BT_ifc_INode>
 
 	Description:
 		The code that begins the entire Tick cycle process.

@@ -21,10 +21,10 @@ Flags:
 ---------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------
 Protected: children 
-	<Array> - of child nodes
+		<virtual. XPS_BT_typ_Composite. children>
 
 Protected: currentIndex
-	<Number> - current tasked index of children nodes
+		<virtual. XPS_BT_typ_Composite. currentIndex>
 	
 ---------------------------------------------------------------------------- */
 [

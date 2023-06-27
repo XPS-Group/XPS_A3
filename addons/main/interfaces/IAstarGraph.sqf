@@ -5,6 +5,7 @@ Interface: main. XPS_ifc_IAstarGraph
 
 Authors:
     Crashdome
+----------------------------------------------------------------------------
 
 	Method: GetEstimatedDistance
 

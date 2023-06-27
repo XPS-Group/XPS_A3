@@ -37,12 +37,14 @@ Description:
 	run your own custom preprocesser (or extend this one) before instantiating a type with 
 	createHashmapPObject command.
 
+Authors: 
+	Crashdome
+------------------------------------------------------------------------------
+
 Parameter: _type 
+	<Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
 
-<Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
-
-Return: 
-	Nothing
+Return: Nothing
 
 Example: Private Properties
 
@@ -131,9 +133,6 @@ Example: Validation of values
 	---
 
 	Note: Good for checking properties that are dependant on an external variable 
-
-Authors: 
-	Crashdome
 
 ---------------------------------------------------------------------------- */
 params [["_typeDef",[],[[]]]];

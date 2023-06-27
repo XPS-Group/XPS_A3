@@ -7,7 +7,7 @@ a <XPS_PF_typ_RoadGraphSearch> object.
 
 Authors: 
 	Crashdome
-
+----------------------------------------------------------------------------
 	Property: Width
     	<Number>
 
@@ -27,7 +27,7 @@ Authors:
 		<Array>
 		
 	Property: RoadObject
-		<Object>
+		<Anything>
 		
 	Property: Type
 		<String>

@@ -42,6 +42,10 @@ Description:
 
     For Example: Tank_4f56a23e  might be fine if you only intend to have about 10 to 100 "Tank" names.
 
+Authors: 
+	Crashdome
+----------------------------------------------------------------------------
+
 
 Optional: _length 
     <Number> - desired length of the ID in chars - Default of 12 (total 12 chars) 
@@ -68,9 +72,6 @@ Example: Using both Optionals 2
     --- Code
     _myUniqueID = [10,"abcdefghijklmnopqrstuvwxyz"] call XPS_fnc_createUniqueID; // might return something like "iosmfhxrslio"
     ---
-
-Authors:
-     Crashdome
 
 ---------------------------------------------------------------------------- */
 

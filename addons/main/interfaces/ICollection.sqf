@@ -5,7 +5,7 @@ Interface: main. XPS_ifc_ICollection
 
 Authors:
     Crashdome
-
+----------------------------------------------------------------------------
 	Property: AllowedTypes
 	<Array>
 	

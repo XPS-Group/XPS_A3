@@ -5,20 +5,25 @@ Interface: behaviour_trees. XPS_BT_ifc_INode
 
 Authors:
     Crashdome
+----------------------------------------------------------------------------
+
+	Property: Blackboard
+	<HashmapObject>
 
 	Property: NodeType
 	<String> - should only return "COMPOSITE", "DECORATOR", "LEAF"
 
-	Property: Blackboard
-	<HashmapObject>
+	Property: Status
+	<String>
 
 	Method: Init
 	
 	Method: Tick
 ---------------------------------------------------------------------------- */
 [
-	["NodeType", "STRING"],
 	["Blackboard", "HASHMAP"],
+	["NodeType", "STRING"],
+	["Status","STRING"],
 	["Init","CODE"],
 	["Tick","CODE"]
 ]
