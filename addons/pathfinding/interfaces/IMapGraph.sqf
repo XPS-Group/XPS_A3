@@ -5,7 +5,7 @@ Interface: pathfinding. XPS_PF_ifc_IMapGraph
 
 Authors:
     Crashdome
-
+----------------------------------------------------------------------------
 	Property: Sectors
 		<Hashmap>
 

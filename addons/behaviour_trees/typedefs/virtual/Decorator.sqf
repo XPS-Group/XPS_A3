@@ -27,11 +27,23 @@ Protected: child
 	["#str",compileFinal {"XPS_BT_typ_Decorator"}],
 	["#type","XPS_BT_typ_Decorator"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
+	
+	/* ----------------------------------------------------------------------------
+	Protected: child
+    
+    	--- Prototype --- 
+    	get "child"
+    	---
+
+	Retruns:
+		<HashmapObject> - child node
+	---------------------------------------------------------------------------- */
+	["child",nil],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
     	--- Prototype --- 
-    	_self call ["preTick"]
+    	_status = _self call ["preTick"]
     	---
 
 	Description:
@@ -97,6 +109,8 @@ Protected: child
     	--- Prototype --- 
     	get "Blackboard"
     	---
+		
+    	<XPS_BT_ifc_INode>
     
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
@@ -108,6 +122,8 @@ Protected: child
     	--- Prototype --- 
     	get "NodeType"
     	---
+		
+    	<XPS_BT_ifc_INode>
     
     Returns: 
 		<String> - "DECORATOR"
@@ -119,6 +135,8 @@ Protected: child
     	--- Prototype --- 
     	get "Status"
     	---
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<String> - should only return "SUCCESS", "FAILED", "RUNNING", or <nil>
@@ -167,6 +185,8 @@ Protected: child
     	--- Prototype --- 
     	call ["Init"]
     	---
+		
+    	<XPS_BT_ifc_INode>
 
 	Description:
 		Initialization code usually called to reset the node.
@@ -187,6 +207,8 @@ Protected: child
     	--- Prototype --- 
     	call ["Tick"]
     	---
+		
+    	<XPS_BT_ifc_INode>
 
 	Description:
 		The code that begins the entire Tick cycle process.

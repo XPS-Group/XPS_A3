@@ -10,6 +10,10 @@ Description:
     
 	Replaces a key such as a private key "_key" with a different key. The values must be in quotes in code block.
 
+Authors: 
+	Crashdome
+----------------------------------------------------------------------------
+
 Parameter: _find 
 
 	<String> - the string to find
@@ -35,9 +39,6 @@ Example:
 	_result = [_find,_replace,_code] call XPS_fnc_preprXPS_fnc_findReplaceKeyInCodeocessTypeDefinition
 	// _result is: {_self call "ABCD"}
 	---
-
-Authors: 
-	Crashdome
 
 ---------------------------------------------------------------------------- */
 params [["_find","",[""]],["_replace","",[""]],["_code",{},[{}]]];

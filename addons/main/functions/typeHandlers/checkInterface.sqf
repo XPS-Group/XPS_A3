@@ -15,6 +15,10 @@ Description:
 
 	Keys can be anything that is valid for a <HashmapKey> although strings as keys are typically used for <HashmapObjects>
 
+Authors: 
+	Crashdome
+----------------------------------------------------------------------------
+
 Parameter: _type 
 	<HashMap> or <HashmapObject> - the map/object to check
 
@@ -34,9 +38,6 @@ Example: Check a hashmap if it supports interface
         private _result = [MyHashmap,["MyInterface"]] call XPS_fnc_checkInterface; 
 		// _result is 'true'
     ---
-
-Authors:
-     Crashdome
 
 ---------------------------------------------------------------------------- */
 

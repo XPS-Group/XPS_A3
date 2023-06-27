@@ -38,7 +38,31 @@ Authors:
 	["#str",compileFinal {"XPS_typ_HashmapCollection"}],
 	["#type","XPS_typ_HashmapCollection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
+    /*----------------------------------------------------------------------------
+    Property: AllowedTypes
+    
+        --- prototype
+        get "AllowedTypes"
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Retruns: 
+        <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
+    ----------------------------------------------------------------------------*/
     ["AllowedTypes",[]],
+    /*----------------------------------------------------------------------------
+    Property: Items
+    
+        --- prototype
+        get "Items"
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Retruns: 
+        <Hashmap> - <hashmaps> or <hashmapobjects> stored in this collection
+    ----------------------------------------------------------------------------*/
     ["Items",nil],
     /* -----------------------------------------------------------------------
     Constructor: #create
@@ -68,6 +92,8 @@ Authors:
         ---prototype
         call ["RegisterType",[_type]];
         ---
+
+        <XPS_ifc_ICollection>
     
     Parameters: 
         _type - <String> - used to add a type after object creation.
@@ -90,6 +116,8 @@ Authors:
         ---prototype
         call ["AddItem",[_key,_item]];
         ---
+
+        <XPS_ifc_ICollection>
     
     Parameters: 
         _key - Anything - Key used when adding to <Items> store
@@ -116,6 +144,8 @@ Authors:
         ---prototype
         call ["RemoveItem",[_key]];
         ---
+
+        <XPS_ifc_ICollection>
     
     Parameters: 
         _key - Anything - Key of item to remove from <Items> store

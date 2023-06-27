@@ -7,7 +7,7 @@ Adds additional properties required by the RoadGraph to pathfind on roads
 
 Authors:
     Crashdome
-
+----------------------------------------------------------------------------
 Property: Weights
 
 <Array>

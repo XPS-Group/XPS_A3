@@ -5,12 +5,15 @@ Interface: main. XPS_ifc_IAstarSearch
 
 Authors:
     Crashdome
-
+----------------------------------------------------------------------------
 	Property: Graph
 		<HashmapObject>
 
 	Property: Path
 		<Array>
+
+	Property: Status
+		<String>
 
 	Property: StartKey
 
