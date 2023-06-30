@@ -184,15 +184,15 @@ Flags:
 
 		private _toTerrain = _toNode get "Terrain";
 			private _typeTo = _toTerrain get "Type";
-        	private _toHeight = _toTerrain get "heightModifier";   
+        	private _toHeight = _toTerrain get "HeightModifier";   
 			
 		private _fromTerrain = _fromNode get "Terrain";
 			//private _typeFrom = _fromTerrain get "Type";
-        	private _fromHeight = _fromTerrain get "heightModifier";
+        	private _fromHeight = _fromTerrain get "HeightModifier";
 
         private _adjustedCost = _moveCost;
 
-		private _isWaterTravel = _self get "curentisWaterTravel";
+		private _isWaterTravel = _self get "_currentIsWaterTravel";
      
 
         switch (_typeTo) do {
@@ -221,7 +221,7 @@ Flags:
 
             case "COAST": {
                 if (_isWaterTravel) exitwith {_adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);};
-                if (((_capabilities get "CanUseRoads") && _hasRoads) || ((_capabilities get "CanUseTrails") && _hasTrails)) then { 
+                if (((_capabilities get "CanUseRoads") && (_toTerrain get "HasRoads")) || ((_capabilities get "CanUseTrails") && (_toTerrain get "HasTrails"))) then { 
                     if (_roadWeight != 0) then {
                             _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "RoadModifier") * _roadWeight);
                     };
@@ -236,7 +236,7 @@ Flags:
             };
 
             case "LAND": {
-                if (((_capabilities get "CanUseRoads") && _hasRoads) || ((_capabilities get "CanUseTrails") && _hasTrails)) then { 
+                if (((_capabilities get "CanUseRoads") && (_toTerrain get "HasRoads")) || ((_capabilities get "CanUseTrails") && (_toTerrain get "HasTrails"))) then { 
                     if (_roadWeight != 0) then {
                             _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "RoadModifier") * _roadWeight);
                     };
@@ -250,6 +250,7 @@ Flags:
                 };
             };
         };
+		//diag_log [_typeTo,_moveCost,_adjustedCost];
         _adjustedCost;
 	}],
 	/*----------------------------------------------------------------------------

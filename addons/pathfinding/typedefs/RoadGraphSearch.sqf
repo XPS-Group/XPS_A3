@@ -79,7 +79,7 @@ Flags:
 		<main.XPS_typ_AstarSearch.AdjustMoveCost>
 	-----------------------------------------------------------------------------*/
 	["AdjustMoveCost",compileFinal {
-		params ["_moveCost"];
+		params ["_moveCost","_fromNode","_toNode"];
 
 		private _weights = _self get "Doctrine" get "Weights";
 		private _road = _next get "RoadObject";

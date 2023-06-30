@@ -371,12 +371,18 @@ Flags:
 			private _moveCost = _self call ["AdjustMoveCost",[_graph call ["GetMoveCost",[_currentNode,_x]],_currentNode,_x]];
 			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _moveCost;
 			private _priority = _costSoFar + _estDist;
+			//diag_log [_x get "Index",_estDist,_costSoFar,_priority];
 			private _costSoFarX = _costSoFarMap get (_x get "Index");
 
 			if (isNil {_costSoFarX} || {_costSoFar < _costSoFarX}) then {
 				_costSoFarMap set [_x get "Index", _costSoFar];
 				_self call ["frontierAdd",[_priority,_x]];
 				_self get "cameFrom" set [_x get "Index", _currentNode];
+
+				_m = createmarker [str str (_x get "Index"),_x get "PosCenter"];
+				_m setmarkercolor "ColorGreen";
+				_m setmarkersize [0.5,0.5];
+				_m setmarkertype "hd_dot";
 			}
 
 		} foreach _neighbors;

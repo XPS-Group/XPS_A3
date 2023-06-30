@@ -62,7 +62,7 @@ Flags:
 		private _subPositions = _sector get "SubPositions";
 		private _numWaterAreas = 0;
 		private _heightTotal = 0;
-		private _isAllWater = !(_sector get "HasBridge");
+		private _isAllWater = call {!(_sector get (_self get "LayerName") get "HasBridge")};
 		private _hasLand = false;
 		private _hasWater = false;
 		{
@@ -94,22 +94,50 @@ Flags:
 	["setRoadModifier",compileFinal {
 		if !(params [["_sector",nil,[createhashmap]],["_radius",nil,[0]]]) exitwith {false;};
 
+		private _hasBridge = false;
+		private _hasRoads = false;
+		private _hasTrails = false;
+		private _modifierList = [false,false,false,false];
+		private _modifier = 1;
+
 		{
 			private _info = getRoadInfo _x;
-			if (_info select 8) then { _sector set ["HasBridge",true]; };
+			if (_info select 8) then {_hasBridge = true;}; 
 
 			switch (_info select 0) do
 			{
-				case "MAIN ROAD";
-				case "ROAD";
+				case "MAIN ROAD": {
+					_hasRoads = true;
+					_modifierList set [0, true];
+				};
+				case "ROAD": {
+					_hasRoads = true;
+					_modifierList set [1, true];
+				};
 				case "TRACK": {
-					_sector get (_self get "LayerName") set ["HasRoads",true];
+					_hasRoads = true;
+					_modifierList set [2, true];
 				};
 				case "TRAIL": {
-					_sector get (_self get "LayerName") set ["HasTrails",true];
+					_hasTrails = true;
+					_modifierList set [3, true];
 				};
 			};
 		} foreach nearestTerrainObjects [_sector get "PosCenter", ["MAIN ROAD","ROAD","TRACK","TRAIL"], _radius * 1.175, false, true];
+
+		_sector get (_self get "LayerName") set ["HasBridge",_hasBridge]; 
+		_sector get (_self get "LayerName") set ["HasRoads",_hasRoads];
+		_sector	 get (_self get "LayerName") set ["HasTrails",_hasTrails];
+
+		if !(_hasRoads || _hasTrails) then {_modifier = 0;} else {
+			{
+				if (_x) exitWith {};
+				_modifier = _modifier - 0.1;
+			} foreach _modifierList; 
+		};
+
+
+		_sector	 get (_self get "LayerName") set ["RoadModifier",_modifier];
 
 		true;
 	}],
