@@ -59,7 +59,9 @@ Flags:
 	["setHeightModifier",compileFinal {
 		if !(params [["_sector",nil,[createhashmap]]]) exitwith {false;};
 
-		private _subPositions = _sector get "SubPositions";
+		private _posRef = _sector get "PosRef";
+		private _subPositions = [];
+		{_subPositions pushback [_posRef#0+(_x#0),_posRef#1+(_x#1)]} foreach (_sector get "SubPositionOffsets");
 		private _numWaterAreas = 0;
 		private _heightTotal = 0;
 		private _isAllWater = call {!(_sector get (_self get "LayerName") get "HasBridge")};

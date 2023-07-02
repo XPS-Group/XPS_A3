@@ -48,34 +48,39 @@ Flags:
 		private _sectorRadius = _self get "SectorRadius";
 		private _gridWidth = _self get "GridWidth";
 
+		// Set SubPosition Offset (same for each sector - based on Sector size) 
+		// Creates a 3x3 grid of offset positions within sector with Indices of:
+		//
+		// 	-------
+		// 	|6|7|8|
+		// 	-------
+		// 	|3|4|5|
+		// 	-------
+		// 	|0|1|2|
+		// 	-------
+		//
+		private _subPosSize = _sectorRadius/2;
+		private _subPositions = [];
+		for "_spY" from 1 to 3 do {
+			for "_spX" from 1 to 3 do {
+				_subPositions pushback [(_subPosSize*_spX),(_subPosSize*_spY)]
+			};
+		};
+
+		// Create Sector with Index
 		for "_yAxis" from 0 to _gridWidth - 1 do {
 			for "_xAxis" from 0 to _gridWidth - 1 do {
 				//Set Index and Positions
 				private _sector = _sectors get [_xAxis,_yAxis];
 
 				if (isNil "_sector") then {
-					_sector = createhashmapobject [XPS_PF_typ_MapNode,[_xAxis,_yAxis]];
+					//_sector = createhashmapobject [XPS_PF_typ_MapNode,[_xAxis,_yAxis]];
+					_sector = createhashmapfromarray [["Index",[_xAxis,_yAxis]]];
 					private _index = _sector get "Index";
 					private _posRef = [_sectorSize * _xAxis,_sectorSize * _yAxis];
 					_sector set ["PosRef", _posRef];
 					_sector set ["PosCenter", [(_sectorSize * _xAxis)+_sectorRadius,(_sectorSize * _yAxis)+_sectorRadius]];
-
-					//Set SubPositions - Creates a 3x3 grid within sector with Indices of:
-					// -------
-					// |6|7|8|
-					// -------
-					// |3|4|5|
-					// -------
-					// |0|1|2|
-					// -------
-					private _subPosSize = _sectorRadius/2;
-					private _subPositions = [];
-					for "_spY" from 1 to 3 do {
-						for "_spX" from 1 to 3 do {
-							_subPositions pushback [_posRef#0+(_subPosSize*_spX),_posRef#1+(_subPosSize*_spY)]
-						};
-					};
-					_sector set ["SubPositions",_subPositions];
+					_sector set ["SubPositionOffsets",_subPositions];
 
 					_sectors set [_index,_sector];
 				};
@@ -241,7 +246,7 @@ Flags:
 	Method: AddLayer
 	
 		--- Prototype --- 
-		call ["AddLayer",[_layerName, _layerBuilder, _useSubPositions*]]
+		call ["AddLayer",[_layerBuilder]]
 		---
 
 		<pathfinding.XPS_PF_ifc_IMapGraph.AddLayer>

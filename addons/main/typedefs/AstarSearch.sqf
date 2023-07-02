@@ -379,10 +379,10 @@ Flags:
 				_self call ["frontierAdd",[_priority,_x]];
 				_self get "cameFrom" set [_x get "Index", _currentNode];
 
-				_m = createmarker [str str (_x get "Index"),_x get "PosCenter"];
-				_m setmarkercolor "ColorGreen";
-				_m setmarkersize [0.5,0.5];
-				_m setmarkertype "hd_dot";
+				// _m = createmarker [str str (_x get "Index"),_x get "PosCenter"];
+				// _m setmarkercolor "ColorGreen";
+				// _m setmarkersize [0.5,0.5];
+				// _m setmarkertype "hd_dot";
 			}
 
 		} foreach _neighbors;

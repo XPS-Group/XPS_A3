@@ -190,6 +190,8 @@ Flags:
 			//private _typeFrom = _fromTerrain get "Type";
         	private _fromHeight = _fromTerrain get "HeightModifier";
 
+		private _sectorDistance = _moveCost; // base moveCost is a function of distance already
+
         private _adjustedCost = _moveCost;
 
 		private _isWaterTravel = _self get "_currentIsWaterTravel";
