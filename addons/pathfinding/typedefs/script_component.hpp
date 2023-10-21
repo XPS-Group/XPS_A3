@@ -1,0 +1,1 @@
+#include "\x\xps\addons\pf\script_component.hpp"
