@@ -1,0 +1,95 @@
+.SHComment {
+    color: #008000;
+    font-style: italic;
+    }
+
+.SHString {
+    color: #800000;
+    }
+    
+.SHKeyword {
+    color: #000080;
+    }
+
+.DarkTheme .SHComment {
+    color: #82ff82;
+    font-style: italic;
+    }
+
+.DarkTheme .SHString {
+    color: #ff8282;
+    }
+
+.DarkTheme .SHKeyword {
+    color: #8282ff;
+    }
+    
+.BlackTheme .SHComment {
+    color: #00ff00;
+    font-style: italic;
+    }
+
+.BlackTheme .SHString {
+    color: #fd2c2c;
+    }
+
+.BlackTheme .SHKeyword {
+    color: #2f2fff;
+    }
+
+.CTopic a:link,
+.CTopic a:visited,
+.CTopic a:hover {
+    color: #000080;
+    }
+    .DarkTheme .CTopic a:link,
+    .DarkTheme .CTopic a:visited,
+    .DarkTheme .CTopic a:hover {
+        color: #8282ff;
+        }
+    .BlackTheme .CTopic a:link,
+    .BlackTheme .CTopic a:visited,
+    .BlackTheme .CTopic a:hover {
+        color: #2c2cff;
+        }
+.CTopic a:active {
+    color: #800000;
+    }
+    .DarkTheme .CTopic a:active {
+        color: #c55c5c;
+        }
+    .BlackTheme .CTopic a:active {
+        color: #ff2c2c;
+        }
+
+
+.CTitle {
+    margin-left: 0.5rem;
+    text-transform: none;
+    font-size: 1.2rem;
+    background-color: #f0f0f0;
+    border-bottom: unset;
+    border-top: 1px solid #C0C0C0;
+    }
+    .DarkTheme .CTitle { border-color: #707070; }
+    .BlackTheme .CTitle { border-color: #686868; }
+
+.TGroup .CTitle {
+    margin-left: 0rem;
+    text-transform: none;
+    font-size: 1.2rem;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
+    }
+    .DarkTheme .CTitle { border-color: #707070; background-color: #3a3a3a; }
+    .BlackTheme .CTitle { border-color: #686868; background-color: #1f1f1f; }
+
+.CHeading {
+    font-size: 1.1rem;
+}
+
+.CBody,
+.CHeading {
+    margin-left: 0.5rem;
+}

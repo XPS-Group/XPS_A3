@@ -1,0 +1,14 @@
+name = "XPS Core";
+// picture = "logo_xps.paa";
+actionName = "Website";
+action = "https://github.com/Crashdome/XPS_A3";
+description = "Issues: https://github.com/Crashdome/XPS_A3/issues";
+// logo = "logo_xps.paa";
+// logoOver = "logo_xps.paa";
+tooltip = "eXtensible Project System - Core";
+tooltipOwned = "eXtensible Project System";
+overview = "Work In Progress";
+author = "XPS Team";
+// overviewPicture = "logo_cba_ca.paa";
+overviewText = "eXtensible Project System - WIP";
+overviewFootnote = "<br /><br /><t color='#999999'>This content a work in progress.<t />";
