@@ -126,17 +126,25 @@ if ("#base" in keys _hashmap) then {
 		// Append keys using @ 
 		if (_x in _keys && typename _x == "STRING") then {
 			if ((_x find "@") == 0 && typename _y in ["ARRAY","HASHMAP"]) then {
-				private _appendableValue = if (_x in keys _hashmap) then {_hashmap get _x} else {false};
+				private _appendableValue = _hashmap getorDefault [_x,false];
 				if (_appendableValue isEqualType _y) then {
 					switch (typeName _appendableValue) do {
 						case "ARRAY" : {
 							if (_x == "@interfaces") then {
-								_hashmap set [_x,+_appendableValue insert [0,_y,true]] // unique Values only for interfaces
+								_appendableValue = +_appendableValue;
+								_appendableValue insert [0,_y,true];
+								_hashmap set ["@interfaces",_appendableValue]; // unique Values only for interfaces
 							} else {
-								_hashmap set [_x,+_appendableValue insert [0,_y]] // always allows duplicates
+								_appendableValue = +_appendableValue;
+								_appendableValue insert [0,_y];
+								_hashmap set [_x,_appendableValue]; // always allows duplicates
 							};
 						};
-						case "HASHMAP" : {_hashMap set [_x,+_y merge [_appendableValue,true]]; /* overwrites parent keys */};
+						case "HASHMAP" : {
+							private _dcValue = +_y;
+							_dcValue merge [+_appendableValue,true];
+							_hashMap set [_x,_dcValue]; /* overwrites parent keys */
+						};
 					};
 				};
 			};
@@ -150,7 +158,7 @@ if ("#base" in keys _hashmap) then {
 		_preCompiled deleteat "#create";
 		_preCompiled deleteat "#clone";
 		_preCompiled deleteat "#delete";
-		_hashmap set ["#base",call compile (str _preCompiled)];
+		_hashmap set ["#base",[_preCompiled] call XPS_fnc_typeDefToArray];
 	};
 	
 	_preCompiled merge [_hashmap,true];
@@ -158,11 +166,10 @@ if ("#base" in keys _hashmap) then {
 };
 
 // Check Interfaces are implemented
-private _interfaces = if ("@interfaces" in keys _preCompiled) then {_preCompiled get "@interfaces"} else {[]};
-
+private _interfaces = _preCompiled getOrDefault ["@interfaces",[]];
 if ([_preCompiled,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
 	// Passes all checks and is Ok to push out definition
-	call compile (str _hashmap);
+	[_hashmap] call XPS_fnc_typeDefToArray;
 } else {
 	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	nil;

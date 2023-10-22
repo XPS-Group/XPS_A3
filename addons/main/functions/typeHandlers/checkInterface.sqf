@@ -41,7 +41,10 @@ Example: Check a hashmap if it supports interface
 
 ---------------------------------------------------------------------------- */
 
-if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNils"]) exitwith {false;};
+if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNils"]) exitwith {
+	diag_log (format ["XPS_fnc_checkInterface: parameters not valid.  -- Interfaces:%1",_this select 1]);
+	false;
+};
 _allowNils = [_allowNils] param [0,false,[true]];
 
 private _result = true;
