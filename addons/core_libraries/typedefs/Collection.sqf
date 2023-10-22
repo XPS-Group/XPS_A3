@@ -40,7 +40,7 @@ Property: Items
     Retruns: 
         <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
     */
-    ["AllowedTypes",nil],
+    ["AllowedTypes",[]],
     /*
     Property: Items
     
@@ -53,7 +53,7 @@ Property: Items
     Retruns: 
         <Hashmap> - <hashmaps> or <hashmapobjects> stored in this collection
     */
-    ["Items",nil],
+    ["Items",createhashmap],
     /*
     Constructor: #create
     

@@ -6,8 +6,10 @@ Interface: main. XPS_ifc_IJobScheduler
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
+	Property: CurrentUID
+	<String>
+
 	Property: CurrentItem
-	<Hashmap> or <HashmapObject>
 
 	Property: Queue
 	<Array>
@@ -24,7 +26,8 @@ Authors:
 	Method: Stop
 ---------------------------------------------------------------------------- */
 [
-	["CurrentItem","STRING"],
+	["CurrentItem","ANYTHING"],
+	["CurrentUID","STRING"],
 	["Queue","ARRAY"],
 	["ProcessesPerFrame","SCALAR"],
 	["ProcessCurrent","CODE"],

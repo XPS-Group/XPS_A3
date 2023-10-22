@@ -115,7 +115,7 @@ Protected: child
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
 	-----------------------------------------------------------------------------*/
-	["Blackboard",nil],
+	["Blackboard",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     

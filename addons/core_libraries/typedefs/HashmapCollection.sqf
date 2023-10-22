@@ -63,7 +63,7 @@ Authors:
     Retruns: 
         <Hashmap> - <hashmaps> or <hashmapobjects> stored in this collection
     ----------------------------------------------------------------------------*/
-    ["Items",nil],
+    ["Items",createhashmap],
     /* -----------------------------------------------------------------------
     Constructor: #create
 

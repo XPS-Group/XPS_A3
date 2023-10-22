@@ -23,7 +23,7 @@ Authors:
 [
 	["Blackboard", "HASHMAP"],
 	["NodeType", "STRING"],
-	["Status","STRING"],
+	["Status","ANYTHING"],
 	["Init","CODE"],
 	["Tick","CODE"]
 ]
