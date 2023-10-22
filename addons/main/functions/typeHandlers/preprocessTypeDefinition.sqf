@@ -143,6 +143,8 @@ private _ctor = "";
 private _dtor = "";
 private _ctor_l = "";
 private _dtor_l = "";
+private _hasCtor = false;
+private _hasDtor = false;
 
 try 
 {
@@ -157,10 +159,14 @@ try
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
+
+			if (_key isEqualTo "#create") then {_hasCtor = true};
+			if (_key isEqualTo "#delete") then {_hasDtor = true};
+
 		private _attributes = [];
 		if (count _keyPair > 2) then {
 			_attributes = _keyPair#2;
-			if !(typename _attributes == "ARRAY") then {throw format ["Attributes for Key %1 is not an array.",_key]};
+			if !(typename _attributes isEqualTo "ARRAY") then {throw format ["Attributes for Key %1 is not an array.",_key]};
 		};
 		
 		private _a = 0;
@@ -169,10 +175,10 @@ try
 			scopeName "ATTRIBUTE_CHECK";
 
 			private _attribute = _attributes#_a;
-			if !(typename _attribute == "ARRAY") then {throw format ["Attributes %1 for Key %2 is not formatted as an array.",_a,_key]};
+			if !(typename _attribute isEqualTo "ARRAY") then {throw format ["Attributes %1 for Key %2 is not formatted as an array.",_a,_key]};
 
 			private _attCommand = _attribute#0;
-			if !(typename _attCommand == "STRING") then {throw format ["Attribute %1 for Key %2 is not a string.",_attCommand,_key]};
+			if !(typename _attCommand isEqualTo "STRING") then {throw format ["Attribute %1 for Key %2 is not a string.",_attCommand,_key]};
 			private "_attParams";
 			if (count _attribute >1) then {_attParams = _attribute#1};
 
@@ -246,22 +252,26 @@ try
 	};
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
+	// Add create / delete methods if they dont exist prior to changing private keys
+	if (!_hasCtor && {_ctor != "" || _ctor_l != ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor != "" || _dtor_l != ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
+
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
-		// Constructor
-		if (_key == "#create" && {_ctor != "" || _ctor_l != ""}) then {
+		// Constructor injection but only if it existed prior to above code
+		if (_hasCtor && {_key isEqualTo "#create" && {_ctor != "" || _ctor_l != ""}}) then {
 			_strCode = (str _value) insert [1,_ctor];
 			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
-		// Destructor
-		if (_key == "#delete" && {_dtor != "" || _dtor_l != ""}) then {
+		// Destructor injection but only if it existed prior to above code
+		if (_hasDtor && {_key isEqualTo "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
 			_strCode = (str _value) insert [1,_dtor];
 			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];
 		};
-		//Replace Private Keys
+		//Replace Private Keys in any code block
 		if (typename _value == "CODE") then {
 			{
 				private _find = _x#0;
