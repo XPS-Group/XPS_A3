@@ -196,19 +196,19 @@ try
 				};
 				case "CTOR" : {
 					private _initValue = str _value;
-					if (typeName _attParams == "STRING") then {_initValue = _attParams};
-					_ctor = _ctor + format["_self set [""%1"",%2];",_key,_initValue]; 
+					if (typeName _attParams == "STRING") then {_initValue = _attParams} else {_initValue = str _attParams};
+					_ctor = _ctor + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR" : {
-					_dtor = _dtor + format["_self set [""%1"",nil];",_key]; 
+					_dtor = _dtor + format["_self set [%1,nil];",str _key]; 
 				};
 				case "CTOR_LAZY" : {
 					private _initValue = str _value;
-					if (typeName _attParams == "STRING") then {_initValue = _attParams};
-					_ctor_l = _ctor_l + format["_self set [""%1"",%2];",_key,_initValue]; 
+					if (typeName _attParams == "STRING") then {_initValue = _attParams} else {_initValue = str _attParams};
+					_ctor_l = _ctor_l + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR_LAZY" : {
-					_dtor_l = _dtor_l + format["_self set [""%1"",nil];",_key]; 
+					_dtor_l = _dtor_l + format["_self set [%1,nil];",str _key]; 
 				};
 				case "VALIDATE_ANY" : {
 					if !(typename _attParams == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
