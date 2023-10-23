@@ -52,21 +52,32 @@ for "_a" from 0 to (count _interfaces -1) do {
 	private _interface = call compile (_interfaces#_a);
 	for "_i" from 0 to (count _interface -1) do {
 		private _check = _interface#_i;
+		_check params ["_key","_checkType"];
 		//Check key exists
-		private _key = _check#0;
 		if !(_key in keys _hashmap) then {
 			diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
 			_result = false;
 		};
 		//Check value type
-		if !(_check#1 in ["ANYTHING","ANY"]) then {
+		if !(_checkType in ["ANYTHING","ANY"]) then {
 			private _type = typename (_hashmap get _key);
 			if (isNil {_type} && !_allowNils) then {
-				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is nil during a check where they are not allowed",_hashmap get "#type",_key]);
+				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key set to nil during a check where they are not allowed",_hashmap get "#type",_key]);
 				_result = false;
 			};
-			if !(_type == _check#1) then {
-				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_check#1]);
+			// Check if Hashmap Object and get type if exists
+			if (_type isEqualTo "HASHMAP") then {
+				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
+				if (typeName _type isEqualto "ARRAY") then {
+					if !(_checkType in _types) then {
+						diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
+						_result = false;
+					};
+					continue;
+				};
+			};
+			if !(_type isEqualTo _checkType) then {
+				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
 				_result = false;
 			};
 		};
