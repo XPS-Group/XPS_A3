@@ -198,7 +198,7 @@ Protected: child
 		_self set ["Status",nil];
 		private _child = _self get "child";
 		if !(isNil "child") then {
-			_status = _child call ["Init"];
+			_child call ["Init"];
 		};
 	}],
 	/*----------------------------------------------------------------------------

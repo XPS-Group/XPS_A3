@@ -205,7 +205,7 @@ Flags:
 		private _children = _self get "children";
 		private _count = count (_children);
 		if (_index < 0 ||_index >= _count) then {_index = -1};
-		_children insert [_index,_childNode];
+		_children insert [_index,[_childNode]];
 		_childNode set ["Blackboard",_self get "Blackboard"];
 		true;
 	}],
@@ -230,7 +230,7 @@ Flags:
 		private _children = _self get "children";
 		{
 			if !(isNil "_x") then {
-				_status = _x call ["Init"];
+				_x call ["Init"];
 			};
 		} foreach _children;
 	}],

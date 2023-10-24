@@ -73,7 +73,7 @@ Protected: currentIndex
 			default {_status = NODE_FAILURE};
 		};
 		_status;
-	}]
+	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
 		<virtual. XPS_BT_typ_Composite. postTick>
@@ -98,6 +98,7 @@ Protected: currentIndex
 	Constructor: #create
 		<virtual. XPS_BT_typ_Composite. #create>
 	-----------------------------------------------------------------------------*/
+	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
 		<virtual. XPS_BT_typ_Composite. AddChildNode>
