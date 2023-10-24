@@ -68,7 +68,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 			// Check if Hashmap Object and get type if exists
 			if (_type isEqualTo "HASHMAP") then {
 				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
-				if (typeName _type isEqualto "ARRAY") then {
+				if (typeName _types isEqualto "ARRAY") then {
 					if !(_checkType in _types) then {
 						diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
 						_result = false;
