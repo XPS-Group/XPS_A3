@@ -83,7 +83,7 @@ Flags:
 
 	Description:
 		The code that executes during a Tick cycle of a Behaviour Tree and then
-		returns a status. This is run asynchronously.
+		returns a status. This is run asynchronously in a scheduled environment.
 		
 		Must be Overridden.
 

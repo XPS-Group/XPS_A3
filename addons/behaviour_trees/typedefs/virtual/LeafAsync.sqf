@@ -211,9 +211,11 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {		
 		_self call ["preTick"];	
-		private _status = _self get "Status";	
-		_handle = [_self, _status, _self get ["callback"]] spawn (_self get ["processTick"]);
-		_self set ["handle",_handle];
+		private _status = _self get "Status";
+		if (isNil {_self get "handle"}) then {	
+			_handle = [_self, _status, _self get ["callback"]] spawn (_self get ["processTick"]);
+			_self set ["handle",_handle];
+		};
 		_self call ["postTick",[_status]];
 	}]
 ]
