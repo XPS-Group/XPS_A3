@@ -71,7 +71,7 @@ params [["_definition",nil,[]],["_blackboard",nil,[createhashmap]]];
 private _fnc_HandleChildren = compileFinal {
 	params ["_parentNode",["_children",[],[[]]]];
 	
-	private _nodeType = _parentNode get "NODETYPE";
+	private _nodeType = _parentNode get "NodeType";
 	if (_nodeType in ["COMPOSITE","DECORATOR"]) then {
 		for "_i" from 0 to (count _children)-1 do {
 			private _typeDef = _children#_i#0;
