@@ -154,7 +154,7 @@ try
 
 		scopeName "MAIN";
 
-		if !(typename (_typeDef#_i) == "ARRAY") then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
+		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
 		
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;
@@ -166,7 +166,7 @@ try
 		private _attributes = [];
 		if (count _keyPair > 2) then {
 			_attributes = _keyPair#2;
-			if !(typename _attributes isEqualTo "ARRAY") then {throw format ["Attributes for Key %1 is not an array.",_key]};
+			if !(_attributes isEqualType []) then {throw format ["Attributes for Key %1 is not an array.",_key]};
 		};
 		
 		private _a = 0;
@@ -175,10 +175,10 @@ try
 			scopeName "ATTRIBUTE_CHECK";
 
 			private _attribute = _attributes#_a;
-			if !(typename _attribute isEqualTo "ARRAY") then {throw format ["Attributes %1 for Key %2 is not formatted as an array.",_a,_key]};
+			if !(_attribute isEqualType []) then {throw format ["Attributes %1 for Key %2 is not formatted as an array.",_a,_key]};
 
 			private _attCommand = _attribute#0;
-			if !(typename _attCommand isEqualTo "STRING") then {throw format ["Attribute %1 for Key %2 is not a string.",_attCommand,_key]};
+			if !(_attCommand isEqualType "") then {throw format ["Attribute %1 for Key %2 is not a string.",_attCommand,_key]};
 			private "_attParams";
 			if (count _attribute >1) then {_attParams = _attribute#1};
 
@@ -188,7 +188,7 @@ try
 					breakTo "Main";
 				};
 				case "CONDITIONAL" : {
-					if !(typename _attParams == "CODE") then {throw format ["Conditional Attribute for Key %2 contains %1. Expected code block.",typename _attParams,_key]};
+					if !(_attParams isEqualType {}) then {throw format ["Conditional Attribute for Key %2 contains %1. Expected code block.",typename _attParams,_key]};
 					if !(call _attParams) then {
 						_typeDef deleteat _i; 
 						breakTo "Main";
@@ -196,7 +196,7 @@ try
 				};
 				case "CTOR" : {
 					private _initValue = str _value;
-					if (typeName _attParams == "STRING") then {_initValue = _attParams} else {_initValue = str _attParams};
+					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
 					_ctor = _ctor + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR" : {
@@ -204,14 +204,14 @@ try
 				};
 				case "CTOR_LAZY" : {
 					private _initValue = str _value;
-					if (typeName _attParams == "STRING") then {_initValue = _attParams} else {_initValue = str _attParams};
+					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
 					_ctor_l = _ctor_l + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR_LAZY" : {
 					_dtor_l = _dtor_l + format["_self set [%1,nil];",str _key]; 
 				};
 				case "VALIDATE_ANY" : {
-					if !(typename _attParams == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
+					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeAny _attParams) then {
 						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
@@ -224,7 +224,7 @@ try
 					};
 				};
 				case "VALIDATE_PARAMS" : {
-					if !(typename _attParams == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
+					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeParams _attParams) then {
 						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
@@ -242,7 +242,7 @@ try
 		};
 
 		// Finally record if private key
-		if (typename _key isEquaTo "STRING" && {_key find "_" == 0}) then {
+		if (_key isEqualType "" && {_key find "_" == 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
 			_keyPair set [0,_uid]
@@ -272,7 +272,7 @@ try
 			_keyPair set [1, _value];
 		};
 		//Replace Private Keys in any code block
-		if (typename _value == "CODE") then {
+		if (_value isEqualType {}) then {
 			{
 				private _find = _x#0;
 				private _replace = _x#1;

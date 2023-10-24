@@ -110,7 +110,7 @@ private _preCompiled = _hashmap; // In case it doesn't have a parent, we need th
 // Check for parent type
 if ("#base" in keys _hashmap) then {
 	private _pType = _hashmap get "#base";
-	if (isNil {_pType} || !(typename _pType == "ARRAY")) exitwith {
+	if (isNil {_pType} || !(_pType isEqualType [])) exitwith {
 		diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
 	};
 
@@ -121,11 +121,11 @@ if ("#base" in keys _hashmap) then {
 	private _keys = keys _hashmap;
 	{
 		// Create base methods as "ParentType.Method"
-		if (!(isNil {_pTypeName}) && {_x in _keys && typename _x isEqualTo "STRING" && typename _y isEqualTo "CODE"}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
+		if (!(isNil {_pTypeName}) && {_x in _keys && _x isEqualType "" && _y isEqualType {}}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
 
 		// Append keys using @ 
-		if (_x in _keys && typename _x isEqualTo "STRING") then {
-			if ((_x find "@") == 0 && typename _y in ["ARRAY","HASHMAP"]) then {
+		if (_x in _keys && _x isEqualType "") then {
+			if ((_x find "@") == 0 && _y isEqualTypeAny [[],createhashmap]) then {
 				private _appendableValue = _hashmap getorDefault [_x,false];
 				if (_appendableValue isEqualType _y) then {
 					switch (typeName _appendableValue) do {
