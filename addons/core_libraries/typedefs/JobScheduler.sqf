@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_JobScheduler
+TypeDef: core. XPS_typ_JobScheduler
 	<TypeDefinition>
 
 Authors: 

@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: behaviour_tree. XPS_BT_fnc_buildTree
+Function: behaviour_trees. XPS_BT_fnc_buildTree
 	
 	---prototype
 	_tree = [_treeDefinition] call XPS_BT_fnc_buildTree;

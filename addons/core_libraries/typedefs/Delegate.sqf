@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_Delegate
+TypeDef: core. XPS_typ_Delegate
 	<TypeDefinition>
 
 Authors: 

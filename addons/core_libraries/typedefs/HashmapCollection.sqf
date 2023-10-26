@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_HashmapCollection
+TypeDef: core. XPS_typ_HashmapCollection
 
 Description:
 <TypeDefinition> - stores only <HashmapObjects> which match <AllowedTypes> array

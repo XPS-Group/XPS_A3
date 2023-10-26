@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_Blackboard
+TypeDef: core. XPS_typ_Blackboard
 	<TypeDefinition>
 
 Authors: 

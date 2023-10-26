@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_IAstarSearch
+Interface: core. XPS_ifc_IAstarSearch
 <Interface>
 
 Authors:
