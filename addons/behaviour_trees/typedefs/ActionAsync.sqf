@@ -56,13 +56,6 @@ Flags:
 		returns a status. This is called asynchronously and initiates the <Action>
 		method. Once <Action> has completed, it will call the <callback> method
 		which sets the status of the Node.
-		
-		 
-
-	Parameters:
-		_self - <HashmapObject> - a ref to this object
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
-		_callback - <Code> - the callback method to execute
 
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil

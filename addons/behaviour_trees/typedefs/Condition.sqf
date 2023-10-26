@@ -69,7 +69,7 @@ Flags:
 	Method: Condition
     
     	--- Prototype --- 
-    	Condition = _self call ["Condition"]
+    	_condition = _self call ["Condition"]
     	---
 
 	Description:
@@ -79,7 +79,7 @@ Flags:
 		Must be Overridden.
 		
 	Returns: 
-		Condition - <Boolean> - True or False
+		_condition - <Boolean> - True or False
 	-----------------------------------------------------------------------------*/
 	["Condition",nil]
 	/*----------------------------------------------------------------------------

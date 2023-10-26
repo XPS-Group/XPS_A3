@@ -28,14 +28,13 @@ Flags:
 	Protected: callback
     
     	--- Prototype --- 
-    	[]_self,_status] call ["callback"]
+    	call ["callback",_status]
     	---
 
 	Description:
 		The callback which sets the status on the node after <processTick> has finished
 
 	Parameters:
-		_self - <HashmapObject> - this node
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 
 	Returns: 
@@ -62,7 +61,7 @@ Flags:
 	Protected: preTick
     
     	--- Prototype --- 
-    	_self call ["preTick"]
+    	call ["preTick"]
     	---
 
 	Description:
