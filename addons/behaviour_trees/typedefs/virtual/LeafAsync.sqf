@@ -8,7 +8,7 @@ Authors:
 
 Description:
 	A node for a Behaviour Tree that has an <ProcessTick> method which is 
-	called when Ticked
+	called when Ticked. 
 
 Parent:
     none
@@ -171,6 +171,7 @@ Flags:
 		_handle = _self get "handle";
 		terminate _handle;
 		_self set ["handle",nil];
+		_self call ["postTick", NODE_FAILURE];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -207,8 +208,7 @@ Flags:
 	Returns: 
 		_status - <String> - returns <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {	
-		XPS_DBG = "LeafAsync:"+(_self get "#type" select 0)+" - "+str diag_TickTime;	
+	["Tick",compileFInal {		
 		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
 			_self call ["preTick"];	
 				_handle = _self spawn {

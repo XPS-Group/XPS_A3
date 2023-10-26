@@ -14,7 +14,7 @@ Authors:
 	<String> - should only return "COMPOSITE", "DECORATOR", "LEAF"
 
 	Property: Status
-	<String>
+	<String> - should only be one of the following: Nil , "SUCCESS", "FAILURE", or "RUNNING"
 
 	Method: Init
 	

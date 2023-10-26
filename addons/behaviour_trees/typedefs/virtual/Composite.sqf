@@ -224,7 +224,6 @@ Flags:
 		_status - <String> - returns <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {	
-		XPS_DBG = "Composite:"+(_self get "#type" select 0)+" - "+str diag_TickTime;	
 		_self call ["preTick"];
 		_self call ["postTick",
 			_self call ["processTick"]
