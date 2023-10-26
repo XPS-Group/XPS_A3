@@ -24,7 +24,7 @@ Flags:
 	["#str",compileFinal {"XPS_typ_Blackboard"}],
 	["#type","XPS_typ_Blackboard"],
 	["@interfaces",["XPS_ifc_IBlackboard"]],
-	["attachedTo",nil],
+	["attachedTo",objNull],
 	["attachedTo_VariableName",nil],
 	/*-----------------------------------------------------------------------------
 	Constructor: #create

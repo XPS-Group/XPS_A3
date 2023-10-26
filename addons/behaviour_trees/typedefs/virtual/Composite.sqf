@@ -86,7 +86,7 @@ Flags:
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",[_status]]
+    	_status = _self call ["postTick",_status]
     	---
 
 	Description:
@@ -97,34 +97,8 @@ Flags:
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
-		params ["_status",nil,[""]];
-		_self set ["Status",_status];
-		_status;
-	}],
-	/*----------------------------------------------------------------------------
-	Protected: tickNextChild
-    
-    	--- Prototype --- 
-    	_status = _self call ["tickNextChild"]
-    	---
-
-	Description:
-		Ticks next child in the array of children
-
-	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
-	-----------------------------------------------------------------------------*/
-	["tickNextChild",compileFinal{
-		private _currentIndex = _self get "currentIndex";
-		private _children = _self get "children";
-		if (_currentIndex >= count _children) exitwith {nil};
-		if (_currentIndex < 0) then {_currentIndex = 0};
-		private _child = _children#_currentIndex;
-		if !(isNil "_child") then {
-			_self set ["currentIndex",_currentIndex+1];
-			_status = _child call ["Tick"];
-		};
-		_status;
+		_self set ["Status",_this];
+		_this;
 	}],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
@@ -249,7 +223,8 @@ Flags:
 	Returns: 
 		_status - <String> - returns <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {		
+	["Tick",compileFInal {	
+		XPS_DBG = "Composite:"+(_self get "#type" select 0)+" - "+str diag_TickTime;	
 		_self call ["preTick"];
 		_self call ["postTick",
 			_self call ["processTick"]

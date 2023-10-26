@@ -54,7 +54,7 @@ Protected: currentIndex
 		private _child = _children#_currentIndex;
 		private _status = _child get "Status";
 
-		if (isNil "_status") then {_status = _child call ["Tick"];};
+		_status = _child call ["Tick"];
 
 		switch (_status) do {
 			case NODE_FAILURE : {
@@ -79,10 +79,6 @@ Protected: currentIndex
 		<virtual. XPS_BT_typ_Composite. postTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
-	Protected: tickNextChild
-		<virtual. XPS_BT_typ_Composite. tickNextChild>
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
 	Property: Blackboard
 		<virtual. XPS_BT_typ_Composite. Blackboard>
 	-----------------------------------------------------------------------------*/
@@ -98,7 +94,7 @@ Protected: currentIndex
 	Constructor: #create
 		<virtual. XPS_BT_typ_Composite. #create>
 	-----------------------------------------------------------------------------*/
-	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}]
+	["#create", { _self call ["XPS_BT_typ_Composite.#create"]; }]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
 		<virtual. XPS_BT_typ_Composite. AddChildNode>

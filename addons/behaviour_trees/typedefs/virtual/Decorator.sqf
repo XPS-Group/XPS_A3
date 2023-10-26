@@ -88,7 +88,7 @@ Protected: child
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",[_status]]
+    	_status = _self call ["postTick",_status]
     	---
 
 	Description:
@@ -99,9 +99,8 @@ Protected: child
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
-		params ["_status",nil,[""]];
-		_self set ["Status",_status];
-		_status;
+		_self set ["Status",_this];
+		_this;
 	}],	
 	/*----------------------------------------------------------------------------
 	Property: Blackboard

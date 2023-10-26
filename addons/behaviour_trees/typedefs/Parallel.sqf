@@ -53,7 +53,13 @@ Protected: currentIndex
 		private _finalStatus = NODE_SUCCESS;
 
 		while {(_self get "currentIndex") < count _children} do {
-			private _status = _self call ["tickNextChild"];
+			private _currentIndex = _self get "currentIndex";
+
+			(_children select _currentIndex) call ["Tick"];
+			
+			if (_currentIndex < count _children-1) then {
+				_self set ["currentIndex",_currentIndex+1];
+			} else {_self set ["currentIndex",0];};
 		};
 
 		for "_i" from 0 to (count _children)-1 do {

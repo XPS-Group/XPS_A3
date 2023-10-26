@@ -54,7 +54,7 @@ Protected: currentIndex
 		private _child = _children#_currentIndex;
 		private _status = _child get "Status";
 
-		if (isNil "_status") then {_status = _child call ["Tick"];};
+		_status = _child call ["Tick"];
 
 		switch (_status) do {
 			case NODE_SUCCESS : {
@@ -77,10 +77,6 @@ Protected: currentIndex
 	/*----------------------------------------------------------------------------
 	Protected: postTick
 		<virtual. XPS_BT_typ_Composite. postTick>
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Protected: tickNextChild
-		<virtual. XPS_BT_typ_Composite. tickNextChild>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
