@@ -10,7 +10,7 @@ Description:
 	A node that ticks children one at a time until success.
 
 Parent:
-    virtual. XPS_BT_typ_Composite>
+    <virtual. XPS_BT_typ_Composite>
 
 Implements:
     <XPS_BT_ifc_INode>
