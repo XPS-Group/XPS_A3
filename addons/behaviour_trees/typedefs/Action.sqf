@@ -51,9 +51,6 @@ Flags:
 		The code that executes during a Tick cycle of a Behaviour Tree and then
 		returns a status.
 
-	Parameters:
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
-
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/

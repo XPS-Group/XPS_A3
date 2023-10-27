@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_AstarSearch
+TypeDef: core. XPS_typ_AstarSearch
 	<TypeDefinition>
 
 Authors: 
@@ -159,7 +159,7 @@ Flags:
 	Property: Graph
     
     	--- Prototype --- 
-    	get "Graph"
+    	get "_workingGraph"
     	---
 		
 		<XPS_ifc_IAstarSearch>
@@ -167,7 +167,7 @@ Flags:
     Returns: 
 		<HashmapObject> - A graph of nodes that implement the <XPS_typ_IAstarGraph> interface
 	-----------------------------------------------------------------------------*/
-	["Graph",nil],
+	["_workingGraph",nil],
 	/*----------------------------------------------------------------------------
 	Property: Doctrine
     
@@ -216,7 +216,7 @@ Flags:
 	Property: StartKey
     
     	--- Prototype --- 
-    	get "StartKey"
+    	get "_workingStartKey"
     	---
 		
 		<XPS_ifc_IAstarSearch>
@@ -225,12 +225,12 @@ Flags:
 		<Anything> - the start of the search. Usually an index or position.
 		
 	-----------------------------------------------------------------------------*/
-	["StartKey",nil],
+	["_workingStartKey",nil],
 	/*----------------------------------------------------------------------------
 	Property: EndKey
     
     	--- Prototype --- 
-    	get "EndKey"
+    	get "_workingEndKey"
     	---
 		
 		<XPS_ifc_IAstarSearch>
@@ -238,7 +238,7 @@ Flags:
     Returns: 
 		<Anything> - the end of the search. Usually an index or position.
 	-----------------------------------------------------------------------------*/
-	["EndKey",nil],
+	["_workingEndKey",nil],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -260,9 +260,9 @@ Flags:
 		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]]]) exitwith {nil;};
 		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
 
-		_self set ["Graph",_graph];
-		_self set ["StartKey",_startKey];
-		_self set ["EndKey",_endKey];
+		_self set ["_workingGraph",_graph];
+		_self set ["_workingStartKey",_startKey];
+		_self set ["_workingEndKey",_endKey];
 		_self call ["Init"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -330,9 +330,9 @@ Flags:
 	Can be used to reset pathfinding also.
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		private _graph = _self get "Graph";
-		_self set ["StartNode",_graph call ["GetNodeAt",[_self get "StartKey"]]];
-		_self set ["EndNode",_graph call ["GetNodeAt",[_self get "EndKey"]]];
+		private _graph = _self get "_workingGraph";
+		_self set ["StartNode",_graph call ["GetNodeAt",[_self get "_workingStartKey"]]];
+		_self set ["EndNode",_graph call ["GetNodeAt",[_self get "_workingEndKey"]]];
 		_self set ["frontier",[[0,_self get "StartNode"]]];
 		_self set ["costSoFar",createhashmap];
 		_self get "costSoFar" set [_self get "StartNode" get "Index",0];
@@ -353,7 +353,7 @@ Flags:
 	it on to the working graph.
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
-		private _graph = _self get "Graph";
+		private _graph = _self get "_workingGraph";
 		private _endNode = _self get "EndNode";
 		private _currentNode = _self call ["frontierPullLowest"];
 		_self set ["currentNode",_currentNode];

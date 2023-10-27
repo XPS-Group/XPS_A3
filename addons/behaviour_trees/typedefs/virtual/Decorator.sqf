@@ -19,10 +19,6 @@ Flags:
     none
 	
 ---------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------
-Protected: child
-	<HashmapObject> - child node
----------------------------------------------------------------------------- */
 [
 	["#str",compileFinal {"XPS_BT_typ_Decorator"}],
 	["#type","XPS_BT_typ_Decorator"],
@@ -88,7 +84,7 @@ Protected: child
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",[_status]]
+    	_status = _self call ["postTick",_status]
     	---
 
 	Description:
@@ -99,9 +95,8 @@ Protected: child
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
-		params ["_status",nil,[""]];
-		_self set ["Status",_status];
-		_status;
+		_self set ["Status",_this];
+		_this;
 	}],	
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
@@ -115,7 +110,7 @@ Protected: child
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
 	-----------------------------------------------------------------------------*/
-	["Blackboard",nil],
+	["Blackboard",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -198,7 +193,7 @@ Protected: child
 		_self set ["Status",nil];
 		private _child = _self get "child";
 		if !(isNil "child") then {
-			_status = _child call ["Init"];
+			_child call ["Init"];
 		};
 	}],
 	/*----------------------------------------------------------------------------

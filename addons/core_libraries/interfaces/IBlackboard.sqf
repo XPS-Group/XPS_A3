@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_IBlackboard
+Interface: core. XPS_ifc_IBlackboard
 <Interface>
 
 Authors:

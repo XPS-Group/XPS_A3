@@ -10,7 +10,7 @@ Description:
 	A node that ticks all children at once.
 
 Parent:
-    virtual. XPS_BT_typ_Composite>
+    <virtual. XPS_BT_typ_Composite>
 
 Implements:
     <XPS_BT_ifc_INode>
@@ -53,7 +53,13 @@ Protected: currentIndex
 		private _finalStatus = NODE_SUCCESS;
 
 		while {(_self get "currentIndex") < count _children} do {
-			private _status = _self call ["tickNextChild"];
+			private _currentIndex = _self get "currentIndex";
+
+			(_children select _currentIndex) call ["Tick"];
+			
+			if (_currentIndex < count _children-1) then {
+				_self set ["currentIndex",_currentIndex+1];
+			} else {_self set ["currentIndex",0];};
 		};
 
 		for "_i" from 0 to (count _children)-1 do {
@@ -62,7 +68,7 @@ Protected: currentIndex
 			if (_status == NODE_RUNNING && !(_finalStatus == NODE_FAILURE)) then {_finalStatus == NODE_RUNNING};
 		};
 		_finalStatus;
-	}]
+	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
 		<virtual. XPS_BT_typ_Composite. postTick>
@@ -87,6 +93,7 @@ Protected: currentIndex
 	Constructor: #create
 		<virtual. XPS_BT_typ_Composite. #create>
 	-----------------------------------------------------------------------------*/
+	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
 		<virtual. XPS_BT_typ_Composite. AddChildNode>

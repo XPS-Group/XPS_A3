@@ -1,13 +1,15 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_IJobScheduler
+Interface: core. XPS_ifc_IJobScheduler
 <Interface>
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
+	Property: CurrentUID
+	<String>
+
 	Property: CurrentItem
-	<Hashmap> or <HashmapObject>
 
 	Property: Queue
 	<Array>
@@ -24,7 +26,8 @@ Authors:
 	Method: Stop
 ---------------------------------------------------------------------------- */
 [
-	["CurrentItem","STRING"],
+	["CurrentItem","ANYTHING"],
+	["CurrentUID","STRING"],
 	["Queue","ARRAY"],
 	["ProcessesPerFrame","SCALAR"],
 	["ProcessCurrent","CODE"],

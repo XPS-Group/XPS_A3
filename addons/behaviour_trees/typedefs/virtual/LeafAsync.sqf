@@ -8,7 +8,7 @@ Authors:
 
 Description:
 	A node for a Behaviour Tree that has an <ProcessTick> method which is 
-	called when Ticked
+	called when Ticked. 
 
 Parent:
     none
@@ -28,22 +28,21 @@ Flags:
 	Protected: callback
     
     	--- Prototype --- 
-    	[]_self,_status] call ["callback"]
+    	call ["callback",_status]
     	---
 
 	Description:
 		The callback which sets the status on the node after <processTick> has finished
 
 	Parameters:
-		_self - <HashmapObject> - this node
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 
 	Returns: 
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["callback",compileFinal {
-		params [["_self",nil,[createhashmap]],["_status",nil,[""]]];
-		_self call ["postTick",[_status]];
+		_status = _this;
+		_self call ["postTick",_status];
 		_self set ["handle",nil];
 	}],
 	/*----------------------------------------------------------------------------
@@ -57,11 +56,12 @@ Flags:
 		<Number> - the handle of the executing script called asynchronously.
 		Nil if not executing.
 	-----------------------------------------------------------------------------*/
+	["handle",nil],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
     	--- Prototype --- 
-    	_self call ["preTick"]
+    	call ["preTick"]
     	---
 
 	Description:
@@ -85,21 +85,19 @@ Flags:
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
-		returns a status to the <callback> method. 
+		The code that executes during a Tick cycle of a Behaviour Tree 
+
+		Must be Overridden
 
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
-	["processTick",compileFinal {
-		params [["_self",nil,[createhashmap]],["_status",nil,[""]],["_callback",nil,[{}]]];
-		[_self, _status] call _callback;
-	}],
+	["processTick",nil],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",[_status]]
+    	_status = _self call ["postTick",_status]
     	---
 
 	Description:
@@ -113,9 +111,8 @@ Flags:
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
-		params ["_status",nil,[""]];
-		_self set ["Status",_status];
-		_status;
+		_self set ["Status",_this];
+		_this;
 	}],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
@@ -129,7 +126,7 @@ Flags:
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
 	-----------------------------------------------------------------------------*/
-	["Blackboard",nil],
+	["Blackboard",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -173,6 +170,7 @@ Flags:
 		_handle = _self get "handle";
 		terminate _handle;
 		_self set ["handle",nil];
+		_self call ["postTick", NODE_FAILURE];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -210,10 +208,15 @@ Flags:
 		_status - <String> - returns <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {		
-		_self call ["preTick"];	
-		private _status = _self get "Status";	
-		_handle = [_self, _status, _self get ["callback"]] spawn (_self get ["processTick"]);
-		_self set ["handle",_handle];
-		_self call ["postTick",[_status]];
+		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
+			_self call ["preTick"];	
+				_handle = _self spawn {
+					private _status = _this call ["processTick"]; 
+					_this call ["callback",_status]
+				};
+				_self set ["handle",_handle];
+			_self call ["postTick",_status];
+		};
+		_self get "Status";
 	}]
 ]

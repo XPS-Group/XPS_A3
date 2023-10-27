@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_HashmapCollection
+TypeDef: core. XPS_typ_HashmapCollection
 
 Description:
 <TypeDefinition> - stores only <HashmapObjects> which match <AllowedTypes> array
@@ -63,7 +63,7 @@ Authors:
     Retruns: 
         <Hashmap> - <hashmaps> or <hashmapobjects> stored in this collection
     ----------------------------------------------------------------------------*/
-    ["Items",nil],
+    ["Items",createhashmap],
     /* -----------------------------------------------------------------------
     Constructor: #create
 
