@@ -42,17 +42,30 @@ Example: Check a hashmap if it supports interface
 ---------------------------------------------------------------------------- */
 
 if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNils"]) exitwith {
-	diag_log (format ["XPS_fnc_checkInterface: parameters not valid.  -- Interfaces:%1",_this select 1]);
+	diag_log (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
 	false;
 };
+if !(_interfaces isEqualTypeAll "") exitwith {
+	diag_log (format ["XPS_fnc_checkInterface: Interfaces must be all strings.  Interfaces:%1",_this select 1]);
+	false;
+};
+
 _allowNils = [_allowNils] param [0,false,[true]];
 
 private _result = true;
+
 for "_a" from 0 to (count _interfaces -1) do {
-	private _interface = call compile (_interfaces#_a);
-	for "_i" from 0 to (count _interface -1) do {
-		private _check = _interface#_i;
-		_check params ["_key","_checkType"];
+	private _interface = [];
+	//Loose Check - get interface ref direct from type def
+	if ((_interfaces#_a) in keys (_hashmap getOrDefault ["@interfaces",createhashmap])) then {
+		_interface = _hashmap get "@interfaces" get (_interfaces#_a);
+	} else { 
+	// Strict Check - interface not in declared list - build it
+		_interface = call compile (_interfaces#_a);
+	};
+	
+	{
+		[_x,_y] params ["_key","_checkType"];
 		//Check key exists
 		if !(_key in keys _hashmap) then {
 			diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
@@ -81,6 +94,6 @@ for "_a" from 0 to (count _interfaces -1) do {
 				_result = false;
 			};
 		};
-	};
+	} foreach _interface;
 };
 _result;

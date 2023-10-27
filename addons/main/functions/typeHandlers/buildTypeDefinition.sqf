@@ -22,6 +22,9 @@ Description:
 	with a value of [1,2,3] and a child type which inherits but has a value of [4,5,6] will become [1,2,3,4,5,6]. The most common usage 
 	will be the special "@interfaces" key which is used in checking Method/Property compliance. 
 
+	@interfaces - an <array> of <strings> - e.g. ["IShape", "IObject"] - where each string is a valid global variable containing an <Interface> <array>
+	which will be used to verify keys/values of a <Hashmap> or <HashmapObject> exist.
+
 Authors: 
 	Crashdome
 ----------------------------------------------------------------------------
@@ -37,6 +40,11 @@ Optional: _allowNils*
 Optional: _preprocess* 
 
 <Boolean> - (optional) default: true - determines if array should be preprocessed. 
+See <XPS_fnc_preprocessinition> for more info.
+
+Optional: _noStack* 
+
+<Boolean> - (optional) default: false - determines if "#base" definition should stack "#create" and "#delete" methods during inheritance
 See <XPS_fnc_preprocessinition> for more info.
 
 Return: _typeDefinition
@@ -126,23 +134,17 @@ if ("#base" in keys _hashmap) then {
 		// Append keys using @ 
 		if (_x in _keys && _x isEqualType "") then {
 			if ((_x find "@") == 0 && _y isEqualTypeAny [[],createhashmap]) then {
-				private _appendableValue = _hashmap getorDefault [_x,false];
-				if (_appendableValue isEqualType _y) then {
-					switch (typeName _appendableValue) do {
+				private _valuesToAppend = _hashmap getorDefault [_x,false];
+				if (_valuesToAppend isEqualType _y) then {
+					switch (typeName _valuesToAppend) do {
 						case "ARRAY" : {
-							if (_x isEqualTo "@interfaces") then {
-								_appendableValue = +_appendableValue;
-								_appendableValue insert [0,_y,true];
-								_hashmap set ["@interfaces",_appendableValue]; // unique Values only for interfaces
-							} else {
-								_appendableValue = +_appendableValue;
-								_appendableValue insert [0,_y];
-								_hashmap set [_x,_appendableValue]; // always allows duplicates
+								_valuesToAppend = +_valuesToAppend;
+								_valuesToAppend insert [0,_y];
+								_hashmap set [_x,_valuesToAppend]; // always allows duplicates
 							};
-						};
 						case "HASHMAP" : {
 							private _dcValue = +_y;
-							_dcValue merge [+_appendableValue,true];
+							_dcValue merge [+_valuesToAppend,true];
 							_hashMap set [_x,_dcValue]; /* overwrites parent keys */
 						};
 					};
@@ -166,8 +168,8 @@ if ("#base" in keys _hashmap) then {
 };
 
 // Check Interfaces are implemented
-private _interfaces = _preCompiled getOrDefault ["@interfaces",[]];
-if ([_preCompiled,_interfaces,_allowNils] call XPS_fnc_checkInterface) then {
+private _interfaces = _preCompiled getOrDefault ["@interfaces",createhashmap];
+if ([_preCompiled, keys _interfaces, _allowNils] call XPS_fnc_checkInterface) then {
 	// Passes all checks and is Ok to push out definition
 	_hashmap toArray false;
 } else {

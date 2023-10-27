@@ -20,15 +20,19 @@ Description:
 			"RootNode",
 			[
 				["ChildA",[]],
-				["ChildB",
-					["ChildC",[]],
-					["ChildD",[]]
+				["ChildB", 
+					[
+						["ChildC",[]],
+						["ChildD",[]]
+					]
 				],
 				["ChildE",
 					["ChildF",[]],
 					["ChildG",
-						["ChildH",[]],
-						["ChildI",[]]
+						[
+							["ChildH",[]],
+							["ChildI",[]]
+						]
 					]
 				]
 			]
@@ -49,7 +53,7 @@ Authors:
 		Using the example structure in the description, it would appear like so:
 
 		--- Code
-		private _treeDef = ["RootNode",[["ChildA",[]],["ChildB",["ChildC",[]],["ChildD",[]]],["ChildE",["ChildF",[]],["ChildG",["ChildH",[]],["ChildI",[]]]]]]
+		private _treeDef = ["RootNode",[["ChildA",[]],["ChildB",[["ChildC",[]],["ChildD",[]]]],["ChildE",["ChildF",[]],["ChildG",[["ChildH",[]],["ChildI",[]]]]]]];
 		private _tree = [_treeDef] call XPS_BT_fnc_buildTree;
 		---
 		This results in _tree as a <hashmapobject> structured as so:

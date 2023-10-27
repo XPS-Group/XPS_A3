@@ -35,11 +35,15 @@
 #define XPS_CFG_IFC(ifcName) class ifcName {\
     file = FILEPATH_C_Q(interfaces\ifcName.sqf);\
     type = "ifc";\
+    recompile = 1;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_IFC_SUB(sub,ifcName) class ifcName {\
     file = FILEPATH_C_Q(interfaces\sub\ifcName.sqf);\
     type = "ifc";\
+    recompile = 1;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_TYP(typName) class typName {\
@@ -48,6 +52,8 @@
     preprocess = 1;\
     allowNils = 0;\
     noStack = 1;\
+    recompile = 1;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_TYP_SUB(sub,typName) class typName {\
@@ -56,10 +62,12 @@
     preprocess = 1;\
     allowNils = 0;\
     noStack = 1;\
+    recompile = 1;\
+    isFinal = 1;\
 }
 
 /* ---------------------------------------*/
 //Interface Checcking
 #define CHECK_IFC1(var1,ifc1) [var1,[Q(ifc1)]] call XPS_fnc_checkInterface
 #define CHECK_IFC2(var1,ifc1,ifc2) [var1,[Q(ifc1),Q(ifc2)]] call XPS_fnc_checkInterface
-#define CHECK_IFC2(var1,ifc1,ifc2,ifc3) [var1,[Q(ifc1),Q(ifc2),Q(ifc3)]] call XPS_fnc_checkInterface
+#define CHECK_IFC3(var1,ifc1,ifc2,ifc3) [var1,[Q(ifc1),Q(ifc2),Q(ifc3)]] call XPS_fnc_checkInterface

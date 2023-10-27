@@ -163,6 +163,19 @@ try
 			if (_key isEqualTo "#create") then {_hasCtor = true};
 			if (_key isEqualTo "#delete") then {_hasDtor = true};
 
+			// Convert Interface list of strings to hashmap with ref to interface
+			if (_key isEqualTo "@interfaces") then {
+				if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
+					private _interfaces = createhashmap;
+					{
+						private _ifc = call compile _x;
+						_interfaces merge [createhashmapfromarray [[_x,_ifc]],true];
+					} foreach _value;
+					_value = compileFinal _interfaces;
+					_keyPair set [1,_value];
+				} else {throw format ["Interface list for Key @interfaces is not an array of strings.",_key]};
+			};
+
 		private _attributes = [];
 		if (count _keyPair > 2) then {
 			_attributes = _keyPair#2;
