@@ -21,7 +21,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_typ_AstarSearch"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_AstarSearch"],
 	["@interfaces",["XPS_ifc_IAstarSearch"]],
 

@@ -20,7 +20,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {"XPS_typ_MultiCastDelegate"}],
+	["#str",compilefinal {_self get "#type"}],
 	["#type","XPS_typ_MultiCastDelegate"],
 	["@interfaces",["XPS_ifc_IMultiCastDelegate"]],
 	//["#flags",["unscheduled"]],

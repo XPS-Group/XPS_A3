@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Condition"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_Condition"],
 	["#base",XPS_BT_typ_Leaf],
 	/*----------------------------------------------------------------------------

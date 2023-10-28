@@ -35,7 +35,7 @@ Authors:
         <Hashmap> - Storage of <HashmapObjects> for this collection
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_HashmapCollection"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_HashmapCollection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
     /*----------------------------------------------------------------------------

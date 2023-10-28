@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_Blackboard"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_Blackboard"],
 	["@interfaces",["XPS_ifc_IBlackboard"]],
 	["attachedTo",objNull],

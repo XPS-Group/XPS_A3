@@ -20,7 +20,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Composite"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_Composite"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/* ----------------------------------------------------------------------------

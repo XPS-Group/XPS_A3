@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_ActionAsync"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_ActionAsync"],
 	["#base",XPS_BT_typ_LeafAsync],
 	/*----------------------------------------------------------------------------
