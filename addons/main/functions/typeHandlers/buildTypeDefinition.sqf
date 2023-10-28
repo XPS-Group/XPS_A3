@@ -131,22 +131,29 @@ if ("#base" in keys _hashmap) then {
 		// Create base methods as "ParentType.Method"
 		if (!(isNil {_pTypeName}) && {_x in _keys && _x isEqualType "" && _y isEqualType {}}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
 
-		// Append keys using @ 
 		if (_x in _keys && _x isEqualType "") then {
-			if ((_x find "@") == 0 && _y isEqualTypeAny [[],createhashmap]) then {
-				private _valuesToAppend = _hashmap getorDefault [_x,false];
-				if (_valuesToAppend isEqualType _y) then {
-					switch (typeName _valuesToAppend) do {
-						case "ARRAY" : {
-								_valuesToAppend = +_valuesToAppend;
-								_valuesToAppend insert [0,_y];
-								_hashmap set [_x,_valuesToAppend]; // always allows duplicates
+			// Append keys using @ 
+			if (_y isEqualTypeAny [[],createhashmap]) then {
+				private _pAppend = (_x find "@") == 0;
+				private _cAppend = ("@" + str _x) in _keys;
+				if ( _pAppend || _cAppend ) then {
+					private _valuesToAppend = _hashmap getorDefault [_x,true];
+					if (_valuesToAppend isEqualType true) then {_valuesToAppend = _hashmap getorDefault ["@"+ str _x,true];};
+					if (_valuesToAppend isEqualType _y) then {
+						switch (typeName _valuesToAppend) do {
+							case "ARRAY" : {
+									_valuesToAppend = +_valuesToAppend;
+									_valuesToAppend insert [0,_y];
+									_hashmap set [_x,_valuesToAppend]; // always allows duplicates
+								};
+							case "HASHMAP" : {
+								private _dcValue = +_y;
+								_dcValue merge [+_valuesToAppend,true];
+								_hashMap set [_x,_dcValue]; /* overwrites parent keys */
 							};
-						case "HASHMAP" : {
-							private _dcValue = +_y;
-							_dcValue merge [+_valuesToAppend,true];
-							_hashMap set [_x,_dcValue]; /* overwrites parent keys */
 						};
+						// Remove @ if parent does not have it
+						if (_cAppend) then {_hashmap deleteat ("@"+ str _x);};
 					};
 				};
 			};
