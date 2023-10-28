@@ -63,6 +63,11 @@ for "_a" from 0 to (count _interfaces -1) do {
 	// Strict Check - interface not in declared list - build it
 		_interface = call compile (_interfaces#_a);
 	};
+
+	if (isNil {_interface}) exitwith {
+		diag_log (format ["XPS_fnc_checkInterface: Interface was nil.  Interfaces:%1",_interfaces#_a]);
+		_result = false;
+	};
 	
 	{
 		[_x,_y] params ["_key","_checkType"];
