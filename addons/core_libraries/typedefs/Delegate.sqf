@@ -23,7 +23,7 @@ Flags:
 	["#str",compilefinal {"XPS_typ_Delegate"}],
 	["#type","XPS_typ_Delegate"],
 	["@interfaces",["XPS_ifc_Delegate"]],
-	["#flags",["unscheduled"]],
+	//["#flags",["unscheduled"]],
 	["_pointer",{}],
 	["_signature",[createhashmap,[]]], // default signature: [ sender object , argument array ]
     /*----------------------------------------------------------------------------

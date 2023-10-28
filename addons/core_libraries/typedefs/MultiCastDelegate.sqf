@@ -23,7 +23,7 @@ Flags:
 	["#str",compilefinal {"XPS_typ_MultiCastDelegate"}],
 	["#type","XPS_typ_MultiCastDelegate"],
 	["@interfaces",["XPS_ifc_MultiCastDelegate"]],
-	["#flags",["unscheduled"]],
+	//["#flags",["unscheduled"]],
 	["_pointers",[],[["CTOR"]]],
 	["_signature",[createhashmap,[]],[["CTOR","[createhashmap,[]]"]]], // default signature: [ sender object , argument array ]
     /*----------------------------------------------------------------------------
