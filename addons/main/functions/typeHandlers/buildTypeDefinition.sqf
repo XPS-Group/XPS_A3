@@ -7,7 +7,7 @@ Function: main. typeHandlers. XPS_fnc_buildTypeDefinition
 	---
 
 	---prototype
-	_typeDefintion = [_type, true] call XPS_fnc_buildTypeDefinition
+	_typeDefintion = [_type, false, true, true] call XPS_fnc_buildTypeDefinition
 	---
 
 Description:
