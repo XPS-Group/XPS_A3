@@ -132,9 +132,16 @@ if ("#base" in keys _hashmap) then {
 		if (!(isNil {_pTypeName}) && {_x in _keys && _x isEqualType "" && _y isEqualType {}}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
 
 		// Append keys using @ 
-		if (_x in _keys && _x isEqualType "") then {
-			if ((_x find "@") == 0 && _y isEqualTypeAny [[],createhashmap]) then {
-				private _valuesToAppend = _hashmap getorDefault [_x,false];
+		if (_x isEqualType "" && {_y isEqualTypeAny [[],createhashmap]}) then {
+
+			private _pAppend = (_x find "@") == 0;
+			private _cAppend = ("@" + _x) in _keys;
+
+			if ( _pAppend || _cAppend ) then {
+				
+				private _valuesToAppend = _hashmap getorDefault [_x,true];
+				if (_valuesToAppend isEqualType true) then {_valuesToAppend = _hashmap getorDefault ["@" + _x,true];};
+
 				if (_valuesToAppend isEqualType _y) then {
 					switch (typeName _valuesToAppend) do {
 						case "ARRAY" : {
@@ -148,11 +155,13 @@ if ("#base" in keys _hashmap) then {
 							_hashMap set [_x,_dcValue]; /* overwrites parent keys */
 						};
 					};
+
+					// Remove @ if parent does not have it
+					if (_cAppend) then {_hashmap deleteat ("@"+ _x);};
 				};
 			};
 		};
 	} foreach _preCompiled;
-
 
 	[_preCompiled] call _fnc_recurseBases;
 
@@ -168,8 +177,8 @@ if ("#base" in keys _hashmap) then {
 };
 
 // Check Interfaces are implemented
-private _interfaces = _preCompiled getOrDefault ["@interfaces",createhashmap];
-if ([_preCompiled, keys _interfaces, _allowNils] call XPS_fnc_checkInterface) then {
+private _interfaces = _preCompiled getOrDefault ["@interfaces",nil];
+if (isNil {_interfaces} || {[_preCompiled, keys _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
 	// Passes all checks and is Ok to push out definition
 	_hashmap toArray false;
 } else {
