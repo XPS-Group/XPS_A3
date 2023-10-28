@@ -37,7 +37,7 @@ Flags:
         _signature (optional) - <Array> - a definition of parameters expected when calling "Invoke" method in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
     ----------------------------------------------------------------------------*/
 	["#create",{
-		if (typename _this == "ARRAY") then {
+		if (_this isEqualType []) then {
 			_self set ["_signature",_this];
 		};
 	}],
