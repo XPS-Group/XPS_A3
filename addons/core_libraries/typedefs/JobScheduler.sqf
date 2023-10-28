@@ -20,7 +20,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_JobScheduler"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_JobScheduler"],
 	["#base",XPS_typ_HashmapCollection],
 	["@interfaces",["XPS_ifc_IJobScheduler"]],

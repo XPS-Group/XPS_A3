@@ -52,7 +52,7 @@ Return: _typeDefinition
 
 Example: No Inheritance
     --- Code
-		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+		MyTypeDefA = [["#str",compileFinal {_self get "#type"}],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
 		private _myObjA = createhashmapobject [TypeA];
@@ -64,11 +64,11 @@ Example: Implements Interface
 		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
 		
 		//This FAILS because PropertyA and Method do not exist
-		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["@interfaces",["MyInterface"]],["PropertyB",10]];
+		MyTypeDefA = [["#str",compileFinal {_self get "#type"}],["@interfaces",["MyInterface"]],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
 		//Does not fail because PropertyA and Method exist
-		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+		MyTypeDefA = [["#str",compileFinal {_self get "#type"}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
 		private _myObjA = createhashmapobject [TypeA];
@@ -79,10 +79,10 @@ Example: Implements Interface with Inheritance
     --- Code
 		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
 
-		MyTypeDefA = [["#str",compileFinal {"TAG_TypeA"}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+		MyTypeDefA = [["#str",compileFinal {_self get "#type"}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
-		MyTypeDefB = [["#str",compileFinal {"TAG_TypeB"}],["#base", MyTypeDefA ],["PropertyA","Goodbye"],["Method",compileFinal {hint "Bye"}]];
+		MyTypeDefB = [["#str",compileFinal {_self get "#type"}],["#base", MyTypeDefA ],["PropertyA","Goodbye"],["Method",compileFinal {hint "Bye"}]];
         TAG_TypeB = ["MyTypeDefB"] call XPS_fnc_buildTypeDefinition; 
 
 		// Both TypeA and TypeB will implement interface from inheritance but PropertyA and Method are overridden in TypeB 
