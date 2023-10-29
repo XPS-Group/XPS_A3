@@ -75,13 +75,16 @@ for "_a" from 0 to (count _interfaces -1) do {
 		if !(_key in keys _hashmap) then {
 			diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
 			_result = false;
+			continue;
 		};
 		//Check value type
 		if !(_checkType in ["ANYTHING","ANY"]) then {
 			private _type = typename (_hashmap get _key);
-			if (isNil {_type} && !_allowNils) then {
-				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key set to nil during a check where they are not allowed",_hashmap get "#type",_key]);
-				_result = false;
+			if (isNil {_type}) then { 
+				if !(_allowNils) then {
+					diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key set to nil during a check where they are not allowed",_hashmap get "#type",_key]);
+					_result = false;
+				} else {continue};
 			};
 			// Check if Hashmap Object and get type if exists
 			if (_type isEqualTo "HASHMAP") then {

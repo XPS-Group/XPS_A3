@@ -135,7 +135,7 @@ Example: Validation of values
 	Note: Good for checking properties that are dependant on an external variable 
 
 ---------------------------------------------------------------------------- */
-params [["_typeDef",[],[[]]]];
+if !(params [["_typeDef",nil,[[]]]]) exitwith {false};
 
 private _privateKeys = [];
 private _result = true;
@@ -298,7 +298,7 @@ try
 	_result;
 
 } catch {
-	diag_log "XPS_fnc_preprocessTypeDefinition: Encountered the follwing exception:";
+	diag_log "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
 	diag_log _exception;
 	false;
 };
