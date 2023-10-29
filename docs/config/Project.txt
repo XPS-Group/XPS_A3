@@ -74,7 +74,7 @@ Source Folder 2: ..\..\addons\core_libraries
 Source Folder 3: ..\..\addons\behaviour_trees
    Name: Behaviour Trees
 
-Source Folder 3: ..\..\optionals\unit_testing
+Source Folder 99: ..\..\optionals\unit_testing
    Name: Unit Testing
 
 
