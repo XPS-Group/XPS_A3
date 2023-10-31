@@ -74,11 +74,15 @@ Source Folder 2: ..\..\addons\core_libraries
 Source Folder 3: ..\..\addons\behaviour_trees
    Name: Behaviour Trees
 
-Source Folder 5: ..\..\addons\pathfinding
-   Name: Pathfinding
-
 Source Folder 4: ..\..\addons\action_planning
    Name: Action Planning
+
+Source Folder 5: ..\..\addons\pathfinding
+   Name: Pathfinding
+   
+Source Folder 99: ..\..\optionals\unit_testing
+   Name: Unit Testing
+
 
 
 # This is where you tell Natural Docs which folders it should scan for source
