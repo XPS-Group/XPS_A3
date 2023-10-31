@@ -135,7 +135,7 @@ Example: Validation of values
 	Note: Good for checking properties that are dependant on an external variable 
 
 ---------------------------------------------------------------------------- */
-params [["_typeDef",[],[[]]]];
+if !(params [["_typeDef",nil,[[]]]]) exitwith {false};
 
 private _privateKeys = [];
 private _result = true;
@@ -143,6 +143,8 @@ private _ctor = "";
 private _dtor = "";
 private _ctor_l = "";
 private _dtor_l = "";
+private _hasCtor = false;
+private _hasDtor = false;
 
 try 
 {
@@ -152,15 +154,32 @@ try
 
 		scopeName "MAIN";
 
-		if !(typename (_typeDef#_i) == "ARRAY") then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
+		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
 		
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
+
+			if (_key isEqualTo "#create") then {_hasCtor = true};
+			if (_key isEqualTo "#delete") then {_hasDtor = true};
+
+			// Convert Interface list of strings to hashmap with ref to interface
+			if (_key isEqualTo "@interfaces") then {
+				if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
+					private _interfaces = createhashmap;
+					{
+						private _ifc = call compile _x;
+						_interfaces merge [createhashmapfromarray [[_x,_ifc]],true];
+					} foreach _value;
+					_value = compileFinal _interfaces;
+					_keyPair set [1,_value];
+				} else {throw format ["Interface list for Key @interfaces is not an array of strings.",_key]};
+			};
+
 		private _attributes = [];
 		if (count _keyPair > 2) then {
 			_attributes = _keyPair#2;
-			if !(typename _attributes == "ARRAY") then {throw format ["Attributes for Key %1 is not an array.",_key]};
+			if !(_attributes isEqualType []) then {throw format ["Attributes for Key %1 is not an array.",_key]};
 		};
 		
 		private _a = 0;
@@ -169,10 +188,10 @@ try
 			scopeName "ATTRIBUTE_CHECK";
 
 			private _attribute = _attributes#_a;
-			if !(typename _attribute == "ARRAY") then {throw format ["Attributes %1 for Key %2 is not formatted as an array.",_a,_key]};
+			if !(_attribute isEqualType []) then {throw format ["Attributes %1 for Key %2 is not formatted as an array.",_a,_key]};
 
 			private _attCommand = _attribute#0;
-			if !(typename _attCommand == "STRING") then {throw format ["Attribute %1 for Key %2 is not a string.",_attCommand,_key]};
+			if !(_attCommand isEqualType "") then {throw format ["Attribute %1 for Key %2 is not a string.",_attCommand,_key]};
 			private "_attParams";
 			if (count _attribute >1) then {_attParams = _attribute#1};
 
@@ -182,7 +201,7 @@ try
 					breakTo "Main";
 				};
 				case "CONDITIONAL" : {
-					if !(typename _attParams == "CODE") then {throw format ["Conditional Attribute for Key %2 contains %1. Expected code block.",typename _attParams,_key]};
+					if !(_attParams isEqualType {}) then {throw format ["Conditional Attribute for Key %2 contains %1. Expected code block.",typename _attParams,_key]};
 					if !(call _attParams) then {
 						_typeDef deleteat _i; 
 						breakTo "Main";
@@ -190,22 +209,22 @@ try
 				};
 				case "CTOR" : {
 					private _initValue = str _value;
-					if (typeName _attParams == "STRING") then {_initValue = _attParams};
-					_ctor = _ctor + format["_self set [""%1"",%2];",_key,_initValue]; 
+					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
+					_ctor = _ctor + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR" : {
-					_dtor = _dtor + format["_self set [""%1"",nil];",_key]; 
+					_dtor = _dtor + format["_self set [%1,nil];",str _key]; 
 				};
 				case "CTOR_LAZY" : {
 					private _initValue = str _value;
-					if (typeName _attParams == "STRING") then {_initValue = _attParams};
-					_ctor_l = _ctor_l + format["_self set [""%1"",%2];",_key,_initValue]; 
+					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
+					_ctor_l = _ctor_l + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR_LAZY" : {
-					_dtor_l = _dtor_l + format["_self set [""%1"",nil];",_key]; 
+					_dtor_l = _dtor_l + format["_self set [%1,nil];",str _key]; 
 				};
 				case "VALIDATE_ANY" : {
-					if !(typename _attParams == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
+					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeAny _attParams) then {
 						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
@@ -218,7 +237,7 @@ try
 					};
 				};
 				case "VALIDATE_PARAMS" : {
-					if !(typename _attParams == "ARRAY") then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
+					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeParams _attParams) then {
 						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
@@ -236,7 +255,7 @@ try
 		};
 
 		// Finally record if private key
-		if (_key find "_" == 0) then {
+		if (_key isEqualType "" && {_key find "_" == 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
 			_keyPair set [0,_uid]
@@ -246,23 +265,27 @@ try
 	};
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
+	// Add create / delete methods if they dont exist prior to changing private keys
+	if (!_hasCtor && {_ctor != "" || _ctor_l != ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor != "" || _dtor_l != ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
+
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
-		// Constructor
-		if (_key == "#create" && {_ctor != "" || _ctor_l != ""}) then {
+		// Constructor injection but only if it existed prior to above code
+		if (_hasCtor && {_key isEqualTo "#create" && {_ctor != "" || _ctor_l != ""}}) then {
 			_strCode = (str _value) insert [1,_ctor];
 			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
-		// Destructor
-		if (_key == "#delete" && {_dtor != "" || _dtor_l != ""}) then {
+		// Destructor injection but only if it existed prior to above code
+		if (_hasDtor && {_key isEqualTo "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
 			_strCode = (str _value) insert [1,_dtor];
 			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];
 		};
-		//Replace Private Keys
-		if (typename _value == "CODE") then {
+		//Replace Private Keys in any code block
+		if (_value isEqualType {}) then {
 			{
 				private _find = _x#0;
 				private _replace = _x#1;
@@ -275,7 +298,7 @@ try
 	_result;
 
 } catch {
-	diag_log "XPS_fnc_preprocessTypeDefinition: Encountered the follwing exception:";
+	diag_log "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
 	diag_log _exception;
 	false;
 };

@@ -11,8 +11,8 @@ Description:
 See also: 
 
 	- <HashmapObjects>
-    - <main.XPS_fnc_buildTypeDefinition>
-    - <main.XPS_fnc_preprocessTypeDefinition>
+    - <main.typeHandlers.XPS_fnc_buildTypeDefinition>
+    - <main.typeHandlers.XPS_fnc_preprocessTypeDefinition>
 ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------
 
@@ -27,5 +27,29 @@ Description:
 See also: 
 
     - <TypeDefinition>
-    - <main.XPS_fnc_checkInterface>
+    - <main.typeHandlers.XPS_fnc_checkInterface>
 ------------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------
+Type: Singleton
+    <HashmapObject>
+
+Description:
+    A <HashmapObject> of which there should only ever be one created.
+
+See also: 
+
+	- <HashmapObjects>
+    - <main.typeHandlers.XPS_fnc_createSingleton>
+---------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------
+Type: Static
+    Read-Only <HashmapObject>
+
+Description:
+    A Read-Only <HashmapObject>.
+
+See also: 
+
+	- <HashmapObjects>
+    - <main.typeHandlers.XPS_fnc_createStaticFromFile>
+---------------------------------------------------------------------------*/

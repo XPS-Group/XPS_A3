@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: behaviour_trees. XPS_BT_ifc_INode
+Interface: action_planning. XPS_AP_ifc_IAction
 <Interface>
 
 Authors:
@@ -10,20 +10,32 @@ Authors:
 	Property: Blackboard
 	<HashmapObject>
 
-	Property: NodeType
-	<String> - should only return "COMPOSITE", "DECORATOR", "LEAF"
+	Property: Considerations
+	<HashmapObject>
+
+	Property: Preconditions
+	<Array>
+
+	Property: Postconditions
+	<Array>
 
 	Property: Status
-	<String> - should only be one of the following: Nil , "SUCCESS", "FAILURE", or "RUNNING"
+	<String>
 
 	Method: Init
 	
-	Method: Tick
+	Method: Execute
+
+	Method: GetScore
 ---------------------------------------------------------------------------- */
 [
 	["Blackboard", "HASHMAP"],
-	["NodeType", "STRING"],
-	["Status","ANYTHING"],
+	["Considerations", "HASHMAP"],
+	["Preconditions","ARRAY"],
+	["Postconditions","ARRAY"],
+	["Status","STRING"],
 	["Init","CODE"],
-	["Tick","CODE"]
+	["Execute","CODE"],
+	["GetScore","CODE"]
+
 ]

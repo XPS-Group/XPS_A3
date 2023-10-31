@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_Collection
+TypeDef: core. XPS_typ_Collection
 	<TypeDefinition>
 
 Authors: 
@@ -25,7 +25,7 @@ Property: Items
 
 
 [
-	["#str",compileFinal {"XPS_typ_Collection"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_Collection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
     /*
@@ -40,7 +40,7 @@ Property: Items
     Retruns: 
         <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
     */
-    ["AllowedTypes",nil],
+    ["AllowedTypes",[]],
     /*
     Property: Items
     
@@ -53,7 +53,7 @@ Property: Items
     Retruns: 
         <Hashmap> - <hashmaps> or <hashmapobjects> stored in this collection
     */
-    ["Items",nil],
+    ["Items",createhashmap],
     /*
     Constructor: #create
     

@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_JobScheduler
+TypeDef: core. XPS_typ_JobScheduler
 	<TypeDefinition>
 
 Authors: 
@@ -20,7 +20,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_JobScheduler"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_JobScheduler"],
 	["#base",XPS_typ_HashmapCollection],
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
@@ -76,7 +76,7 @@ Flags:
     Returns: 
 		<String> - The key of the item currently being processed
 	-----------------------------------------------------------------------------*/
-	["CurrentUID",nil],
+	["CurrentUID",""],
 	/*----------------------------------------------------------------------------
 	Property: ProcessesPerFrame
     
@@ -231,8 +231,8 @@ Flags:
 		Stops processing queue
 	-----------------------------------------------------------------------------*/
 	["Stop",compileFinal {
-		private _handle = _self get "_handle";
-		if !(isNil "_handle") then {
+		private _hndl = _self get "_handle";
+		if !(isNil "_hndl") then {
 			removeMissionEventHandler ["EachFrame",_handle];
 			_self set ["_handle",nil];
 		};
