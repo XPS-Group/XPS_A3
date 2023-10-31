@@ -77,6 +77,9 @@ Source Folder 3: ..\..\addons\behaviour_trees
 Source Folder 5: ..\..\addons\pathfinding
    Name: Pathfinding
 
+Source Folder 4: ..\..\addons\action_planning
+   Name: Action Planning
+
 
 # This is where you tell Natural Docs which folders it should scan for source
 # files.  If you add any on the command line this section is ignored except
