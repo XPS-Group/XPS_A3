@@ -34,10 +34,22 @@ Type: Singleton
     <HashmapObject>
 
 Description:
-    A <HashmapObject> of which there is only ever one created.
+    A <HashmapObject> of which there should only ever be one created.
 
 See also: 
 
 	- <HashmapObjects>
-    - <main.typeHandlers.XPS_fnc_createSingletonFromFile>
+    - <main.typeHandlers.XPS_fnc_createSingleton>
+---------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------
+Type: Static
+    Read-Only <HashmapObject>
+
+Description:
+    A Read-Only <HashmapObject>.
+
+See also: 
+
+	- <HashmapObjects>
+    - <main.typeHandlers.XPS_fnc_createStaticFromFile>
 ---------------------------------------------------------------------------*/

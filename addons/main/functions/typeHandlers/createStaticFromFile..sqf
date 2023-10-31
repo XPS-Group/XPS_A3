@@ -1,20 +1,18 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. typeHandlers. XPS_fnc_createSingletonFromFile
+Function: main. typeHandlers. XPS_fnc_createStaticFromFile
 	
 	---prototype
-	_result = [_varname, _filepath] call XPS_fnccreateSingletonFromFile
+	_result = [_varname, _filepath] call XPS_fnc_createStaticFromFile
 	---
 
 Description:
-    Reads a file containing a private Type Definition and returns a <HashmapObject>.
+    Reads a file containing a private Type Definition and returns a Read-Only <HashmapObject>.
 	It then sets the missionNamespace variable name to a compileFinal'd <HashmapObject>
-	so that only one ever exists.
+	so that only one ever exists and can never be altered.
 
 	File should return a <HashmapObject> and XPS_fnc_buildTypeDefintion should be called
 	manually in SQF file if needed.
-
-	The type definition should also include the NoCopy and Sealed flags as needed.
 
 Example: File and calling code example
 
@@ -22,8 +20,7 @@ Example: File and calling code example
 	--- Code
 
 		private _def = [ [ 
-			["#type","Tag_typ_MySingleton"],
-			["#flags",["sealed","nocopy","unscheduled"]],
+			["#type","Tag_typ_MyStaticClass"],
 			["Method", { hint "Hello World!"}]
 		] ,false,true,true] call XPS_fnc_buildTypeDefinition;
 
@@ -32,8 +29,8 @@ Example: File and calling code example
 
 	To create the Singleton from above file:
 	--- Code
-		["MySingleton" , "File.sqf"] call XPS_fnc_createSingletonFromFile;
-		MySingleton call ["Method"];
+		["MyStatic" , "File.sqf"] call XPS_fnc_createStaticFromFile;
+		MyStatic call ["Method"];
     ---
 
 Authors: 
