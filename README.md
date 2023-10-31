@@ -17,6 +17,8 @@ An Arma 3 Framework Mod
     - Interface Contracts
     - Type Definition Preprocessor
     - Type Definition Caching Support
+    - Optional Unit Testing framework
+    - Singleton / Static type creation
     - Common Core Object Libraries
   - Use Built-in library types for common utiltiies
     - A* Searching
@@ -26,7 +28,7 @@ An Arma 3 Framework Mod
     
     WIP Library Objects :
     - Map and Road Pathfinding
-    - K-Dimensional Searching
+    - Hex Grids
 
   AI Features  
   - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
