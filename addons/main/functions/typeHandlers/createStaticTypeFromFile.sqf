@@ -1,9 +1,9 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. typeHandlers. XPS_fnc_createStaticFromFile
+Function: main. typeHandlers. XPS_fnc_createStaticTypeFromFile
 	
 	---prototype
-	_result = [_varname, _filepath] call XPS_fnc_createStaticFromFile
+	_result = [_varname, _filepath] call XPS_fnc_createStaticTypeFromFile
 	---
 
 Description:
@@ -29,7 +29,7 @@ Example: File and calling code example
 
 	To create the Singleton from above file:
 	--- Code
-		["MyStatic" , "File.sqf"] call XPS_fnc_createStaticFromFile;
+		["MyStatic" , "File.sqf"] call XPS_fnc_createStaticTypeFromFile;
 		MyStatic call ["Method"];
     ---
 
