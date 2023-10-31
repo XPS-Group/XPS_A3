@@ -11,8 +11,8 @@ Description:
 See also: 
 
 	- <HashmapObjects>
-    - <main.XPS_fnc_buildTypeDefinition>
-    - <main.XPS_fnc_preprocessTypeDefinition>
+    - <main.typeHandlers.XPS_fnc_buildTypeDefinition>
+    - <main.typeHandlers.XPS_fnc_preprocessTypeDefinition>
 ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ Description:
 See also: 
 
     - <TypeDefinition>
-    - <main.XPS_fnc_checkInterface>
+    - <main.typeHandlers.XPS_fnc_checkInterface>
 ------------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------
 Type: Singleton
@@ -39,5 +39,5 @@ Description:
 See also: 
 
 	- <HashmapObjects>
-    - <main.XPS_fnc_createSingleton>
+    - <main.typeHandlers.XPS_fnc_createSingletonFromFile>
 ---------------------------------------------------------------------------*/
