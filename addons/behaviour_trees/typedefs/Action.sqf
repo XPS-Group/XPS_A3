@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Action"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_Action"],
 	["#base",XPS_BT_typ_Leaf],
 	/*----------------------------------------------------------------------------
@@ -50,9 +50,6 @@ Flags:
 	Description:
 		The code that executes during a Tick cycle of a Behaviour Tree and then
 		returns a status.
-
-	Parameters:
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil

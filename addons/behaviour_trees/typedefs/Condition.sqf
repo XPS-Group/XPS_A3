@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Condition"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_Condition"],
 	["#base",XPS_BT_typ_Leaf],
 	/*----------------------------------------------------------------------------
@@ -58,8 +58,7 @@ Flags:
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		private _status = _self get "Status";
-		_status = if (_self call ["Condition"]) then {NODE_SUCCESS} else {NODE_FAILURE};
+		if (_self call ["Condition"]) then {_status = NODE_SUCCESS} else {_status = NODE_FAILURE};
 		_status;
 	}],
 	/*----------------------------------------------------------------------------
@@ -70,7 +69,7 @@ Flags:
 	Method: Condition
     
     	--- Prototype --- 
-    	Condition = _self call ["Condition"]
+    	_condition = _self call ["Condition"]
     	---
 
 	Description:
@@ -80,7 +79,7 @@ Flags:
 		Must be Overridden.
 		
 	Returns: 
-		Condition - <Boolean> - True or False
+		_condition - <Boolean> - True or False
 	-----------------------------------------------------------------------------*/
 	["Condition",nil]
 	/*----------------------------------------------------------------------------

@@ -24,7 +24,7 @@ Protected: child
 	<HashmapObject> - child node
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Inverter"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_Inverter"],
 	["#base",XPS_BT_typ_Decorator],
 	/*----------------------------------------------------------------------------
@@ -65,7 +65,7 @@ Protected: child
             case NODE_FAILURE : {_status = NODE_SUCCESS;};
         };
 		_status;
-	}]
+	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
 		<virtual. XPS_BT_typ_Decorator. postTick>
@@ -74,6 +74,7 @@ Protected: child
 	Constructor: #create
 		<virtual. XPS_BT_typ_Decorator. #create>
 	-----------------------------------------------------------------------------*/
+	["#create", {_self call ["XPS_BT_typ_Decorator.#create"];}]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
 		<virtual. XPS_BT_typ_Decorator. AddChildNode>

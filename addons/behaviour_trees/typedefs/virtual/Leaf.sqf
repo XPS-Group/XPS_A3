@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Leaf"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_Leaf"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ Flags:
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",[_status]]
+    	_status = _self call ["postTick",_status]
     	---
 
 	Description:
@@ -77,9 +77,8 @@ Flags:
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
-		params ["_status",nil,[""]];
-		_self set ["Status",_status];
-		_status;
+		_self set ["Status",_this];
+		_this;
 	}],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
@@ -93,7 +92,7 @@ Flags:
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
 	-----------------------------------------------------------------------------*/
-	["Blackboard",nil],
+	["Blackboard",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     

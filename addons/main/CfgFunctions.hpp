@@ -1,16 +1,18 @@
 class CfgFunctions {
 	class PREFIX {
 		TAG = "xps";
-		class TypeHandlers {
-			XPS_CFG_FNC_SUB(typeHandlers,buildTypeDefinition);
-			XPS_CFG_FNC_SUB(typeHandlers,parseTypeDefClass);
-			XPS_CFG_FNC_SUB(typeHandlers,findReplaceKeyinCode);
-			XPS_CFG_FNC_SUB(typeHandlers,checkInterface);
-			XPS_CFG_FNC_SUB(typeHandlers,preprocessTypeDefinition);
-		};
 		class General {
 			XPS_CFG_FNC(createUniqueID);
 			XPS_CFG_FNC(logError);
+		};
+		class TypeHandlers {
+			XPS_CFG_FNC_SUB(typeHandlers,buildTypeDefinition);
+			XPS_CFG_FNC_SUB(typeHandlers,checkInterface);
+			XPS_CFG_FNC_SUB(typeHandlers,createSingleton);
+			XPS_CFG_FNC_SUB(typeHandlers,createStaticfromFile);
+			XPS_CFG_FNC_SUB(typeHandlers,findReplaceKeyinCode);
+			XPS_CFG_FNC_SUB(typeHandlers,parseTypeDefClass);
+			XPS_CFG_FNC_SUB(typeHandlers,preprocessTypeDefinition);
 		};
 		
 		class Init {

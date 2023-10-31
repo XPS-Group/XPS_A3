@@ -20,7 +20,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_Composite"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_Composite"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/* ----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ Flags:
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",[_status]]
+    	_status = _self call ["postTick",_status]
     	---
 
 	Description:
@@ -97,34 +97,8 @@ Flags:
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
-		params ["_status",nil,[""]];
-		_self set ["Status",_status];
-		_status;
-	}],
-	/*----------------------------------------------------------------------------
-	Protected: tickNextChild
-    
-    	--- Prototype --- 
-    	_status = _self call ["tickNextChild"]
-    	---
-
-	Description:
-		Ticks next child in the array of children
-
-	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
-	-----------------------------------------------------------------------------*/
-	["tickNextChild",compileFinal{
-		private _currentIndex = _self get "currentIndex";
-		private _children = _self get "children";
-		if (_currentIndex >= count _children) exitwith {nil};
-		if (_currentIndex < 0) then {_currentIndex = 0};
-		private _child = _children#_currentIndex;
-		if !(isNil "_child") then {
-			_self set ["currentIndex",_currentIndex+1];
-			_status = _child call ["Tick"];
-		};
-		_status;
+		_self set ["Status",_this];
+		_this;
 	}],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
@@ -138,7 +112,7 @@ Flags:
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
 	-----------------------------------------------------------------------------*/
-	["Blackboard",nil],
+	["Blackboard",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -205,7 +179,7 @@ Flags:
 		private _children = _self get "children";
 		private _count = count (_children);
 		if (_index < 0 ||_index >= _count) then {_index = -1};
-		_children insert [_index,_childNode];
+		_children insert [_index,[_childNode]];
 		_childNode set ["Blackboard",_self get "Blackboard"];
 		true;
 	}],
@@ -230,7 +204,7 @@ Flags:
 		private _children = _self get "children";
 		{
 			if !(isNil "_x") then {
-				_status = _x call ["Init"];
+				_x call ["Init"];
 			};
 		} foreach _children;
 	}],
@@ -249,7 +223,7 @@ Flags:
 	Returns: 
 		_status - <String> - returns <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {		
+	["Tick",compileFInal {	
 		_self call ["preTick"];
 		_self call ["postTick",
 			_self call ["processTick"]

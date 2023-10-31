@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_IMultiCastDelegate
+Interface: core. XPS_ifc_IMultiCastDelegate
 <Interface>
 
 Authors:

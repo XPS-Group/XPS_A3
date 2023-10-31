@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_Blackboard
+TypeDef: core. XPS_typ_Blackboard
 	<TypeDefinition>
 
 Authors: 
@@ -21,9 +21,11 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_Blackboard"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_Blackboard"],
 	["@interfaces",["XPS_ifc_IBlackboard"]],
+	["attachedTo",objNull],
+	["attachedTo_VariableName",nil],
 	/*-----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -63,11 +65,11 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["AttachToObject",compileFinal {
 		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
-		private _prevObject = _self get "_attachedObject";
-		private _prevObjectVar = _self get "_attachedObjectVariable";
+		private _prevObject = _self get "attachedTo";
+		private _prevObjectVar = _self get "attachedTo_VariableName";
 		if !(isNull _prevObject) then {_prevObject setVariable [_prevObjectVar,nil]; };
 		if !(isnull _object) then {_object setVariable [_varName,_self];};
-		_self set ["_attachedObject",_object];
-		_self set ["_attachedObjectVariable",_varName];
+		_self set ["attachedTo",_object];
+		_self set ["attachedTo_VariableName",_varName];
 	}]
 ]
