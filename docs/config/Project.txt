@@ -74,6 +74,9 @@ Source Folder 2: ..\..\addons\core_libraries
 Source Folder 3: ..\..\addons\behaviour_trees
    Name: Behaviour Trees
 
+Source Folder 5: ..\..\addons\pathfinding
+   Name: Pathfinding
+
 Source Folder 4: ..\..\addons\action_planning
    Name: Action Planning
 

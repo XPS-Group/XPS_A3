@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: behaviour_tree. XPS_BT_fnc_buildTree
+Function: behaviour_trees. XPS_BT_fnc_buildTree
 	
 	---prototype
 	_tree = [_treeDefinition] call XPS_BT_fnc_buildTree;
@@ -20,15 +20,19 @@ Description:
 			"RootNode",
 			[
 				["ChildA",[]],
-				["ChildB",
-					["ChildC",[]],
-					["ChildD",[]]
+				["ChildB", 
+					[
+						["ChildC",[]],
+						["ChildD",[]]
+					]
 				],
 				["ChildE",
 					["ChildF",[]],
 					["ChildG",
-						["ChildH",[]],
-						["ChildI",[]]
+						[
+							["ChildH",[]],
+							["ChildI",[]]
+						]
 					]
 				]
 			]
@@ -49,7 +53,7 @@ Authors:
 		Using the example structure in the description, it would appear like so:
 
 		--- Code
-		private _treeDef = ["RootNode",[["ChildA",[]],["ChildB",["ChildC",[]],["ChildD",[]]],["ChildE",["ChildF",[]],["ChildG",["ChildH",[]],["ChildI",[]]]]]]
+		private _treeDef = ["RootNode",[["ChildA",[]],["ChildB",[["ChildC",[]],["ChildD",[]]]],["ChildE",["ChildF",[]],["ChildG",[["ChildH",[]],["ChildI",[]]]]]]];
 		private _tree = [_treeDef] call XPS_BT_fnc_buildTree;
 		---
 		This results in _tree as a <hashmapobject> structured as so:
@@ -71,7 +75,7 @@ params [["_definition",nil,[]],["_blackboard",nil,[createhashmap]]];
 private _fnc_HandleChildren = compileFinal {
 	params ["_parentNode",["_children",[],[[]]]];
 	
-	private _nodeType = _parentNode get "NODETYPE";
+	private _nodeType = _parentNode get "NodeType";
 	if (_nodeType in ["COMPOSITE","DECORATOR"]) then {
 		for "_i" from 0 to (count _children)-1 do {
 			private _typeDef = _children#_i#0;

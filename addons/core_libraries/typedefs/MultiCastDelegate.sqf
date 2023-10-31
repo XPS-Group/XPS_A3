@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_MultiCastDelegate
+TypeDef: core. XPS_typ_MultiCastDelegate
 	<TypeDefinition>
 
 Authors: 
@@ -20,10 +20,10 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {"XPS_typ_MultiCastDelegate"}],
+	["#str",compilefinal {_self get "#type"}],
 	["#type","XPS_typ_MultiCastDelegate"],
-	["@interfaces",["XPS_ifc_MultiCastDelegate"]],
-	["#flags",["unscheduled"]],
+	["@interfaces",["XPS_ifc_IMultiCastDelegate"]],
+	//["#flags",["unscheduled"]],
 	["_pointers",[],[["CTOR"]]],
 	["_signature",[createhashmap,[]],[["CTOR","[createhashmap,[]]"]]], // default signature: [ sender object , argument array ]
     /*----------------------------------------------------------------------------
@@ -37,7 +37,7 @@ Flags:
         _signature (optional) - <Array> - a definition of parameters expected when calling "Invoke" method in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
     ----------------------------------------------------------------------------*/
 	["#create",{
-		if (typename _this == "ARRAY") then {
+		if (_this isEqualType []) then {
 			_self set ["_signature",_this];
 		};
 	}],

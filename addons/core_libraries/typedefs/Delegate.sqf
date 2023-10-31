@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_Delegate
+TypeDef: core. XPS_typ_Delegate
 	<TypeDefinition>
 
 Authors: 
@@ -20,10 +20,10 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {"XPS_typ_Delegate"}],
+	["#str",compilefinal {_self get "#type"}],
 	["#type","XPS_typ_Delegate"],
-	["@interfaces",["XPS_ifc_Delegate"]],
-	["#flags",["unscheduled"]],
+	["@interfaces",["XPS_ifc_IDelegate"]],
+	//["#flags",["unscheduled"]],
 	["_pointer",{}],
 	["_signature",[createhashmap,[]]], // default signature: [ sender object , argument array ]
     /*----------------------------------------------------------------------------
@@ -37,8 +37,10 @@ Flags:
         _signature (optional) - <Array> : a definition of parameters expected when calling "Invoke" method in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
     ----------------------------------------------------------------------------*/
 	["#create",{
-		if (typename _this == "ARRAY") then {
+		if (_this isEqualType []) then {
 			_self set ["_signature",_this];
+		} else {
+			_self set ["_signature",[createhashmap,[]]];
 		};
 	}],
     /*----------------------------------------------------------------------------
@@ -82,7 +84,7 @@ Flags:
     ----------------------------------------------------------------------------*/
 	["Invoke",{
 		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {false;};
-		private _pointer = _self get "Pointer";
+		private _pointer = _self get "_pointer";
 
 		switch (true) do {
 			 case (_pointer isEqualTypeParams [createhashmap,""]) : {

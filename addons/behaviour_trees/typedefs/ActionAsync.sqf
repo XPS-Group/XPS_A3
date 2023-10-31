@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_BT_typ_ActionAsync"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_ActionAsync"],
 	["#base",XPS_BT_typ_LeafAsync],
 	/*----------------------------------------------------------------------------
@@ -55,20 +55,13 @@ Flags:
 		The code that executes during a Tick cycle of a Behaviour Tree and then
 		returns a status. This is called asynchronously and initiates the <Action>
 		method. Once <Action> has completed, it will call the <callback> method
-		which sets the status of the Node. 
-
-	Parameters:
-		_self - <HashmapObject> - a ref to this object
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
-		_callback - <Code> - the callback method to execute
+		which sets the status of the Node.
 
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		params [["_self",nil,[createhashmap]],["_status",nil,[""]],["_callback",nil,[{}]]];
-		_status = _self call ["Action"];
-		[_self, _status] call _callback;
+		_self call ["Action"];
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
@@ -83,7 +76,7 @@ Flags:
 
 	Description:
 		The code that executes during a Tick cycle of a Behaviour Tree and then
-		returns a status. This is run asynchronously.
+		returns a status. This is run asynchronously in a scheduled environment.
 		
 		Must be Overridden.
 

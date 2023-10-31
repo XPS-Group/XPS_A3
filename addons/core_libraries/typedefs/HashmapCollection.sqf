@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: main. XPS_typ_HashmapCollection
+TypeDef: core. XPS_typ_HashmapCollection
 
 Description:
 <TypeDefinition> - stores only <HashmapObjects> which match <AllowedTypes> array
@@ -35,7 +35,7 @@ Authors:
         <Hashmap> - Storage of <HashmapObjects> for this collection
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {"XPS_typ_HashmapCollection"}],
+	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_typ_HashmapCollection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
     /*----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ Authors:
     Retruns: 
         <Hashmap> - <hashmaps> or <hashmapobjects> stored in this collection
     ----------------------------------------------------------------------------*/
-    ["Items",nil],
+    ["Items",createhashmap],
     /* -----------------------------------------------------------------------
     Constructor: #create
 
