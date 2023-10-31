@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. typeHandlers. XPS_UT_fnc_parseUnitTestClass
+Function: main. testHandlers. XPS_UT_fnc_parseUnitTestClass
 	
 	---prototype
 	_result = [_class,_tag*] call XPS_UT_fnc_parseUnitTestClass
