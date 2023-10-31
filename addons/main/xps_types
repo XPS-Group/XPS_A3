@@ -29,3 +29,15 @@ See also:
     - <TypeDefinition>
     - <main.XPS_fnc_checkInterface>
 ------------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------
+Type: Singleton
+    <HashmapObject>
+
+Description:
+    A <HashmapObject> of which there is only ever one created.
+
+See also: 
+
+	- <HashmapObjects>
+    - <main.XPS_fnc_createSingleton>
+---------------------------------------------------------------------------*/
