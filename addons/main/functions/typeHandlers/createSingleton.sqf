@@ -40,7 +40,6 @@ Description:
 
 Example: Using a definiton defined locally and built using XPS Preprocessor and Type Builder
 
-	Recommended and preferred. Will never create a subsequent instance.
 	--- Code
 		private _typeDef = [
 			["#type","Tag_typ_mySingleton],
@@ -55,8 +54,6 @@ Example: Using a definiton defined locally and built using XPS Preprocessor and 
 
 Example: Using an external File and using XPS Preprocessor and Type Builder
 
-	Recommended over using next example but, not preferred over first example.
-	Potential to collide if someone calls same file with different _varName.
 	--- Code
 	file.sqf:
 		[
@@ -74,19 +71,21 @@ Example: Using an external File and using XPS Preprocessor and Type Builder
 
 Example: Using a predefined global type
 
-	WARNING: Not Recommended!
-	It's more dangerous than previous example because a globally cached type is easier to retrieve than a file.
 	--- Code
 		["MySingleton" , Tag_typ_mySingleton] call XPS_fnc_createSingleton;
 		private _singleton = MySingleton call ["GetInstance"];
     ---
 
-	The reason this is DANGEROUS is because, if you were to do the following:
+Example: Subsequent call after one of the above will fail
+	
+	if you were to do the following:
+	
 	--- Code
 		["MySingleton2" , Tag_typ_mySingleton] call XPS_fnc_createSingleton;
 		private _singleton = MySingleton2 call ["GetInstance"];
+	
 	---
-	It would overwrite the hidden singleton instance and both MySingleton and MySingleton2 would refer to the same (2nd) instance.
+	A report would be logged and subsequent instance would be discarded 
 
 Authors: 
 	Crashdome
@@ -111,13 +110,19 @@ if ("#flags" in keys _typeDef ) then {
 
 private _hash = (hashValue (_typeDef get "#type")) regexReplace ["[\+\\]","_"]; // repalace + and \ with _
 
-call compile format["%1 = createhashmapobject [%2,%3];",_hash,_typeDef,_args];
+if (isNil _hash) then {
+	call compile format["%1 = createhashmapobject [%2,%3];",_hash,_typeDef,_args];
 
-private _staticDef = [
-	["#type","XPS_typ_Static_Singleton"],
-	["GetInstance",compile format["%1",_hash]]
-];
+	private _staticDef = [
+		["#type","XPS_typ_Static_Singleton"],
+		["GetInstance",compile format["%1",_hash]]
+	];
 
-call compile format["%1 = compileFinal createhashmapobject [%2]",_varName,_staticDef];
+	call compile format["%1 = compileFinal createhashmapobject [%2]",_varName,_staticDef];
 
-true;
+	true;
+
+} else {
+	diag_log text format["XPS_fnc_createSingleton: Attempt to create another instance of %1",_varName];
+	false;
+};
