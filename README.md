@@ -17,14 +17,19 @@ An Arma 3 Framework Mod
     - Interface Contracts
     - Type Definition Preprocessor
     - Type Definition Caching Support
-    - Optional Unit Testing framework
-    - Singleton / Static type creation
+    - Singleton / Static Object Creation
     - Common Core Object Libraries
-  - Use Built-in library types for common utiltiies
-    - A* Searching
-    - Job Scheduling
-    - Collections
-    - Delegates and Multicast Delegates
+      - A* Searching
+      - Job Scheduling
+      - Collections
+      - Delegates and Multicast Delegates
+      - Behavior Trees
+        - Node Classes
+        - Tree Builder Function
+      - Optional Unit Testing framework
+        - Create Test Classes and Test Methods
+        - UI View of Tests
+        - Assert-Style Static Classes for testing code
     
     WIP Library Objects :
     - Map and Road Pathfinding
