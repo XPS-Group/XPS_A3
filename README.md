@@ -19,7 +19,7 @@ An Arma 3 Framework Mod
     - Interface Contracts
     - Type Definition Preprocessor
       - Obfuscate "Private" methods and properties
-      - Add Preprocessor Attributes to manipulate code at runtime
+      - Add Preprocessor Attributes to validate or manipulate code during preprocessing
       - Auto-Inject Constructor / Destructor setting of properties or backing fields
     - Type Definition Builder
       - Bring parent methods and propertes to your child classes
