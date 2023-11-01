@@ -16,29 +16,34 @@ An Arma 3 Framework Mod
   - Bring an Object-Oriented Structure to your Mod
     - Interface Contracts
     - Type Definition Preprocessor
+      - Obfuscate "Private" methods and properties
+      - Add Preprocessor Attributes to manipulate code at runtime
+      - Auto-Inject Constructor / Destructor setting of properties or backing fields
+    - Type Definition Builder
+      - Bring parent methods and propertes to your child classes
+      - Auto-Append Properties with Arrays and Hashmaps during inheritance.
     - Type Definition Caching Support
     - Singleton / Static Object Creation
-    - Common Core Object Libraries
-      - A* Searching
-      - Job Scheduling
-      - Collections
-      - Delegates and Multicast Delegates
-      - Behavior Trees
-        - Node Classes
-        - Tree Builder Function
-      - Optional Unit Testing framework
-        - Create Test Classes and Test Methods
-        - UI View of Tests
-        - Assert-Style Static Classes for testing code
-    
-    WIP Library Objects :
-    - Map and Road Pathfinding
+  
+  - Common Core Object Library
+    - A* Searching
+    - Blackboard
+    - Collections
+    - Delegates and Multicast Delegates
+    - Job Scheduler
+  
+  - Other Libraries
+    - Behavior Trees
+      - Pre-defined Node Classes
+      - Tree Builder Function
+    - Optional Unit Testing framework
+      - Create Test Classes and Test Methods
+      - UI View of Tests
+      - Assert-Style Static Classes for testing code
+  - Other [WIP] Libraries
+    - Action Planning / Utility AI
     - Hex Grids
-
-  AI Features  
-  - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
-  - WIP - Use Action Planning / Utility AI for short or long term planning
-  - WIP - Replace the Danger/Formation FSM behaviors
+    - Pathfinding
 
 #History
 This project started as the eXtensible Planning System - a mod to introduce Behaviour Trees, Utility AI, and Goal-Oriented Action Planning. I was using Hashmaps to create
