@@ -28,7 +28,7 @@ An Arma 3 Framework Mod
     
     WIP Library Objects :
     - Map and Road Pathfinding
-    - Hex Grids
+    -- Hex Grids
 
   AI Features  
   - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
