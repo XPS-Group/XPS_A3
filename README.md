@@ -48,7 +48,7 @@ An Arma 3 Framework Mod
     - Hex Grids
     - Pathfinding
 
-##History
+## History
 
 This project started as the eXtensible Planning System - a mod to introduce Behaviour Trees, Utility AI, and Goal-Oriented Action Planning. I was using Hashmaps to create
 a simple OO-design prior to the introduction of HashmapObjects.
