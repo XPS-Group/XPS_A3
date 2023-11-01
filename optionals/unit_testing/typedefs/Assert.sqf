@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
 TypeDef: unit_testing. XPS_UT_typ_Assert
-	<Static>
+	<TypeDefintion>
 
 Authors: 
 	Crashdome

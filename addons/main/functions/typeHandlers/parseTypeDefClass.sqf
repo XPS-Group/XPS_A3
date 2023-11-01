@@ -61,17 +61,17 @@ if (isText _file && isText _type) then {
 	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal")} else {0};
 	private _isFinal_Cmd = if (_isFinal==1) then {"compileFinal"} else {""};
 
-	//diag_log format ["[XPS TD parser]  : var: %1 - recompile: %2",_varname,_recompile];
+	// diag_log text format ["[XPS TD parser]  : var: %1 - recompile: %2",_varname,_recompile];
 	if (isNil {_typeDefinition}) then {
-		//diag_log "[XPS TD parser]  : init namespace variables";
+		// diag_log text "[XPS TD parser]  : init namespace variables";
 		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),_isFinal_Cmd] call _fnc_loadFile];
 		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 	} else {
-		if ((_recompile == 1 || isFilePatchingEnabled) && _isFinal==0 ) then {
-			//diag_log "[XPS TD parser]  : recompiling";
+		if ((_recompile == 1 || isFilePatchingEnabled) /* && _isFinal==0 */) then {
+			// diag_log text "[XPS TD parser]  : recompiling";
 			missionNamespace setvariable [_varName,[_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),""] call _fnc_loadFile];
 		} else {
-			//diag_log "[XPS TD parser]  : using cached";
+			// diag_log text "[XPS TD parser]  : using cached";
 			missionNamespace setvariable [_varName,_typeDefinition];
 		};
 	};

@@ -36,14 +36,14 @@
     file = FILEPATH_C_Q(interfaces\ifcName.sqf);\
     type = "ifc";\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
 }
 
 #define XPS_CFG_IFC_SUB(sub,ifcName) class ifcName {\
     file = FILEPATH_C_Q(interfaces\sub\ifcName.sqf);\
     type = "ifc";\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
 }
 
 #define XPS_CFG_TYP(typName) class typName {\
@@ -53,7 +53,7 @@
     allowNils = 0;\
     noStack = 1;\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
 }
 
 #define XPS_CFG_TYP_SUB(sub,typName) class typName {\
@@ -63,7 +63,7 @@
     allowNils = 0;\
     noStack = 1;\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
 }
 
 /* ---------------------------------------*/
