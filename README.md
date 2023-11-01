@@ -42,7 +42,7 @@ An Arma 3 Framework Mod
       - Create Test Classes and Test Methods
       - UI View of Tests
       - Assert-Style Static Classes for testing code
-      
+
   - Other [WIP] Libraries
     - Action Planning / Utility AI
     - Hex Grids
@@ -54,8 +54,7 @@ a simple OO-design prior to the introduction of HashmapObjects.
 
 Since the announcement to introduce a new hashmap command 'createHashmapObject' for v2.14, this project has been rewritten to include additional features to the framework:
   - A better and standardized OOP approach (an example is to include an Interface-style contract system for building objects) and a general framework to foster Mod compatibility at the scripting level using those objects.
-
  
 Ultimately, it is my hope and goal to provide more creativity in the community. All constructive criticism and ideas are welcome here.
  
- -Crashdome
+-Crashdome
