@@ -33,7 +33,7 @@ if (isText (_class >> "tag")) then {
 
 private _fnc_loadFile = {
 	params ["_file"];
-	private _statement = _statement = "createhashmapobject [call compileScript [""%1"",false]];"};
+	private _statement = _statement = "createhashmapobject [call compileScript [""%1"",false]];";
 	private _code =  format[_statement,_file];
 	call compile _code;
 };
