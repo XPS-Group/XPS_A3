@@ -9,15 +9,17 @@ class XPS_CFG_BASECLASSNAME {
 		XPS_CFG_IFC(IException);
 		XPS_CFG_IFC(IJobScheduler);
 		XPS_CFG_IFC(IMultiCastDelegate);
+		XPS_CFG_IFC(IStack);
 
 		XPS_CFG_TYP(AstarSearch);
 		XPS_CFG_TYP(Blackboard);
 		XPS_CFG_TYP(Collection);
 		XPS_CFG_TYP(Delegate);
 		XPS_CFG_TYP(Exception);
-		XPS_CFG_TYP(ExceptionHandler);
+		XPS_CFG_TYP(MissionCodeStack);
 		XPS_CFG_TYP(HashmapCollection);
 		XPS_CFG_TYP(JobScheduler);
 		XPS_CFG_TYP(MultiCastDelegate);
+		XPS_CFG_TYP(Stack);
 	};
 };

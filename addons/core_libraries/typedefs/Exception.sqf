@@ -43,10 +43,11 @@ Flags:
 		_self set ["Source",_source];
 		_self set ["Target",_target];
 		_self set ["Message",_message];
-	}],
-	["#delete",{ 
+		 
 		if !(isNil {XPS_ExceptionHandler}) then {
-			XPS_ExceptionHandler call ["AddToStackTrace",[str _self, _self get "Handled"]];
+			XPS_ExceptionHandler call ["AddToStackTrace",[_self]];
 		};
+	}],
+	["#delete",{
 	}]
 ]

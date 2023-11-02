@@ -6,10 +6,27 @@ Interface: core. XPS_ifc_IException
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
+
+	Property: ExceptionType
+		<String>
+		
+	Property: Source 
+		<Anything>
+
+	Property: Target
+		<Anything>
+
 	Property: Message
 		<String>
 
+	Property: Data
+		<Hashmap>
+
 ---------------------------------------------------------------------------- */
 [
-	["Message","STRING"]
+	["ExceptionType","STRING"],
+	["Source","ANYTING"].
+	["Target","ANYTHING"],
+	["Message","STRING"],
+	["Data","HASHMAP"]
 ]
