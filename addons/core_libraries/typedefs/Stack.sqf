@@ -13,7 +13,8 @@ Parent:
     none
 
 Implements:
-    <XPS_typ_IStack>
+    <XPS_ifc_IOrderedCollection>
+    <XPS_ifc_IStack>
 
 Flags:
 	none
@@ -22,6 +23,7 @@ Flags:
 [
 	["#str", {_self get "#type"}],
 	["#type", "XPS_typ_Stack"],
+    ["@interfaces", ["XPS_typ_IStack","XPS_ifc_OrderedCollection"]],
 	["_stackArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Clear
@@ -30,7 +32,7 @@ Flags:
         call ["Clear"]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IOrderedCollection>
     
     Parameters: 
 		none
@@ -48,7 +50,7 @@ Flags:
         call ["Count"]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IOrderedCollection>
     
     Parameters: 
 		none
@@ -57,7 +59,7 @@ Flags:
 		<Number> - the number of elements in the stack
     ----------------------------------------------------------------------------*/
 	["Count",{
-		count (_self get "_staqckArray");
+		count (_self get "_stackArray");
 	}],
     /*----------------------------------------------------------------------------
     Method: IsEmpty
@@ -66,16 +68,16 @@ Flags:
         call ["IsEmpty"]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IOrderedCollection>
     
     Parameters: 
 		none
 		
 	Returns:
-		<Boolean>
+		<Boolean> - True if stack is empty, otherwise False.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_staqckArray") == 0;
+		count (_self get "_stackArray") == 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Peek

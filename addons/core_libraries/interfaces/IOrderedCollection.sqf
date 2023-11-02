@@ -1,24 +1,24 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_IStack
+Interface: core. XPS_ifc_IOrderedCollection
 <Interface>
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Method: Peek
+	Method: Clear
 		<Code>
 
-	Method: Pop
+	Method: Count
 		<Code>
-	
-	Method: Push
+		
+	Method: IsEmpty
 		<Code>
 
 ---------------------------------------------------------------------------- */
 [
-	["Peek","CODE"],
-	["Pop","CODE"],
-	["Push","CODE"]
+	["Clear","CODE"],
+	["Count","CODE"],
+	["IsEmpty","CODE"]
 ]

@@ -13,6 +13,7 @@ Parent:
     none
 
 Implements:
+    <XPS_ifc_IOrderedCollection>
     <XPS_typ_IQueue>
 
 Flags:
@@ -22,7 +23,62 @@ Flags:
 [
 	["#str", {_self get "#type"}],
 	["#type", "XPS_typ_Queue"],
+    ["@interfaces", ["XPS_ifc_IQueue","XPS_ifc_OrderedCollection"]],
 	["_queueArray",[],[["CTOR"]]],
+    /*----------------------------------------------------------------------------
+    Method: Clear
+    
+        --- Prototype --- 
+        call ["Clear"]
+        ---
+
+        <XPS_ifc_IOrderedCollection>
+    
+    Parameters: 
+		none
+		
+	Returns:
+		Nothing
+    ----------------------------------------------------------------------------*/
+	["Clear",{
+		_self get "_queueArray" resize 0;
+	}],
+    /*----------------------------------------------------------------------------
+    Method: Count
+    
+        --- Prototype --- 
+        call ["Count"]
+        ---
+
+        <XPS_ifc_IOrderedCollection>
+    
+    Parameters: 
+		none
+		
+	Returns:
+		<Number> - the number of elements in the stack
+    ----------------------------------------------------------------------------*/
+	["Count",{
+		count (_self get "_queueArray");
+	}],
+    /*----------------------------------------------------------------------------
+    Method: IsEmpty
+    
+        --- Prototype --- 
+        call ["IsEmpty"]
+        ---
+
+        <XPS_ifc_IOrderedCollection>
+    
+    Parameters: 
+		none
+		
+	Returns:
+		<Boolean> - True if queue is empty, otherwise False.
+    ----------------------------------------------------------------------------*/
+	["IsEmpty",{
+		count (_self get "_queueArray") == 0;
+	}],
     /*----------------------------------------------------------------------------
     Method: Peek
     
@@ -55,10 +111,10 @@ Flags:
 		none
 		
 	Returns:
-		<Anything> - removes and returns last element in the stack or nil if empty
+		<Anything> - removes and returns last element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
 	["Pop",{
-		_self get "_queueArray" deleteat -1;
+		_self get "_queueArray" deleteat 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Push
@@ -70,7 +126,7 @@ Flags:
         <XPS_ifc_IStack>
     
     Parameters: 
-		_value - the value to push to top of the stack
+		_value - the value to push to top of the queue
 		
 	Returns:
 		Nothing
