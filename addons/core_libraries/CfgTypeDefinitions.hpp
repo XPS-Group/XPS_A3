@@ -1,4 +1,5 @@
-class XPS_CFG_I_BASECLASSNAME {
+
+class XPS_CFG_TD_BASECLASSNAME {
 	class ADDON {
 		tag = "xps";
 		XPS_CFG_IFC(IAstarGraph);
@@ -13,12 +14,7 @@ class XPS_CFG_I_BASECLASSNAME {
 		XPS_CFG_IFC(IOrderedCollection);
 		XPS_CFG_IFC(IQueue);
 		XPS_CFG_IFC(IStack);
-	};
-};
 
-class XPS_CFG_TD_BASECLASSNAME {
-	class ADDON {
-		tag = "xps";
 		XPS_CFG_TYP(AstarSearch);
 		XPS_CFG_TYP(Blackboard);
 		XPS_CFG_TYP(Collection);

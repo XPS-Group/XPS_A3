@@ -227,7 +227,7 @@ Flags:
     Returns: 
 		<Hashmap> - All <XPS_PF_typ_RoadNodes> represented in a searchable graph
 	-----------------------------------------------------------------------------*/
-	["Roads",nil],
+	["Roads",createhashmap],
 	/*----------------------------------------------------------------------------
 	Method: GetEstimatedDistance
     

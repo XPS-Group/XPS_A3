@@ -23,7 +23,7 @@ Flags:
 [
 	["#str", {_self get "#type"}],
 	["#type", "XPS_typ_Queue"],
-    ["@interfaces", ["XPS_ifc_IQueue","XPS_ifc_OrderedCollection"]],
+    ["@interfaces", ["XPS_ifc_IQueue","XPS_ifc_IOrderedCollection"]],
 	["_queueArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Clear
@@ -113,7 +113,7 @@ Flags:
 	Returns:
 		<Anything> - removes and returns last element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
-	["Pop",{
+	["Dequeue",{
 		_self get "_queueArray" deleteat 0;
 	}],
     /*----------------------------------------------------------------------------
@@ -131,7 +131,7 @@ Flags:
 	Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
-	["Push",{
+	["Enqueue",{
 		params ["_value"];
 		_self get "_queueArray" pushback _value;
 	}]
