@@ -29,7 +29,7 @@ if !(params [["_class",nil,[configFile]],"_tag"]) exitwith {false;};
 
 _tag = [_tag] param [0,configName _class,[""]];
 if (isText (_class >> "tag")) then {
-	//diag_log format ["[XPS TD parser] : changing TAG: %1",_tag];
+	//diag_log text format ["[XPS TD parser] : changing TAG: %1",_tag];
 	_tag = getText (_class >> "tag");
 };
 
@@ -44,7 +44,7 @@ private _fnc_loadFile = {
 	call compile _code;
 };
 
-//diag_log format ["[XPS TD parser] : parsing TAG: %1 - CLASS: %2",_tag, configName _class];
+//diag_log text format ["[XPS TD parser] : parsing TAG: %1 - CLASS: %2",_tag, configName _class];
 private _file = _class >> "file";
 private _type = _class >> "type";
 

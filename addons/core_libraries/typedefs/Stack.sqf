@@ -23,7 +23,7 @@ Flags:
 [
 	["#str", {_self get "#type"}],
 	["#type", "XPS_typ_Stack"],
-    ["@interfaces", ["XPS_typ_IStack","XPS_ifc_OrderedCollection"]],
+    ["@interfaces", ["XPS_typ_IStack","XPS_ifc_IOrderedCollection"]],
 	["_stackArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Clear

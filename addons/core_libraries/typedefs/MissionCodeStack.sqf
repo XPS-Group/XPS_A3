@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_MissionCodeStackr
+TypeDef: core. XPS_typ_MissionCodeStack
 	<TypeDefinition>
 
 Authors: 

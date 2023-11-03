@@ -119,7 +119,7 @@ private _preCompiled = _hashmap; // In case it doesn't have a parent, we need th
 if ("#base" in keys _hashmap) then {
 	private _pType = _hashmap get "#base";
 	if (isNil {_pType} || !(_pType isEqualType [])) exitwith {
-		diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
+		diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
 	};
 
 	_preCompiled = createhashmapfromarray _pType;
@@ -182,6 +182,6 @@ if (isNil {_interfaces} || {[_preCompiled, keys _interfaces, _allowNils] call XP
 	// Passes all checks and is Ok to push out definition
 	_hashmap toArray false;
 } else {
-	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
+	diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	nil;
 };

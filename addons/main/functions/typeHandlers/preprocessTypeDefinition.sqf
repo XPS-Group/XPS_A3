@@ -226,26 +226,26 @@ try
 				case "VALIDATE_ANY" : {
 					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeAny _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_ALL" : {
 					if !(_value isEqualTypeALL _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_PARAMS" : {
 					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeParams _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_TYPE" : {
 					if !(_value isEqualType _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
@@ -269,19 +269,22 @@ try
 	if (!_hasCtor && {_ctor != "" || _ctor_l != ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
 	if (!_hasDtor && {_dtor != "" || _dtor_l != ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
 
+	private _header = if (true) then {
+		"private _xps_methodName = %1;private _xps_caller = if (isNil ""_xps_caller"") then {[_fnc_scriptParent,_fnc_scriptName]} else {_xps_caller};XPS_MissionCodeStack call [""AddToStackTrace"",[diag_scope,_xps_caller,_xps_methodName,if (_this isEqualType []) then {_this apply {str _x}} else {str _this}]];"
+	} else {""};
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
 		// Constructor injection but only if it existed prior to above code
 		if (_hasCtor && {_key isEqualTo "#create" && {_ctor != "" || _ctor_l != ""}}) then {
-			_strCode = (str _value) insert [1,_ctor];
-			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
+			private _strCode = (str _value) insert [1,_ctor];
+			private _value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
 		// Destructor injection but only if it existed prior to above code
 		if (_hasDtor && {_key isEqualTo "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
-			_strCode = (str _value) insert [1,_dtor];
-			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
+			private _strCode = (str _value) insert [1,_dtor];
+			private _value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];
 		};
 		//Replace Private Keys in any code block
@@ -292,13 +295,17 @@ try
 				_value = [_find,_replace,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
 			} foreach _privateKeys;
+			if (true) then {
+				private _strCode = (str _value) insert [1,_ctor];
+				_keyPair set [1, call compile _strCode];
+			};
 		};
 	};
 
 	_result;
 
 } catch {
-	diag_log "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
+	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
 	diag_log _exception;
 	false;
 };

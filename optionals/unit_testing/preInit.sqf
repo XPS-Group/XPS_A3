@@ -20,10 +20,6 @@ ADDON = false;
 Variable: unit_testing. XPS_UT_Engine
 	<Singleton>
 
-	--- prototype
-	XPS_UT_Engine get "#type"
-	---
-
 Description:
 	A <HashmapObject> which is used to perform and record Unit Tests
 
@@ -38,10 +34,6 @@ Returns:
 /* -------------------------------------------------------------------------
 Variable: unit_testing. XPS_UT_Assert
 	<Static>
-
-	--- prototype
-	XPS_UT_Assert call ["AreEqual",[1,2,"Values 1 and 2 are not equal."]]  // throws an AssertFailedException with message
-	---
 
 Description:
 	Used in Unit Testing Test Methods to test various conditions and return 

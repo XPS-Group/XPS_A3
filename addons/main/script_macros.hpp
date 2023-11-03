@@ -12,8 +12,11 @@
 
 #define COMPONENT_DIR Q(##@##ADDON)
 
-#define XPS_CFG_BASECLASSNAME Enhanced_XPS_Type_Definitions
-#define QXPS_CFG_BASECLASSNAME Q(XPS_CFG_BASECLASSNAME)
+#define XPS_CFG_I_BASECLASSNAME Enhanced_XPS_Interfaces
+#define QXPS_CFG_I_BASECLASSNAME Q(XPS_CFG_I_BASECLASSNAME)
+
+#define XPS_CFG_TD_BASECLASSNAME Enhanced_XPS_Type_Definitions
+#define QXPS_CFG_TD_BASECLASSNAME Q(XPS_CFG_TD_BASECLASSNAME)
 
 #define XPS_MAIN_FNC(fncName) VARNAME(PREFIX,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\fncName.sqf)]
 #define XPS_ADDON_FNC(fncName) VARNAME(ADDON,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\fncName.sqf)]

@@ -25,7 +25,7 @@ Authors:
 ---------------------------------------------------------------------------- */
 [
 	["ExceptionType","STRING"],
-	["Source","ANYTING"].
+	["Source","ANYTING"],
 	["Target","ANYTHING"],
 	["Message","STRING"],
 	["Data","HASHMAP"]

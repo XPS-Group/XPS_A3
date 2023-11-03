@@ -8,12 +8,27 @@ Function: main. typeHandlers. XPS_fnc_createStaticTypeFromFile
 
 Description:
     Reads a file containing a private Type Definition and returns a Read-Only <HashmapObject>.
-	It then sets the missionNamespace variable name to a compileFinal'd <HashmapObject>
+	It then sets the missionNamespace variable name to the compileFinal'd <HashmapObject>
 	so that only one ever exists and can never be altered.
 
-	File should return a <HashmapObject> and XPS_fnc_buildTypeDefintion should be called
-	manually in SQF file if needed.
+	Files should return a <HashmapObject> and therefore XPS_fnc_buildTypeDefintion should be called
+	manually in SQF file before returning the result if needed.
 
+Authors: 
+	Crashdome
+
+------------------------------------------------------------------------------
+
+	Parameter: _varname
+		<string> - the variable in which the <HashmapObject> will be stored
+
+	Optional: _filepath
+		<string> - the path to the file  
+
+	Return: _result
+		<Boolean> - True is successful, otherwise false
+
+	
 Example: File and calling code example
 
 	File.sqf
@@ -32,19 +47,6 @@ Example: File and calling code example
 		["MyStatic" , "File.sqf"] call XPS_fnc_createStaticTypeFromFile;
 		MyStatic call ["Method"];
     ---
-
-Authors: 
-	Crashdome
-------------------------------------------------------------------------------
-
-	Parameter: _varname
-		<string> - the variable in which the <HashmapObject> will be stored
-
-	Optional: _filepath
-		<string> - the path to the file  
-
-	Return: _result
-		<Boolean> - True is successful, otherwise false
 
 ---------------------------------------------------------------------------- */
 if !(params [["_varname",nil,[""]],["_filepath",nil,[""]]]) exitwith {false;};

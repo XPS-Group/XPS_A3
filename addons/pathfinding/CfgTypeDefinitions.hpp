@@ -1,4 +1,4 @@
-class XPS_CFG_BASECLASSNAME {
+class XPS_CFG_I_BASECLASSNAME {
 	class ADDON {				
 		XPS_CFG_IFC(ILayerBuilder);
 		XPS_CFG_IFC(IMapGraph);
@@ -7,7 +7,11 @@ class XPS_CFG_BASECLASSNAME {
 		XPS_CFG_IFC(IRoadGraph);
 		XPS_CFG_IFC(IRoadGraphDoctrine);
 		XPS_CFG_IFC(IRoadNode);
+	};
+};
 
+class XPS_CFG_TD_BASECLASSNAME {
+	class ADDON {				
 		XPS_CFG_TYP(MapGraph);
 		XPS_CFG_TYP(MapGraphDoctrine);
 		XPS_CFG_TYP(MapGraphSearch);
