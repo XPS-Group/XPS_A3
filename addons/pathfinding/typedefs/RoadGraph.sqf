@@ -322,7 +322,7 @@ Flags:
 	Used to reset any working values if needed. Unused in this instance.
 
 	Returns:
-		<Nothing>
+		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {}],
 	/*----------------------------------------------------------------------------

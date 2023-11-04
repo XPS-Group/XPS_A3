@@ -395,7 +395,7 @@ Flags:
 		<main.XPS_ifc_IAstarGraph.Init>
 
 	Returns:
-		<Nothing>
+		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {}]
 ]

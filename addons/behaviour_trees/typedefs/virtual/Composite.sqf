@@ -165,7 +165,7 @@ Flags:
 		it will append the child to the index. 
 
 	Parameters:
-		childNode - <HashmapObject> that implements the <XPS_ifc_INode> interface
+		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
 		_index* - (optional - Default : -1) - the index in which to place the child node
 
 	Returns: 
@@ -174,7 +174,7 @@ Flags:
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
 		if (isNil "_childNode") exitwith {false};
-		if !( CHECK_IFC1(_childNode,XPS_ifc_INode) ) exitwith {false};
+		if !( CHECK_IFC1(_childNode,XPS_BT_ifc_INode) ) exitwith {false};
 
 		private _children = _self get "children";
 		private _count = count (_children);

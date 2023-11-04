@@ -33,7 +33,7 @@ Flags:
     	---
 
     Returns: 
-		<Nothing> 
+		Nothing 
 	-----------------------------------------------------------------------------*/
 	["popQueue",compileFinal {
 		private _queue = _self get "Queue";

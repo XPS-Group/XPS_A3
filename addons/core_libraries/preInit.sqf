@@ -4,22 +4,22 @@ ADDON = false;
 
 // Singleton Class Instantiations ------------------------------------------
 /* -------------------------------------------------------------------------
-Variable: core. XPS_MissionCodeStack
+Variable: core. XPS_MissionDebugger
 	<Singleton>
 
 	--- prototype
-	XPS_MissionCodeStack get "#type"
+	XPS_MissionDebugger get "#type"
 	---
 
 Description:
 	A <HashmapObject> which is used to aide with Exceptions
 
-	See <XPS_typ_MissionCodeStack> for more info on operations.
+	See <XPS_typ_MissionDebugger> for more info on operations.
 
 Returns: 
-	<Singleton> - of <XPS_typ_MissionCodeStack>
+	<Singleton> - of <XPS_typ_MissionDebugger>
 ---------------------------------------------------------------------------*/
-["XPS_MissionCodeStack",XPS_typ_MissionCodeStack] call XPS_fnc_createSingleton;
+["XPS_MissionDebugger",call compileScript ["x\xps\addons\core\typedefs\MissionDebugger.sqf",false]] call XPS_fnc_createSingleton;
 
 
 ADDON = true;

@@ -133,7 +133,8 @@ _args = [_args] param [0,[],[[]]];
 if (isNil _varName) then {
 		
 	//randomize instance variable
-	private _instanceVar = "xps_" + call XPS_fnc_getUniqueID; 
+	private _uid = [] call XPS_fnc_createUniqueID;
+	private _instanceVar = "xps_" + _uid; 
 	
 	// collision proofing?
 	private _attempts = 0;

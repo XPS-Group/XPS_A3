@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_MissionCodeStack
+TypeDef: core. XPS_typ_MissionDebugger
 	<TypeDefinition>
 
 Authors: 
@@ -24,7 +24,7 @@ Flags:
 ---------------------------------------------------------------------------- */
 [
 	["#str",{_self get "#type"}],
-	["#type", "XPS_typ_MissionCodeStack"],
+	["#type", "XPS_typ_MissionDebugger"],
 	["#flags",["sealed","noCopy"]],
 	/*----------------------------------------------------------------------------
 	Protected: getStackTrace
@@ -54,31 +54,68 @@ Flags:
 		the <XPS_typ_Stack> <HashmapObject>.
 
     Returns: 
-		<Nothing> 
+		Nothing 
 	-----------------------------------------------------------------------------*/
 	["initStackLocation",{
-		private _stackVar = "xps_stack_" + ([4] call XPS_fnc_createUniqueID);
+		private _uid = [6] call XPS_fnc_createUniqueID;
+		private _stackVar = "xps_" + _uid + "_stack";
 		_self set ["getStackTrace",compilefinal format["%1",_stackVar]];
-		call compile format["%1 = createhashmapobject [XPS_typ_Stack]",_stackVar];
+		private _def = [
+			["#str", {_self get "#type"}],
+			["#type", "XPS_typ_CustomStack"],
+			["@interfaces", ["XPS_ifc_IStack","XPS_ifc_IOrderedCollection"]],
+			["_stackArray",[]],
+			["#create",{
+				_self set ["_stackArray",[]];
+			}],
+			["Clear",{
+				_self get "_stackArray" resize 0;
+			}],
+			["Count",{
+				count (_self get "_stackArray");
+			}],
+			["IsEmpty",{
+				count (_self get "_stackArray") == 0;
+			}],
+			["Peek",{
+				_self get "_stackArray" select -1;
+			}],
+			["Pop",{
+				_self get "_stackArray" deleteat -1;
+			}],
+			["Push",{
+				// params ["_value"];
+				private _stack = _self get "_stackArray";
+				
+				while {count _stack > 100} do {
+					_stack deleteat 0; 
+				};
+				_stack pushback _this;
+				diag_log _this;
+			}]
+		];
+
+		call compile format["%1 = createhashmapobject [%2];",_stackVar,_def];
 	}],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
     	--- Prototype --- 
-    	createhashmapobject [XPS_typ_MissionCodeStack]
+    	createhashmapobject [XPS_typ_MissionDebugger]
     	---
 
 	Parameters: 
 		none
 
     Returns: 
-		<Nothing> 
+		Nothing 
 	-----------------------------------------------------------------------------*/
 	["#create",{
 		_self call ["initStackLocation"];
-		addMissionEventHandler ["ScriptError",{
-			_this call ["Flush"]; 
-		},_self];
+		// addMissionEventHandler ["ScriptError",{
+		// 	_this#0 call ["Flush"]; 
+		// },[_self]];
+
 		nil;
 	}],
 	/*----------------------------------------------------------------------------
@@ -92,13 +129,13 @@ Flags:
 		_value - <Anything> - that can be converted to a <String> by the <str: https://community.bistudio.com/wiki/str> command
 
     Returns: 
-		<Nothing> 
+		Nothing 
 	-----------------------------------------------------------------------------*/
 	["AddToStackTrace",{
-		params ["_value"];
+		// params ["_value"];
 
 		private _stack = _self call ["getStackTrace"];
-		_stack call ["Push",_value];
+		_stack call ["Push",_this];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Flush
@@ -113,7 +150,7 @@ Flags:
 		none
 
     Returns: 
-		<Nothing> 
+		Nothing 
 	-----------------------------------------------------------------------------*/
 	["Flush",{
 		private _stack = _self call ["getStackTrace"];
@@ -124,7 +161,7 @@ Flags:
 			for "_n" from 1 to _level do {
 				_string = "  " + _string;
 			};
-			if (_level == 1) then {diag_log text "XPS_MissionCodeStack: "};
+			if (_level == 1) then {diag_log text "XPS_MissionDebugger: "};
 			diag_log text _string;
 			_level = _level + 1;
 		};
