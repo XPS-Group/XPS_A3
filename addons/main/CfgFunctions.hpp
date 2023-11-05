@@ -5,9 +5,7 @@ class CfgFunctions {
 			XPS_CFG_FNC(createUniqueID);
 			XPS_CFG_FNC(logError);
 		};
-		class Debug {
-			
-		}
+		
 		class TypeHandlers {
 			XPS_CFG_FNC_SUB(typeHandlers,buildTypeDefinition);
 			XPS_CFG_FNC_SUB(typeHandlers,checkInterface);
