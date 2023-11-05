@@ -25,7 +25,7 @@ Property: Items
 
 
 [
-	["#str",compileFinal {_self get "#type"}],
+	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Collection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
     /*

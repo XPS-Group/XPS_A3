@@ -3,27 +3,27 @@
 TypeDef: unit_testing. XPS_UT_typ_AssertInconclusiveException
 	<TypeDefinition>
 
+
 Authors: 
 	Crashdome
    
 Description:
-<HashmapObject> which stores a message
-the exception.
+	An exception for when an assertion from <XPS_UT_Assert> is inconclusive.
 
 Parent:
-    none
+    <core. XPS_typ_Exception>
 
 Implements:
-    <XPS_UT_ifc_IException>
+    <core. XPS_ifc_IException>
 
 Flags:
     none
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {[_self get "#type" select 0, _self get "Message"]}],
 	["#type","XPS_UT_typ_AssertInconclusiveException"],
-	["@interfaces",["XPS_UT_ifc_IException"]],
+	["#base",XPS_typ_Exception],
+	
 	
 	/*----------------------------------------------------------------------------
 	Property: Message
@@ -32,31 +32,31 @@ Flags:
     	get "Message"
     	---
 		
-		<XPS_UT_ifc_IException>
+		<core. XPS_ifc_IException>
     
     Returns: 
-		<String> - A message about the exception thrown
+		<String> - Assertion Inconclusive
 	-----------------------------------------------------------------------------*/
-	["Message",""],
-	
-	/*-----------------------------------------------------------------------------
+	["Message","Assertion Inconclusive"]
+	/*----------------------------------------------------------------------------
+	Property: Source
+    	<core. XPS_typ_Exception. Source>
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
+	Property: Target
+    	<core. XPS_typ_Exception. Target>
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
 	Constructor: #create
     
-    	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_UT_typ_AssertInconclusiveException",_message]
-    	---
-    
-    Optionals: 
-		message* - <String> - (Optional - Default : "") the message about the exception thrown
-		to be set on Message Property
+        --- prototype
+        createhashmapobject [XPS_UT_typ_AssertFailedException, _source", _target*, _message*]
+        ---
 
-	Returns:
-		_result - <HashmapObject>
+    Optionals: 
+        _source (optional) - <Anything>
+        _target (optional) - <Anything>
+        _message (optional) - <String> - custom message to override the default
+
 	-----------------------------------------------------------------------------*/
-	["#create",{
-		params [["_message",nil,[""]]];
-		if !(isNil {_message}) then {
-			_self set ["Message",_message];
-		};
-	}]
 ]

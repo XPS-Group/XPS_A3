@@ -23,7 +23,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",{_self get "#type"}],
+	["#str",{_self get "#type" select  0}],
 	["#type", "XPS_typ_MissionDebugger"],
 	["@interfaces", ["XPS_ifc_IDebugger"]],
 	["#flags",["sealed","noCopy"]],
@@ -64,7 +64,7 @@ Flags:
 		private _stackVar = "xps_" + _uid + "_stack";
 		_self set ["getCallStack",compilefinal format["%1",_stackVar]];
 		private _def = [
-			["#str", {_self get "#type"}],
+			["#str", {_self get "#type" select  0}],
 			["#type", "XPS_typ_CustomStack"],
 			["@interfaces", ["XPS_ifc_IStack","XPS_ifc_IOrderedCollection"]],
 			["_stackArray",[]],

@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {_self get "#type"}],
+	["#str",compilefinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Delegate"],
 	["@interfaces",["XPS_ifc_IDelegate"]],
 	//["#flags",["unscheduled"]],

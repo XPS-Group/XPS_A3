@@ -7,7 +7,7 @@ Authors:
 	Crashdome
    
 Description:
-Static <HashmapObject> with methods to perform equality and type checks
+	<HashmapObject> with methods to perform equality and type checks
 
 Parent:
     none

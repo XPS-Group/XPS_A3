@@ -3,17 +3,6 @@
 ADDON = false;
 
 // 
-{
-	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
-} foreach configProperties [configFile >> QXPS_UT_CFG_BASECLASSNAME];
-
-{
-	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
-} foreach configProperties [missionConfigFile >> QXPS_UT_CFG_BASECLASSNAME];
-
-{
-	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
-} foreach configProperties [campaignConfigFile >> QXPS_UT_CFG_BASECLASSNAME];
 
 // Singleton Class Instantiations ------------------------------------------
 /* -------------------------------------------------------------------------
@@ -28,7 +17,7 @@ Description:
 Returns: 
 	<Singleton> - of <XPS_UT_typ_Engine>
 ---------------------------------------------------------------------------*/
-["XPS_UT_Engine",XPS_UT_typ_Engine] call XPS_fnc_createSingleton;
+["XPS_UT_Engine",XPS_UT_typ_Engine,["XPS_UT_typ_TestClass"]] call XPS_fnc_createSingleton;
 
 // Static Class Instantiations --------------------------------------------
 /* -------------------------------------------------------------------------
@@ -37,7 +26,7 @@ Variable: unit_testing. XPS_UT_Assert
 
 Description:
 	Used in Unit Testing Test Methods to test various conditions and return 
-	a <XPS_UT_ifc_IException> object upon failure.
+	a <core. XPS_ifc_IException> object upon failure.
 
 	See <XPS_UT_typ_Assert> for more info on operations.
 
@@ -46,4 +35,17 @@ Returns:
 ---------------------------------------------------------------------------*/
 ["XPS_UT_Assert","typedefs\Assert.sqf"] call XPS_fnc_createStaticFromFile;
 
+// Load Unit Test Classes --------------------------------------------------
+
+{
+	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
+} foreach configProperties [configFile >> QXPS_UT_CFG_BASECLASSNAME];
+
+{
+	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
+} foreach configProperties [missionConfigFile >> QXPS_UT_CFG_BASECLASSNAME];
+
+{
+	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
+} foreach configProperties [campaignConfigFile >> QXPS_UT_CFG_BASECLASSNAME];
 ADDON = true;

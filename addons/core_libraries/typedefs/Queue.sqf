@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self get "#type"}],
+	["#str", {_self get "#type" select  0}],
 	["#type", "XPS_typ_Queue"],
     ["@interfaces", ["XPS_ifc_IQueue","XPS_ifc_IOrderedCollection"]],
 	["_queueArray",[],[["CTOR"]]],
