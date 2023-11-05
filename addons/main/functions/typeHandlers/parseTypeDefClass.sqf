@@ -34,13 +34,13 @@ if (isText (_class >> "tag")) then {
 };
 
 private _fnc_loadFile = {
-	params ["_type","_file","_allowNils","_preprocess","_noStack","_isFinal_Cmd"];
+	params ["_type","_file","_allowNils","_preprocess","_noStack","_isFinal_Cmd","_headers"];
 	private _statement = "";
 	switch (_type) do {
 		case "ifc" : {_statement = "%5 createhashmapfromarray (call compileScript [""%1"",false]);"};
-		case "typ" : {_statement = /* "%5 createhashmapfromarray " */ "([call compileScript [""%1"",false],%2,%3,%4] call XPS_fnc_buildTypeDefinition);"}; // hashmap disabled until bug fix in stable branch
+		case "typ" : {_statement = /* "%5 createhashmapfromarray " */ "([call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition);"}; // hashmap disabled until bug fix in stable branch
 	};
-	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd];
+	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd,_headers];
 	call compile _code;
 };
 
@@ -59,17 +59,18 @@ if (isText _file && isText _type) then {
 	private _recompile = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "recompile")} else {0};
 	private _noStack = if (isNumber (_class >> "noStack")) then {getNumber (_class >> "noStack")} else {0};
 	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal")} else {0};
+	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType")} else {0};
 	private _isFinal_Cmd = if (_isFinal==1) then {"compileFinal"} else {""};
 
 	// diag_log text format ["[XPS TD parser]  : var: %1 - recompile: %2",_varname,_recompile];
 	if (isNil {_typeDefinition}) then {
 		// diag_log text "[XPS TD parser]  : init namespace variables";
-		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),_isFinal_Cmd] call _fnc_loadFile];
+		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),_isFinal_Cmd,(_headers==1)] call _fnc_loadFile];
 		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 	} else {
 		if ((_recompile == 1 || isFilePatchingEnabled) /* && _isFinal==0 */) then {
 			// diag_log text "[XPS TD parser]  : recompiling";
-			missionNamespace setvariable [_varName,[_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),""] call _fnc_loadFile];
+			missionNamespace setvariable [_varName,[_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),"",(_headers==1)] call _fnc_loadFile];
 		} else {
 			// diag_log text "[XPS TD parser]  : using cached";
 			missionNamespace setvariable [_varName,_typeDefinition];

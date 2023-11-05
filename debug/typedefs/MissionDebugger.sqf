@@ -25,23 +25,26 @@ Flags:
 [
 	["#str",{_self get "#type"}],
 	["#type", "XPS_typ_MissionDebugger"],
+	["@interfaces", ["XPS_ifc_IDebugger"]],
 	["#flags",["sealed","noCopy"]],
+	["_callStack",[],[["CTOR"]]],
+	["_enabled",false],
 	/*----------------------------------------------------------------------------
-	Protected: getStackTrace
+	Protected: getCallStack
     
     	--- Prototype --- 
-    	call ["getStackTrace"]
+    	call ["getCallStack"]
     	---
 
 		Because this object is a <Static> (read-only) <HashmapObject>, it can't hold
 		references to other objects without making them read-only also. This method
-		therefore is generated at instantiation to return the stack from it's stored 
+		therefore is generated at instantiation to return the call stack from it's stored 
 		location. See also : <initStackLocation>
 
     Returns: 
 		<HashmapObject> - of type <XPS_typ_Stack> 
 	-----------------------------------------------------------------------------*/
-	["getStackTrace",{}],
+	["getCallStack",{}],
 	/*----------------------------------------------------------------------------
 	Protected: initStackLocation
     
@@ -50,7 +53,7 @@ Flags:
     	---
 
 		Generates a random unique ID to store the <XPS_typ_Stack> <HashmapObject>
-		at runtime and also generates the code block for <getStackTrace> to retrieve 
+		at runtime and also generates the code block for <getCallStack> to retrieve 
 		the <XPS_typ_Stack> <HashmapObject>.
 
     Returns: 
@@ -59,7 +62,7 @@ Flags:
 	["initStackLocation",{
 		private _uid = [6] call XPS_fnc_createUniqueID;
 		private _stackVar = "xps_" + _uid + "_stack";
-		_self set ["getStackTrace",compilefinal format["%1",_stackVar]];
+		_self set ["getCallStack",compilefinal format["%1",_stackVar]];
 		private _def = [
 			["#str", {_self get "#type"}],
 			["#type", "XPS_typ_CustomStack"],
@@ -111,18 +114,15 @@ Flags:
 		Nothing 
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		_self call ["initStackLocation"];
 		// addMissionEventHandler ["ScriptError",{
 		// 	_this#0 call ["Flush"]; 
 		// },[_self]];
-
-		nil;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: AddToStackTrace
+	Method: AddToCallStack
     
     	--- Prototype --- 
-    	call ["AddToStackTrace",_value]
+    	call ["AddToCallStack",_value]
     	---
 
 	Parameters: 
@@ -131,12 +131,14 @@ Flags:
     Returns: 
 		Nothing 
 	-----------------------------------------------------------------------------*/
-	["AddToStackTrace",{
-		// params ["_value"];
-
-		private _stack = _self call ["getStackTrace"];
-		_stack call ["Push",_this];
+	["AddToCallStack",{
+		if !(_this iSEqualType [] && {_self get "_enabled"}) exitwith {false};
+		if !(_value isEqualTypeParams ["",0,"","","",createhashmap]) exitwith {false};
+		private _stack = _self get "_callstack";
+		_stack pushback _this;
 	}],
+	
+	["DumpCallStackToRPT",{}],
 	/*----------------------------------------------------------------------------
 	Method: Flush
     
@@ -153,17 +155,16 @@ Flags:
 		Nothing 
 	-----------------------------------------------------------------------------*/
 	["Flush",{
-		private _stack = _self call ["getStackTrace"];
-		_level = 1;
+		private _stack = _self get "_callstack";
+		
 		while {count _stack > 0} do {
-			private _value = _stack call ["Pop"];
-			private _string = [str _value,_value] select (_value isEqualType "");
-			for "_n" from 1 to _level do {
-				_string = "  " + _string;
-			};
-			if (_level == 1) then {diag_log text "XPS_MissionDebugger: "};
-			diag_log text _string;
-			_level = _level + 1;
+			private _value = _self get "_stackArray" deleteat -1;
+			//TODO - do stuff
 		};
-	}]
+	}],
+	
+	["GetTrace",{}],
+	["GetRawTrace",{+(_self get "_callStack")}],
+	["StartTrace",{_self set ["_enabled",true];}],	
+	["StopTrace",{_self set ["_enabled",false];}]	
 ]

@@ -3,7 +3,7 @@
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
-	_typeDefintion = [_type] call XPS_fnc_preprocessTypeDefinition
+	_typeDefintion = [_type, _headers] call XPS_fnc_preprocessTypeDefinition
 	---
 
 Description:
@@ -43,6 +43,9 @@ Authors:
 
 Parameter: _type 
 	<Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
+
+Optional: _headers 
+	<Boolean> - determines if debug headers should be injected into code blocks  
 
 Return: Nothing
 
@@ -146,6 +149,7 @@ private _ctor_l = "";
 private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
+
 private _typeName = (_typeDef select (_typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}})) select 1;
 _typeName = [_typeName,"<unknown type>"] select (isNil {_typeName});
 
@@ -272,9 +276,6 @@ try
 	if (!_hasCtor && {_ctor != "" || _ctor_l != ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
 	if (!_hasDtor && {_dtor != "" || _dtor_l != ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
 
-	private _header = if (_debugHeaders) then {
-		"private _xps_methodName = ""%2.%1"";private _xps_caller = if (isNil ""_xps_caller"") then {_self get ""#type"" select 0} else {_xps_caller};XPS_MissionDebugger call [""GetInstance""] call [""AddToStackTrace"",[diag_scope,_fnc_scriptParent,_fnc_scriptName,_xps_caller,_xps_methodName,if (_this isEqualType []) then {_this apply {str _x}} else {str _this}]];"
-	} else {""};
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
@@ -290,15 +291,20 @@ try
 			private _value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];
 		};
-		//Replace Private Keys in any code block
+
 		if (_value isEqualType {}) then {
-			private _strHeader = format[_header,_keypair#0,_typeName];
+			// Set header before replacing private keys
+			private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
+
+			//Replace Private Keys in any code block
 			{
 				private _find = _x#0;
 				private _replace = _x#1;
 				_value = [_find,_replace,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
 			} foreach _privateKeys;
+
+			//Finally Insert unaltered header
 			if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
 				private _strCode = (str _value) insert [1,_strHeader];
 				_keyPair set [1, call compile _strCode];

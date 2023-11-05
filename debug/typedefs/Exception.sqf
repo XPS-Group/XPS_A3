@@ -44,8 +44,8 @@ Flags:
 		_self set ["Target",_target];
 		_self set ["Message",_message];
 		 
-		if !(isNil {XPS_ExceptionHandler}) then {
-			XPS_ExceptionHandler call ["AddToStackTrace",[_self]];
+		if !(isNil {XPS_MissionDebugger}) then {
+			XPS_MissionDebugger call ["AddToCallStack",[_self]];
 		};
 	}],
 	["#delete",{

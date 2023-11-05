@@ -2,10 +2,10 @@
 
 class CfgMods {
     class ADDON {
-        name = "XPS Core Libraries";
+        name = "XPS Debug";
         dir = COMPONENT_DIR;
         author = "Crashdome";
-        description = "Extensible Project System - Core Libraries";
+        description = "Extensible Project System - Debug";
         overview = "Work In Progress";
     };
 };
@@ -13,7 +13,7 @@ class CfgMods {
 class CfgPatches {
 	class ADDON {
 			// Meta information for editor
-			name = "XPS : Core Libraries";
+			name = "XPS : Debug";
 			author = "Crashdome";
 			url = "";
 	
@@ -28,5 +28,3 @@ class CfgPatches {
 			weapons[] = {};
 	};
 };
-
-#include "CfgTypeDefinitions.hpp"

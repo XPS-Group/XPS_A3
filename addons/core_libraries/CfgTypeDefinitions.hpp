@@ -21,8 +21,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 		XPS_CFG_TYP(Delegate);
 		XPS_CFG_TYP(Exception);
 		XPS_CFG_TYP(HashmapCollection);
-		XPS_CFG_TYP(JobScheduler);
-		// XPS_CFG_TYP(MissionDebugger);
+		XPS_CFG_TYP(JobScheduler);		
 		XPS_CFG_TYP(MultiCastDelegate);
 		XPS_CFG_TYP(Queue);
 		XPS_CFG_TYP(Stack);

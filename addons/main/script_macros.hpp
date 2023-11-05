@@ -54,6 +54,7 @@
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
+    /*headerType = 0;\*/
 }
 
 #define XPS_CFG_TYP_SUB(sub,typName) class typName {\
@@ -64,6 +65,7 @@
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
+    /*headerType = 0;\*/
 }
 
 /* ---------------------------------------*/
