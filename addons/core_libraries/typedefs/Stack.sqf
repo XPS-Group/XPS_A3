@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self get "#type"}],
+	["#str", {_self get "#type" select  0}],
 	["#type", "XPS_typ_Stack"],
     ["@interfaces", ["XPS_ifc_IStack","XPS_ifc_IOrderedCollection"]],
 	["_stackArray",[],[["CTOR"]]],
