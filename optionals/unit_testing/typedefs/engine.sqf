@@ -7,7 +7,7 @@ Authors:
 	Crashdome
 
 Description:
-	A Singleton object which is a collection of Unit Test Classes that can be run
+	An object which is a collection of Unit Test Classes that can be run
 	to perform Unit Tests of other <Hashmap Objects>
 
 Parent:

@@ -10,10 +10,10 @@ Description:
 	An exception for when an assertion from <XPS_UT_Assert> has failed.
 
 Parent:
-    <XPS_typ_Exception>
+    <core. XPS_typ_Exception>
 
 Implements:
-    <XPS_ifc_IException>
+    <core. XPS_ifc_IException>
 
 Flags:
     none
@@ -38,11 +38,11 @@ Flags:
 	["Message","Assertion Failed"]
 	/*----------------------------------------------------------------------------
 	Property: Source
-    	<XPS_typ_Exception. Source>
+    	<core. XPS_typ_Exception. Source>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Target
-    	<XPS_typ_Exception. Target>
+    	<core. XPS_typ_Exception. Target>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Constructor: #create

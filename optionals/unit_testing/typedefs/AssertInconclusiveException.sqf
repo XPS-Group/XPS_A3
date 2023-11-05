@@ -3,18 +3,18 @@
 TypeDef: unit_testing. XPS_UT_typ_AssertInconclusiveException
 	<TypeDefinition>
 
+
 Authors: 
 	Crashdome
    
 Description:
-<HashmapObject> which stores a message
-the exception.
+	An exception for when an assertion from <XPS_UT_Assert> is inconclusive.
 
 Parent:
-    none
+    <core. XPS_typ_Exception>
 
 Implements:
-    <XPS_UT_ifc_IException>
+    <core. XPS_ifc_IException>
 
 Flags:
     none
@@ -32,7 +32,7 @@ Flags:
     	get "Message"
     	---
 		
-		<XPS_ifc_IException>
+		<core. XPS_ifc_IException>
     
     Returns: 
 		<String> - Assertion Inconclusive
@@ -40,11 +40,11 @@ Flags:
 	["Message","Assertion Inconclusive"]
 	/*----------------------------------------------------------------------------
 	Property: Source
-    	<XPS_typ_Exception. Source>
+    	<core. XPS_typ_Exception. Source>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Target
-    	<XPS_typ_Exception. Target>
+    	<core. XPS_typ_Exception. Target>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Constructor: #create

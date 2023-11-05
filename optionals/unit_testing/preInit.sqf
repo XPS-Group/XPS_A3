@@ -26,7 +26,7 @@ Variable: unit_testing. XPS_UT_Assert
 
 Description:
 	Used in Unit Testing Test Methods to test various conditions and return 
-	a <XPS_UT_ifc_IException> object upon failure.
+	a <core. XPS_ifc_IException> object upon failure.
 
 	See <XPS_UT_typ_Assert> for more info on operations.
 
