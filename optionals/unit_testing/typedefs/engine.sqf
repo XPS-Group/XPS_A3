@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_UT_typ_Engine
-	<Singleton>
+TypeDef: unit_testing. XPS_UT_typ_Engine
+	<TypeDefintion>
 
 Authors: 
 	Crashdome
@@ -21,7 +21,7 @@ Flags:
 	Sealed
 
 ---------------------------------------------------------------------------- */
-private _def = [
+[
 	["#str", {_self get "#type"}],
 	["#type","XPS_UT_type_Engine"],
 	["#flags",["sealed","nocopy"]],
@@ -32,5 +32,3 @@ private _def = [
 	["RunAll",{}],
 	["RunSelected",{}]
 ];
-
-compilefinal createhashmapobject [_def];

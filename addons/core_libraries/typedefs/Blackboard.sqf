@@ -42,7 +42,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
 		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
-		_self call ["AttachToObject",[_object,_varName]];
+		if !(isNull _object) then {_self call ["AttachToObject",[_object,_varName]]};
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: AttachToObject 

@@ -40,12 +40,17 @@ Optional: _allowNils*
 Optional: _preprocess* 
 
 <Boolean> - (optional) default: true - determines if array should be preprocessed. 
-See <XPS_fnc_preprocessinition> for more info.
+See <XPS_fnc_preprocessTypeDefinition> for more info.
 
 Optional: _noStack* 
 
 <Boolean> - (optional) default: false - determines if "#base" definition should stack "#create" and "#delete" methods during inheritance
-See <XPS_fnc_preprocessinition> for more info.
+See <XPS_fnc_preprocessTypeDefinition> for more info.
+
+Optional: _headers* 
+
+<Boolean> - (optional) default: false - determines if debug headers should be injected into code blocks - ignored if _preprocess == false
+See <XPS_fnc_preprocessTypeDefinition> for more info.
 
 Return: _typeDefinition
 	<TypeDefinition> - or False if error
@@ -94,10 +99,11 @@ Example: Implements Interface with Inheritance
     ---
 
 ---------------------------------------------------------------------------- */
-if !(params [["_type",nil,[[]]],"_allowNils","_preprocess","_noStack"]) exitwith {false;};
+if !(params [["_type",nil,[[]]],"_allowNils","_preprocess","_noStack","_headers"]) exitwith {false;};
 _allowNils = [_allowNils] param [0,true,[true]];
 _preprocess = [_preprocess] param [0,true,[true]];
 _noStack = [_noStack] param [0,false,[true]];
+_headers = [_headers] param [0,false,[true]];
 
 private _fnc_recurseBases = {
 	params ["_hashmap"];
@@ -109,7 +115,7 @@ private _fnc_recurseBases = {
 };
 
 if (_preprocess) then {
-	if !([_type] call XPS_fnc_preprocessTypeDefinition) exitwith {false;};
+	if !([_type, _headers] call XPS_fnc_preprocessTypeDefinition) exitwith {false;};
 };
 
 private _hashmap = createhashmapfromarray _type;
@@ -119,7 +125,7 @@ private _preCompiled = _hashmap; // In case it doesn't have a parent, we need th
 if ("#base" in keys _hashmap) then {
 	private _pType = _hashmap get "#base";
 	if (isNil {_pType} || !(_pType isEqualType [])) exitwith {
-		diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
+		diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
 	};
 
 	_preCompiled = createhashmapfromarray _pType;
@@ -182,6 +188,6 @@ if (isNil {_interfaces} || {[_preCompiled, keys _interfaces, _allowNils] call XP
 	// Passes all checks and is Ok to push out definition
 	_hashmap toArray false;
 } else {
-	diag_log (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
+	diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	nil;
 };

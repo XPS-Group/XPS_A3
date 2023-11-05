@@ -161,7 +161,7 @@ Flags:
 		Adds a child node to this node. Subsequent calls will replace previous values
 
 	Parameters:
-		childNode - <HashmapObject> that implements the <XPS_ifc_INode> interface
+		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
 
 	Returns: 
 		<Boolean> - True if successful otherwise False
@@ -169,7 +169,7 @@ Flags:
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]]];
 		if (isNil "_childNode") exitwith {false};
-		if !(CHECK_IFC1(_childNode,XPS_ifc_INode)) exitwith {false};
+		if !(CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitwith {false};
 		_self set ["child",_childNode];
 		_childNode set ["Blackboard",_self get "Blackboard"];
 		true;

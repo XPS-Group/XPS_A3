@@ -12,8 +12,8 @@
 
 #define COMPONENT_DIR Q(##@##ADDON)
 
-#define XPS_CFG_BASECLASSNAME Enhanced_XPS_Type_Definitions
-#define QXPS_CFG_BASECLASSNAME Q(XPS_CFG_BASECLASSNAME)
+#define XPS_CFG_TD_BASECLASSNAME Enhanced_XPS_Type_Definitions
+#define QXPS_CFG_TD_BASECLASSNAME Q(XPS_CFG_TD_BASECLASSNAME)
 
 #define XPS_MAIN_FNC(fncName) VARNAME(PREFIX,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\fncName.sqf)]
 #define XPS_ADDON_FNC(fncName) VARNAME(ADDON,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\fncName.sqf)]
@@ -36,14 +36,14 @@
     file = FILEPATH_C_Q(interfaces\ifcName.sqf);\
     type = "ifc";\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
 }
 
 #define XPS_CFG_IFC_SUB(sub,ifcName) class ifcName {\
     file = FILEPATH_C_Q(interfaces\sub\ifcName.sqf);\
     type = "ifc";\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
 }
 
 #define XPS_CFG_TYP(typName) class typName {\
@@ -53,7 +53,8 @@
     allowNils = 0;\
     noStack = 1;\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
+    /*headerType = 0;\*/
 }
 
 #define XPS_CFG_TYP_SUB(sub,typName) class typName {\
@@ -63,7 +64,8 @@
     allowNils = 0;\
     noStack = 1;\
     recompile = 1;\
-    isFinal = 1;\
+    isFinal = 0;\
+    /*headerType = 0;\*/
 }
 
 /* ---------------------------------------*/

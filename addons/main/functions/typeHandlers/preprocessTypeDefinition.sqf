@@ -3,7 +3,7 @@
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
-	_typeDefintion = [_type] call XPS_fnc_preprocessTypeDefinition
+	_typeDefintion = [_type, _headers] call XPS_fnc_preprocessTypeDefinition
 	---
 
 Description:
@@ -43,6 +43,9 @@ Authors:
 
 Parameter: _type 
 	<Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
+
+Optional: _headers 
+	<Boolean> - determines if debug headers should be injected into code blocks  
 
 Return: Nothing
 
@@ -135,7 +138,8 @@ Example: Validation of values
 	Note: Good for checking properties that are dependant on an external variable 
 
 ---------------------------------------------------------------------------- */
-if !(params [["_typeDef",nil,[[]]]]) exitwith {false};
+if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
+_debugHeaders = [_debugHeaders] param [0,false,[true]];
 
 private _privateKeys = [];
 private _result = true;
@@ -145,6 +149,9 @@ private _ctor_l = "";
 private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
+
+private _typeName = (_typeDef select (_typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}})) select 1;
+_typeName = [_typeName,"<unknown type>"] select (isNil {_typeName});
 
 try 
 {
@@ -226,26 +233,26 @@ try
 				case "VALIDATE_ANY" : {
 					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeAny _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_ALL" : {
 					if !(_value isEqualTypeALL _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_PARAMS" : {
 					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeParams _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_TYPE" : {
 					if !(_value isEqualType _attParams) then {
-						diag_log format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
@@ -274,31 +281,41 @@ try
 		_keyPair params ["_key","_value"];
 		// Constructor injection but only if it existed prior to above code
 		if (_hasCtor && {_key isEqualTo "#create" && {_ctor != "" || _ctor_l != ""}}) then {
-			_strCode = (str _value) insert [1,_ctor];
-			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
+			private _strCode = (str _value) insert [1,_ctor];
+			private _value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
 		// Destructor injection but only if it existed prior to above code
 		if (_hasDtor && {_key isEqualTo "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
-			_strCode = (str _value) insert [1,_dtor];
-			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
+			private _strCode = (str _value) insert [1,_dtor];
+			private _value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];
 		};
-		//Replace Private Keys in any code block
+
 		if (_value isEqualType {}) then {
+			// Set header before replacing private keys
+			private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
+
+			//Replace Private Keys in any code block
 			{
 				private _find = _x#0;
 				private _replace = _x#1;
 				_value = [_find,_replace,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
 			} foreach _privateKeys;
+
+			//Finally Insert unaltered header
+			if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
+				private _strCode = (str _value) insert [1,_strHeader];
+				_keyPair set [1, call compile _strCode];
+			};
 		};
 	};
 
 	_result;
 
 } catch {
-	diag_log "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
+	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
 	diag_log _exception;
 	false;
 };

@@ -7,72 +7,169 @@ Function: main. typeHandlers. XPS_fnc_createSingleton
 	---
 
 Description:
-    Takes a Type Definition and creates a <HashmapObject>. Best if Type Definition is private or local in scope.
-	If Type Def is a string name of a Global Variable, especially a compileFinal'd hashmap, another instance CAN be created.
+    Takes a Type Definition and creates a <Static> <HashmapObject> with a "GetInstance" method. This method can be used
+	to retrieve a singleton <HashmapObject> which is stored in a randomized global variable. It's not perfectly safe nor 
+	perfectly guaranteed to NOT be overwritten maliciously. But, it's the closest we can get that I know of.
 
-	A NoCopy flag is added if not provided. The resulting <HashmapObject> is then stored in a hashed global variable
-	based on "#type" so, at least one must be provided. This ensures hashed variable is same everytime it is created.
+	Notes:
+	- If you would like to make the <HashmapObject> read-only and truly secure, consider using <XPS_fnc_createStaticTypeFromFile> 
+	to make it a <Static> class instead. 
+	- Best if Type Definition is private or local in scope and calls this function directly - To prevent developers from creating non-singleton copies.
+	- <XPS_fnc_buildTypeDefinition> should be called manually on Type Definition if local/private array (if needed).
+	- The type definition *should* also include the NoCopy and/or Sealed flag but, Sealed is unnecessary if allowing run-time extendability.
+	- A NoCopy flag is added if not provided. This ensures an accidental copy is not made and subsequently any code that possibly references a clone'd instance 
+	- The resulting <HashmapObject> is then stored in a randomizeed global variable. This function will *only* check the static method's global variable
+	 and if that variable has a value, fail if already assigned.
+	- Because the instance location can be inspected at run-time and maliciously altered, it is recommended that Singleton / Multiton objects
+	are only ever created in a secured environment - e.g. on the game server
+	- *Why have the instance in a randomized variable and not say, a hash of the typename?* I originally used a hash so I could determine if the actual instance was already
+	created but, it was determined that if someone wanted to, they could figure out the hash variable name and send a publicvariable client-side to 
+	replace that instance. Randomized is more secure.
 
-	It then sets the missionNamespace variable name from parameter "_varName" to a cStatic> <HashmapObject> which
-	contains a method "GetInstance" which will return the Singleton Instance of the <HashmapObject>.
+	Results In Summary:
+		- A <Static> object in a global variable (_varName parameter) with a single Method to return the singleton object 
+			--- code
+			VarName call ["GetInstance"]
+			---
+		- An instance of the singleton stored in a randomized global variable 
 
-	- XPS_fnc_buildTypeDefintion should be called manually on Type Definition if local/private array.
-	- The type definition should also include the NoCopy and/or Sealed flag as needed but unnecessary if allowing extendability.
+	Multiton Alternative:
+		Calling this function with the same definition multiple times with a different _varName parameter each time, effectively turns this into
+		a Multiton creator.
 
-Example: File and calling code example
-
-	To create the Singleton from above file:
-	--- Code
-		["MySingleton" , "Tag_typ_MySingletnClass"] call XPS_fnc_createSingletonFromFile;
-		_instance = MySingleton call ["GetInstance"];
-    ---
-
-Authors: 
-	Crashdome
 ------------------------------------------------------------------------------
 
 	Parameter: _varname
 		<string> - the variable in which the <HashmapObject> will be stored
 
 	Parameter: _typeDef
-		<string> - the global variable holding the type definition
-		<array>/<hashmap> - a full Type Definition
+		<string> - the global variable holding the type definition - Not Recommended
+		<array> or <hashmap> - a full Type Definition
 
 	Optional: _args
-		<string> - the global variable holding the type definition
 		<array> - an argument array sent to #create method of Type Defintion
 
 	Return: _result
 		<Boolean> - True if successful, otherwise false
 
----------------------------------------------------------------------------- */
+------------------------------------------------------------------------------
+
+Example: Using a definiton defined locally and built using XPS Preprocessor and Type Builder
+
+	--- Code
+		private _typeDef = [
+			["#type","Tag_typ_mySingleton],
+			["PropA","Hello World!"],
+			["Method",{hint (_self get "PropA");}]
+		];
+
+		private _processedTypeDef = [ _typeDef, false, true, true ] call XPS_fnc_buildTypeDefinition 
+		["MySingleton" , _processedTypeDef] call XPS_fnc_createSingleton;
+    ---
+		
+	--- Code
+		private _singleton = MySingleton call ["GetInstance"];
+    ---
+
+Example: Using an external File and using XPS Preprocessor and Type Builder
+
+	--- Code
+	file.sqf:
+		[
+			["#type","Tag_typ_mySingleton],
+			["PropA","Hello World!"],
+			["Method",{hint (_self get "PropA");}]
+		]
+    ---
+
+	--- Code
+		private _typeDef = [ call compileScript ["file.sqf"], false, true, true ] call XPS_fnc_buildTypeDefinition 
+		["MySingleton" , _typeDef] call XPS_fnc_createSingleton;
+    ---
+		
+	--- Code
+		private _singleton = MySingleton call ["GetInstance"];
+    ---
+
+Example: Using a predefined global type
+
+	--- Code
+		["MySingleton" , Tag_typ_mySingleton] call XPS_fnc_createSingleton;
+    ---
+		
+	--- Code
+		private _singleton = MySingleton call ["GetInstance"];
+    ---
+
+Example: Subsequent calling
+	
+	if you were to do the following:
+	
+	--- Code
+		_result = ["MySingleton" , Tag_typ_mySingleton] call XPS_fnc_createSingleton; // _result will be true (succeeded first instance)
+		_result = ["MySingleton" , Tag_typ_mySingleton] call XPS_fnc_createSingleton; // This will fail since MySingleton already exists
+		private _singleton = MySingleton call ["GetInstance"];
+	---
+	A report would be logged and subsequent instance would be discarded 
+
+	However, consider the following:
+
+	--- Code
+		_result = ["MySingleton" , Tag_typ_mySingleton] call XPS_fnc_createSingleton; // _result will be true (succeeded first instance)
+		_result = ["MySingleton2" , Tag_typ_mySingleton] call XPS_fnc_createSingleton; // _result will also be true (now it is a Multiton)
+		private _singleton = MySingleton call ["GetInstance"]; // first instance
+		private _singleton2 = MySingleton2 call ["GetInstance"]; // second and completely different instance
+	---
+
+
+Authors: 
+	Crashdome
+------------------------------------------------------------------------------*/
 
 if !(params [ ["_varname",nil,[""]], ["_typedef",nil,["",[],createhashmap]], "_args"]) exitwith {false;};
 _args = [_args] param [0,[],[[]]];
 
-if (_typeDef isEqualType "") then {
-	_typeDef = call compile _typeDef;
-};
 
-if (_typeDEf isEqualType []) then {
-	_typeDef = createhashmapfromarray _typeDef;
-};
+if (isNil _varName) then {
+		
+	//randomize instance variable
+	private _uid = [] call XPS_fnc_createUniqueID;
+	private _instanceVar = "xps_" + _uid; 
+	
+	// collision proofing?
+	private _attempts = 0;
+	while {!(isNil _instanceVar) && _attempts < 100} do {
+		_instanceVar = "xps_" + call XPS_fnc_getUniqueID; 
+		_attempts = _attempts + 1;
+	};
 
-if ("#flags" in keys _typeDef ) then {
-	_typeDef get "#flags" pushbackUnique "noCopy";
+	if (_typeDef isEqualType "") then {
+		_typeDef = call compile _typeDef;
+	};
+
+	if (_typeDEf isEqualType []) then {
+		_typeDef = createhashmapfromarray _typeDef;
+	};
+
+	//add noCopy
+	if ("#flags" in keys _typeDef ) then {
+		_typeDef get "#flags" pushbackUnique "noCopy";
+	} else {
+		_typeDef set ["#flags",["noCopy"]];
+	};
+
+	call compile format["%1 = createhashmapobject [%2,%3];",_instanceVar,_typeDef,_args];
+
+	private _staticDef = [
+		["#type","XPS_typ_StaticSingletonProvider"],
+		["GetInstance",compile format["%1",_instanceVar]]
+	];
+
+	call compile format["%1 = compileFinal createhashmapobject [%2]",_varName,_staticDef];
+
+	true;
+
 } else {
-	_typeDef set ["#flags",["noCopy"]];
+	diag_log text format["XPS_fnc_createSingleton: Attempt to create another instance of %1",_varName];
+	false;
 };
-
-private _hash = (hashValue (_typeDef get "#type")) regexReplace ["[\+\\]","_"]; // repalace + and \ with _
-
-call compile format["%1 = createhashmapobject [%2,%3];",_hash,_typeDef,_args];
-
-private _staticDef = [
-	["#type","XPS_typ_Static_Singleton"],
-	["GetInstance",compile format["%1",_hash]]
-];
-
-call compile format["%1 = compileFinal createhashmapobject [%2]",_varName,_staticDef];
-
-true;
