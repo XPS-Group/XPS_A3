@@ -220,7 +220,7 @@ Flags:
 	Returns: 
 		<Hashmap> - a Multidimensional <hashmap> where key is [x,y] index of sector and value is a <hashmap> of sub-values
 	-----------------------------------------------------------------------------*/
-	["Sectors",nil],
+	["Sectors",createhashmap],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
 	
@@ -395,7 +395,7 @@ Flags:
 		<main.XPS_ifc_IAstarGraph.Init>
 
 	Returns:
-		<Nothing>
+		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {}]
 ]

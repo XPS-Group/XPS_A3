@@ -53,7 +53,7 @@ Flags:
 		where first value is for type "MAINROAD", second type is for "ROAD", and third 
 		value is for "TRACK" and also "TRAIL" if included
 	-----------------------------------------------------------------------------*/
-	["Weights",nil],
+	["Weights",[0.9, 1, 1.2]],
 	/*----------------------------------------------------------------------------
 	Property: RoadTypes
     

@@ -10,7 +10,7 @@ Description:
 	A collection of items that are processed in order received
 
 Parent:
-	XPS_typ_HashmapCollection
+	<XPS_typ_HashmapCollection>
 
 Implements: 
 	<XPS_ifc_IJobScheduler>
@@ -33,7 +33,7 @@ Flags:
     	---
 
     Returns: 
-		<Nothing> 
+		Nothing 
 	-----------------------------------------------------------------------------*/
 	["popQueue",compileFinal {
 		private _queue = _self get "Queue";

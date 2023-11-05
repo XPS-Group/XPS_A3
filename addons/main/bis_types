@@ -20,6 +20,10 @@ Type: Control
 External:
 BI Wiki : <Control: https://community.bistudio.com/wiki/Control>
 
+Type: Diary Record
+External:
+BI Wiki : <Display: https://community.bistudio.com/wiki/Diary_Record>
+
 Type: Display
 External:
 BI Wiki : <Display: https://community.bistudio.com/wiki/Display>
@@ -57,6 +61,10 @@ Type: Object
 External:
 BI Wiki : <Object: https://community.bistudio.com/wiki/Object>
 
+Type: Script
+External:
+BI Wiki : <String: https://community.bistudio.com/wiki/Script_Handle>
+
 Type: Side
 External:
 BI Wiki : <Side: https://community.bistudio.com/wiki/Side>
@@ -64,4 +72,12 @@ BI Wiki : <Side: https://community.bistudio.com/wiki/Side>
 Type: String
 External:
 BI Wiki : <String: https://community.bistudio.com/wiki/String>
+
+Type: Task
+External:
+BI Wiki : <String: https://community.bistudio.com/wiki/Task>
+
+Type: Team Member
+External:
+BI Wiki : <String: https://community.bistudio.com/wiki/Team_Member>
 ------------------------------------------------------------------------------*/

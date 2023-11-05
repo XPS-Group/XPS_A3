@@ -42,11 +42,11 @@ Example: Check a hashmap if it supports interface
 ---------------------------------------------------------------------------- */
 
 if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNils"]) exitwith {
-	diag_log (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
+	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
 	false;
 };
 if !(_interfaces isEqualTypeAll "") exitwith {
-	diag_log (format ["XPS_fnc_checkInterface: Interfaces must be all strings.  Interfaces:%1",_this select 1]);
+	diag_log text (format ["XPS_fnc_checkInterface: Interfaces must be all strings.  Interfaces:%1",_this select 1]);
 	false;
 };
 
@@ -65,7 +65,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 	};
 
 	if (isNil {_interface}) exitwith {
-		diag_log (format ["XPS_fnc_checkInterface: Interface was nil.  Interfaces:%1",_interfaces#_a]);
+		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interfaces:%1",_interfaces#_a]);
 		_result = false;
 	};
 	
@@ -73,7 +73,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 		[_x,_y] params ["_key","_checkType"];
 		//Check key exists
 		if !(_key in keys _hashmap) then {
-			diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
+			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
 			_result = false;
 			continue;
 		};
@@ -82,7 +82,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 			private _type = typename (_hashmap get _key);
 			if (isNil {_type}) then { 
 				if !(_allowNils) then {
-					diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key set to nil during a check where they are not allowed",_hashmap get "#type",_key]);
+					diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key set to nil during a check where they are not allowed",_hashmap get "#type",_key]);
 					_result = false;
 				} else {continue};
 			};
@@ -91,14 +91,14 @@ for "_a" from 0 to (count _interfaces -1) do {
 				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
 				if (typeName _types isEqualto "ARRAY") then {
 					if !(_checkType in _types) then {
-						diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
+						diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
 						_result = false;
 					};
 					continue;
 				};
 			};
 			if !(_type isEqualTo _checkType) then {
-				diag_log (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
+				diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
 				_result = false;
 			};
 		};

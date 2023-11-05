@@ -30,7 +30,7 @@ Example: Typical
 ---------------------------------------------------------------------------- */
 
 if !(params [["_errorString","",[""]],"_args"]) exitwith {
-    diag_log format ["XPS: Error in logging params (_errorString not a string): params: %1,%2",[_errorString,_args]];
+    diag_log text format ["XPS: Error in logging params (_errorString not a string): params: %1,%2",[_errorString,_args]];
 };
 _args = [_args] param [0,[],[[]]];
 
@@ -38,5 +38,5 @@ if (count _args > 0) then {
     diag_log _errorString;
 } else {
     args insert [0,_errorString];
-    diag_log format _args;
+    diag_log text format _args;
 };

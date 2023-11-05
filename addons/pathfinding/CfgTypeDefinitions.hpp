@@ -1,5 +1,6 @@
-class XPS_CFG_BASECLASSNAME {
-	class ADDON {				
+
+class XPS_CFG_TD_BASECLASSNAME {
+	class ADDON {
 		XPS_CFG_IFC(ILayerBuilder);
 		XPS_CFG_IFC(IMapGraph);
 		XPS_CFG_IFC(IMapGraphDoctrine);
