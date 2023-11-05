@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type"}],
+	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_BT_typ_LeafAsync"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------

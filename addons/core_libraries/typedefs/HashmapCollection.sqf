@@ -36,7 +36,7 @@ Authors:
         <Hashmap> - Storage of <HashmapObjects> for this collection
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type"}],
+	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_typ_HashmapCollection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
     /*----------------------------------------------------------------------------
@@ -83,7 +83,11 @@ Authors:
     -------------------------------------------------------------------------*/ 
     ["#create", compileFinal {
         params [["_allowedTypes",nil,[[]]]];
-        if !(isNil "_allowedTypes") then {_self set ["AllowedTypes",_allowedTypes];};
+        if !(isNil "_allowedTypes") then {
+            _self set ["AllowedTypes",_allowedTypes];
+        } else {
+            _self set ["AllowedTypes",[]];
+        };
         _self set ["Items",createhashmap];
     }],
 

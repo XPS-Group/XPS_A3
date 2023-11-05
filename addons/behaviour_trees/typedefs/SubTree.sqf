@@ -23,7 +23,6 @@ Protecteds:
 	tree - <HashmapObject> - of a behaviour tree
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type"}],
 	["#type","XPS_BT_typ_SubTree"],
 	["#base",XPS_BT_typ_Leaf],
 	/*----------------------------------------------------------------------------

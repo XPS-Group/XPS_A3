@@ -22,12 +22,10 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self get "#type"}],
+	["#str", {_self get "#type" select  0}],
 	["#type","XPS_UT_type_Engine"],
 	["#flags",["sealed","nocopy"]],
 	["#base",XPS_typ_HashmapCollection],
-	["AddItem",{}],
-	["RemoveItem",{}],
 	["Selected",[]],
 	["RunAll",{}],
 	["RunSelected",{}]
