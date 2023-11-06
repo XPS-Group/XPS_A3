@@ -139,6 +139,7 @@ Example: Validation of values
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
+_debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
 _debugHeaders = [_debugHeaders] param [0,false,[true]];
 
 private _privateKeys = [];
@@ -150,8 +151,9 @@ private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
 
-private _typeName = (_typeDef select (_typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}})) select 1;
-_typeName = [_typeName,"<unknown type>"] select (isNil {_typeName});
+private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}};
+private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index == -1);
+private _typeName = _typeArray select (count _typeArray > 1);
 
 try 
 {
@@ -316,6 +318,6 @@ try
 
 } catch {
 	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
-	diag_log _exception;
+	diag_log text _exception;
 	false;
 };

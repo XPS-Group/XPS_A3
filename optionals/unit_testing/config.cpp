@@ -32,3 +32,4 @@ class CfgPatches {
 #include "CfgTypeDefinitions.hpp"
 #include "CfgFunctions.hpp"
 #include "Cfg3DEN.hpp"
+#include "CfgUnitTests.hpp"

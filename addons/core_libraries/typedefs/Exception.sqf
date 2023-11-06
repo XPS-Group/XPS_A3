@@ -83,10 +83,9 @@ Flags:
 
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params ["_source","_target","_message"];
+		params [["_source","",[]],["_target","",[]],["_message","",[""]]];
 		_source = [str _source,_source] select (_source isEqualType "");
 		_target = [str _target,_target] select (_target isEqualType "");
-		_message = [_message] param [0,"",[""]];
 
 		_self set ["Source",_source];
 		_self set ["Target",_target];

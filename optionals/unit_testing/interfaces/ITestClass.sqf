@@ -13,6 +13,8 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["Description","STRING"],
-	["TestOrder","ARRAY"],
+	["TestDescription","STRING"],
+	["FinalizeTest","CODE"],
+	["InitTest","CODE"],
+	["TestOrder","ARRAY"]
 ]
