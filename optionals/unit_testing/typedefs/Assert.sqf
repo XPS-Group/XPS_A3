@@ -42,7 +42,7 @@ Flags:
 	["AreEqual",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if !(_arg1 isEqualTo _arg2) then {
-			_self call ["Fail",["AreEqual",_message]]
+			_self call ["Fail",["AreEqual",_message,createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -65,7 +65,7 @@ Flags:
 	["AreNotEqual",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if (_arg1 isEqualTo _arg2) then {
-			_self call ["Fail",["AreNotEqual",_message]]
+			_self call ["Fail",["AreNotEqual",_message,createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -88,7 +88,7 @@ Flags:
 	["AreSame",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if !(_arg1 isEqualRef _arg2) then {
-			_self call ["Fail",["AreSame",_message]]
+			_self call ["Fail",["AreSame",_message,createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -111,7 +111,7 @@ Flags:
 	["AreNotSame",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if (_arg1 isEqualRef _arg2) then {
-			_self call ["Fail",["AreNotSame",_message]]
+			_self call ["Fail",["AreNotSame",_message,createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -128,8 +128,8 @@ Flags:
 		_message* - <String> - (Optional - Default : "") - The message to place in the Exception
 	-----------------------------------------------------------------------------*/
 	["Fail",{
-		params [["_target","",[""]],["_message","",[""]]];
-		private _e =  compileFinal createhashmapobject [XPS_UT_typ_AssertFailedException,[_self get "#type" select 0,_target,_message]];
+		params [["_target","",[""]],["_message","",[""]],["_data",createhashmap,[createhashmap]]];
+		private _e =  compileFinal createhashmapobject [XPS_UT_typ_AssertFailedException,[_self get "#type" select 0,_target,_message,_data]];
 		throw _e;
 	}],
 	/*-----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ Flags:
 		_message* - <String> - (Optional - Default : "") - The message to place in the Exception
 	-----------------------------------------------------------------------------*/
 	["Inconclusive",{
-		params [["_target","",[""]],["_message","",[""]]];
+		params [["_target","",[""]],["_message","",[""]],["_data",createhashmap,[createhashmap]]];
 		private _e =  compileFinal createhashmapobject [XPS_UT_typ_AssertInconclusiveException,[_self get "#type" select 0,_target,_message]];
 		throw _e;
 	}],
@@ -168,7 +168,7 @@ Flags:
 	["IsEqualType",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if !(_arg1 isEqualType _arg2) then {
-			_self call ["Fail",["IsEqualType",_message]]
+			_self call ["Fail",["IsEqualType",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -191,7 +191,7 @@ Flags:
 	["IsNotEqualType",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if (_arg1 isEqualType _arg2) then {
-			_self call ["Fail",["IsNotEqualType",_message]]
+			_self call ["Fail",["IsNotEqualType",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -214,7 +214,7 @@ Flags:
 	["IsEqualTypeAll",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if !(_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsEqualTypeAll",_message]]
+			_self call ["Fail",["IsEqualTypeAll",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -237,7 +237,7 @@ Flags:
 	["IsNotEqualTypeAll",{
 		params ["_arg1","_arg2",["_message","",[""]]];
 		if (_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeAll",_message]]
+			_self call ["Fail",["IsNotEqualTypeAll",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -260,7 +260,7 @@ Flags:
 	["IsEqualTypeAny",{
 		params ["_arg1",["_arg2",[],[[]]],["_message","",[""]]];
 		if !(_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsEqualTypeAny",_message]]
+			_self call ["Fail",["IsEqualTypeAny",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -283,7 +283,7 @@ Flags:
 	["IsNotEqualTypeAny",{
 		params ["_arg1",["_arg2",[],[[]]],["_message","",[""]]];
 		if (_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeAny",_message]]
+			_self call ["Fail",["IsNotEqualTypeAny",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -306,7 +306,7 @@ Flags:
 	["IsEqualTypeArray",{
 		params ["_arg1",["_arg2",[],[[]]],["_message","",[""]]];
 		if !(_arg1 isEqualTypeArray _arg2) then {
-			_self call ["Fail",["IsEqualTypeArray",_message]]
+			_self call ["Fail",["IsEqualTypeArray",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -329,7 +329,7 @@ Flags:
 	["IsNotEqualTypeArray",{
 		params ["_arg1",["_arg2",[],[[]]],["_message","",[""]]];
 		if (_arg1 isEqualTypeArray _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeArray",_message]]
+			_self call ["Fail",["IsNotEqualTypeArray",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -352,7 +352,7 @@ Flags:
 	["IsEqualTypeParams",{
 		params ["_arg1",["_arg2",[],[[]]],["_message","",[""]]];
 		if !(_arg1 isEqualTypeParams _arg2) then {
-			_self call ["Fail",["IsEqualTypeParams",_message]]
+			_self call ["Fail",["IsEqualTypeParams",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -375,7 +375,7 @@ Flags:
 	["IsNotEqualTypeParams",{
 		params ["_arg1",["_arg2",[],[[]]],["_message","",[""]]];
 		if (_arg1 isEqualTypeParams _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeParams",_message]]
+			_self call ["Fail",["IsNotEqualTypeParams",_message, createhashmapfromarray [_arg1,_arg2]]]
 		};
 		nil;
 	}],
@@ -397,7 +397,7 @@ Flags:
 	["IsFalse",{
 		params [["_bool",false,[true]],["_message","",[""]]];
 		if (_bool) then {
-			_self call ["Fail",["IsFalse",_message]]
+			_self call ["Fail",["IsFalse",_message, createhashmapfromarray [_bool]]]
 		};
 		nil;
 	}],
@@ -419,7 +419,7 @@ Flags:
 	["IsTrue",{
 		params [["_bool",false,[true]],["_message","",[""]]];
 		if !(_bool) then {
-			_self call ["Fail",["IsTrue",_message]]
+			_self call ["Fail",["IsTrue",_message, createhashmapfromarray [_bool]]]
 		};
 		nil;
 	}],
@@ -443,7 +443,7 @@ Flags:
 	["IsInstanceOfType",{
 		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message","",[""]]];
 		if !(_type in _hashmapobject get "#type") then {
-			_self call ["Fail",["IsInstanceOfType",_message]]
+			_self call ["Fail",["IsInstanceOfType",_message, createhashmapfromarray [_hashmapobject,_type]]]
 		};
 		nil;
 	}],
@@ -467,7 +467,7 @@ Flags:
 	["IsNotInstanceOfType",{
 		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message","",[""]]];
 		if (_type in _hashmapobject get "#type") then {
-			_self call ["Fail",["IsNotInstanceOfType",_message]]
+			_self call ["Fail",["IsNotInstanceOfType",_message, createhashmapfromarray [_hashmapobject,_type]]]
 		};
 		nil;
 	}],
@@ -489,7 +489,7 @@ Flags:
 	["IsNil",{
 		params ["_arg",["_message","",[""]]];
 		if !(isNil {_arg}) then {
-			_self call ["Fail",["IsNil",_message]]
+			_self call ["Fail",["IsNil",_message, createhashmapfromarray [_arg]]]
 		};
 		nil;
 	}],
@@ -511,7 +511,7 @@ Flags:
 	["IsNotNil",{
 		params ["_arg",["_message","",[""]]];
 		if (isNil {_arg}) then {
-			_self call ["Fail",["IsNotNil",_message]]
+			_self call ["Fail",["IsNotNil",_message, createhashmapfromarray [_arg]]]
 		};
 		nil;
 	}],
@@ -545,7 +545,7 @@ Flags:
 	["IsNull",{
 		params [["_arg",configFile,[objNull]],["_message","",[""]]];
 		if !(isNull _arg) then {
-			_self call ["Fail",["IsNull",_message]]
+			_self call ["Fail",["IsNull",_message, createhashmapfromarray [_arg]]]
 		};
 		nil;
 	}],
@@ -579,7 +579,30 @@ Flags:
 	["IsNotNull",{
 		params [["_arg",objNull,[objNull]],["_message","",[""]]];
 		if (isNull _arg) then {
-			_self call ["Fail",["IsNotNull",_message]]
+			_self call ["Fail",["IsNotNull",_message, createhashmapfromarray [_arg]]]
+		};
+		nil;
+	}],
+	/*-----------------------------------------------------------------------------
+	Method: ThrowsException 
+    
+    	--- Prototype --- 
+    	call ["ThrowsException",[_code, _exceptionType, _message*]]
+    	---
+
+	Runs the code supplied. Variables should pass through 
+	
+    Parameters: 
+		- _code - <Code> - the code to execute which is expected to throw an exception
+		- _exceptionType <string> - the exception type to catch (can be a parent class)
+
+	Optionals:
+		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+	-----------------------------------------------------------------------------*/
+	["IsNotNull",{
+		params [["_arg",objNull,[objNull]],["_message","",[""]]];
+		if (isNull _arg) then {
+			_self call ["Fail",["IsNotNull",_message, createhashmapfromarray [_arg]]]
 		};
 		nil;
 	}]

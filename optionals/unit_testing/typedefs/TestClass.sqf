@@ -32,7 +32,7 @@ Flags:
 	Property: Description
     
     	--- Prototype --- 
-    	get "TestDescription"
+    	get "Description"
     	---
 		
 		<XPS_UT_ifc_ITestClass>
@@ -40,7 +40,7 @@ Flags:
     Returns: 
 		<String> - A friendly description of what the Test Methods are testing
 	-----------------------------------------------------------------------------*/
-	["TestDescription","Base Test Class"],
+	["Description","Base Test Class"],
 	/*----------------------------------------------------------------------------
 	Method: FinalizeTest
     

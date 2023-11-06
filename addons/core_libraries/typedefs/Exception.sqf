@@ -42,6 +42,19 @@ Flags:
     Returns: 
 		<String> - A message about the exception thrown
 	-----------------------------------------------------------------------------*/
+	["Data",nil],
+	/*----------------------------------------------------------------------------
+	Property: Message
+    
+    	--- Prototype --- 
+    	get "Message"
+    	---
+		
+		<XPS_ifc_IException>
+    
+    Returns: 
+		<String> - A message about the exception thrown
+	-----------------------------------------------------------------------------*/
 	["Message",""],
 	/*----------------------------------------------------------------------------
 	Property: Source
@@ -83,13 +96,14 @@ Flags:
 
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_source","",[]],["_target","",[]],["_message","",[""]]];
+		params [["_source","",[]],["_target","",[]],["_message","",[""]],["_data",createhashmap,[createhashmap]]];
 		_source = [str _source,_source] select (_source isEqualType "");
 		_target = [str _target,_target] select (_target isEqualType "");
 
 		_self set ["Source",_source];
 		_self set ["Target",_target];
 		_self set ["Message",_message];
+		_self set ["Data",_data];
 		 //TODO : If I ever get a debugger going
 		// if !(isNil {XPS_MissionDebugger}) then {
 		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];

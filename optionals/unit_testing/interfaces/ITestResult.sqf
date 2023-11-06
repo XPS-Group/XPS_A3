@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: unit_testing. XPS_UT_ifc_ITestClass
+Interface: unit_testing. XPS_UT_ifc_ITestResult
 <Interface>
 
 Authors:
@@ -13,8 +13,4 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["Description","STRING"],
-	["FinalizeTest","CODE"],
-	["InitTest","CODE"],
-	["TestOrder","ARRAY"]
 ]

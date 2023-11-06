@@ -28,7 +28,7 @@ Flags:
 [
 	["#type","XPS_UT_typ_SampleTestClassA"],
 	["#base", XPS_typ_TestClass],
-	["TestDescription","Sample Test Class A"],
+	["Description","Sample Test Class A"],
 	["TestOrder",[
 		"Check A and B are same type",
 		"Check B and C are same type",
