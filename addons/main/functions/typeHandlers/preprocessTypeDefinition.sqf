@@ -295,8 +295,8 @@ try
 		};
 
 		if (_value isEqualType {}) then {
-			// Set header before replacing private keys
-			private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
+			// // Set header before replacing private keys
+			// private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
 
 			//Replace Private Keys in any code block
 			{
@@ -306,11 +306,11 @@ try
 				_keyPair set [1,_value];
 			} foreach _privateKeys;
 
-			//Finally Insert unaltered header
-			if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
-				private _strCode = (str _value) insert [1,_strHeader];
-				_keyPair set [1, call compile _strCode];
-			};
+			// //Finally Insert unaltered header
+			// if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
+			// 	private _strCode = (str _value) insert [1,_strHeader];
+			// 	_keyPair set [1, call compile _strCode];
+			// };
 		};
 	};
 

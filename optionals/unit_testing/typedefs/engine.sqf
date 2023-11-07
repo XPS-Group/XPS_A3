@@ -57,6 +57,7 @@ Flags:
 						if (count (["XPS_UT_typ_AssertFailedException","XPS_UT_typ_AssertInconclusiveException"] arrayintersect (_exception get "#type"))>0) then {
 							diag_log text  ((_class get "Description") + ":" + _x + " -  FAILED");
 							diag_log text str _exception;
+							diag_log text str (_exception get "Data");
 						} else {
 							throw _exception;
 						};

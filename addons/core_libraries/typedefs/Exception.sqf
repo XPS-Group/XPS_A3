@@ -96,13 +96,14 @@ Flags:
 
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_source","",[]],["_target","",[]],["_message","",[""]],["_data",createhashmap,[createhashmap]]];
+		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
+		diag_log _this;
 		_source = [str _source,_source] select (_source isEqualType "");
 		_target = [str _target,_target] select (_target isEqualType "");
 
 		_self set ["Source",_source];
 		_self set ["Target",_target];
-		_self set ["Message",_message];
+		if !(isNil "_message") then {_self set ["Message",_message]};
 		_self set ["Data",_data];
 		 //TODO : If I ever get a debugger going
 		// if !(isNil {XPS_MissionDebugger}) then {
