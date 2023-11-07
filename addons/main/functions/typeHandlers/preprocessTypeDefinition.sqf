@@ -139,6 +139,7 @@ Example: Validation of values
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
+_debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
 _debugHeaders = [_debugHeaders] param [0,false,[true]];
 
 private _privateKeys = [];
@@ -150,8 +151,9 @@ private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
 
-private _typeName = (_typeDef select (_typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}})) select 1;
-_typeName = [_typeName,"<unknown type>"] select (isNil {_typeName});
+private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}};
+private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index == -1);
+private _typeName = _typeArray select (count _typeArray > 1);
 
 try 
 {
@@ -293,8 +295,8 @@ try
 		};
 
 		if (_value isEqualType {}) then {
-			// Set header before replacing private keys
-			private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
+			// // Set header before replacing private keys
+			// private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
 
 			//Replace Private Keys in any code block
 			{
@@ -304,11 +306,11 @@ try
 				_keyPair set [1,_value];
 			} foreach _privateKeys;
 
-			//Finally Insert unaltered header
-			if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
-				private _strCode = (str _value) insert [1,_strHeader];
-				_keyPair set [1, call compile _strCode];
-			};
+			// //Finally Insert unaltered header
+			// if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
+			// 	private _strCode = (str _value) insert [1,_strHeader];
+			// 	_keyPair set [1, call compile _strCode];
+			// };
 		};
 	};
 
@@ -316,6 +318,6 @@ try
 
 } catch {
 	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
-	diag_log _exception;
+	diag_log text _exception;
 	false;
 };

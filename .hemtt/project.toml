@@ -2,8 +2,7 @@ name = "XPS"
 prefix = "xps"
 author= "Crashdome"
 reuse_private_key = false
+
 [files]
 include = ["readme.txt"]
 
-# [hemtt.dev]
-# exclude = ["addons/action_planning","addons/behaviour_trees","addons/pathfinding"]

@@ -70,7 +70,7 @@ Authors:
 					- ChildI
 
 ---------------------------------------------------------------------------- */
-params [["_definition",nil,[]],["_blackboard",nil,[createhashmap]]];
+params [["_definition",[],[[]]],["_blackboard",nil,[createhashmap]]];
 
 private _fnc_HandleChildren = compileFinal {
 	params ["_parentNode",["_children",[],[[]]]];

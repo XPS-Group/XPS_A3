@@ -23,13 +23,13 @@
 #define XPS_CFG_FNC(fncName) class fncName {\
     file = FILEPATH_C_Q(functions\fncName.sqf);\
     headerType = 0;\
-    recompile = 0;\
+    recompile = 1;\
 }
 
 #define XPS_CFG_FNC_SUB(sub,fncName) class fncName {\
     file = FILEPATH_C_Q(functions\sub\fncName.sqf);\
     headerType = 0;\
-    recompile = 0;\
+    recompile = 1;\
 }
 
 #define XPS_CFG_IFC(ifcName) class ifcName {\
@@ -54,7 +54,6 @@
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
-    /*headerType = 0;\*/
 }
 
 #define XPS_CFG_TYP_SUB(sub,typName) class typName {\
@@ -65,7 +64,6 @@
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
-    /*headerType = 0;\*/
 }
 
 /* ---------------------------------------*/

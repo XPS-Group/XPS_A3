@@ -42,12 +42,57 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Description","Base Test Class"],
 	/*----------------------------------------------------------------------------
+	Method: FinalizeTest
+    
+    	--- Prototype --- 
+    	call ["FinalizeTest"]
+    	---
+		
+		This method is called by the Unit Testing Engine AFTER it performs
+		any Unit Tests. This can be used to clean up the testing environment.
+
+		- When directly inherited this method Does Nothing
+		- Can Be Overridden
+
+		<XPS_UT_ifc_ITestClass>
+    
+    Returns: 
+		Nothing
+	-----------------------------------------------------------------------------*/
+	["FinalizeTest",{
+		//Do Nothing
+	}],
+	/*----------------------------------------------------------------------------
+	Method: InitTest
+    
+    	--- Prototype --- 
+    	call ["InitTest"]
+    	---
+		
+		This method is called by the Unit Testing Engine BEFORE it performs
+		any Unit Tests. This can be used to set up the testing environment for
+		testing.
+
+		- When directly inherited this method Does Nothing
+		- Can Be Overridden
+
+		<XPS_UT_ifc_ITestClass>
+    
+    Returns: 
+		Nothing
+	-----------------------------------------------------------------------------*/
+	["InitTest",{
+		//Do Nothing
+	}],
+	/*----------------------------------------------------------------------------
 	Property: TestOrder
     
     	--- Prototype --- 
     	get "TestOrder"
     	---
 		
+		Must Be Overridden and contain values upon creation
+
 		<XPS_UT_ifc_ITestClass>
     
     Returns: 

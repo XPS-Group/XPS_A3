@@ -130,7 +130,6 @@ if ("#base" in keys _hashmap) then {
 
 	_preCompiled = createhashmapfromarray _pType;
 
-
 	private _pTypeName = _preCompiled get "#type";
 	private _keys = keys _hashmap;
 	{
@@ -172,12 +171,16 @@ if ("#base" in keys _hashmap) then {
 	[_preCompiled] call _fnc_recurseBases;
 
 	if (_noStack) then {
-		_preCompiled deleteat "#create";
-		_preCompiled deleteat "#clone";
-		_preCompiled deleteat "#delete";
+		{
+			if (_x in keys _precompiled) then {
+				if !(_x in _keys) then {_hashmap set [_x, _precompiled get _x]};
+				_preCompiled deleteat _x;
+			};
+		} foreach ["#create","#clone","#delete"];
 		_hashmap set ["#base",_preCompiled toArray false];
 	};
 	
+	// Merge for interface check
 	_preCompiled merge [_hashmap,true];
 	
 };

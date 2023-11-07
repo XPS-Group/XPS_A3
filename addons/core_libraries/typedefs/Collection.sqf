@@ -18,9 +18,6 @@ Implements:
 Flags:
     none
 
-Property: AllowedTypes
-
-Property: Items
 ---------------------------------------------------------------------------- */
 
 
@@ -28,7 +25,7 @@ Property: Items
 	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Collection"],
     ["@interfaces",["XPS_ifc_ICollection"]],
-    /*
+    /*----------------------------------------------------------------------------
     Property: AllowedTypes
     
         --- prototype
@@ -39,9 +36,9 @@ Property: Items
     
     Retruns: 
         <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
-    */
+    ----------------------------------------------------------------------------*/
     ["AllowedTypes",[]],
-    /*
+    /*----------------------------------------------------------------------------
     Property: Items
     
         --- prototype
@@ -52,9 +49,9 @@ Property: Items
     
     Retruns: 
         <Hashmap> - <hashmaps> or <hashmapobjects> stored in this collection
-    */
+    ----------------------------------------------------------------------------*/
     ["Items",createhashmap],
-    /*
+    /*----------------------------------------------------------------------------
     Constructor: #create
     
         --- prototype
@@ -63,13 +60,13 @@ Property: Items
     
     Parameters: 
         _allowedTypes (optional) - <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
-    */
+    ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         params [["_allowedTypes",[],[[]]]];
         _self set ["AllowedTypes",_allowedTypes];
         _self set ["Items",createhashmap];
     }],
-    /*
+    /*----------------------------------------------------------------------------
     Method: RegisterType 
     
         --- Prototype --- 
@@ -80,7 +77,7 @@ Property: Items
     
     Parameters: 
         type - <Type> - used to add a type after object creation. In shorthand - i.e. [] or objNull or 0 or createhashmap, etc..
-	*/
+	----------------------------------------------------------------------------*/
     ["RegisterType",compileFinal {
         if !(params [["_type",nil,[]]]) exitwith {false;};
         private _list = _self get "AllowedTypes";
@@ -88,7 +85,7 @@ Property: Items
         _list pushback _type;
         true;
     }],
-    /*
+    /*----------------------------------------------------------------------------
     Method: AddItem
     
         --- Prototype --- 
@@ -100,7 +97,7 @@ Property: Items
     Parameters: 
         key - <HashmapKey> 
         item - <Anything> 
-    */
+    ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {false;};
         if !("Items" in (keys _self)) exitwith {false;};
@@ -110,7 +107,7 @@ Property: Items
         (_self get "Items") set [_key,_item];
         true;
     }],
-    /*
+    /*----------------------------------------------------------------------------
     Method: RemoveItem
     
         --- Prototype --- 
@@ -121,7 +118,7 @@ Property: Items
     
     Parameters: 
         key - <HashmapKey> 
-    */
+    ----------------------------------------------------------------------------*/
 	["RemoveItem",compileFinal {
         if !(params [["_key",nil,[""]]]) exitwith {false;};
         if !("Items" in (keys _self)) exitwith {false;};

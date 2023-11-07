@@ -161,6 +161,7 @@ if (isNil _varName) then {
 	call compile format["%1 = createhashmapobject [%2,%3];",_instanceVar,_typeDef,_args];
 
 	private _staticDef = [
+		["#str",{format["%1",_instanceVar]}],
 		["#type","XPS_typ_StaticSingletonProvider"],
 		["GetInstance",compile format["%1",_instanceVar]]
 	];

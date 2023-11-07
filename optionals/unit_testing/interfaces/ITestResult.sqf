@@ -1,20 +1,24 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: unit_testing. XPS_UT_ifc_ITestClass
+Interface: unit_testing. XPS_UT_ifc_ITestResult
 <Interface>
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: Description
+	Property: ItemID
 
-	Property: TestOrder
+	Property: MethodName
 
+	Property: Result
+
+	Property : Exception
+	
 ---------------------------------------------------------------------------- */
 [
-	["Description","STRING"],
-	["FinalizeTest","CODE"],
-	["InitTest","CODE"],
-	["TestOrder","ARRAY"]
+	["ItemID","STRING"],
+	["MethodName", "STRING"],
+	["Result","STRING"],
+	["Exception","ANY"]
 ]

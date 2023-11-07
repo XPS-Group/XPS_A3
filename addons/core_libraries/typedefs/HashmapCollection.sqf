@@ -18,22 +18,7 @@ Flags:
 
 Authors: 
 	Crashdome
--------------------------------------------------------------------------------
-    Property: AllowedTypes
 
-        ---prototype
-        get "AllowedTypes"
-        ---
-
-        <Array> of <Strings> - List of allowed types when using <AddItem> method
-
-    Property: Items
-
-        ---prototype
-        get "Items"
-        ---
-
-        <Hashmap> - Storage of <HashmapObjects> for this collection
 ---------------------------------------------------------------------------- */
 [
 	["#str",compileFinal {_self get "#type" select  0}],
