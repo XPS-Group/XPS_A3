@@ -7,10 +7,18 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: Description
+	Property: ItemID
 
-	Property: TestOrder
+	Property: MethodName
 
+	Property: Result
+
+	Property : Exception
+	
 ---------------------------------------------------------------------------- */
 [
+	["ItemID","STRING"],
+	["MethodName", "STRING"],
+	["Result","STRING"],
+	["Exception","ANY"]
 ]
