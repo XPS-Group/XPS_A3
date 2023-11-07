@@ -28,5 +28,6 @@ Authors:
 	["Source","ANYTING"],
 	["Target","ANYTHING"],
 	["Message","STRING"],
-	["Data","HASHMAP"]
+	["Data","HASHMAP"],
+	["GetText","CODE"]
 ]

@@ -21,14 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {format[
-			"%1: Source: %2 Target: %3 Message: %4",
-			_self get "#type" select 0,
-			_self get "Source",
-			_self get "Target",
-			_self get "Message"
-		]
-	}],
+	["#str", {_self get "#type" select 0}],
 	["#type","XPS_typ_Exception"],
 	/*----------------------------------------------------------------------------
 	Property: Message
@@ -97,7 +90,6 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["#create",{
 		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
-		diag_log _this;
 		_source = [str _source,_source] select (_source isEqualType "");
 		_target = [str _target,_target] select (_target isEqualType "");
 
@@ -109,5 +101,13 @@ Flags:
 		// if !(isNil {XPS_MissionDebugger}) then {
 		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];
 		// };
-	}]
+	}],
+	["GetText",{text format[
+			"%1:"+endl+"         Source: %2"+endl+"         Target: %3"+endl+"         Message: %4"+endl+"         Data: %5",
+			_self get "#type" select 0,
+			_self get "Source",
+			_self get "Target",
+			_self get "Message",
+			str (_self get "Data")
+		]}]
 ]
