@@ -1,0 +1,38 @@
+#include "script_component.hpp"
+/* ----------------------------------------------------------------------------
+TypeDef: core. XPS_typ_Enum
+	<TypeDefinition>
+
+Authors: 
+	Crashdome
+   
+Description:
+	Abstract Class. Derived classes created with <XPS_fnc_createEnumeration> will
+	store a type-safe set of enumerations which are constants (compileFinal'd).
+
+	This class is not meant to be inherited directly.
+	Use <XPS_fnc_createEnumeration> to generate them safely.
+	
+Parent:
+    none
+
+Implements:
+    None
+
+Flags:
+    unscheduled
+
+
+---------------------------------------------------------------------------- */
+[
+	["#str",compilefinal {_self get "#type" select  0}],
+	["#type","XPS_typ_Enum"],
+	//["#flags",["unscheduled"]],
+	["Names",[]],
+	["ValueType","SCALAR"],
+	["Values",[]],
+	["IsDefined", {
+		params [["_lookup","",[0,"",text ""]]];
+		_lookup in keys _self;
+	}]
+]

@@ -30,6 +30,18 @@ See also:
     - <main.typeHandlers.XPS_fnc_checkInterface>
 ------------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------
+Type: Enumeration
+    <HashmapObject>
+
+Description:
+    A <HashmapObject> which holds a value that is constant.
+
+See also: 
+
+	- <HashmapObjects>
+    - <main.typeHandlers.XPS_fnc_createEnumeration>
+---------------------------------------------------------------------------*/
+/* ----------------------------------------------------------------------------
 Type: Singleton
     <HashmapObject>
 

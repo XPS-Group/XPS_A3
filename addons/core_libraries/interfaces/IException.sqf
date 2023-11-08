@@ -22,6 +22,9 @@ Authors:
 	Property: Data
 		<Hashmap>
 
+	Property: GetText
+		<Code>
+
 ---------------------------------------------------------------------------- */
 [
 	["ExceptionType","STRING"],
