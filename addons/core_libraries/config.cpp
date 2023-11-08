@@ -29,5 +29,6 @@ class CfgPatches {
 	};
 };
 
-#include "CfgFunctions.hpp"
 #include "CfgTypeDefinitions.hpp"
+#include "CfgFunctions.hpp"
+#include "Cfg3DEN.hpp"
