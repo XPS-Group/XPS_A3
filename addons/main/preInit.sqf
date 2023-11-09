@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 
 /* -------------------------------------------------------------------------
-Variable: main. xps_main
+Variable: main. XPS_Main
 
 Description:
 	This returns true once the preInit type 

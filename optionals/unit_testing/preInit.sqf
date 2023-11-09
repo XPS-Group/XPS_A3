@@ -1,5 +1,13 @@
 #include "script_component.hpp"
 
+/* -------------------------------------------------------------------------
+Variable: main. XPS_UT
+
+Description:
+	This returns true once preInit has been completed
+
+Returns: <Boolean>
+---------------------------------------------------------------------------*/
 ADDON = false;
 
 diag_log text "[XPS UT preInit]";
