@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 
 /* -------------------------------------------------------------------------
-Variable: main. XPS_UT
+Variable: unit_testing. XPS_UT
 
 Description:
 	This returns true once preInit has been completed
