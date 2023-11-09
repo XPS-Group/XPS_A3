@@ -3,10 +3,6 @@
 TypeDef: unit_testing. XPS_UT_typ_TestResult
 	<TypeDefinition>
 
-	--- prototype
-	createhashmapobject [XPS_UT_typ_TestResult,[_itemID, _methodName, _result, _exception]];
-	---
-
 Authors: 
 	Crashdome
    
