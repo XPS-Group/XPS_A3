@@ -3,10 +3,6 @@
 TypeDef: unit_testing. XPS_UT_typ_SampleTestClassB
 	<TypeDefinition>
 
-	--- prototype
-	createhashmapobject [XPS_UT_typ_SampleTestClassB];
-	---
-
 Authors: 
 	Crashdome
    

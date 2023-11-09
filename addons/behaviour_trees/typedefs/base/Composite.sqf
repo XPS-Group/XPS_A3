@@ -1,13 +1,13 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. virtual. XPS_BT_typ_Decorator
+TypeDef: behaviour_trees. base. XPS_BT_typ_Composite
 	<TypeDefinition>
 
 Authors: 
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has one child
+	A node for a Behaviour Tree that has multiple children
 
 Parent:
     none
@@ -17,24 +17,34 @@ Implements:
 
 Flags:
     none
-	
+
 ---------------------------------------------------------------------------- */
 [
 	["#str",compileFinal {_self get "#type" select  0}],
-	["#type","XPS_BT_typ_Decorator"],
+	["#type","XPS_BT_typ_Composite"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
-	
 	/* ----------------------------------------------------------------------------
-	Protected: child
+	Protected: children 
     
     	--- Prototype --- 
-    	get "child"
+    	get "children"
     	---
 
-	Retruns:
-		<HashmapObject> - child node
+	Returns:
+		<Array> - of child nodes		
 	---------------------------------------------------------------------------- */
-	["child",nil],
+	["children",[]],
+	/* ----------------------------------------------------------------------------
+	Protected: currentIndex
+    
+    	--- Prototype --- 
+    	get "currentIndex"
+    	---
+
+	Returns:
+		<Number> - current tasked index of child nodes
+	---------------------------------------------------------------------------- */
+	["currentIndex",0],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
@@ -66,20 +76,12 @@ Flags:
 		The code that executes during a Tick cycle of a Behaviour Tree and then
 		returns a status.
 
+	Must be Overridden
+
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
-	["processTick",compileFinal {
-		private _status = _self get "Status";
-		private _child = _self get "child";
-		if (isNil "_child") exitwith {NODE_FAILURE};
-		if (isNil {_child get "Status"}) then {
-			_status = _child call ["Tick"];
-		} else {
-			_status = _child get "Status";
-		};		
-		_status;
-	}],
+	["processTick",compileFinal {}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
@@ -97,15 +99,15 @@ Flags:
 	["postTick",compileFinal {
 		_self set ["Status",_this];
 		_this;
-	}],	
+	}],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
     
     	--- Prototype --- 
     	get "Blackboard"
     	---
-		
-    	<XPS_BT_ifc_INode>
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
@@ -117,13 +119,13 @@ Flags:
     	--- Prototype --- 
     	get "NodeType"
     	---
-		
-    	<XPS_BT_ifc_INode>
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "DECORATOR"
+		<String> - "COMPOSITE"
 	-----------------------------------------------------------------------------*/
-	["NodeType","DECORATOR"],
+	["NodeType","COMPOSITE"],
 	/*----------------------------------------------------------------------------
 	Property: Status
     
@@ -141,36 +143,43 @@ Flags:
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_BT_typ_Decorator"]
+    	_result = createHashmapObject ["XPS_BT_typ_Composite"]
     	---
 
 	Returns:
-		_result - <HashmapObject> of a Decorator node
+		_result - <HashmapObject> of a Composite node
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-		_self set ["child",nil];
+		_self set ["children",[]];
+		_self set ["currentIndex",0];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
     
     	--- Prototype --- 
-    	call ["AddChildNode",[childNode]]
+    	call ["AddChildNode",[childNode,_index]]
     	---
 
 	Description:
-		Adds a child node to this node. Subsequent calls will replace previous values
+		Adds a child node at the specified index. If index is out of bounds or unspecified,
+		it will append the child to the index. 
 
 	Parameters:
 		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
+		_index* - (optional - Default : -1) - the index in which to place the child node
 
 	Returns: 
 		<Boolean> - True if successful otherwise False
 	-----------------------------------------------------------------------------*/
 	["AddChildNode",compileFinal {
-		params [["_childNode",nil,[createhashmap]]];
+		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
 		if (isNil "_childNode") exitwith {false};
-		if !(CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitwith {false};
-		_self set ["child",_childNode];
+		if !( CHECK_IFC1(_childNode,XPS_BT_ifc_INode) ) exitwith {false};
+
+		private _children = _self get "children";
+		private _count = count (_children);
+		if (_index < 0 ||_index >= _count) then {_index = -1};
+		_children insert [_index,[_childNode]];
 		_childNode set ["Blackboard",_self get "Blackboard"];
 		true;
 	}],
@@ -180,8 +189,8 @@ Flags:
     	--- Prototype --- 
     	call ["Init"]
     	---
-		
-    	<XPS_BT_ifc_INode>
+
+		<XPS_BT_ifc_INode>
 
 	Description:
 		Initialization code usually called to reset the node.
@@ -191,10 +200,13 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
 		_self set ["Status",nil];
-		private _child = _self get "child";
-		if !(isNil "child") then {
-			_child call ["Init"];
-		};
+		_self set ["currentIndex",0];
+		private _children = _self get "children";
+		{
+			if !(isNil "_x") then {
+				_x call ["Init"];
+			};
+		} foreach _children;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Tick
@@ -202,8 +214,8 @@ Flags:
     	--- Prototype --- 
     	call ["Tick"]
     	---
-		
-    	<XPS_BT_ifc_INode>
+
+		<XPS_BT_ifc_INode>
 
 	Description:
 		The code that begins the entire Tick cycle process.
@@ -211,7 +223,7 @@ Flags:
 	Returns: 
 		_status - <String> - returns <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {		
+	["Tick",compileFInal {	
 		_self call ["preTick"];
 		_self call ["postTick",
 			_self call ["processTick"]

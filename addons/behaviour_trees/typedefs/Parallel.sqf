@@ -10,7 +10,7 @@ Description:
 	A node that ticks all children at once.
 
 Parent:
-    <virtual. XPS_BT_typ_Composite>
+    <base. XPS_BT_typ_Composite>
 
 Implements:
     <XPS_BT_ifc_INode>
@@ -21,10 +21,10 @@ Flags:
 ---------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------
 Protected: children 
-		<virtual. XPS_BT_typ_Composite. children>
+		<base. XPS_BT_typ_Composite. children>
 
 Protected: currentIndex
-		<virtual. XPS_BT_typ_Composite. currentIndex>
+		<base. XPS_BT_typ_Composite. currentIndex>
 	
 ---------------------------------------------------------------------------- */
 [
@@ -32,7 +32,7 @@ Protected: currentIndex
 	["#base",XPS_BT_typ_Composite],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
-		<virtual. XPS_BT_typ_Composite. preTick>
+		<base. XPS_BT_typ_Composite. preTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: processTick
@@ -70,40 +70,40 @@ Protected: currentIndex
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-		<virtual. XPS_BT_typ_Composite. postTick>
+		<base. XPS_BT_typ_Composite. postTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: tickNextChild
-		<virtual. XPS_BT_typ_Composite. tickNextChild>
+		<base. XPS_BT_typ_Composite. tickNextChild>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
-		<virtual. XPS_BT_typ_Composite. Blackboard>
+		<base. XPS_BT_typ_Composite. Blackboard>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: NodeType
-		<virtual. XPS_BT_typ_Composite. NodeType>
+		<base. XPS_BT_typ_Composite. NodeType>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Status
-		<virtual. XPS_BT_typ_Composite. Status>
+		<base. XPS_BT_typ_Composite. Status>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Constructor: #create
-		<virtual. XPS_BT_typ_Composite. #create>
+		<base. XPS_BT_typ_Composite. #create>
 	-----------------------------------------------------------------------------*/
 	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
-		<virtual. XPS_BT_typ_Composite. AddChildNode>
+		<base. XPS_BT_typ_Composite. AddChildNode>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Init
-		<virtual. XPS_BT_typ_Composite. Init>
+		<base. XPS_BT_typ_Composite. Init>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Tick
-		<virtual. XPS_BT_typ_Composite. Tick>
+		<base. XPS_BT_typ_Composite. Tick>
 	-----------------------------------------------------------------------------*/
 
 ]
