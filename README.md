@@ -8,9 +8,10 @@ An Arma 3 Framework Mod
 [ [Discord](https://discord.gg/ryXZjDY7En) ] 
 [ [Source Documentation](https://xps-group.github.io/) ] 
 
-### UPDATE Oct 2023 - 2.14 has been released to stable branch for some time now, yet some bugs in the createhashmapobject command exist
+### UPDATE Oct 2023 - 2.14 has been released to stable branch for some time now, yet some bugs in the createhashmapobject command exist in stable version. Fixes confirmed working in dev branch however. 
   - #base is limited to only Arrays as passing a Hashmap causes a CTD
   - #create fails to properly assign _self variable in a scheduled environment (works fine if called unscheduled via #flags or in unscheduled environment)
+  - unscheduled #flag causes function methods to return null but methods called in unscheduled context without the flag work fine. 
 
   These bugs are accounted for in the project but, until they are fixed, some features are limited. 
 
