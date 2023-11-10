@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_Enum
+TypeDef: core. XPS_typ_Enumeration
 	<TypeDefinition>
 
 Authors: 
@@ -11,7 +11,7 @@ Description:
 	store a type-safe set of enumerations which are constants (compileFinal'd).
 
 	This class is not meant to be inherited directly.
-	Use <XPS_fnc_createEnumeration> to generate them safely.
+	Use <core.typeHandlers.XPS_fnc_createEnumeration> to generate them safely.
 	
 Parent:
     none
@@ -26,7 +26,7 @@ Flags:
 ---------------------------------------------------------------------------- */
 [
 	["#str",compilefinal {_self get "#type" select  0}],
-	["#type","XPS_typ_Enum"],
+	["#type","XPS_typ_Enumeration"],
 	//["#flags",["unscheduled"]],
 	["Names",[]],
 	["ValueType","SCALAR"],

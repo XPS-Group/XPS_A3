@@ -15,7 +15,7 @@ Parent:
     none
 
 Implements:
-    <XPS_typ_Exception>
+    <XPS_ifc_IException>
 
 Flags:
 
