@@ -19,21 +19,23 @@ An Arma 3 Framework Mod
     - Type Definition Caching Support
     - Optional Unit Testing framework
     - Singleton / Static type creation
-    - Common Core Object Libraries
-  - Use Built-in library types for common utiltiies
+    - Common Core Object Libraries   
+  - Use Built-in OOP library types for common utiltiies
     - A* Searching
     - Job Scheduling
     - Collections
     - Delegates and Multicast Delegates
+    - Type Safe Enumerations
+    - Exceptions and Exception Handling
     
-    WIP Library Objects :
+  WIP Library Objects :
     - Map and Road Pathfinding
-    - Hex Grids
+    - Hex or Square Map Grids
 
   AI Features  
-  - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
-  - WIP - Use Action Planning / Utility AI for short or long term planning
-  - WIP - Replace the Danger/Formation FSM behaviors
+    - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
+    - WIP - Use Action Planning / Utility AI for short or long term planning
+    - WIP - Replace the Danger/Formation FSM behaviors
 
 #History
 This project started as the eXtensible Planning System - a mod to introduce Behaviour Trees, Utility AI, and Goal-Oriented Action Planning. I was using Hashmaps to create
