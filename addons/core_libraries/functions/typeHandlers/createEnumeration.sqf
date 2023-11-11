@@ -54,7 +54,7 @@ private _baseDef = createhashmapfromarray _typeDef;
 private _newDef = createhashmap;
 	_newDef set ["#str",compilefinal format ["%1",str _varName]];
 	_newDef set ["#type",_baseDef getOrDefault ["#type","unknown type"]];
-	_newDef set ["#base",XPS_typ_Enumeration];
+	_newDef set ["#base",_baseDef getOrDefault ["#base",XPS_typ_Enumeration]];
 	_newDef set ["Names",[]];
 	_newDef set ["Values",[]];
 
@@ -62,7 +62,7 @@ private _enumType = if (toUpper (_baseDef get "ValueType") in ["STRING","SCALAR"
 _newDef set ["ValueType",_enumType];
 
 
-private _keyArray = _baseDef getOrDefault ["Enumerations",[]];
+private _keyArray = _baseDef getOrDefault ["@Enumerations",[]];
 
 switch (true) do {
 	case (_keyArray isEqualTypeAll "" && {_enumType isEqualTo "SCALAR"}) : {
@@ -156,19 +156,19 @@ Example: Using a definiton defined locally with no provided values
 
 		private _areSame = _myPet isEqualTo _myOtherPet; // False
 		
-		private _isDog = TAG_Pets get "Dog" isEqualRef _mypet;  // True
+		private _isDog = TAG_Pets_Dog isEqualRef _mypet;  // True
 
-		private _areAnyBird = "Bird" in [str _mypet, str _myOtherPet]; // False
+		private _areAnyBird = TAG_Pets_Bird in [_mypet, _myOtherPet]; // False
 
 		_myPet = Tag_Pets get selectrandom [0,1,2]
 		switch (_myPet) do {
-			case (TAG_Pets get "Dog") : {
+			case (TAG_Pets_Dog) : {
 				hint "I am a good boy!!"
 			};
-			case (TAG_Pets get "Cat") : {
+			case (TAG_Pets_Cat) : {
 				hint "I am a jerk."
 			};
-			case (TAG_Pets get "Bird") : {
+			case (TAG_Pets_Bird) : {
 				hint "Chirp!!"
 			};
 		};

@@ -151,13 +151,13 @@ if ("#base" in keys _hashmap) then {
 					switch (typeName _valuesToAppend) do {
 						case "ARRAY" : {
 								_valuesToAppend = +_valuesToAppend;
-								_valuesToAppend insert [0,_y];
-								_hashmap set [_x,_valuesToAppend]; // always allows duplicates
+								_y pushbackUnique _valuestoAppend; // does not allow duplicates
+								_hashmap set [_x,_valuesToAppend]; 
 							};
 						case "HASHMAP" : {
-							private _dcValue = +_y;
-							_dcValue merge [+_valuesToAppend,true];
-							_hashMap set [_x,_dcValue]; /* overwrites parent keys */
+							private _dCopy = +_y;
+							_dCopy merge [+_valuesToAppend,true]; // overwrites parent keys 
+							_hashMap set [_x,_dCopy]; 
 						};
 					};
 

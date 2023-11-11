@@ -26,6 +26,10 @@ Description:
 	Supported Attributes in the preprocessor are:
 
 		- ["OBSOLETE"]
+		- ["CTOR",value]
+		- ["DTOR",value]
+		- ["CTOR_LAZ",value]
+		- ["DTOR_LAZY",value]
 		- ["CONDITIONAL",{code}] - must return a boolean
 		- ["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
 		- ["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
@@ -206,7 +210,9 @@ try
 
 			switch (toUpper _attCommand) do {
 				case "OBSOLETE" : {
-					_typeDef deleteat _i; 
+					if !(_attParams isEqualType "") then {throw format ["Obsolete Attribute for Key %2 contains %1. Expected String.",typename _attParams,_key]};
+					_value = call compile ((str _value) insert [0,_attParams]);
+					_keyPair set [1, _value];
 					breakTo "Main";
 				};
 				case "CONDITIONAL" : {
@@ -218,7 +224,7 @@ try
 				};
 				case "CTOR" : {
 					private _initValue = str _value;
-					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
+					if (!isNil "_attParams" && {_attParams isEqualType ""}) then {_initValue = _attParams} else {_initValue = str _attParams};
 					_ctor = _ctor + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR" : {
@@ -226,7 +232,7 @@ try
 				};
 				case "CTOR_LAZY" : {
 					private _initValue = str _value;
-					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
+					if (!isNil "_attParams" && {_attParams isEqualType ""}) then {_initValue = _attParams} else {_initValue = str _attParams};
 					_ctor_l = _ctor_l + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR_LAZY" : {
