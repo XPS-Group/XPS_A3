@@ -615,5 +615,30 @@ Flags:
 			};
 		};
 		nil;
+	}],
+	/*-----------------------------------------------------------------------------
+	Method: WithinRange 
+    
+    	--- Prototype --- 
+    	call ["WithinRange",[_num, ,_min, _max,  _message*]]
+    	---
+
+	Runs the code supplied. Local variables should pass through from the Test Method but if desired,
+	the entire test can be passed as the code parameter.
+	
+    Parameters: 
+		- _num - <Scalar> - the number to check
+		- _min - <Scalar> - the minimum value _num can be
+		- _max - <Scalar> - the maximum value _num can be
+
+	Optionals:
+		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+	-----------------------------------------------------------------------------*/
+	["WithinRange",{
+		params [["_num"],0,[0],["_min"],0,[0],["_max",0,[0]],["_message",nil,[""]]];
+		if (_num > _max || _num < _min) then {
+			_self call ["Fail",["WithinRange",if (isNil "_message") then {nil} else {_message}, createhashmap]]
+		};
+		nil;
 	}]
 ]
