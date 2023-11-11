@@ -31,6 +31,7 @@ Flags:
 		{
 			private _class = _self get "Items" get _x;
 
+			//TODO : Should we use just a hashmap or place result directly on test class?
 		} foreach (_self get "classOrder");
 		_self set ["TestResults",_testRsults];
 

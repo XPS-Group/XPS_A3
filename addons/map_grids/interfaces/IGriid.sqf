@@ -8,11 +8,24 @@ Authors:
 ----------------------------------------------------------------------------
 
 	Property: Cells
-	<Array>
+	<HASHMAP>
 
+	Method: GetPositionByIndex
+
+	Method: GetIndexByPosition
+
+	Method: GetNearbyIndexes
+
+	Method: GetCellByPosition
+
+	Method: GetNearbyCells
 	
 ---------------------------------------------------------------------------- */
 [
-	["Cells", "ARRAY"],
-	["Index","ARRAY"]
+	["Cells", "HASHMAP"],
+	["GetPositionByIndex","CODE"],
+	["GetIndexByPosition","CODE"],
+	["GetNearbyIndexes","CODE"],
+	["GetCellByPosition","CODE"],
+	["GetNearbyCells","CODE"],
 ]
