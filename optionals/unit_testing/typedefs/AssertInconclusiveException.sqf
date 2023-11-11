@@ -54,8 +54,8 @@ Flags:
         ---
 
     Optionals: 
-        _source (optional) - <Anything>
-        _target (optional) - <Anything>
+        _source (optional) - Anything
+        _target (optional) - Anything
         _message (optional) - <String> - custom message to override the default
 
 	-----------------------------------------------------------------------------*/

@@ -11,10 +11,10 @@ Authors:
 		<String>
 		
 	Property: Source 
-		<Anything>
+		Anything
 
 	Property: Target
-		<Anything>
+		Anything
 
 	Property: Message
 		<String>

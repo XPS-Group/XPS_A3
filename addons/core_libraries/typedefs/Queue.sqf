@@ -92,7 +92,7 @@ Flags:
 		none
 		
 	Returns:
-		<Anything> - first element in the queue or nil if empty - does not remove 
+		Anything - first element in the queue or nil if empty - does not remove 
 		from queue
     ----------------------------------------------------------------------------*/
 	["Peek",{
@@ -111,7 +111,7 @@ Flags:
 		none
 		
 	Returns:
-		<Anything> - removes and returns last element in the queue or nil if empty
+		Anything - removes and returns last element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
 	["Dequeue",{
 		_self get "_queueArray" deleteat 0;

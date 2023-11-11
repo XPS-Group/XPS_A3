@@ -7,7 +7,7 @@ Function: core. typeHandlers. XPS_fnc_createEnumeration
 	---
 
 Description:
-    Takes a Type Definition and creates a <HashmapObject> with methods to hold and 
+    Takes a Type Definition and creates a static helper <HashmapObject> with methods to hold and 
 	retrieve <Enumeration> objects. Can be used to perform additional operations
 	on them as well. This function only accepts definitions of the 'enum' type.
 
@@ -38,15 +38,18 @@ if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[]]] ]) exitwith {false};
 private _fnc_createEnumConstant = {
 	params ["_var","_name","_val","_def"];
 
-	private _hashObject = createhashmapobject [[
+	private _hashObject = compilefinal createhashmapobject [[
 		["#str", compilefinal format["%1",str _name]],
 		["#type", format["%1_%2",_var,_name]],
+		["#flags",["sealed","nocopy"]],
 		["Value",_val]
 	]];
-	_def set [_name , _hashObject ];
-	_def set [_val , _hashObject ];
-	private _statement =  format["%1_%2 = compileFinal _hashObject;",_var,_name]; 
-	call compile _statement;
+	private _gVar = format["%1_%2",_var,_name];
+	private _objInstance = call compile _gVar;
+	if (isNil "_objInstance" || {_objInstance isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];_objInstance = _hashObject};
+	diag_log _objInstance;
+	_def set [_name , _gVar ];
+	_def set [_val , _gVar ];
 };
 
 private _baseDef = createhashmapfromarray _typeDef;
@@ -55,6 +58,7 @@ private _newDef = createhashmap;
 	_newDef set ["#str",compilefinal format ["%1",str _varName]];
 	_newDef set ["#type",_baseDef getOrDefault ["#type","unknown type"]];
 	_newDef set ["#base",_baseDef getOrDefault ["#base",XPS_typ_Enumeration]];
+	_newDef set ["#flags",["sealed","nocopy"]],
 	_newDef set ["Names",[]];
 	_newDef set ["Values",[]];
 
@@ -62,7 +66,7 @@ private _enumType = if (toUpper (_baseDef get "ValueType") in ["STRING","SCALAR"
 _newDef set ["ValueType",_enumType];
 
 
-private _keyArray = _baseDef getOrDefault ["@Enumerations",[]];
+private _keyArray = _baseDef getOrDefault ["Enumerations",[]];
 
 switch (true) do {
 	case (_keyArray isEqualTypeAll "" && {_enumType isEqualTo "SCALAR"}) : {
@@ -71,7 +75,7 @@ switch (true) do {
 			private _key = _x;
 			private _nameOk = _newDef get "Names" pushBackUnique _key;
 			if (_nameOK == -1) then {continue};
-			_newDef get "Values" pushback _i;
+			_newDef get "Values" pushback _value;
 			
 			[_varName,_key,_value,_newDef] call _fnc_createEnumConstant;
 			
@@ -97,8 +101,7 @@ switch (true) do {
 	};
 };
 
-private _finalObj = createhashmapobject [_newDef];
-call compile format["%1 = compileFinal _finalObj",_varName];
+call compile format["%1 = compilefinal createhashmapobject [_newDef]",_varName];
 
 true;
 /*------------------------------------------------------------------------------
@@ -123,12 +126,12 @@ Example: Using a definiton defined locally with no provided values
 		#type - ["TAG_enum_Pets", "XPS_typ_Enumeration"]
 		Names - [ "Cat", "Dog", "Bird"]
 		Values - [ 0, 1 ,2 ]
-		Cat - TAG_Pets_Cat <HashmapObject>
-		Dog - TAG_Pets_Dog <HashmapObject>
-		Bird - TAG_Pets_Bird <HashmapObject>
-		0 - TAG_Pets_Cat <HashmapObject>
-		1 - TAG_Pets_Dog <HashmapObject>
-		2 - TAG_Pets_Bird <HashmapObject>
+		Cat - "TAG_Pets_Cat"
+		Dog - "TAG_Pets_Dog"
+		Bird - "TAG_Pets_Bird"
+		0 - "TAG_Pets_Cat"
+		1 - "TAG_Pets_Dog"
+		2 - "TAG_Pets_Bird"
 
 
 	*TAG_Pets_Cat*

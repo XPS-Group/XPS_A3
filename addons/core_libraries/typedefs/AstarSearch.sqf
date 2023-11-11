@@ -120,7 +120,7 @@ Flags:
 
     Parameters:
 		_priority - <Number> - the value which determines index in frontier array. Lowest first.
-		_item - <Anything> - The key of the item being placed in priority queue
+		_item - Anything - The key of the item being placed in priority queue
 
     Returns: 
 		<Array> - of nodes from start to goal
@@ -146,7 +146,7 @@ Flags:
     	---
 
     Returns: 
-		<Anything> - key of node that is at front of frontier queue. Item is removed from queue
+		Anything - key of node that is at front of frontier queue. Item is removed from queue
 	-----------------------------------------------------------------------------*/
 	["frontierPullLowest",compileFinal {
 		private _frontier = _self get "frontier";
@@ -222,7 +222,7 @@ Flags:
 		<XPS_ifc_IAstarSearch>
     
     Returns: 
-		<Anything> - the start of the search. Usually an index or position.
+		Anything - the start of the search. Usually an index or position.
 		
 	-----------------------------------------------------------------------------*/
 	["_workingStartKey",nil],
@@ -236,7 +236,7 @@ Flags:
 		<XPS_ifc_IAstarSearch>
     
     Returns: 
-		<Anything> - the end of the search. Usually an index or position.
+		Anything - the end of the search. Usually an index or position.
 	-----------------------------------------------------------------------------*/
 	["_workingEndKey",nil],
 	/*----------------------------------------------------------------------------
@@ -250,8 +250,8 @@ Flags:
 		_graph - <XPS_ifc_IAstarGraph> - the graph to perform the search on
 
     Optionals: 
-		_startKey* - <Anything> - (Optional - Default : nil) 
-    	_endKey* - <Anything> - (Optional - Default : nil) 
+		_startKey* - Anything - (Optional - Default : nil) 
+    	_endKey* - Anything - (Optional - Default : nil) 
 
 	Returns:
 		_result - <HashmapObject>
