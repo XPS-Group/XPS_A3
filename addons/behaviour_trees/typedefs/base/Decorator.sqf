@@ -1,14 +1,13 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. virtual. XPS_BT_typ_Leaf
+TypeDef: behaviour_trees. base. XPS_BT_typ_Decorator
 	<TypeDefinition>
 
 Authors: 
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has an <ProcessTick> method which is 
-	called when Ticked
+	A node for a Behaviour Tree that has one child
 
 Parent:
     none
@@ -18,25 +17,37 @@ Implements:
 
 Flags:
     none
-
+	
 ---------------------------------------------------------------------------- */
 [
 	["#str",compileFinal {_self get "#type" select  0}],
-	["#type","XPS_BT_typ_Leaf"],
+	["#type","XPS_BT_typ_Decorator"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
+	
+	/* ----------------------------------------------------------------------------
+	Protected: child
+    
+    	--- Prototype --- 
+    	get "child"
+    	---
+
+	Retruns:
+		<HashmapObject> - child node
+	---------------------------------------------------------------------------- */
+	["child",nil],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
     	--- Prototype --- 
-    	_self call ["preTick"]
+    	_status = _self call ["preTick"]
     	---
 
 	Description:
 		The code that executes before a Tick cycle of a Behaviour Tree. Usually 
-		sets node to RUNNING status.
+		propogates down the tree if possible.
 
 	Returns: 
-		Nothing
+		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
@@ -58,7 +69,17 @@ Flags:
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
-	["processTick",nil],
+	["processTick",compileFinal {
+		private _status = _self get "Status";
+		private _child = _self get "child";
+		if (isNil "_child") exitwith {NODE_FAILURE};
+		if (isNil {_child get "Status"}) then {
+			_status = _child call ["Tick"];
+		} else {
+			_status = _child get "Status";
+		};		
+		_status;
+	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
@@ -70,24 +91,21 @@ Flags:
 		The code that executes after a Tick cycle of a Behaviour Tree and then
 		sets the <Status> property before going back up the tree.
 
-	Parameters:
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
-
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
 		_this;
-	}],
+	}],	
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
     
     	--- Prototype --- 
     	get "Blackboard"
     	---
-
-		<XPS_BT_ifc_INode>
+		
+    	<XPS_BT_ifc_INode>
     
     Returns: 
 		<HashmapObject> - A blackboard for use in nodes
@@ -99,13 +117,13 @@ Flags:
     	--- Prototype --- 
     	get "NodeType"
     	---
-
-		<XPS_BT_ifc_INode>
+		
+    	<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "LEAF"
+		<String> - "DECORATOR"
 	-----------------------------------------------------------------------------*/
-	["NodeType","LEAF"],
+	["NodeType","DECORATOR"],
 	/*----------------------------------------------------------------------------
 	Property: Status
     
@@ -120,13 +138,50 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
+	Constructor: #create
+    
+    	--- Prototype --- 
+    	_result = createHashmapObject ["XPS_BT_typ_Decorator"]
+    	---
+
+	Returns:
+		_result - <HashmapObject> of a Decorator node
+	-----------------------------------------------------------------------------*/
+	["#create", compileFinal {
+		_self set ["child",nil];
+	}],
+	/*----------------------------------------------------------------------------
+	Method: AddChildNode
+    
+    	--- Prototype --- 
+    	call ["AddChildNode",[childNode]]
+    	---
+
+	Description:
+		Adds a child node to this node. Subsequent calls will replace previous values
+
+	Parameters:
+		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
+
+	Returns: 
+		<Boolean> - True if successful otherwise False
+	-----------------------------------------------------------------------------*/
+	["AddChildNode",compileFinal {
+		params [["_childNode",nil,[createhashmap]]];
+		if (isNil "_childNode") exitwith {false};
+		if !(CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitwith {false};
+		_self set ["child",_childNode];
+		_childNode set ["Blackboard",_self get "Blackboard"];
+		true;
+	}],
+	/*----------------------------------------------------------------------------
 	Method: Init
     
     	--- Prototype --- 
     	call ["Init"]
     	---
-
-		<XPS_BT_ifc_INode>
+		
+    	<XPS_BT_ifc_INode>
 
 	Description:
 		Initialization code usually called to reset the node.
@@ -136,6 +191,10 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
 		_self set ["Status",nil];
+		private _child = _self get "child";
+		if !(isNil "child") then {
+			_child call ["Init"];
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Tick
@@ -143,8 +202,8 @@ Flags:
     	--- Prototype --- 
     	call ["Tick"]
     	---
-
-		<XPS_BT_ifc_INode>
+		
+    	<XPS_BT_ifc_INode>
 
 	Description:
 		The code that begins the entire Tick cycle process.

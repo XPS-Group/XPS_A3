@@ -27,8 +27,6 @@ Language: SQF
    Enum Values: Under Parent
    Case Sensitive: No
 
-   Class Prototype Ender: ]
-
 
 # These settings define the languages Natural Docs knows how to parse.  You
 # can define your own here or override the settings of the existing ones.

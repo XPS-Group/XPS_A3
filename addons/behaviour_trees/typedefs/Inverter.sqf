@@ -10,7 +10,7 @@ Description:
 	A node for a Behaviour Tree that has one child
 
 Parent:
-    <virtual. XPS_BT_typ_Decorator>
+    <base. XPS_BT_typ_Decorator>
 
 Implements:
     <XPS_BT_ifc_INode>
@@ -28,19 +28,19 @@ Protected: child
 	["#base",XPS_BT_typ_Decorator],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
-		<virtual. XPS_BT_typ_Decorator. Blackboard>
+		<base. XPS_BT_typ_Decorator. Blackboard>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: NodeType
-		<virtual. XPS_BT_typ_Decorator. NodeType>
+		<base. XPS_BT_typ_Decorator. NodeType>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Status
-		<virtual. XPS_BT_typ_Decorator. Status>
+		<base. XPS_BT_typ_Decorator. Status>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: preTick
-		<virtual. XPS_BT_typ_Decorator. preTick>
+		<base. XPS_BT_typ_Decorator. preTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: processTick
@@ -67,23 +67,23 @@ Protected: child
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-		<virtual. XPS_BT_typ_Decorator. postTick>
+		<base. XPS_BT_typ_Decorator. postTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Constructor: #create
-		<virtual. XPS_BT_typ_Decorator. #create>
+		<base. XPS_BT_typ_Decorator. #create>
 	-----------------------------------------------------------------------------*/
 	["#create", {_self call ["XPS_BT_typ_Decorator.#create"];}]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
-		<virtual. XPS_BT_typ_Decorator. AddChildNode>
+		<base. XPS_BT_typ_Decorator. AddChildNode>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Init
-		<virtual. XPS_BT_typ_Decorator. Tick>
+		<base. XPS_BT_typ_Decorator. Tick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Tick
-		<virtual. XPS_BT_typ_Decorator. Tick>
+		<base. XPS_BT_typ_Decorator. Tick>
 	-----------------------------------------------------------------------------*/
 ]

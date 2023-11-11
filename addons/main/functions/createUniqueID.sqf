@@ -70,7 +70,7 @@ Example: Using both Optionals
 
 Example: Using both Optionals 2
     --- Code
-    _myUniqueID = [10,"abcdefghijklmnopqrstuvwxyz"] call XPS_fnc_createUniqueID; // might return something like "iosmfhxrslio"
+    _myUniqueID = [10,"abcdefghijklmnopqrstuvwxyz"] call XPS_fnc_createUniqueID; // might return something like "iosmfhxrshep"
     ---
 
 ---------------------------------------------------------------------------- */

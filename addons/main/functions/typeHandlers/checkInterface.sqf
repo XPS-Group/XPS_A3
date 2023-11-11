@@ -46,11 +46,11 @@ if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNi
 	false;
 };
 if !(_interfaces isEqualTypeAll "") exitwith {
-	diag_log text (format ["XPS_fnc_checkInterface: Interfaces must be all strings.  Interfaces:%1",_this select 1]);
+	diag_log text (format ["XPS_fnc_checkInterface: Interface parameter must be an array of all strings.  Param:%1",_this select 1]);
 	false;
 };
 
-_allowNils = [_allowNils] param [0,false,[true]];
+_allownils = if (isNil "_allowNils") then {false} else {_allowNils};
 
 private _result = true;
 
@@ -89,15 +89,15 @@ for "_a" from 0 to (count _interfaces -1) do {
 			// Check if Hashmap Object and get type if exists
 			if (_type isEqualTo "HASHMAP") then {
 				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
-				if (typeName _types isEqualto "ARRAY") then {
-					if !(_checkType in _types) then {
-						diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
+				if (_types isEqualtype []) then {
+					if !(toLower _checkType in (_types apply {toLower _x})) then {
+						diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value types %3. Type %4 expected",_hashmap get "#type",_key,_types,_checkType]);
 						_result = false;
 					};
 					continue;
 				};
 			};
-			if !(_type isEqualTo _checkType) then {
+			if !(tolower _type isEqualTo tolower _checkType) then {
 				diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
 				_result = false;
 			};

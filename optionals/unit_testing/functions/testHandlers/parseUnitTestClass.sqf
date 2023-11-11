@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. testHandlers. XPS_fnc_parseUnitTestClass
+Function: unit_testing. testHandlers. XPS_fnc_parseUnitTestClass
 	
 	---prototype
 	_result = [_class,_tag*] call XPS_fnc_parseUnitTestClass
@@ -33,7 +33,7 @@ if (isText (_class >> "tag")) then {
 
 private _fnc_loadFile = {
 	params ["_file"];
-	private _statement = _statement = "createhashmapobject [call compileScript [""%1"",false]];";
+	private _statement = "createhashmapobject [ [ call compileScript [""%1"",false] ,false ,true ,true ,true ] call XPS_fnc_buildTypeDefinition ];";
 	private _code =  format[_statement,_file];
 	call compile _code;
 };
@@ -43,7 +43,7 @@ private _file = _class >> "file";
 if (isText _file) then {
 
 	_file = getText _file;
-	private _varName = format ["%1_%2_%3",_tag,_type,configName _class];
+	private _varName = format ["%1_%2",_tag,configName _class];
 	private _testClass = uiNamespace getVariable _varName;
 
 	if (isNil {_testClass}) then {
@@ -56,7 +56,7 @@ if (isText _file) then {
 			missionNamespace setvariable [_varName,_testClass];
 		};
 	};
-	XPS_UT_Engine call ["GetInstance"] call [missionNamespace getVariable _varName];
+	XPS_UT_Engine call ["GetInstance"] call ["AddItem",[_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName]];
 };
 
 {

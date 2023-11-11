@@ -4,9 +4,9 @@
 #define QXPS_UT_CFG_BASECLASSNAME Q(XPS_UT_CFG_BASECLASSNAME)
 
 #define XPS_UT_CFG_TEST(typName) class typName {\
-    file = FILEPATH_C_Q(typedefs\typName.sqf);\
+    file = FILEPATH_C_Q(unittests\typName.sqf);\
 }
 
 #define XPS_UT_CFG_TEST_SUB(sub,typName) class typName {\
-    file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
+    file = FILEPATH_C_Q(unittests\sub\typName.sqf);\
 }

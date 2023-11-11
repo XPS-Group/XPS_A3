@@ -11,7 +11,7 @@ Description:
 	called asynchronously when Ticked
 
 Parent:
-    <virtual. XPS_BT_typ_LeafAsync>
+    <base. XPS_BT_typ_LeafAsync>
 
 Implements:
     <XPS_BT_ifc_INode>
@@ -25,27 +25,27 @@ Flags:
 	["#base",XPS_BT_typ_LeafAsync],
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
-		<virtual. XPS_BT_typ_Leaf. Blackboard>
+		<base. XPS_BT_typ_Leaf. Blackboard>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: NodeType
-		<virtual. XPS_BT_typ_LeafAsync. NodeType>
+		<base. XPS_BT_typ_LeafAsync. NodeType>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Status
-		<virtual. XPS_BT_typ_LeafAsync. Status>
+		<base. XPS_BT_typ_LeafAsync. Status>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: callback
-		<virtual. XPS_BT_typ_LeafAsync. callback>
+		<base. XPS_BT_typ_LeafAsync. callback>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: handle
-		<virtual. XPS_BT_typ_LeafAsync. handle>
+		<base. XPS_BT_typ_LeafAsync. handle>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: preTick
-		<virtual. XPS_BT_typ_LeafAsync. preTick>
+		<base. XPS_BT_typ_LeafAsync. preTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: processTick
@@ -64,7 +64,7 @@ Flags:
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-		<virtual. XPS_BT_typ_LeafAsync. postTick>
+		<base. XPS_BT_typ_LeafAsync. postTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Action
@@ -85,14 +85,14 @@ Flags:
 	["Action",nil]
 	/*----------------------------------------------------------------------------
 	Method: Halt
-		<virtual. XPS_BT_typ_LeafAsync. Halt>
+		<base. XPS_BT_typ_LeafAsync. Halt>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Init
-		<virtual. XPS_BT_typ_LeafAsync. Init>
+		<base. XPS_BT_typ_LeafAsync. Init>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Tick
-		<virtual. XPS_BT_typ_LeafAsync. Tick>
+		<base. XPS_BT_typ_LeafAsync. Tick>
 	-----------------------------------------------------------------------------*/
 ]

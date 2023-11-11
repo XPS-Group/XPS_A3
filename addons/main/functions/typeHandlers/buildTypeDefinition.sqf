@@ -130,7 +130,6 @@ if ("#base" in keys _hashmap) then {
 
 	_preCompiled = createhashmapfromarray _pType;
 
-
 	private _pTypeName = _preCompiled get "#type";
 	private _keys = keys _hashmap;
 	{
@@ -152,13 +151,13 @@ if ("#base" in keys _hashmap) then {
 					switch (typeName _valuesToAppend) do {
 						case "ARRAY" : {
 								_valuesToAppend = +_valuesToAppend;
-								_valuesToAppend insert [0,_y];
-								_hashmap set [_x,_valuesToAppend]; // always allows duplicates
+								_y pushbackUnique _valuestoAppend; // does not allow duplicates
+								_hashmap set [_x,_valuesToAppend]; 
 							};
 						case "HASHMAP" : {
-							private _dcValue = +_y;
-							_dcValue merge [+_valuesToAppend,true];
-							_hashMap set [_x,_dcValue]; /* overwrites parent keys */
+							private _dCopy = +_y;
+							_dCopy merge [+_valuesToAppend,true]; // overwrites parent keys 
+							_hashMap set [_x,_dCopy]; 
 						};
 					};
 
@@ -172,12 +171,16 @@ if ("#base" in keys _hashmap) then {
 	[_preCompiled] call _fnc_recurseBases;
 
 	if (_noStack) then {
-		_preCompiled deleteat "#create";
-		_preCompiled deleteat "#clone";
-		_preCompiled deleteat "#delete";
+		{
+			if (_x in keys _precompiled) then {
+				if !(_x in _keys) then {_hashmap set [_x, _precompiled get _x]};
+				_preCompiled deleteat _x;
+			};
+		} foreach ["#create","#clone","#delete"];
 		_hashmap set ["#base",_preCompiled toArray false];
 	};
 	
+	// Merge for interface check
 	_preCompiled merge [_hashmap,true];
 	
 };

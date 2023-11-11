@@ -1,8 +1,16 @@
 #include "script_component.hpp"
 
+/* -------------------------------------------------------------------------
+Variable: unit_testing. XPS_UT
+
+Description:
+	This returns true once preInit has been completed
+
+Returns: <Boolean>
+---------------------------------------------------------------------------*/
 ADDON = false;
 
-// 
+diag_log text "[XPS UT preInit]";
 
 // Singleton Class Instantiations ------------------------------------------
 /* -------------------------------------------------------------------------
@@ -33,7 +41,7 @@ Description:
 Returns: 
 	<Static> - of <XPS_UT_typ_Assert>
 ---------------------------------------------------------------------------*/
-["XPS_UT_Assert","typedefs\Assert.sqf"] call XPS_fnc_createStaticFromFile;
+XPS_UT_Assert = compilefinal createhashmapobject [XPS_UT_typ_Assert];
 
 // Load Unit Test Classes --------------------------------------------------
 
@@ -48,4 +56,7 @@ Returns:
 {
 	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
 } foreach configProperties [campaignConfigFile >> QXPS_UT_CFG_BASECLASSNAME];
+
+diag_log text "[XPS UT preInit End]";
+
 ADDON = true;

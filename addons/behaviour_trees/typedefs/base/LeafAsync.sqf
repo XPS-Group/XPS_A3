@@ -1,13 +1,14 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. virtual. XPS_BT_typ_Composite
+TypeDef: behaviour_trees. base. XPS_BT_typ_LeafAsync
 	<TypeDefinition>
 
 Authors: 
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has multiple children
+	A node for a Behaviour Tree that has an <ProcessTick> method which is 
+	called when Ticked. 
 
 Parent:
     none
@@ -21,43 +22,54 @@ Flags:
 ---------------------------------------------------------------------------- */
 [
 	["#str",compileFinal {_self get "#type" select  0}],
-	["#type","XPS_BT_typ_Composite"],
+	["#type","XPS_BT_typ_LeafAsync"],
 	["@interfaces",["XPS_BT_ifc_INode"]],
-	/* ----------------------------------------------------------------------------
-	Protected: children 
+	/*----------------------------------------------------------------------------
+	Protected: callback
     
     	--- Prototype --- 
-    	get "children"
+    	call ["callback",_status]
     	---
 
-	Returns:
-		<Array> - of child nodes		
-	---------------------------------------------------------------------------- */
-	["children",[]],
-	/* ----------------------------------------------------------------------------
-	Protected: currentIndex
+	Description:
+		The callback which sets the status on the node after <processTick> has finished
+
+	Parameters:
+		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+
+	Returns: 
+		Nothing
+	-----------------------------------------------------------------------------*/
+	["callback",compileFinal {
+		_status = _this;
+		_self call ["postTick",_status];
+		_self set ["handle",nil];
+	}],
+	/*----------------------------------------------------------------------------
+	Protected: handle
     
     	--- Prototype --- 
-    	get "currentIndex"
+    	get "handle"
     	---
-
-	Returns:
-		<Number> - current tasked index of child nodes
-	---------------------------------------------------------------------------- */
-	["currentIndex",0],
+    
+    Returns: 
+		<Number> - the handle of the executing script called asynchronously.
+		Nil if not executing.
+	-----------------------------------------------------------------------------*/
+	["handle",nil],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
     	--- Prototype --- 
-    	_status = _self call ["preTick"]
+    	call ["preTick"]
     	---
 
 	Description:
 		The code that executes before a Tick cycle of a Behaviour Tree. Usually 
-		propogates down the tree if possible.
+		sets node to RUNNING status.
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		Nothing
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
@@ -73,15 +85,14 @@ Flags:
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
-		returns a status.
+		The code that executes during a Tick cycle of a Behaviour Tree 
 
-	Must be Overridden
+		Must be Overridden
 
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 	-----------------------------------------------------------------------------*/
-	["processTick",compileFinal {}],
+	["processTick",nil],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
@@ -92,6 +103,9 @@ Flags:
 	Description:
 		The code that executes after a Tick cycle of a Behaviour Tree and then
 		sets the <Status> property before going back up the tree.
+
+	Parameters:
+		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
 
 	Returns: 
 		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
@@ -123,9 +137,9 @@ Flags:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "COMPOSITE"
+		<String> - "LEAF"
 	-----------------------------------------------------------------------------*/
-	["NodeType","COMPOSITE"],
+	["NodeType","LEAF"],
 	/*----------------------------------------------------------------------------
 	Property: Status
     
@@ -140,48 +154,23 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
-	Constructor: #create
+	Method: Halt
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_BT_typ_Composite"]
-    	---
-
-	Returns:
-		_result - <HashmapObject> of a Composite node
-	-----------------------------------------------------------------------------*/
-	["#create", compileFinal {
-		_self set ["children",[]];
-		_self set ["currentIndex",0];
-	}],
-	/*----------------------------------------------------------------------------
-	Method: AddChildNode
-    
-    	--- Prototype --- 
-    	call ["AddChildNode",[childNode,_index]]
+    	call ["Halt"]
     	---
 
 	Description:
-		Adds a child node at the specified index. If index is out of bounds or unspecified,
-		it will append the child to the index. 
-
-	Parameters:
-		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
-		_index* - (optional - Default : -1) - the index in which to place the child node
+		Halts a script called asynchronously
 
 	Returns: 
-		<Boolean> - True if successful otherwise False
+		Nothing
 	-----------------------------------------------------------------------------*/
-	["AddChildNode",compileFinal {
-		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
-		if (isNil "_childNode") exitwith {false};
-		if !( CHECK_IFC1(_childNode,XPS_BT_ifc_INode) ) exitwith {false};
-
-		private _children = _self get "children";
-		private _count = count (_children);
-		if (_index < 0 ||_index >= _count) then {_index = -1};
-		_children insert [_index,[_childNode]];
-		_childNode set ["Blackboard",_self get "Blackboard"];
-		true;
+	["Halt",compileFInal {		
+		_handle = _self get "handle";
+		terminate _handle;
+		_self set ["handle",nil];
+		_self call ["postTick", NODE_FAILURE];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -200,13 +189,6 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
 		_self set ["Status",nil];
-		_self set ["currentIndex",0];
-		private _children = _self get "children";
-		{
-			if !(isNil "_x") then {
-				_x call ["Init"];
-			};
-		} foreach _children;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Tick
@@ -218,15 +200,23 @@ Flags:
 		<XPS_BT_ifc_INode>
 
 	Description:
-		The code that begins the entire Tick cycle process.
+		The code that begins the entire Tick cycle process. Calls proccessTick
+		asynchronously. Status should be RUNNING in most cases until processTick
+		has finished.
 
 	Returns: 
 		_status - <String> - returns <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {	
-		_self call ["preTick"];
-		_self call ["postTick",
-			_self call ["processTick"]
-		];
+	["Tick",compileFInal {		
+		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
+			_self call ["preTick"];	
+				_handle = _self spawn {
+					private _status = _this call ["processTick"]; 
+					_this call ["callback",_status]
+				};
+				_self set ["handle",_handle];
+			_self call ["postTick",_status];
+		};
+		_self get "Status";
 	}]
 ]

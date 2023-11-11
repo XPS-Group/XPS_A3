@@ -26,6 +26,10 @@ Description:
 	Supported Attributes in the preprocessor are:
 
 		- ["OBSOLETE"]
+		- ["CTOR",value]
+		- ["DTOR",value]
+		- ["CTOR_LAZ",value]
+		- ["DTOR_LAZY",value]
 		- ["CONDITIONAL",{code}] - must return a boolean
 		- ["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
 		- ["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
@@ -139,6 +143,7 @@ Example: Validation of values
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
+_debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
 _debugHeaders = [_debugHeaders] param [0,false,[true]];
 
 private _privateKeys = [];
@@ -150,8 +155,9 @@ private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
 
-private _typeName = (_typeDef select (_typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}})) select 1;
-_typeName = [_typeName,"<unknown type>"] select (isNil {_typeName});
+private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}};
+private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index == -1);
+private _typeName = _typeArray select (count _typeArray > 1);
 
 try 
 {
@@ -204,7 +210,9 @@ try
 
 			switch (toUpper _attCommand) do {
 				case "OBSOLETE" : {
-					_typeDef deleteat _i; 
+					if !(_attParams isEqualType "") then {throw format ["Obsolete Attribute for Key %2 contains %1. Expected String.",typename _attParams,_key]};
+					_value = call compile ((str _value) insert [0,_attParams]);
+					_keyPair set [1, _value];
 					breakTo "Main";
 				};
 				case "CONDITIONAL" : {
@@ -216,7 +224,7 @@ try
 				};
 				case "CTOR" : {
 					private _initValue = str _value;
-					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
+					if (!isNil "_attParams" && {_attParams isEqualType ""}) then {_initValue = _attParams} else {_initValue = str _attParams};
 					_ctor = _ctor + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR" : {
@@ -224,7 +232,7 @@ try
 				};
 				case "CTOR_LAZY" : {
 					private _initValue = str _value;
-					if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams};
+					if (!isNil "_attParams" && {_attParams isEqualType ""}) then {_initValue = _attParams} else {_initValue = str _attParams};
 					_ctor_l = _ctor_l + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR_LAZY" : {
@@ -293,8 +301,8 @@ try
 		};
 
 		if (_value isEqualType {}) then {
-			// Set header before replacing private keys
-			private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
+			// // Set header before replacing private keys
+			// private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
 
 			//Replace Private Keys in any code block
 			{
@@ -304,11 +312,11 @@ try
 				_keyPair set [1,_value];
 			} foreach _privateKeys;
 
-			//Finally Insert unaltered header
-			if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
-				private _strCode = (str _value) insert [1,_strHeader];
-				_keyPair set [1, call compile _strCode];
-			};
+			// //Finally Insert unaltered header
+			// if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
+			// 	private _strCode = (str _value) insert [1,_strHeader];
+			// 	_keyPair set [1, call compile _strCode];
+			// };
 		};
 	};
 
@@ -316,6 +324,6 @@ try
 
 } catch {
 	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
-	diag_log _exception;
+	diag_log text _exception;
 	false;
 };

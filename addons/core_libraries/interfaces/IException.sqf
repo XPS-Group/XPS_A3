@@ -22,11 +22,15 @@ Authors:
 	Property: Data
 		<Hashmap>
 
+	Property: GetText
+		<Code>
+
 ---------------------------------------------------------------------------- */
 [
 	["ExceptionType","STRING"],
 	["Source","ANYTING"],
 	["Target","ANYTHING"],
 	["Message","STRING"],
-	["Data","HASHMAP"]
+	["Data","HASHMAP"],
+	["GetText","CODE"]
 ]
