@@ -89,12 +89,16 @@ for "_a" from 0 to (count _interfaces -1) do {
 			// Check if Hashmap Object and get type if exists
 			if (_type isEqualTo "HASHMAP") then {
 				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
-				if (_types isEqualtype []) then {
-					if !(toLower _checkType in (_types apply {toLower _x})) then {
-						diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value types %3. Type %4 expected",_hashmap get "#type",_key,_types,_checkType]);
-						_result = false;
+				private _typeIfcs = (_hashmap get _key) getOrDefault ["@interfaces",_type];
+				if (_typeIfcs isEqualtype createhashmap) then {
+					if (toLower _checkType in ((keys _typeIfcs) apply {toLower _x})) then {
+						continue;
 					};
-					continue;
+				};
+				if (_types isEqualtype []) then {
+					if (toLower _checkType in (_types apply {toLower _x})) then {
+						continue;
+					};
 				};
 			};
 			if !(tolower _type isEqualTo tolower _checkType) then {
