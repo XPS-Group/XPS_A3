@@ -28,16 +28,16 @@ An Arma 3 Framework Mod
     - Type Safe Enumerations
     - Exceptions and Exception Handling
     
-  ## WIP Library Objects :
-    - Map and Road Pathfinding
-    - Hex or Square Map Grids
+  WIP Library Objects :
+  - Map and Road Pathfinding
+  - Hex or Square Map Grids
 
-  ## AI Features  
-    - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
-    - WIP - Use Action Planning / Utility AI for short or long term planning
-    - WIP - Replace the Danger/Formation FSM behaviors
+  AI Features  
+  - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
+  - WIP - Use Action Planning / Utility AI for short or long term planning
+  - WIP - Replace the Danger/Formation FSM behaviors
 
-#History
+# History
 This project started as the eXtensible Planning System - a mod to introduce Behaviour Trees, Utility AI, and Goal-Oriented Action Planning. I was using Hashmaps to create
 a simple OO-design prior to the introduction of HashmapObjects.
 
