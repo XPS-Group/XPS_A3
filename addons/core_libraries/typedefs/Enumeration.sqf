@@ -31,9 +31,52 @@ Flags:
 	["#str",compilefinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Enumeration"],
 	//["#flags",["unscheduled"]],
+	/*----------------------------------------------------------------------------
+	Property: Names
+    
+    	--- Prototype --- 
+    	get "Names"
+    	---
+    
+    Returns: 
+		<Array> - of all Type Names
+	-----------------------------------------------------------------------------*/
 	["Names",[]],
+	/*----------------------------------------------------------------------------
+	Property: ValueType
+    
+    	--- Prototype --- 
+    	get "ValueType"
+    	---
+    
+    Returns: 
+		<String> - can be "SCALAR", "STRING" or "TEXT"
+	-----------------------------------------------------------------------------*/
 	["ValueType","SCALAR"],
+	/*----------------------------------------------------------------------------
+	Property: Values
+    
+    	--- Prototype --- 
+    	get "Values"
+    	---
+    
+    Returns: 
+		<Array> - of all Values
+	-----------------------------------------------------------------------------*/
 	["Values",[]],
+	/*----------------------------------------------------------------------------
+	Method: IsDefined
+    
+    	--- Prototype --- 
+    	call ["IsDefined",[_lookup]]
+    	---
+	
+	Prameters:
+		_lookup - <Anything> - value to look up to see if Name or Value exists
+    
+    Returns: 
+		<Boolean> - True if _lookup value exists otherwisse False
+	-----------------------------------------------------------------------------*/
 	["IsDefined", {
 		params [["_lookup","",[0,"",text ""]]];
 		_lookup in keys _self;

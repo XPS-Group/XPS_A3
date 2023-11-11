@@ -1,12 +1,8 @@
 class CfgFunctions {
-	class PREFIX {
-		tag = "xps";
-		class Debug
-		{
-			XPS_CFG_FNC(createMissionDebugger);
-		};
-	};
 	class ADDON {
+		// class category {
+		// 	XPS_CFG_FNC(functionName);
+		// };
 		class Init {
 			class preInit {
 				file = FILEPATH_C_Q(preInit.sqf);

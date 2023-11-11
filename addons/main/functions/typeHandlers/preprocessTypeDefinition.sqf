@@ -224,7 +224,7 @@ try
 				};
 				case "CTOR" : {
 					private _initValue = str _value;
-					if (!isNil "_attParams" && {_attParams isEqualType ""}) then {_initValue = _attParams} else {_initValue = str _attParams};
+					if !(isNil "_attParams") then {if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams}};
 					_ctor = _ctor + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR" : {
@@ -232,7 +232,7 @@ try
 				};
 				case "CTOR_LAZY" : {
 					private _initValue = str _value;
-					if (!isNil "_attParams" && {_attParams isEqualType ""}) then {_initValue = _attParams} else {_initValue = str _attParams};
+					if !(isNil "_attParams") then {if (_attParams isEqualType "") then {_initValue = _attParams} else {_initValue = str _attParams}};
 					_ctor_l = _ctor_l + format["_self set [%1,%2];",str _key,_initValue]; 
 				};
 				case "DTOR_LAZY" : {
