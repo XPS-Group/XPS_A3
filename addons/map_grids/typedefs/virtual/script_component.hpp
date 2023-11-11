@@ -1,0 +1,1 @@
+#include "\x\xps\addons\mg\typedefs\script_component.hpp"
