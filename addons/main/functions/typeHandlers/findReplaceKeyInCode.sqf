@@ -32,7 +32,7 @@ Return: _result
 
 Example:
 	
-	---
+	--- code
 	private _code = {_self call "_privateKey"}; 
 	private _find = "_privateKey";
 	private _replace = "ABCD";
