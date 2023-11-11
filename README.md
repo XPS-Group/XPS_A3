@@ -28,11 +28,11 @@ An Arma 3 Framework Mod
     - Type Safe Enumerations
     - Exceptions and Exception Handling
     
-  # WIP Library Objects :
+  ## WIP Library Objects :
     - Map and Road Pathfinding
     - Hex or Square Map Grids
 
-  # AI Features  
+  ## AI Features  
     - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
     - WIP - Use Action Planning / Utility AI for short or long term planning
     - WIP - Replace the Danger/Formation FSM behaviors
