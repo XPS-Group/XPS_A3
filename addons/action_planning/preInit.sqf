@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 
 /* -------------------------------------------------------------------------
-Variable: core. XPS_AP
+Variable: action_planning. XPS_AP
 
 Description:
 	This returns true once preInit has been completed

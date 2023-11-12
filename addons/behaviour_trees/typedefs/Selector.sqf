@@ -45,7 +45,7 @@ Protected: currentIndex
 		Ticks all children at once. Any failures results in "FAILURE"
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _children = _self get "children";

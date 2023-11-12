@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 
 /* -------------------------------------------------------------------------
-Variable: core. XPS_MG
+Variable: map_grids. XPS_MG
 
 Description:
 	This returns true once preInit has been completed

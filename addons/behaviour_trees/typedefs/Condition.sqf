@@ -51,10 +51,10 @@ Flags:
 		returns a status.
 
 	Parameters:
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		if (_self call ["Condition"]) then {_status = NODE_SUCCESS} else {_status = NODE_FAILURE};

@@ -57,7 +57,7 @@ Flags:
 		propogates down the tree if possible.
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
@@ -79,7 +79,7 @@ Flags:
 	Must be Overridden
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {}],
 	/*----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ Flags:
 		sets the <Status> property before going back up the tree.
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
@@ -136,7 +136,7 @@ Flags:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - should only return "SUCCESS", "FAILED", "RUNNING", or <nil>
+		<Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------

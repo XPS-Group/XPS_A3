@@ -51,7 +51,7 @@ Flags:
 		returns a status.
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _status = _self get "Status";
@@ -76,7 +76,7 @@ Flags:
 		Must be Overridden.
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["Action",nil]
 	/*----------------------------------------------------------------------------
