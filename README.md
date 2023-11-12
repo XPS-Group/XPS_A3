@@ -8,55 +8,43 @@ An Arma 3 Framework Mod
 [ [Discord](https://discord.gg/ryXZjDY7En) ] 
 [ [Source Documentation](https://xps-group.github.io/) ] 
 
-### UPDATE Oct 2023 - 2.14 has been released to stable branch for some time now, yet some bugs in the createhashmapobject command exist in stable version. Fixes confirmed working in dev branch however. 
+### UPDATE Oct 2023 - 2.14 has been released to stable branch for some time now, yet some bugs in the createhashmapobject command exist
   - #base is limited to only Arrays as passing a Hashmap causes a CTD
   - #create fails to properly assign _self variable in a scheduled environment (works fine if called unscheduled via #flags or in unscheduled environment)
-  - unscheduled #flag causes function methods to return null but methods called in unscheduled context without the flag work fine. 
-
-  These bugs are accounted for in the project but, until they are fixed, some features are limited. 
 
 ## Features:
   - Bring an Object-Oriented Structure to your Mod
     - Interface Contracts
     - Type Definition Preprocessor
-      - Obfuscate "Private" methods and properties
-      - Add Preprocessor Attributes to validate or manipulate code during preprocessing
-      - Auto-Inject Constructor / Destructor setting of properties or backing fields
-    - Type Definition Builder
-      - Bring parent methods and propertes to your child classes
-      - Auto-Append Properties with Arrays and Hashmaps during inheritance.
     - Type Definition Caching Support
-    - Singleton / Static Object Creation
-  
-  - Common Core Object Library
+    - Optional Unit Testing framework
+    - Singleton / Static type creation
+    - Common Core Object Libraries   
+  - Use Built-in OOP library types for common utiltiies
     - A* Searching
-    - Blackboard
+    - Job Scheduling
     - Collections
     - Delegates and Multicast Delegates
-    - Job Scheduler
-  
-  - Other Libraries
-    - Behavior Trees
-      - Pre-defined Node Classes
-      - Tree Builder Function
-    - Optional Unit Testing framework
-      - Create Test Classes and Test Methods
-      - UI View of Tests
-      - Assert-Style Static Classes for testing code
+    - Type Safe Enumerations
+    - Exceptions and Exception Handling
+    
+  WIP Library Objects :
+  - Map and Road Pathfinding
+  - Hex or Square Map Grids
 
-  - Other [WIP] Libraries
-    - Action Planning / Utility AI
-    - Hex Grids
-    - Pathfinding
+  AI Features  
+  - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
+  - WIP - Use Action Planning / Utility AI for short or long term planning
+  - WIP - Replace the Danger/Formation FSM behaviors
 
-## History
-
+# History
 This project started as the eXtensible Planning System - a mod to introduce Behaviour Trees, Utility AI, and Goal-Oriented Action Planning. I was using Hashmaps to create
 a simple OO-design prior to the introduction of HashmapObjects.
 
 Since the announcement to introduce a new hashmap command 'createHashmapObject' for v2.14, this project has been rewritten to include additional features to the framework:
   - A better and standardized OOP approach (an example is to include an Interface-style contract system for building objects) and a general framework to foster Mod compatibility at the scripting level using those objects.
+
  
 Ultimately, it is my hope and goal to provide more creativity in the community. All constructive criticism and ideas are welcome here.
  
--Crashdome
+ -Crashdome
