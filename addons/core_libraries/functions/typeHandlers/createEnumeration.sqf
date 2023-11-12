@@ -132,6 +132,8 @@ Example: Using a definiton defined locally with no provided values
 		0 - "TAG_Pets_Cat"
 		1 - "TAG_Pets_Dog"
 		2 - "TAG_Pets_Bird"
+		"GetEnum" - Method to retrieve the global variable 'constant'
+		"IsDefined" - Method to determine if Name or Value exists
 
 
 	*TAG_Pets_Cat* - Static Class
@@ -160,6 +162,9 @@ Example: Using a definiton defined locally with no provided values
 		private _myOtherPet = TAG_Pets call ["GetEnum","Cat"];  // Cat - 0
 		private _myNeighborsPet = TAG_Pets_Bird;  // Bird - 2
 
+		private _myPetValue = _myPet get "Value"; // 1
+		private _myPetName = str _myPet;  // "Dog"
+
 		private _areSame = _myPet isEqualTo _myOtherPet; // False
 		
 		private _isDog = TAG_Pets_Dog isEqualRef _mypet;  // True
@@ -179,7 +184,7 @@ Example: Using a definiton defined locally with no provided values
 			};
 		};
     ---
-	
+
 Authors: 
 	Crashdome
 ------------------------------------------------------------------------------*/
