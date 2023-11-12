@@ -132,8 +132,8 @@ Example: Using a definiton defined locally with no provided values
 		0 - "TAG_Pets_Cat"
 		1 - "TAG_Pets_Dog"
 		2 - "TAG_Pets_Bird"
-		"GetEnum" - Method to retrieve the global variable 'constant'
-		"IsDefined" - Method to determine if Name or Value exists
+		GetEnum - Method to retrieve the global variable 'constant'
+		IsDefined - Method to determine if Name or Value exists
 
 
 	*TAG_Pets_Cat* - Static Class
