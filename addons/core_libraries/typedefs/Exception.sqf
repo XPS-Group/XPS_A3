@@ -59,7 +59,7 @@ Flags:
 		<XPS_ifc_IException>
     
     Returns: 
-		<Anything> - typcally the source <HashmapObject> that caused this error
+		Anything - typcally the source <HashmapObject> that caused this error
 	-----------------------------------------------------------------------------*/
 	["Source",nil],
 	/*----------------------------------------------------------------------------
@@ -72,7 +72,7 @@ Flags:
 		<XPS_ifc_IException>
     
     Returns: 
-		<Anything> - typcally the Method or Script Name that caused this error
+		Anything - typcally the Method or Script Name that caused this error
 	-----------------------------------------------------------------------------*/
 	["Target",nil],
 	/*----------------------------------------------------------------------------
@@ -83,8 +83,8 @@ Flags:
         ---
     
     Optionals: 
-        _source (optional) - <Anything>
-        _target (optional) - <Anything>
+        _source (optional) - Anything
+        _target (optional) - Anything
         _message (optional) - <String> - custom message to override the default
 
 	-----------------------------------------------------------------------------*/

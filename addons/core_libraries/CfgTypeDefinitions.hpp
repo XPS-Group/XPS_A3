@@ -19,6 +19,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 		XPS_CFG_TYP(Blackboard);
 		XPS_CFG_TYP(Collection);
 		XPS_CFG_TYP(Delegate);
+		XPS_CFG_TYP(Enumeration);
 		XPS_CFG_TYP(Exception);
 		XPS_CFG_TYP(HashmapCollection);
 		XPS_CFG_TYP(JobScheduler);		

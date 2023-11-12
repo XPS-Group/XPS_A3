@@ -61,6 +61,10 @@ Type: Object
 External:
 BI Wiki : <Object: https://community.bistudio.com/wiki/Object>
 
+Type: Scalar
+External:
+BI Wiki : <Scalar: https://community.bistudio.com/wiki/Number>
+
 Type: Script
 External:
 BI Wiki : <String: https://community.bistudio.com/wiki/Script_Handle>
@@ -73,11 +77,19 @@ Type: String
 External:
 BI Wiki : <String: https://community.bistudio.com/wiki/String>
 
+Type: Structered Text
+External:
+BI Wiki : <Structered Text: https://community.bistudio.com/wiki/Structured_Text>
+
 Type: Task
 External:
-BI Wiki : <String: https://community.bistudio.com/wiki/Task>
+BI Wiki : <Task: https://community.bistudio.com/wiki/Task>
+
+Type: Text
+External:
+BI Wiki : <Text: https://community.bistudio.com/wiki/Structured_Text>
 
 Type: Team Member
 External:
-BI Wiki : <String: https://community.bistudio.com/wiki/Team_Member>
+BI Wiki : <Team Member: https://community.bistudio.com/wiki/Team_Member>
 ------------------------------------------------------------------------------*/

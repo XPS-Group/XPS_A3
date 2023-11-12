@@ -96,7 +96,7 @@ Flags:
     
     Parameters: 
         key - <HashmapKey> 
-        item - <Anything> 
+        item - Anything 
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {false;};

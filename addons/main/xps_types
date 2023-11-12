@@ -34,12 +34,15 @@ Type: Enumeration
     <HashmapObject>
 
 Description:
-    A <HashmapObject> which holds a value that is constant.
+    A <HashmapObject> which holds a value that is constant and readonly. Typically 
+    has a Helper class to aide in retrieving the constant by Name or Value that is 
+    derived from <core. XPS_typ_Enumeration>
 
 See also: 
 
 	- <HashmapObjects>
-    - <main.typeHandlers.XPS_fnc_createEnumeration>
+    - <core. XPS_typ_Enumeration>
+    - <core.typeHandlers.XPS_fnc_createEnumeration>
 ---------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------
 Type: Singleton

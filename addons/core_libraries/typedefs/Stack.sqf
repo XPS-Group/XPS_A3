@@ -92,7 +92,7 @@ Flags:
 		none
 		
 	Returns:
-		<Anything> - last element in the stack or nil if empty - does not remove 
+		Anything - last element in the stack or nil if empty - does not remove 
 		from stack
     ----------------------------------------------------------------------------*/
 	["Peek",{
@@ -111,7 +111,7 @@ Flags:
 		none
 		
 	Returns:
-		<Anything> - removes and returns last element in the stack or nil if empty
+		Anything - removes and returns last element in the stack or nil if empty
     ----------------------------------------------------------------------------*/
 	["Pop",{
 		_self get "_stackArray" deleteat -1;
