@@ -110,7 +110,7 @@ Example: Using a definiton defined locally with no provided values
 
 	--- Code
 		private _enumDef = [
-			["#type","TAG_enum_Pets"],
+			["#type","TAG_typ_Pets"],
 			["ValueType","SCALAR"],
 			["Enumerations", [ "None", "Cat", "Dog", "Bird"]]
 		];
@@ -118,12 +118,12 @@ Example: Using a definiton defined locally with no provided values
 		private _result = ["TAG_Pets", _typeDef ] call XPS_fnc_createEnumeration; 
 	---
 
-	Thi will result in the following variables in being defined with the following <HashmapObject>:
+	This will result in the following variables in being defined with the following <HashmapObjects>:
 	
 	*TAG_Pets* - A Static class 
 
-		#str - "TAG_enum_Pets"
-		#type - ["TAG_enum_Pets", "XPS_typ_Enumeration"]
+		#str - "TAG_typ_Pets"
+		#type - ["TAG_typ_Pets", "XPS_typ_Enumeration"]
 		Names - [ "Cat", "Dog", "Bird"]
 		Values - [ 0, 1 ,2 ]
 		Cat - "TAG_Pets_Cat"
@@ -134,28 +134,31 @@ Example: Using a definiton defined locally with no provided values
 		2 - "TAG_Pets_Bird"
 
 
-	*TAG_Pets_Cat*
+	*TAG_Pets_Cat* - Static Class
 
 		#str - "Cat"
-		#type - "TAG_enum_Pets_Cat"
+		#type - "TAG_Pets_Cat"
 		Value - 0
 		
-	*TAG_Pets_Dog*
+	*TAG_Pets_Dog* - Static Class
 
 		#str - "Dog"
-		#type - "TAG_enum_Pets_Dog"
+		#type - "TAG_Pets_Dog"
 		Value - 1
 
-	*TAG_Pets_Bird*
+	*TAG_Pets_Bird* - Static Class
 
 		#str - "Bird"
-		#type - "TAG_enum_Pets_Bird"
+		#type - "TAG_Pets_Bird"
 		Value - 2
 
+
 	With which you can do the following (and more)
+
 	--- code 		
-		private _myPet = TAG_Pets get 1; // Dog - 1
-		private _myOtherPet = TAG_Pets get "Cat";  // Cat - 0
+		private _myPet = TAG_Pets call ["GetEnum",1]; // Dog - 1
+		private _myOtherPet = TAG_Pets call ["GetEnum","Cat"];  // Cat - 0
+		private _myNeighborsPet = TAG_Pets_Bird;  // Bird - 2
 
 		private _areSame = _myPet isEqualTo _myOtherPet; // False
 		
@@ -163,7 +166,7 @@ Example: Using a definiton defined locally with no provided values
 
 		private _areAnyBird = TAG_Pets_Bird in [_mypet, _myOtherPet]; // False
 
-		_myPet = Tag_Pets get selectrandom [0,1,2]
+		_myPet = Tag_Pets call ["GetEnum",selectrandom [0,1,2]];
 		switch (_myPet) do {
 			case (TAG_Pets_Dog) : {
 				hint "I am a good boy!!"
@@ -176,6 +179,7 @@ Example: Using a definiton defined locally with no provided values
 			};
 		};
     ---
+	
 Authors: 
 	Crashdome
 ------------------------------------------------------------------------------*/
