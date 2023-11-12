@@ -61,7 +61,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			_status = NODE_RUNNING;
+			private _status = XPS_BT_Result_Running;
 			_self set ["Status",_status];
 		};
 	}],

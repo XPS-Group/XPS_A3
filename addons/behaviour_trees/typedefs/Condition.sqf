@@ -57,7 +57,7 @@ Flags:
 		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		if (_self call ["Condition"]) then {_status = NODE_SUCCESS} else {_status = NODE_FAILURE};
+		private _status = if (_self call ["Condition"]) then {XPS_BT_Result_Success} else {XPS_BT_Result_Failure};
 		_status;
 	}],
 	/*----------------------------------------------------------------------------

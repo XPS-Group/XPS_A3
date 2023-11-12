@@ -49,7 +49,7 @@ Protected: currentIndex
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _children = _self get "children";
-		private _finalStatus = NODE_SUCCESS;
+		private _finalStatus = XPS_BT_Result_Success;
 
 		while {(_self get "currentIndex") < count _children} do {
 			private _currentIndex = _self get "currentIndex";
@@ -63,8 +63,8 @@ Protected: currentIndex
 
 		for "_i" from 0 to (count _children)-1 do {
 			private _status = (_children#_index) get "Status";
-			if (_status == NODE_FAILURE) then {_finalStatus == NODE_FAILURE};
-			if (_status == NODE_RUNNING && !(_finalStatus == NODE_FAILURE)) then {_finalStatus == NODE_RUNNING};
+			if (_status isEqualTo XPS_BT_Result_Failure) then {_finalStatus = XPS_BT_Result_Failure};
+			if (_status isEqualTo XPS_BT_Result_Running && !(_finalStatus isEqualTo XPS_BT_Result_Failure)) then {_finalStatus = XPS_BT_Result_Running};
 		};
 		_finalStatus;
 	}],

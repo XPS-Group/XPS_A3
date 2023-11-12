@@ -40,7 +40,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			_status = NODE_RUNNING;
+			_status = "RUNNING";
 			_self set ["Status",_status];
 		};
 	}],

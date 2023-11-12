@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_BT_typ_Result
+TypeDef: behaviour_trees. XPS_BT_enum_Result
 	<TypeDefinition>
 
 Authors: 
@@ -20,7 +20,8 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_BT_typ_Result"],
+	["#type","XPS_BT_enum_Result"],
+	["#base",XPS_typ_Enumeration],
 	["ValueType","STRING"],
 	["Enumerations", [["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
 ]

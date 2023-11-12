@@ -73,7 +73,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			_status = NODE_RUNNING;
+			_status = XPS_BT_Result_Running;
 			_self set ["Status",_status];
 		};
 	}],
@@ -170,7 +170,7 @@ Flags:
 		_handle = _self get "handle";
 		terminate _handle;
 		_self set ["handle",nil];
-		_self call ["postTick", NODE_FAILURE];
+		_self call ["postTick", XPS_BT_Result_Failure];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init

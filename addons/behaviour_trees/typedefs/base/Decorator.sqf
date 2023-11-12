@@ -51,7 +51,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			_status = NODE_RUNNING;
+			private _status = XPS_BT_Result_Running;
 			_self set ["Status",_status];
 		};
 	}],
@@ -72,7 +72,7 @@ Flags:
 	["processTick",compileFinal {
 		private _status = _self get "Status";
 		private _child = _self get "child";
-		if (isNil "_child") exitwith {NODE_FAILURE};
+		if (isNil "_child") exitwith {XPS_BT_Result_Failure};
 		if (isNil {_child get "Status"}) then {
 			_status = _child call ["Tick"];
 		} else {

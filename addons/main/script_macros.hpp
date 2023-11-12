@@ -76,7 +76,7 @@
     isFinal = 0;\
 }
 
-#define XPS_CFG_TYP_ENUM(sub,typName) class typName {\
+#define XPS_CFG_ENUM_SUB(sub,typName) class typName {\
     file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
     type = "enum";\
     preprocess = 1;\

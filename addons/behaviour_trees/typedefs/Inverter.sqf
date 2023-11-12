@@ -60,8 +60,8 @@ Protected: child
 		private _status = _self call ["XPS_BT_typ_Decorator.processTick"];
         // Invert Status
         switch (_status) do {
-            case NODE_SUCCESS : {_status = NODE_FAILURE;};
-            case NODE_FAILURE : {_status = NODE_SUCCESS;};
+            case XPS_BT_Result_Success : {_status = XPS_BT_Result_Failure;};
+            case XPS_BT_Result_Failure : {_status = XPS_BT_Result_Success;};
         };
 		_status;
 	}],
