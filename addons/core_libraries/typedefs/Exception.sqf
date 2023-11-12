@@ -21,19 +21,19 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self get "#type" select 0}],
+	["#str", {_self call ["GetText"]}],
 	["#type","XPS_typ_Exception"],
 	/*----------------------------------------------------------------------------
-	Property: Message
+	Property: Data
     
     	--- Prototype --- 
-    	get "Message"
+    	get "Data"
     	---
 		
 		<XPS_ifc_IException>
     
     Returns: 
-		<String> - A message about the exception thrown
+		<Hashmap> - provides more detail about the exception
 	-----------------------------------------------------------------------------*/
 	["Data",nil],
 	/*----------------------------------------------------------------------------
@@ -79,13 +79,14 @@ Flags:
 	Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_typ_Exception, _source", _target*, _message*]
+        createhashmapobject [XPS_typ_Exception, _source*, _target*, _message*, _data*]
         ---
     
     Optionals: 
-        _source (optional) - Anything
-        _target (optional) - Anything
-        _message (optional) - <String> - custom message to override the default
+        _source - (optional - Default: nil) - Anything
+        _target - (optional - Default: nil) - Anything
+        _message - (optional - Default: nil) - <String> - custom message to override the default
+        _data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
 
 	-----------------------------------------------------------------------------*/
 	["#create",{
@@ -97,13 +98,31 @@ Flags:
 		_self set ["Target",_target];
 		if !(isNil "_message") then {_self set ["Message",_message]};
 		_self set ["Data",_data];
-		 //TODO : If I ever get a debugger going
+		 //TODO : If I ever get an ingame debugger going
 		// if !(isNil {XPS_MissionDebugger}) then {
 		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];
 		// };
 	}],
+	/*----------------------------------------------------------------------------
+	Method: GetText
+    
+        --- prototype
+        call ["GetText"]
+        ---
+
+	Returns:
+		<Text> - A Structured Text formatted as follows:
+
+		---text
+		XPS_typ_Exception:
+		         Source: (source)
+				 Target: (target)
+		         Message: (message)
+		         Data: (data)
+		---
+	-----------------------------------------------------------------------------*/
 	["GetText",{text format[
-			"%1:"+endl+"         Source: %2"+endl+"         Target: %3"+endl+"         Message: %4"+endl+"         Data: %5",
+			endl+"%1:"+endl+"    Source: %2"+endl+"    Target: %3"+endl+"    Message: %4"+endl+"    Data: %5",
 			_self get "#type" select 0,
 			_self get "Source",
 			_self get "Target",

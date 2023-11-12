@@ -1,28 +1,28 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: unit_testing. XPS_UT_typ_AssertFailedException
+TypeDef: core. exceptions. XPS_typ_ArgummentNilException
 	<TypeDefinition>
+
 
 Authors: 
 	Crashdome
    
 Description:
-	An exception for when an assertion from <XPS_UT_Assert> has failed.
+	An exception for when an argument is nil and not expected to be.
 
 Parent:
-    <core. XPS_typ_Exception>
+    <XPS_typ_Exception>
 
 Implements:
-    <core. XPS_ifc_IException>
+    <XPS_ifc_IException>
 
 Flags:
     none
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_UT_typ_AssertFailedException"],
+	["#type","XPS_typ_ArgummentNilException"],
 	["#base",XPS_typ_Exception],
-	
 	/*----------------------------------------------------------------------------
 	Property: Data
     
@@ -47,9 +47,9 @@ Flags:
 		<XPS_ifc_IException>
     
     Returns: 
-		<String> - Assertion Failed
+		<String> - Argument was Nil when Nil is not Accepted
 	-----------------------------------------------------------------------------*/
-	["Message","Assertion Failed"]
+	["Message","One or more arguments were Nil when Nil is not Accepted"]
 	/*----------------------------------------------------------------------------
 	Property: Source
     
@@ -82,7 +82,7 @@ Flags:
 	Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_UT_typ_AssertFailedException, _source*, _target*, _message*, _data*]
+        createhashmapobject [XPS_typ_ArgummentNilException, _source*, _target*, _message*, _data*]
         ---
     
     Optionals: 
@@ -103,7 +103,7 @@ Flags:
 		<Text> - A Structured Text formatted as follows:
 
 		---text
-		XPS_UT_typ_AssertFailedException:
+		XPS_typ_ArgummentNilException:
 		         Source: (source)
 				 Target: (target)
 		         Message: (message)

@@ -48,6 +48,11 @@ Keys:
 ---------------------------------------------------------------------------*/
 ["XPS_BT_Result",XPS_BT_enum_Result] call XPS_fnc_createEnumeration;
 
+// Add Unhandled Exception Event to dump Exception types to RPT
+addMissionEventHandler ["ScriptError",{
+	
+}];
+
 diag_log (text "[XPS BT preInit End]");
 
 ADDON = true;
