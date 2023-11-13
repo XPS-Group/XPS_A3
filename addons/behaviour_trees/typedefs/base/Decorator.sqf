@@ -47,11 +47,11 @@ Flags:
 		propogates down the tree if possible.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			private _status = XPS_BT_Result_Running;
+			private _status = XPS_BT_Status_Running;
 			_self set ["Status",_status];
 		};
 	}],
@@ -67,12 +67,12 @@ Flags:
 		returns a status.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _status = _self get "Status";
 		private _child = _self get "child";
-		if (isNil "_child") exitwith {XPS_BT_Result_Failure};
+		if (isNil "_child") exitwith {XPS_BT_Status_Failure};
 		if (isNil {_child get "Status"}) then {
 			_status = _child call ["Tick"];
 		} else {
@@ -92,7 +92,7 @@ Flags:
 		sets the <Status> property before going back up the tree.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
@@ -134,7 +134,7 @@ Flags:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------

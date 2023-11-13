@@ -54,14 +54,14 @@ Protected: child
 		returns a status.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _status = _self call ["XPS_BT_typ_Decorator.processTick"];
         // Invert Status
         switch (_status) do {
-            case XPS_BT_Result_Success : {_status = XPS_BT_Result_Failure;};
-            case XPS_BT_Result_Failure : {_status = XPS_BT_Result_Success;};
+            case XPS_BT_Status_Success : {_status = XPS_BT_Status_Failure;};
+            case XPS_BT_Status_Failure : {_status = XPS_BT_Status_Success;};
         };
 		_status;
 	}],

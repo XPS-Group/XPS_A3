@@ -35,7 +35,7 @@ Flags:
 		The callback which sets the status on the node after <processTick> has finished
 
 	Parameters:
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 
 	Returns: 
 		Nothing
@@ -73,7 +73,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			_status = XPS_BT_Result_Running;
+			_status = XPS_BT_Status_Running;
 			_self set ["Status",_status];
 		};
 	}],
@@ -90,7 +90,7 @@ Flags:
 		Must be Overridden
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",nil],
 	/*----------------------------------------------------------------------------
@@ -105,10 +105,10 @@ Flags:
 		sets the <Status> property before going back up the tree.
 
 	Parameters:
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
@@ -150,7 +150,7 @@ Flags:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<Enumeration> - <XPS_BT_Result_Success>, <XPS_BT_Result_Failure>, or <XPS_BT_Result_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
@@ -170,7 +170,7 @@ Flags:
 		_handle = _self get "handle";
 		terminate _handle;
 		_self set ["handle",nil];
-		_self call ["postTick", XPS_BT_Result_Failure];
+		_self call ["postTick", XPS_BT_Status_Failure];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
