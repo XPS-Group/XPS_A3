@@ -11,15 +11,15 @@ Function: main. typeHandlers. XPS_fnc_buildTypeDefinition
 	---
 
 Description:
-    Used to define a global declaration for a <Hashmap> or <HashmapObject> 
+    Used to define a global declaration for a type <Array> (<Hashmap> for v2.16 onward)
 
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
 	_<String> - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
 	a unique identifier every time the type definition is rebuilt. See <XPS_fnc_preprocessTypeDefinition> for more info
 
-	@<String> - any key named as such with an @ symbol and also has an <array> value type, will be appended. For example, "@MyArray" key in parent
-	with a value of [1,2,3] and a child type which inherits but has a value of [4,5,6] will become [1,2,3,4,5,6]. The most common usage 
+	@String - any key named as such with an @ symbol and also has an <array> value type, will be appended (unique only). For example, "@MyArray" key in parent
+	with a value of [1,2,3] and a child type which inherits but has a value of [2,3,4,5,6] will become [1,2,3,4,5,6]. The most common usage 
 	will be the special "@interfaces" key which is used in checking Method/Property compliance. 
 
 	@interfaces - an <array> of <strings> - e.g. ["IShape", "IObject"] - where each string is a valid global variable containing an <Interface> <array>
@@ -54,49 +54,6 @@ See <XPS_fnc_preprocessTypeDefinition> for more info.
 
 Return: _typeDefinition
 	<TypeDefinition> - or False if error
-
-Example: No Inheritance
-    --- Code
-		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
-
-		private _myObjA = createhashmapobject [TypeA];
-		_myObj call ["Method"] //hints 'Hi'
-    ---
-
-Example: Implements Interface
-    --- Code
-		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
-		
-		//This FAILS because PropertyA and Method do not exist
-		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["@interfaces",["MyInterface"]],["PropertyB",10]];
-        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
-
-		//Does not fail because PropertyA and Method exist
-		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
-
-		private _myObjA = createhashmapobject [TypeA];
-		_myObj call ["Method"] //hints 'Hi'
-    ---
-
-Example: Implements Interface with Inheritance
-    --- Code
-		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
-
-		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
-
-		MyTypeDefB = [["#str",compileFinal {_self get "#type" select  0}],["#base", MyTypeDefA ],["PropertyA","Goodbye"],["Method",compileFinal {hint "Bye"}]];
-        TAG_TypeB = ["MyTypeDefB"] call XPS_fnc_buildTypeDefinition; 
-
-		// Both TypeA and TypeB will implement interface from inheritance but PropertyA and Method are overridden in TypeB 
-		private _myObjA = createhashmapobject [TypeA];
-		_myObj call ["Method"] //hints 'Hi'
-
-		private _myObjB = createhashmapobject [TypeB];
-		_myObj call ["Method"] //hints 'Bye'
-    ---
 
 ---------------------------------------------------------------------------- */
 if !(params [["_type",nil,[[]]],"_allowNils","_preprocess","_noStack","_headers"]) exitwith {false;};
@@ -194,3 +151,49 @@ if (isNil {_interfaces} || {[_preCompiled, keys _interfaces, _allowNils] call XP
 	diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	nil;
 };
+
+/*------------------------------------------------------------------------------
+Example: No Inheritance
+    --- Code
+		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
+
+		private _myObjA = createhashmapobject [TypeA];
+		_myObj call ["Method"] //hints 'Hi'
+    ---
+
+Example: Implements Interface
+    --- Code
+		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
+		
+		//This FAILS because PropertyA and Method do not exist
+		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["@interfaces",["MyInterface"]],["PropertyB",10]];
+        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
+
+		//Does not fail because PropertyA and Method exist
+		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
+
+		private _myObjA = createhashmapobject [TypeA];
+		_myObj call ["Method"] //hints 'Hi'
+    ---
+
+Example: Implements Interface with Inheritance
+    --- Code
+		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
+
+		MyTypeDefA = [["#str",compileFinal {_self get "#type" select  0}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+        TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
+
+		MyTypeDefB = [["#str",compileFinal {_self get "#type" select  0}],["#base", MyTypeDefA ],["PropertyA","Goodbye"],["Method",compileFinal {hint "Bye"}]];
+        TAG_TypeB = ["MyTypeDefB"] call XPS_fnc_buildTypeDefinition; 
+
+		// Both TypeA and TypeB will implement interface from inheritance but PropertyA and Method are overridden in TypeB 
+		private _myObjA = createhashmapobject [TypeA];
+		_myObj call ["Method"] //hints 'Hi'
+
+		private _myObjB = createhashmapobject [TypeB];
+		_myObj call ["Method"] //hints 'Bye'
+    ---
+
+------------------------------------------------------------------------------*/

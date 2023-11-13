@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. exceptions. XPS_typ_ArgummentNilException
+TypeDef: core. exceptions. XPS_typ_ArgumentNilException
 	<TypeDefinition>
 
 
@@ -21,7 +21,7 @@ Flags:
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_typ_ArgummentNilException"],
+	["#type","XPS_typ_ArgumentNilException"],
 	["#base",XPS_typ_Exception],
 	/*----------------------------------------------------------------------------
 	Property: Data
@@ -82,7 +82,7 @@ Flags:
 	Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_typ_ArgummentNilException, _source*, _target*, _message*, _data*]
+        createhashmapobject [XPS_typ_ArgumentNilException, _source*, _target*, _message*, _data*]
         ---
     
     Optionals: 
@@ -103,7 +103,7 @@ Flags:
 		<Text> - A Structured Text formatted as follows:
 
 		---text
-		XPS_typ_ArgummentNilException:
+		XPS_typ_ArgumentNilException:
 		         Source: (source)
 				 Target: (target)
 		         Message: (message)

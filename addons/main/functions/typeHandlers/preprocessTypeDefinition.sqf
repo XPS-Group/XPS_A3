@@ -25,7 +25,7 @@ Description:
 
 	Supported Attributes in the preprocessor are:
 
-		- ["OBSOLETE"]
+		- ["OBSOLETE"] - used on methods no longer used but kept for backwards compatibility
 		- ["CTOR",value]
 		- ["DTOR",value]
 		- ["CTOR_LAZ",value]
@@ -52,94 +52,6 @@ Optional: _headers
 	<Boolean> - determines if debug headers should be injected into code blocks  
 
 Return: Nothing
-
-Example: Private Properties
-
-	The array :
-
-	---code
-	[
-		["_propertyA",10],
-		["_propertyB",10],
-		["MethodA",{ (_self get "_propertyA") + (_self get "_propertyB")}]
-	]
-	---
-
-	After calling this function would modify the original array to something like:
-	
-	---code
-	[
-		["f372a1c1",10],
-		["9ade556a",10],
-		["MethodA",{ (_self get "f372a1c1") + (_self get "9ade556a")}]
-	]
-	---
-
-	Which can then be converted to a <HashmapObject> preventing "_propertyA" or 
-	"_propertyB" to be called by an external function or method.
-
-Example: Obsolete Methods/Properties
-
-	The array :
-
-	---code
-	[
-		["PropertyA",10,[["OBSOLETE"]]], // We dont use this anymore!
-		["MethodA",{ "some old code here"},[["OBSOLETE"]]], // This has been replaced
-		["MethodA",{ "some new code here"}]
-	]
-	---
-
-	After calling this function would modify the original array to something like:
-	
-	---code
-	[
-		["MethodA",{ "some new code here"}]
-	]
-	---
-
-Example: Conditional
-
-	The array :
-
-	---code
-	[
-		["MethodA",{ "some code dependant on MyVar being >= 10"},[["CONDITIONAL",{MyVar >= 10}]]],
-		["MethodA",{ "some code dependant on MyVar being < 10"},[["CONDITIONAL",{MyVar < 10}]]]
-	]
-	---
-
-	After calling this function, if MyVar was 13, it would modify the original array to something like:
-	
-	---code
-	[
-		["MethodA",{ "some code dependant on MyVar being >= 10"}]
-	]
-	---
-
-	Note: Good for versioning and mod compatibility
-
-Example: Validation of values
-
-	The array :
-
-	---code
-	[
-		["PropertyA",[1,2,3,4,"A"],[["VALIDATE_ALL",0]]],
-		["PropertyB",SomeGlobalVar,[["VALIDATE_TYPE",""]]]
-	]
-	---
-
-	After calling this function, if SomeGlobalVar was "Hello World":
-	
-	---code
-	[
-		["PropertyA", [1,2,3,4] , [["VALIDATE_TYPE,[]]  ,["VALIDATE_ALL",0]] ],  // This would vaildate true and continue
-		["PropertyB",SomeGlobalVar,[["VALIDATE_TYPE",objNull]]]  // This would cause the type to not compile and an error would be sent to the RPT
-	]
-	---
-
-	Note: Good for checking properties that are dependant on an external variable 
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
@@ -327,3 +239,96 @@ try
 	diag_log text _exception;
 	false;
 };
+
+/*----------------------------------------------------------------------------------
+
+Example: Private Properties
+
+	The array :
+
+	---code
+	[
+		["_propertyA",10],
+		["_propertyB",10],
+		["MethodA",{ (_self get "_propertyA") + (_self get "_propertyB")}]
+	]
+	---
+
+	After calling this function would modify the original array to something like:
+	
+	---code
+	[
+		["f372a1c1",10],
+		["9ade556a",10],
+		["MethodA",{ (_self get "f372a1c1") + (_self get "9ade556a")}]
+	]
+	---
+
+	Which can then be converted to a <HashmapObject> preventing "_propertyA" or 
+	"_propertyB" to be get, set, or called by an external function or method.
+
+Example: Obsolete Methods
+
+	The array :
+
+	---code
+	[
+		["PropertyA",10], 
+		["MethodA",{ "some old code here"},[["OBSOLETE","diag_log ""Warning! MethodA is old. Use MethodA_New"";"]]], // This has been replaced
+		["MethodA_New",{ "some new code here"}]
+	]
+	---
+
+	After calling this function would modify the original array to something like:
+	
+	---code
+	[
+		["PropertyA",10], 
+		["MethodA",{ "diag_log ""Warning! MethodA is old. Use MethodA_New""; some old code here"}], 
+		["MethodA_New",{ "some new code here"}]
+	]
+	---
+
+Example: Conditional
+
+	The array :
+
+	---code
+	[
+		["MethodA",{ "some code dependant on MyVar being >= 10" },[["CONDITIONAL",{MyVar >= 10}]]],
+		["MethodA",{ "some code dependant on MyVar being < 10" },[["CONDITIONAL",{MyVar < 10}]]]
+	]
+	---
+
+	After calling this function, if MyVar was 13, it would modify the original array to something like:
+	
+	---code
+	[
+		["MethodA",{ "some code dependant on MyVar being >= 10" }]
+	]
+	---
+
+	Note: Good for versioning and mod compatibility
+
+Example: Validation of values
+
+	The array :
+
+	---code
+	[
+		["PropertyA",[1,2,3,4,"A"],[["VALIDATE_ALL",0]]], // This would vaildate false and cause the type to not compile and an error would be sent to the RPT
+		["PropertyB",SomeGlobalVar,[["VALIDATE_TYPE",""]]]
+	]
+	---
+
+	Another example of calling this function, if SomeGlobalVar was "Hello World":
+	
+	---code
+	[
+		["PropertyA", [1,2,3,4] , [["VALIDATE_ALL",0]] ],  // This would vaildate true and continue
+		["PropertyB",SomeGlobalVar,[["VALIDATE_TYPE",objNull]]]  // This would cause the type to not compile and an error would be sent to the RPT
+	]
+	---
+
+	Note: Good for checking properties that are dependant on an external variable 
+----------------------------------------------------------------------------------*/
