@@ -96,7 +96,9 @@ Flags:
 		from queue
     ----------------------------------------------------------------------------*/
 	["Peek",{
-		_self get "_queueArray" select 0;
+        if !(_self call ["IsEmpty"]) then {
+		    _self get "_queueArray" select 0;
+        } else {nil};
 	}],
     /*----------------------------------------------------------------------------
     Method: Pop
@@ -114,7 +116,9 @@ Flags:
 		Anything - removes and returns last element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
 	["Dequeue",{
-		_self get "_queueArray" deleteat 0;
+        if !(_self call ["IsEmpty"]) then {
+		    _self get "_queueArray" deleteat 0;
+        } else {nil};
 	}],
     /*----------------------------------------------------------------------------
     Method: Push

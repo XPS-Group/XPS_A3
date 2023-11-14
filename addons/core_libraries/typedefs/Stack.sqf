@@ -96,7 +96,9 @@ Flags:
 		from stack
     ----------------------------------------------------------------------------*/
 	["Peek",{
-		_self get "_stackArray" select -1;
+        if !(_self call ["IsEmpty"]) then {
+		    _self get "_stackArray" select -1;
+        } else {nil};
 	}],
     /*----------------------------------------------------------------------------
     Method: Pop
@@ -114,7 +116,9 @@ Flags:
 		Anything - removes and returns last element in the stack or nil if empty
     ----------------------------------------------------------------------------*/
 	["Pop",{
-		_self get "_stackArray" deleteat -1;
+        if !(_self call ["IsEmpty"]) then {
+		    _self get "_stackArray" deleteat -1;
+        } else {nil};
 	}],
     /*----------------------------------------------------------------------------
     Method: Push
