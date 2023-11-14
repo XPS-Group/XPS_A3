@@ -47,7 +47,6 @@ private _fnc_createEnumConstant = {
 	private _gVar = format["%1_%2",_var,_name];
 	private _objInstance = call compile _gVar;
 	if (isNil "_objInstance" || {_objInstance isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];_objInstance = _hashObject};
-	diag_log _objInstance;
 	_def set [_name , _gVar ];
 	_def set [_val , _gVar ];
 };
@@ -173,13 +172,13 @@ Example: Using a definiton defined locally with no provided values
 
 		_myPet = Tag_Pets call ["GetEnum",selectrandom [0,1,2]];
 		switch (_myPet) do {
-			case (TAG_Pets_Dog) : {
+			case TAG_Pets_Dog : {
 				hint "I am a good boy!!"
 			};
-			case (TAG_Pets_Cat) : {
+			case TAG_Pets_Cat : {
 				hint "I am a jerk."
 			};
-			case (TAG_Pets_Bird) : {
+			case TAG_Pets_Bird : {
 				hint "Chirp!!"
 			};
 		};

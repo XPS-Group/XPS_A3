@@ -45,7 +45,7 @@ Protected: currentIndex
 		Ticks all children at once. Any failures results in "FAILURE"
 
 	Returns: 
-		_status - <String> - "RUNNING", "SUCCESS", "FAILURE", or nil
+		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _children = _self get "children";
@@ -56,20 +56,20 @@ Protected: currentIndex
 		_status = _child call ["Tick"];
 
 		switch (_status) do {
-			case NODE_SUCCESS : {
+			case XPS_BT_Status_Success : {
 				_currentIndex = _currentIndex+1;
 				if (_currentIndex < count _children) then {
 					_self set ["currentIndex",_currentIndex];
-					_status = NODE_RUNNING;
+					_status = XPS_BT_Status_Running;
 				};
 			};
-			case NODE_FAILURE : {
+			case XPS_BT_Status_Failure : {
 				// Do Nothing - keep status failure
 			};
-			case NODE_RUNNING : {
+			case XPS_BT_Status_Running : {
 				// Do Nothing - keep index and status same
 			};
-			default {_status = NODE_FAILURE};
+			default {_status = XPS_BT_Status_Failure};
 		};
 		_status;
 	}],

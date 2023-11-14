@@ -1,12 +1,20 @@
 
 class XPS_CFG_TD_BASECLASSNAME {
 	class ADDON {
-		XPS_CFG_IFC(INode);
+		class Interfaces {
+			XPS_CFG_IFC(INode);
+		};
 
-		XPS_CFG_TYP_SUB(base,Composite);
-		XPS_CFG_TYP_SUB(base,Decorator);
-		XPS_CFG_TYP_SUB(base,Leaf);
-		XPS_CFG_TYP_SUB(base,LeafAsync);
+		class Enumerations {
+			XPS_CFG_ENUM(Result);
+		}; 
+
+		class Base {
+			XPS_CFG_TYP_SUB(base,Composite);
+			XPS_CFG_TYP_SUB(base,Decorator);
+			XPS_CFG_TYP_SUB(base,Leaf);
+			XPS_CFG_TYP_SUB(base,LeafAsync);
+		};
 
 		XPS_CFG_TYP(Action);
 		XPS_CFG_TYP(ActionAsync);
@@ -16,5 +24,6 @@ class XPS_CFG_TD_BASECLASSNAME {
 		XPS_CFG_TYP(Selector);
 		XPS_CFG_TYP(Sequence);
 		XPS_CFG_TYP(SubTree);
+		
 	};
 };

@@ -1,12 +1,13 @@
 #include "script_component.hpp"
 
 /* -------------------------------------------------------------------------
-Variable: core. XPS_AP
+Variable: action_planning. XPS_AP
 
 Description:
 	This returns true once preInit has been completed
 
-Returns: <Boolean>
+Returns: 
+	<Boolean> - Nil prior to preInit function, False once preInit starts, True if preInit has completed
 ---------------------------------------------------------------------------*/
 ADDON = false;
 

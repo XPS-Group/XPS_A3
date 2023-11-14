@@ -1,7 +1,7 @@
 #include "script_component.hpp"
 
 /* -------------------------------------------------------------------------
-Variable: core. XPS_PF
+Variable: pathfinding. XPS_PF
 
 Description:
 	This returns true once preInit has been completed

@@ -1,41 +1,32 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_Exception
+TypeDef: unit_testing. exceptions. XPS_UT_typ_AssertInconclusiveException
 	<TypeDefinition>
+
 
 Authors: 
 	Crashdome
    
 Description:
-	<HashmapObject> which stores data about an error condition. 
-	Typically is thrown using the <throw: https://community.bistudio.com/wiki/throw> command and
-	possibly handled using <try: https://community.bistudio.com/wiki/try> / <catch: https://community.bistudio.com/wiki/catch>
+	An exception for when an assertion from <XPS_UT_Assert> is inconclusive.
 
 Parent:
-    none
+    <core. XPS_typ_Exception>
 
 Implements:
-    <XPS_ifc_IException>
+    <core. XPS_ifc_IException>
 
 Flags:
+    none
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self call ["GetText"]}],
-	["#type","XPS_typ_Exception"],
+	["#type","XPS_UT_typ_AssertInconclusiveException"],
+	["#base",XPS_typ_Exception],
 	/*----------------------------------------------------------------------------
 	Property: Data
-    
-    	--- Prototype --- 
-    	get "Data"
-    	---
-		
-		<XPS_ifc_IException>
-    
-    Returns: 
-		<Hashmap> - provides more detail about the exception
+    	<core. XPS_typ_Exception. Source>
 	-----------------------------------------------------------------------------*/
-	["Data",nil],
 	/*----------------------------------------------------------------------------
 	Property: Message
     
@@ -43,25 +34,26 @@ Flags:
     	get "Message"
     	---
 		
-		<XPS_ifc_IException>
+		<core. XPS_ifc_IException>
     
     Returns: 
-		<String> - A message about the exception thrown
+		<String> - Assertion Inconclusive
 	-----------------------------------------------------------------------------*/
-	["Message",""],
+	["Message","Assertion Inconclusive"]
 	/*----------------------------------------------------------------------------
-	Property: Source
+	Property: Data
     
     	--- Prototype --- 
-    	get "Source"
+    	get "Data"
     	---
-		
+
 		<XPS_ifc_IException>
+
+    	<XPS_typ_Exception. Data>
     
     Returns: 
-		Anything - typcally the source <HashmapObject> that caused this error
+		<Hashmap> - provides more detail about the exception
 	-----------------------------------------------------------------------------*/
-	["Source",nil],
 	/*----------------------------------------------------------------------------
 	Property: Target
     
@@ -70,16 +62,17 @@ Flags:
     	---
 		
 		<XPS_ifc_IException>
+
+    	<XPS_typ_Exception. Target>
     
     Returns: 
 		Anything - typcally the Method or Script Name that caused this error
 	-----------------------------------------------------------------------------*/
-	["Target",nil],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_typ_Exception, _source*, _target*, _message*, _data*]
+        createhashmapobject [XPS_UT_typ_AssertInconclusiveException, _source*, _target*, _message*, _data*]
         ---
     
     Optionals: 
@@ -89,20 +82,6 @@ Flags:
         _data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
 
 	-----------------------------------------------------------------------------*/
-	["#create",{
-		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
-		_source = [str _source,_source] select (_source isEqualType "");
-		_target = [str _target,_target] select (_target isEqualType "");
-
-		_self set ["Source",_source];
-		_self set ["Target",_target];
-		if !(isNil "_message") then {_self set ["Message",_message]};
-		_self set ["Data",_data];
-		 //TODO : If I ever get an ingame debugger going
-		// if !(isNil {XPS_MissionDebugger}) then {
-		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];
-		// };
-	}],
 	/*----------------------------------------------------------------------------
 	Method: GetText
     
@@ -114,19 +93,11 @@ Flags:
 		<Text> - A Structured Text formatted as follows:
 
 		---text
-		XPS_typ_Exception:
+		XPS_UT_typ_AssertInconclusiveException:
 		         Source: (source)
 				 Target: (target)
 		         Message: (message)
 		         Data: (data)
 		---
 	-----------------------------------------------------------------------------*/
-	["GetText",{text format[
-			endl+"%1:"+endl+"    Source: %2"+endl+"    Target: %3"+endl+"    Message: %4"+endl+"    Data: %5",
-			_self get "#type" select 0,
-			_self get "Source",
-			_self get "Target",
-			_self get "Message",
-			str (_self get "Data")
-		]}]
 ]

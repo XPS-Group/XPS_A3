@@ -1,41 +1,42 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_Exception
+TypeDef: core. exceptions. XPS_typ_ArgummentOutOfRangeException
 	<TypeDefinition>
+
 
 Authors: 
 	Crashdome
    
 Description:
-	<HashmapObject> which stores data about an error condition. 
-	Typically is thrown using the <throw: https://community.bistudio.com/wiki/throw> command and
-	possibly handled using <try: https://community.bistudio.com/wiki/try> / <catch: https://community.bistudio.com/wiki/catch>
+	An exception for when an argument is nil and not expected to be.
 
 Parent:
-    none
+    <XPS_typ_Exception>
 
 Implements:
     <XPS_ifc_IException>
 
 Flags:
+    none
 
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self call ["GetText"]}],
-	["#type","XPS_typ_Exception"],
+	["#type","XPS_typ_ArgummentOutOfRangeException"],
+	["#base",XPS_typ_Exception],
 	/*----------------------------------------------------------------------------
 	Property: Data
     
     	--- Prototype --- 
     	get "Data"
     	---
-		
+
 		<XPS_ifc_IException>
+
+    	<XPS_typ_Exception. Data>
     
     Returns: 
 		<Hashmap> - provides more detail about the exception
 	-----------------------------------------------------------------------------*/
-	["Data",nil],
 	/*----------------------------------------------------------------------------
 	Property: Message
     
@@ -46,9 +47,9 @@ Flags:
 		<XPS_ifc_IException>
     
     Returns: 
-		<String> - A message about the exception thrown
+		<String> - Argument was out of range
 	-----------------------------------------------------------------------------*/
-	["Message",""],
+	["Message","Argument was out of range"]
 	/*----------------------------------------------------------------------------
 	Property: Source
     
@@ -57,11 +58,12 @@ Flags:
     	---
 		
 		<XPS_ifc_IException>
+
+    	<XPS_typ_Exception. Source>
     
     Returns: 
 		Anything - typcally the source <HashmapObject> that caused this error
 	-----------------------------------------------------------------------------*/
-	["Source",nil],
 	/*----------------------------------------------------------------------------
 	Property: Target
     
@@ -70,16 +72,17 @@ Flags:
     	---
 		
 		<XPS_ifc_IException>
+
+    	<XPS_typ_Exception. Target>
     
     Returns: 
 		Anything - typcally the Method or Script Name that caused this error
 	-----------------------------------------------------------------------------*/
-	["Target",nil],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_typ_Exception, _source*, _target*, _message*, _data*]
+        createhashmapobject [XPS_typ_ArgummentOutOfRangeException, _source*, _target*, _message*, _data*]
         ---
     
     Optionals: 
@@ -89,20 +92,6 @@ Flags:
         _data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
 
 	-----------------------------------------------------------------------------*/
-	["#create",{
-		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
-		_source = [str _source,_source] select (_source isEqualType "");
-		_target = [str _target,_target] select (_target isEqualType "");
-
-		_self set ["Source",_source];
-		_self set ["Target",_target];
-		if !(isNil "_message") then {_self set ["Message",_message]};
-		_self set ["Data",_data];
-		 //TODO : If I ever get an ingame debugger going
-		// if !(isNil {XPS_MissionDebugger}) then {
-		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];
-		// };
-	}],
 	/*----------------------------------------------------------------------------
 	Method: GetText
     
@@ -114,19 +103,11 @@ Flags:
 		<Text> - A Structured Text formatted as follows:
 
 		---text
-		XPS_typ_Exception:
+		XPS_typ_ArgummentOutOfRangeException:
 		         Source: (source)
 				 Target: (target)
 		         Message: (message)
 		         Data: (data)
 		---
 	-----------------------------------------------------------------------------*/
-	["GetText",{text format[
-			endl+"%1:"+endl+"    Source: %2"+endl+"    Target: %3"+endl+"    Message: %4"+endl+"    Data: %5",
-			_self get "#type" select 0,
-			_self get "Source",
-			_self get "Target",
-			_self get "Message",
-			str (_self get "Data")
-		]}]
 ]
