@@ -42,7 +42,7 @@ This project started as the eXtensible Planning System - a mod to introduce Beha
 a simple OO-design prior to the introduction of HashmapObjects.
 
 Since the announcement to introduce a new hashmap command 'createHashmapObject' for v2.14, this project has been rewritten to include additional features to the framework:
-  - A better and standardized OOP approach (an example is to include an Interface-style contract system for building objects) and a general framework to foster Mod compatibility at the scripting level using those objects.
+  - A better and standardized OOP approach (an example is to include an Interface-style contract system for building objects) and a general framework to foster better Mod compatibility at the scripting level when using those objects.
 
  
 Ultimately, it is my hope and goal to provide more creativity in the community. All constructive criticism and ideas are welcome here.
