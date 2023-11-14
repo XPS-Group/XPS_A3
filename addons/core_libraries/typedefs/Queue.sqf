@@ -101,10 +101,10 @@ Flags:
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Pop
+    Method: Dequeue
     
         --- Prototype --- 
-        call ["Pop"]
+        call ["Dequeue"]
         ---
 
         <XPS_ifc_IStack>
@@ -121,10 +121,10 @@ Flags:
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Push
+    Method: Enqueue
     
         --- Prototype --- 
-        call ["Push",_value]
+        call ["Enqueue",_value]
         ---
 
         <XPS_ifc_IStack>
