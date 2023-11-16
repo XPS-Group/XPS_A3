@@ -136,7 +136,6 @@ Flags:
 		Nothing
     ----------------------------------------------------------------------------*/
 	["Enqueue",{
-		params ["_value"];
-		_self get "_queueArray" pushback _value;
+		_self get "_queueArray" pushback _this;
 	}]
 ]

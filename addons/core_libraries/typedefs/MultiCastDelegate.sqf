@@ -37,7 +37,7 @@ Flags:
         _signature (optional) - <Array> - (Default: [createhashmap,[]]) - a definition of parameters expected when calling "Invoke" method in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
 
 		The default signature sent to the invoked method is as follows:
-		--- code 
+		--- text 
 		[
 			sender - usually the class calling Invoke - e.g. (_self) as (<HashmapObject>), 
 			arguments - Array of stuff

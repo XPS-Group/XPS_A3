@@ -1,20 +1,17 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_ICollection
+Interface: core. XPS_ifc_ITypeRestrictor
 <Interface>
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 	
-	Method: GetItems
+	Method: RegisterType
 
-	Method: RemoveItem
-	
-	Method: AddItem
+	Method IsAllowed
 ---------------------------------------------------------------------------- */
 [
-	["AddItem","CODE"],
-	["GetItems","CODE"],
-	["RemoveItem","CODE"]
+	["RegisterType","CODE"],
+	["IsAllowed","CODE"]
 ]

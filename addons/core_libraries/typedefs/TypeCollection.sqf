@@ -1,13 +1,16 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_HashmapCollection
-    <TypeDefinition>
+TypeDef: core. XPS_typ_TypeCollection
+	<TypeDefinition>
 
+Authors: 
+	Crashdome
+   
 Description:
-Stores only <HashmapObjects> 
+<HashmapObject> which stores items only if the type is allowed
 
 Parent:
-    <XPS_typ_Collection>
+    XPS_typ_Collection
 
 Implements:
     <XPS_ifc_ICollection>
@@ -15,12 +18,11 @@ Implements:
 Flags:
     none
 
-Authors: 
-	Crashdome
-
 ---------------------------------------------------------------------------- */
+
+
 [
-	["#type","XPS_typ_HashmapCollection"],
+	["#type","XPS_typ_TypeCollection"],
     ["#base", XPS_typ_Collection],
     ["_allowed",[]],
     /*----------------------------------------------------------------------------
@@ -31,14 +33,12 @@ Authors:
         ---
     
     Parameters: 
-        _allowedTypes (optional) - <Array> -of <Strings> which are <HashmapObject> '#type's
+        _allowedTypes (optional) - <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         _self call ["XPS_typ_Collection.#create"];
         params [["_allowedTypes",[],[[]]]];
-        if (_allowedTypes isEqualTypeAll "") then {
-            _self set ["_allowed",_allowedTypes];
-        };
+         _self set ["_allowed",_allowedTypes];
     }],
     /*----------------------------------------------------------------------------
     Method: RegisterType 
@@ -46,6 +46,8 @@ Authors:
         --- Prototype --- 
         call ["RegisterType",_type]
         ---
+
+        <XPS_ifc_ICollection>
     
     Parameters: 
         _type - <Type> - used to add a type after object creation. In shorthand - i.e. [] or objNull or 0 or createhashmap, etc..
@@ -57,32 +59,26 @@ Authors:
         _list pushback _type;
         true;
     }],
-    /* -----------------------------------------------------------------------
+    /*----------------------------------------------------------------------------
     Method: AddItem
-
-        ---prototype
-        call ["AddItem",[_key,_item]];
+    
+        --- Prototype --- 
+        call ["AddItem",[_key,_item]]
         ---
 
         <XPS_ifc_ICollection>
     
     Parameters: 
-        _key - Anything - Key used when adding to store
-        _item - <HashmapObject> - to add to the store
-
-    Returns:
-        <Boolean> - <True> if successfully added, otherwise <False>
-
-    -------------------------------------------------------------------------*/ 
+        key - <HashmapKey> 
+        item - Anything 
+    ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
-        if !(params [["_key",nil,[""]],["_item",nil,[createhashmap]]]) exitwith {false;};
-        if ((_key == "") || (_key in (keys (_self get "_items")))) exitwith {false;};
+        if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {false;};
         private _allowlist = _self get "_allowed";
-        private _types = _item getOrDefault ["#type",[]];
-        if !(count (_types arrayIntersect _allowlist) > 0) exitwith {false;};
-        (_self get "_items") set [_key,_item];
+        if !(_item isEqualTypeAny _allowlist) exitwith {false;};
+        _self call ["XPS_typ_Collection",[_key,_item]];
         true;
-    }]
+    }],
 
     /* -----------------------------------------------------------------------
     Method: RemoveItem
@@ -95,4 +91,5 @@ Authors:
 		<XPS_typ_Collection.GetItems>
 
     -------------------------------------------------------------------------*/ 
+
 ]

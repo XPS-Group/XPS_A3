@@ -202,13 +202,13 @@ try
 		// Constructor injection but only if it existed prior to above code
 		if (_hasCtor && {_key isEqualTo "#create" && {_ctor != "" || _ctor_l != ""}}) then {
 			private _strCode = (str _value) insert [1,_ctor];
-			private _value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
+			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
 		// Destructor injection but only if it existed prior to above code
 		if (_hasDtor && {_key isEqualTo "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
 			private _strCode = (str _value) insert [1,_dtor];
-			private _value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
+			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];
 		};
 

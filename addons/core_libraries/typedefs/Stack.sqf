@@ -136,7 +136,6 @@ Flags:
 		Nothing
     ----------------------------------------------------------------------------*/
 	["Push",{
-		params ["_value"];
-		_self get "_stackArray" pushback _value;
+		_self get "_stackArray" pushback _this;
 	}]
 ]

@@ -11,15 +11,8 @@ Authors:
 
 	Property: CurrentItem
 
-	Property: Queue
-	<Array>
-
 	Property: ProcessesPerFrame
 	<Number>
-
-	Method: ProcessCurrent
-	
-	Method: FinalizeCurrent
 	
 	Method: Start
 	
@@ -28,10 +21,7 @@ Authors:
 [
 	["CurrentItem","ANYTHING"],
 	["CurrentUID","STRING"],
-	["Queue","ARRAY"],
 	["ProcessesPerFrame","SCALAR"],
-	["ProcessCurrent","CODE"],
-	["FinalizeCurrent","CODE"],
 	["Start","CODE"],
 	["Stop","CODE"]
 ]
