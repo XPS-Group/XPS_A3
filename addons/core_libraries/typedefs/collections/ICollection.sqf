@@ -3,6 +3,10 @@
 Interface: core. XPS_ifc_ICollection
 <Interface>
 
+	--- prototype
+	XPS_ifc_ICollection
+	---
+
 Authors:
     Crashdome
 ----------------------------------------------------------------------------

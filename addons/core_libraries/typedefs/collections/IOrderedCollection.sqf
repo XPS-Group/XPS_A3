@@ -3,6 +3,10 @@
 Interface: core. XPS_ifc_IOrderedCollection
 <Interface>
 
+	--- prototype
+	XPS_ifc_IOrderedCollection
+	---
+
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
@@ -16,9 +20,12 @@ Authors:
 	Method: IsEmpty
 		<Code>
 
+	Method: Peek
+		<Code>
 ---------------------------------------------------------------------------- */
 [
 	["Clear","CODE"],
 	["Count","CODE"],
-	["IsEmpty","CODE"]
+	["IsEmpty","CODE"],
+	["Peek","CODE"]
 ]

@@ -3,28 +3,69 @@
 TypeDef: core. XPS_typ_AstarSearch
 	<TypeDefinition>
 
+    	--- Prototype --- 
+		XPS_typ_AstarSearch :  XPS_ifc_IAstarSearch
+    	---
+
+    	--- Code --- 
+    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_graph,_startKey,_endKey]]
+    	---
+
 Authors: 
 	Crashdome
 
 Description:
 	Traverses a <HashmapObject> which implements the <XPS_ifc_IAstarGraph> interface
 	to find the best path.
+	
+Parameters:
+	_graph - <XPS_ifc_IAstarGraph> - the graph to perform the search on
+	_startKey - Anything 
+	_endKey - Anything 
 
-Parent:
-	none
-
-Implements: 
-	<XPS_ifc_IAstarSearch>
-
-Flags: 
-	none
-
+Returns:
+	_result - <HashmapObject>
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_typ_AstarSearch"],
-	["@interfaces",["XPS_ifc_IAstarSearch"]],
+	/*----------------------------------------------------------------------------
+	Constructor: #create
+    
+    	--- Prototype --- 
+    	call ["#create",[_graph,_startKey,_endKey]]
+    	---
+    
+	Parameters:
+		_graph - <XPS_ifc_IAstarGraph> - the graph to perform the search on
+		_startKey - Anything 
+    	_endKey - Anything 
 
+	Returns:
+		True
+	-----------------------------------------------------------------------------*/
+	["#create",compileFinal {
+		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]]]) exitwith {nil;};
+		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
+		_self set ["_workingGraph",_graph];
+		_self set ["_workingStartKey",_startKey];
+		_self set ["_workingEndKey",_endKey];
+		_self call ["Init"];
+	}],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		--- prototype
+		"XPS_typ_AstarSearch"
+		---
+	----------------------------------------------------------------------------*/
+	["#str",compileFinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+		<XPS_ifc_IAstarSearch>
+	----------------------------------------------------------------------------*/
+	["@interfaces",["XPS_ifc_IAstarSearch"]],
+	["_workingGraph",nil],
+	["_workingStartKey",nil],
+	["_workingEndKey",nil],
 	/*----------------------------------------------------------------------------
 	Protected: cameFrom
     
@@ -155,19 +196,7 @@ Flags:
 		};
 		nil;
 	}],
-	/*----------------------------------------------------------------------------
-	Property: Graph
-    
-    	--- Prototype --- 
-    	get "_workingGraph"
-    	---
-		
-		<XPS_ifc_IAstarSearch>
-    
-    Returns: 
-		<HashmapObject> - A graph of nodes that implement the <XPS_typ_IAstarGraph> interface
-	-----------------------------------------------------------------------------*/
-	["_workingGraph",nil],
+
 	/*----------------------------------------------------------------------------
 	Property: Doctrine
     
@@ -212,59 +241,6 @@ Flags:
 			- FAILURE 
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
-	/*----------------------------------------------------------------------------
-	Property: StartKey
-    
-    	--- Prototype --- 
-    	get "_workingStartKey"
-    	---
-		
-		<XPS_ifc_IAstarSearch>
-    
-    Returns: 
-		Anything - the start of the search. Usually an index or position.
-		
-	-----------------------------------------------------------------------------*/
-	["_workingStartKey",nil],
-	/*----------------------------------------------------------------------------
-	Property: EndKey
-    
-    	--- Prototype --- 
-    	get "_workingEndKey"
-    	---
-		
-		<XPS_ifc_IAstarSearch>
-    
-    Returns: 
-		Anything - the end of the search. Usually an index or position.
-	-----------------------------------------------------------------------------*/
-	["_workingEndKey",nil],
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-    
-    	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_graph,_startKey*,_endKey*]]
-    	---
-    
-	Parameters:
-		_graph - <XPS_ifc_IAstarGraph> - the graph to perform the search on
-
-    Optionals: 
-		_startKey* - Anything - (Optional - Default : nil) 
-    	_endKey* - Anything - (Optional - Default : nil) 
-
-	Returns:
-		_result - <HashmapObject>
-	-----------------------------------------------------------------------------*/
-	["#create",compileFinal {
-		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]]]) exitwith {nil;};
-		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
-
-		_self set ["_workingGraph",_graph];
-		_self set ["_workingStartKey",_startKey];
-		_self set ["_workingEndKey",_endKey];
-		_self call ["Init"];
-	}],
 	/*----------------------------------------------------------------------------
 	Method: AdjustEstimatedDistance
     

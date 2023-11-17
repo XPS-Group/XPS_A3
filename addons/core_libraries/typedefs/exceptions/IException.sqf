@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 Interface: core. XPS_ifc_IException
 <Interface>
+	--- prototype
+	XPS_ifc_IException
+	---
 
 Authors:
     Crashdome

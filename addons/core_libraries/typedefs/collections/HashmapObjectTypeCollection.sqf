@@ -1,37 +1,45 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_HashmapCollection
+TypeDef: core. XPS_typ_HashmapObjectTypeCollection
     <TypeDefinition>
-
-Description:
-Stores only <HashmapObjects> 
-
-Parent:
-    <XPS_typ_Collection>
-
-Implements:
-    <XPS_ifc_ICollection>
-
-Flags:
-    none
+        --- prototype
+        XPS_typ_HashmapObjectTypeCollection : XPS_ifc_ICollection, XPS_typ_Collection
+        ---
+        --- prototype
+        createhashmapobject [XPS_typ_HashmapObjectTypeCollection,[_allowedTypes]]
+        ---
 
 Authors: 
 	Crashdome
 
+Description:
+    Stores only <HashmapObjects> 
+
+Parameters: 
+    _allowedTypes (optional) - <Array> -of <Strings> which are <HashmapObject> '#type's
+
+Returns:
+	<HashmapObject>
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_typ_HashmapCollection"],
+	["#type","XPS_typ_HashmapObjectTypeCollection"],
+    /*----------------------------------------------------------------------------
+    Parent: #base
+        <XPS_typ_Collection>
+    ----------------------------------------------------------------------------*/
     ["#base", XPS_typ_Collection],
-    ["_allowed",[]],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_typ_Collection,[_allowedTypes]]
+        call [#create,[_allowedTypes]]
         ---
     
     Parameters: 
         _allowedTypes (optional) - <Array> -of <Strings> which are <HashmapObject> '#type's
+
+    Returns:
+        True
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         _self call ["XPS_typ_Collection.#create"];
@@ -40,6 +48,17 @@ Authors:
             _self set ["_allowed",_allowedTypes];
         };
     }],
+    /*----------------------------------------------------------------------------
+    Parent: #str
+		--- prototype
+		"XPS_typ_HashmapObjectTypeCollection"
+		---
+    ----------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------
+    Parent: @interfaces
+        <XPS_typ_Collection.@interfaces>
+    ----------------------------------------------------------------------------*/
+    ["_allowed",[]],
     /*----------------------------------------------------------------------------
     Method: RegisterType 
     
@@ -71,7 +90,7 @@ Authors:
         _item - <HashmapObject> - to add to the store
 
     Returns:
-        <Boolean> - <True> if successfully added, otherwise <False>
+        <Boolean> - True if successfully added, otherwise False
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {

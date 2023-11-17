@@ -42,7 +42,7 @@ Alter Comment Type: Interface
    Plural Display Name: Hashmap Interfaces
 
    Scope: Start
-   Flags: Code, Variable Type, Database Hierarchy
+   Flags: Code, Variable Type, Class Hierarchy
 
    Keywords:
       mapinterface, mapinterfaces
@@ -115,31 +115,6 @@ Alter Comment Type: Property
    Keywords:
 
 
-Comment Type: HMParent
-
-   Display Name: Parent
-   Plural Display Name: Parents
-
-   Scope: Normal
-   Flags: Code
-
-   Keywords:
-      parent, parents
-      inherit, inherits
-
-
-Comment Type: HMInterface
-
-   Display Name: Interface
-   Plural Display Name: Interfaces
-
-   Scope: Normal
-   Flags: Code
-
-   Keywords:
-      implement, implements
-
-
 Comment Type: HMProperty
 
    Display Name: Property
@@ -188,8 +163,24 @@ Comment Type: HMMethod
    Keywords:
       method, methods
       callback, callbacks
-      constructor, constructors
-      destructor, destructors
+
+
+Comment Type: HMReserved
+
+   Display Name: Reserved
+   Plural Display Name: Reserved
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      constructor, ctor
+      destructor, dtor
+      clone
+      tostring, str
+      parent, parents
+      inherit, inherits
+      implement, implements
 
 
 Alter Comment Type: Package

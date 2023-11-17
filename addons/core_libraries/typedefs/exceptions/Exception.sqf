@@ -2,6 +2,12 @@
 /* ----------------------------------------------------------------------------
 TypeDef: core. XPS_typ_Exception
 	<TypeDefinition>
+    	--- Prototype --- 
+		XPS_typ_Exception :  XPS_ifc_IException
+    	---
+        --- prototype
+        createhashmapobject [XPS_typ_Exception, [_source*, _target*, _message*, _data*]]
+        ---
 
 Authors: 
 	Crashdome
@@ -11,18 +17,58 @@ Description:
 	Typically is thrown using the <throw: https://community.bistudio.com/wiki/throw> command and
 	possibly handled using <try: https://community.bistudio.com/wiki/try> / <catch: https://community.bistudio.com/wiki/catch>
 
-Parent:
-    none
+Optionals: 
+	_source - (optional - Default: nil) - Anything
+	_target - (optional - Default: nil) - Anything
+	_message - (optional - Default: nil) - <String> - custom message to override the default
+	_data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
 
-Implements:
-    <XPS_ifc_IException>
-
-Flags:
-
+Returns:
+	<HashmapObject>
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self call ["GetText"]}],
 	["#type","XPS_typ_Exception"],
+	/*----------------------------------------------------------------------------
+	Constructor: #create
+    
+        --- prototype
+        call [#create, [_source*, _target*, _message*, _data*]]
+        ---
+    
+    Optionals: 
+        _source - (optional - Default: nil) - Anything
+        _target - (optional - Default: nil) - Anything
+        _message - (optional - Default: nil) - <String> - custom message to override the default
+        _data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
+
+	Returns:
+		True
+	-----------------------------------------------------------------------------*/
+	["#create",{
+		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
+		_source = [str _source,_source] select (_source isEqualType "");
+		_target = [str _target,_target] select (_target isEqualType "");
+
+		_self set ["Source",_source];
+		_self set ["Target",_target];
+		if !(isNil "_message") then {_self set ["Message",_message]};
+		_self set ["Data",_data];
+		 //TODO : If I ever get an ingame debugger going
+		// if !(isNil {XPS_MissionDebugger}) then {
+		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];
+		// };
+	}],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		XPS_typ_Exception:
+		         Source: (source)
+				 Target: (target)
+		         Message: (message)
+		         Data: (data)
+		---
+	----------------------------------------------------------------------------*/
+	["#str", {_self call ["GetText"]}],
 	/*----------------------------------------------------------------------------
 	Property: Data
     
@@ -75,35 +121,7 @@ Flags:
 		Anything - typcally the Method or Script Name that caused this error
 	-----------------------------------------------------------------------------*/
 	["Target",nil],
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-    
-        --- prototype
-        createhashmapobject [XPS_typ_Exception, _source*, _target*, _message*, _data*]
-        ---
-    
-    Optionals: 
-        _source - (optional - Default: nil) - Anything
-        _target - (optional - Default: nil) - Anything
-        _message - (optional - Default: nil) - <String> - custom message to override the default
-        _data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
-
-	-----------------------------------------------------------------------------*/
-	["#create",{
-		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
-		_source = [str _source,_source] select (_source isEqualType "");
-		_target = [str _target,_target] select (_target isEqualType "");
-
-		_self set ["Source",_source];
-		_self set ["Target",_target];
-		if !(isNil "_message") then {_self set ["Message",_message]};
-		_self set ["Data",_data];
-		 //TODO : If I ever get an ingame debugger going
-		// if !(isNil {XPS_MissionDebugger}) then {
-		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];
-		// };
-	}],
-	/*----------------------------------------------------------------------------
+	/*-----------------------------------------------------------------------------
 	Method: GetText
     
         --- prototype

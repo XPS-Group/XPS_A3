@@ -1,30 +1,49 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_Stack
+TypeDef: core. XPS_typ_Queue
 	<TypeDefinition>
+        --- prototype
+        XPS_typ_Queue : XPS_ifc_IOrderedCollection, XPS_ifc_IQueue
+        ---
+        --- prototype
+        createhashmapobject [XPS_typ_Queue]
+        ---
 
 Authors: 
 	Crashdome
    
 Description:
-	A Last In First Out (LIFO) collection. 
+	A First In First Out (FIFO) collection. 
 
-Parent:
-    none
-
-Implements:
-    <XPS_ifc_IOrderedCollection>
-    <XPS_ifc_IStack>
-
-Flags:
-	none
-
+Returns:
+	<HashmapObject>
 ---------------------------------------------------------------------------- */
 [
+	["#type", "XPS_typ_Queue"],
+    /*----------------------------------------------------------------------------
+    Constructor: #create
+    
+        --- prototype
+        call ["#create"]
+        ---
+    
+    Return:
+        True
+    ----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
+	Str: #str
+		--- prototype
+		"XPS_typ_Queue"
+		---
+	----------------------------------------------------------------------------*/
 	["#str", {_self get "#type" select  0}],
-	["#type", "XPS_typ_Stack"],
-    ["@interfaces", ["XPS_ifc_IStack","XPS_ifc_IOrderedCollection"]],
-	["_stackArray",[],[["CTOR"]]],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+		<XPS_ifc_IQueue>
+		<XPS_ifc_IOrderedCollection>
+	----------------------------------------------------------------------------*/
+    ["@interfaces", ["XPS_ifc_IQueue","XPS_ifc_IOrderedCollection"]],
+	["_queueArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Clear
     
@@ -41,7 +60,7 @@ Flags:
 		Nothing
     ----------------------------------------------------------------------------*/
 	["Clear",{
-		_self get "_stackArray" resize 0;
+		_self get "_queueArray" resize 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Count
@@ -59,7 +78,7 @@ Flags:
 		<Number> - the number of elements in the stack
     ----------------------------------------------------------------------------*/
 	["Count",{
-		count (_self get "_stackArray");
+		count (_self get "_queueArray");
 	}],
     /*----------------------------------------------------------------------------
     Method: IsEmpty
@@ -74,10 +93,10 @@ Flags:
 		none
 		
 	Returns:
-		<Boolean> - True if stack is empty, otherwise False.
+		<Boolean> - True if queue is empty, otherwise False.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_stackArray") == 0;
+		count (_self get "_queueArray") == 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Peek
@@ -86,25 +105,25 @@ Flags:
         call ["Peek"]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IOrderedCollection>
     
     Parameters: 
 		none
 		
 	Returns:
-		Anything - last element in the stack or nil if empty - does not remove 
-		from stack
+		Anything - first element in the queue or nil if empty - does not remove 
+		from queue
     ----------------------------------------------------------------------------*/
 	["Peek",{
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_stackArray" select -1;
+		    _self get "_queueArray" select 0;
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Pop
+    Method: Dequeue
     
         --- Prototype --- 
-        call ["Pop"]
+        call ["Dequeue"]
         ---
 
         <XPS_ifc_IStack>
@@ -113,29 +132,29 @@ Flags:
 		none
 		
 	Returns:
-		Anything - removes and returns last element in the stack or nil if empty
+		Anything - removes and returns last element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
-	["Pop",{
+	["Dequeue",{
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_stackArray" deleteat -1;
+		    _self get "_queueArray" deleteat 0;
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Push
+    Method: Enqueue
     
         --- Prototype --- 
-        call ["Push",_value]
+        call ["Enqueue",_value]
         ---
 
         <XPS_ifc_IStack>
     
     Parameters: 
-		_value - the value to push to top of the stack
+		_value - the value to push to top of the queue
 		
 	Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
-	["Push",{
-		_self get "_stackArray" pushback _this;
+	["Enqueue",{
+		_self get "_queueArray" pushback _this;
 	}]
 ]

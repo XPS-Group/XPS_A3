@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 Interface: core. XPS_ifc_IAstarGraph
 <Interface>
+	--- prototype
+	XPS_ifc_IAstarGraph
+	---
 
 Authors:
     Crashdome

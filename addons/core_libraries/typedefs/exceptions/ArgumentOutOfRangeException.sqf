@@ -1,41 +1,54 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. exceptions. XPS_typ_ArgummentOutOfRangeException
+TypeDef: core. XPS_typ_ArgummentOutOfRangeException
 	<TypeDefinition>
-
+    	--- Prototype --- 
+		XPS_typ_ArgummentOutOfRangeException :  XPS_ifc_IException, XPS_typ_Exception
+    	---
+        --- prototype
+        createhashmapobject [XPS_typ_ArgummentOutOfRangeException, [_source*, _target*, _message*, _data*]]
+        ---
 
 Authors: 
 	Crashdome
    
 Description:
-	An exception for when an argument is nil and not expected to be.
+	An exception for when an argument is out of range from what it was expected to be.
 
-Parent:
-    <XPS_typ_Exception>
+Optionals: 
+	_source - (optional - Default: nil) - Anything
+	_target - (optional - Default: nil) - Anything
+	_message - (optional - Default: nil) - <String> - custom message to override the default
+	_data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
 
-Implements:
-    <XPS_ifc_IException>
-
-Flags:
-    none
+Returns:
+	<HashmapObject>
 
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_typ_ArgummentOutOfRangeException"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_typ_Exception>
+	-----------------------------------------------------------------------------*/
 	["#base",XPS_typ_Exception],
 	/*----------------------------------------------------------------------------
+	Constructor: #create
+    	<XPS_typ_Exception. #create>
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		XPS_typ_ArgummentOutOfRangeException:
+		         Source: (source)
+				 Target: (target)
+		         Message: (message)
+		         Data: (data)
+		---
+	----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
 	Property: Data
-    
-    	--- Prototype --- 
-    	get "Data"
-    	---
-
-		<XPS_ifc_IException>
-
     	<XPS_typ_Exception. Data>
-    
-    Returns: 
-		<Hashmap> - provides more detail about the exception
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Message
@@ -52,62 +65,14 @@ Flags:
 	["Message","Argument was out of range"]
 	/*----------------------------------------------------------------------------
 	Property: Source
-    
-    	--- Prototype --- 
-    	get "Source"
-    	---
-		
-		<XPS_ifc_IException>
-
     	<XPS_typ_Exception. Source>
-    
-    Returns: 
-		Anything - typcally the source <HashmapObject> that caused this error
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Target
-    
-    	--- Prototype --- 
-    	get "Target"
-    	---
-		
-		<XPS_ifc_IException>
-
     	<XPS_typ_Exception. Target>
-    
-    Returns: 
-		Anything - typcally the Method or Script Name that caused this error
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-    
-        --- prototype
-        createhashmapobject [XPS_typ_ArgummentOutOfRangeException, _source*, _target*, _message*, _data*]
-        ---
-    
-    Optionals: 
-        _source - (optional - Default: nil) - Anything
-        _target - (optional - Default: nil) - Anything
-        _message - (optional - Default: nil) - <String> - custom message to override the default
-        _data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
-
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: GetText
-    
-        --- prototype
-        call ["GetText"]
-        ---
-
-	Returns:
-		<Text> - A Structured Text formatted as follows:
-
-		---text
-		XPS_typ_ArgummentOutOfRangeException:
-		         Source: (source)
-				 Target: (target)
-		         Message: (message)
-		         Data: (data)
-		---
+    	<XPS_typ_Exception. GetText>
 	-----------------------------------------------------------------------------*/
 ]

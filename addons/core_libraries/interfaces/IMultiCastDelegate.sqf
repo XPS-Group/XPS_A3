@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 Interface: core. XPS_ifc_IMultiCastDelegate
 <Interface>
+	--- prototype
+	XPS_ifc_IMultiCastDelegate
+	---
 
 Authors:
     Crashdome

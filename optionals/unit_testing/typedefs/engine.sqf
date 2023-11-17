@@ -25,7 +25,7 @@ Flags:
 	["#str", {_self get "#type" select  0}],
 	["#type","XPS_UT_type_Engine"],
 	["#flags",["sealed","nocopy"]],
-	["#base",XPS_typ_HashmapCollection],
+	["#base",XPS_typ_HashmapObjectTypeCollection],
 	["initTestRsults",{
 		private _testResults = createhashmapobject [XPS_UT_typ_TestResults];
 		{
@@ -37,7 +37,7 @@ Flags:
 
 	}],
 	["#create", {
-		_self call ["XPS_typ_HashmapCollection.#create",[]];
+		_self call ["XPS_typ_HashmapObjectTypeCollection.#create",[]];
 	}],
 	["Selected",[]],
 	["RunAll",{
@@ -78,7 +78,7 @@ Flags:
 
         <XPS_ifc_ICollection>
 
-		Overrides base class method : <main. XPS_typ_HashmapCollection. AddItem>
+		Overrides base class method : <main. XPS_typ_HashmapObjectTypeCollection. AddItem>
 
 		Performs base method and then appends identifier to classOrder <array>
     
@@ -87,12 +87,12 @@ Flags:
         _item - <HashmapObject> - to add to <Items> store
 
     Returns:
-        <Boolean> - <True> if successfully added, otherwise <False>
+        <Boolean> - True if successfully added, otherwise False
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
         if !(params [["_key",nil,[""]],["_item",nil,[createhashmap]]]) exitwith {false;};
-        if !(_self call ["XPS_typ_HashmapCollection.AddItem",[_key,_item]]) exitwith {false};
+        if !(_self call ["XPS_typ_HashmapObjectTypeCollection.AddItem",[_key,_item]]) exitwith {false};
 		_self get "classOrder" pushback _key;
     }],
 	["classOrder",[],[["CTOR"]]],

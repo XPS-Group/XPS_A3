@@ -3,40 +3,50 @@
 TypeDef: core. XPS_typ_Collection
 	<TypeDefinition>
 
+    	--- Prototype --- 
+		XPS_typ_Collection :  XPS_ifc_ICollection
+    	---
+        --- prototype
+        createhashmapobject [XPS_typ_Collection]
+        ---
+
 Authors: 
 	Crashdome
    
 Description:
-<HashmapObject> which stores items 
+<HashmapObject> which is essentially just a wrapper for a <Hashmap> 
 
-Parent:
-    none
-
-Implements:
-    <XPS_ifc_ICollection>
-
-Flags:
-    none
-
+Returns:
+	<HashmapObject>
 ---------------------------------------------------------------------------- */
-
-
 [
-	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Collection"],
-    ["@interfaces",["XPS_ifc_ICollection"]],
-    ["_items",createhashmap],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_typ_Collection]
+        call ["#create"]
         ---
     
+    Return:
+        True
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         _self set ["_items",createhashmap];
     }],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		--- prototype
+		"XPS_typ_Collection"
+		---
+	----------------------------------------------------------------------------*/
+	["#str",compileFinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+		<XPS_ifc_ICollection>
+	----------------------------------------------------------------------------*/
+    ["@interfaces",["XPS_ifc_ICollection"]],
+    ["_items",createhashmap],
     /*----------------------------------------------------------------------------
     Method: AddItem
     

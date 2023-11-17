@@ -40,7 +40,7 @@ Flags:
 
     Method: AddItem
 
-		<main. XPS_typ_Hashmapcollection.AddItem>
+		<main. XPS_typ_HashmapObjectTypeCollection.AddItem>
 
 	Method: FinalizeCurrent
 
@@ -48,11 +48,11 @@ Flags:
 
     Method: RegisterType
 
-		<main. XPS_typ_Hashmapcollection.RegisterType>
+		<main. XPS_typ_HashmapObjectTypeCollection.RegisterType>
 
     Method: RemoveItem
 
-		<main. XPS_typ_Hashmapcollection.RemoveItem>
+		<main. XPS_typ_HashmapObjectTypeCollection.RemoveItem>
 
 	Method: Start
 
@@ -73,7 +73,7 @@ Flags:
     	get "AllowedTypes"
     	---
     
-		Override of <main. XPS_typ_Hashmapcollection.AllowedTypes>
+		Override of <main. XPS_typ_HashmapObjectTypeCollection.AllowedTypes>
 
     Returns: 
 		Nothing

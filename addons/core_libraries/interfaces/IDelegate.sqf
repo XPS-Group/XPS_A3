@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 Interface: core. XPS_ifc_IDelegate
 <Interface>
+	--- prototype
+	XPS_ifc_IDelegate
+	---
 
 Authors:
     Crashdome

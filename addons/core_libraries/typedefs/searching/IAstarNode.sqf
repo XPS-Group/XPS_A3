@@ -1,24 +1,17 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_IStack
+Interface: core. XPS_ifc_IAstarNode
 <Interface>
+	--- prototype
+	XPS_ifc_IAstarNode
+	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-
-	Method: Peek
-		<Code>
-
-	Method: Pop
-		<Code>
-	
-	Method: Push
-		<Code>
-
+	Property: Index
+		Anything
 ---------------------------------------------------------------------------- */
 [
-	["Peek","CODE"],
-	["Pop","CODE"],
-	["Push","CODE"]
+	["Index","ANYTHING"]
 ]

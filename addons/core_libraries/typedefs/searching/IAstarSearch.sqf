@@ -3,6 +3,10 @@
 Interface: core. XPS_ifc_IAstarSearch
 <Interface>
 
+	--- prototype
+	XPS_ifc_IAstarSearch
+	---
+
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
@@ -10,6 +14,7 @@ Authors:
 		<Array>
 
 	Property: Status
+		Anything
 
 	Method: AdjustEstimatedDistance
 

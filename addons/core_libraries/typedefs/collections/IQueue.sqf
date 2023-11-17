@@ -3,6 +3,10 @@
 Interface: core. XPS_ifc_IQueue
 <Interface>
 
+	--- prototype
+	XPS_ifc_IQueue
+	---
+
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
@@ -12,13 +16,9 @@ Authors:
 	
 	Method: Enqueue
 		<Code>
-		
-	Method: Peek
-		<Code>
 
 ---------------------------------------------------------------------------- */
 [
 	["Dequeue","CODE"],
 	["Enqueue","CODE"],
-	["Peek","CODE"]
 ]

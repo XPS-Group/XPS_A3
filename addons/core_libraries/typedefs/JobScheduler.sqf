@@ -10,7 +10,7 @@ Description:
 	A collection of items that are processed in order received
 
 Parent:
-	<XPS_typ_HashmapCollection>
+	<XPS_typ_HashmapObjectTypeCollection>
 
 Implements: 
 	<XPS_ifc_ICollection>
@@ -22,7 +22,7 @@ Flags:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_typ_JobScheduler"],
-	["#base",XPS_typ_HashmapCollection],
+	["#base",XPS_typ_HashmapObjectTypeCollection],
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
 	["_handle",nil],
 	["_queueObject", nil, [["CTOR","createhashmapobject [XPS_typ_Queue]"]]],
@@ -138,10 +138,10 @@ Flags:
         _myobj = createhashmapobject ["XPS_typ_JobScheduler",[_allowedTypes]];
         ---
 
-		<XPS_typ_HashmapCollection.#create>
+		<XPS_typ_HashmapObjectTypeCollection.#create>
     -------------------------------------------------------------------------*/ 
 	["#create",{
-		_self call ["XPS_typ_HashmapCollection.#create",_this];
+		_self call ["XPS_typ_HashmapObjectTypeCollection.#create",_this];
 	}],
     /* -----------------------------------------------------------------------
     Method: AddItem
@@ -150,19 +150,19 @@ Flags:
         call ["AddItem",[_item]];
         ---
 
-		overrides <XPS_typ_Hashmapcollection.AddItem>
+		overrides <XPS_typ_HashmapObjectTypeCollection.AddItem>
     
     Parameters: 
         _item - <HashmapObject> - to add to <Items> store
 
     Returns:
-        <Boolean> - <True> if successfully added, otherwise <False>
+        <Boolean> - True if successfully added, otherwise False
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
         if !(params [["_item",nil,[createhashmap]]]) exitwith {false;};
         private _uid = [] call XPS_fnc_createUniqueID;
-        if (_self call ["XPS_typ_HashmapCollection.AddItem",[_uid,_item]]) exitwith {
+        if (_self call ["XPS_typ_HashmapObjectTypeCollection.AddItem",[_uid,_item]]) exitwith {
 			_self get "_queueObject" call ["Enqueue",_uid];
 			true;
 		};
@@ -170,12 +170,12 @@ Flags:
     }],
     /* -----------------------------------------------------------------------
     Method: RegisterType
-		<XPS_typ_Hashmapcollection.RegisterType>
+		<XPS_typ_HashmapObjectTypeCollection.RegisterType>
 
     -------------------------------------------------------------------------*/ 
     /* -----------------------------------------------------------------------
     Method: RemoveItem
-		<XPS_typ_Hashmapcollection.RemoveItem>
+		<XPS_typ_HashmapObjectTypeCollection.RemoveItem>
 
     -------------------------------------------------------------------------*/ 
 	/*----------------------------------------------------------------------------

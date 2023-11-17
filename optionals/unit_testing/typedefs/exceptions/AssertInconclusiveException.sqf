@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: unit_testing. exceptions. XPS_UT_typ_AssertInconclusiveException
+TypeDef: unit_testing.  XPS_UT_typ_AssertInconclusiveException
 	<TypeDefinition>
 
 

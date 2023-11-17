@@ -1,7 +1,13 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_TypeCollection
+TypeDef: core. XPS_typ_NativeTypeCollection
 	<TypeDefinition>
+        --- prototype
+        XPS_typ_NativeTypeCollection : XPS_ifc_ICollection, XPS_typ_Collection
+        ---
+        --- prototype
+        createhashmapobject [XPS_typ_NativeTypeCollection,[_allowedTypes]]
+        ---
 
 Authors: 
 	Crashdome
@@ -9,37 +15,50 @@ Authors:
 Description:
 <HashmapObject> which stores items only if the type is allowed
 
-Parent:
-    XPS_typ_Collection
+Parameters: 
+    _allowedTypes (optional) - <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
 
-Implements:
-    <XPS_ifc_ICollection>
-
-Flags:
-    none
-
+Returns:
+    <HashmapObject>
 ---------------------------------------------------------------------------- */
 
 
 [
-	["#type","XPS_typ_TypeCollection"],
+	["#type","XPS_typ_NativeTypeCollection"],
+    /*----------------------------------------------------------------------------
+    Parent: #base
+        <XPS_typ_Collection>
+    ----------------------------------------------------------------------------*/
     ["#base", XPS_typ_Collection],
-    ["_allowed",[]],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
         --- prototype
-        createhashmapobject [XPS_typ_Collection,[_allowedTypes]]
+        call [#create,[_allowedTypes]]
         ---
     
     Parameters: 
         _allowedTypes (optional) - <Array> - in the same format as the Params command - i.e. ["",[],objNull,0]
+
+    Returns:
+        True
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         _self call ["XPS_typ_Collection.#create"];
         params [["_allowedTypes",[],[[]]]];
          _self set ["_allowed",_allowedTypes];
     }],
+    /*----------------------------------------------------------------------------
+    Parent: #str
+		--- prototype
+		"XPS_typ_NativeTypeCollection"
+		---
+    ----------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------
+    Parent: @interfaces
+        <XPS_typ_Collection.@interfaces>
+    ----------------------------------------------------------------------------*/
+    ["_allowed",[]],
     /*----------------------------------------------------------------------------
     Method: RegisterType 
     
@@ -85,7 +104,6 @@ Flags:
 		<XPS_typ_Collection.RemoveItem>
 
     -------------------------------------------------------------------------*/ 
-
     /* -----------------------------------------------------------------------
     Method: GetItems
 		<XPS_typ_Collection.GetItems>

@@ -1,6 +1,14 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
 TypeDef: core. XPS_typ_Blackboard
+
+    	--- Prototype --- 
+		XPS_typ_Blackboard
+    	---
+
+    	--- Code --- 
+    	_result = createHashmapObject ["XPS_typ_AstarSearch",[_graph,_startKey,_endKey]]
+    	---
 	<TypeDefinition>
 
 Authors: 
