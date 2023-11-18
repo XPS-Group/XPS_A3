@@ -2,6 +2,12 @@
 /* -----------------------------------------------------------------------------
 TypeDef: core. XPS_typ_JobScheduler
 	<TypeDefinition>
+	---prototype
+	XPS_typ_JobScheduler : XPS_ifc_ITypeCollection, XPS_ifc_IJobScheduler, XPS_typ_TypeCollection, XPS_typ_TypeCollection
+	---
+	---prototype
+	createhashmapobject ["XPS_typ_JobScheduler",[_allowedTypes*]];
+	---
 
 Authors: 
 	Crashdome
@@ -9,20 +15,38 @@ Authors:
 Description:
 	A collection of items that are processed in order received
 
-Parent:
-	<XPS_typ_HashmapObjectTypeCollection>
+Parameters: 
+    _allowedTypes* - (optional) - <Array> -of <Strings> which are <HashmapObject> '#type's
 
-Implements: 
-	<XPS_ifc_ICollection>
-	<XPS_ifc_IJobScheduler>
-
-Flags: 
-	none
+Returns:
+	<HashmapObject>
 
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_typ_JobScheduler"],
-	["#base",XPS_typ_HashmapObjectTypeCollection],
+    /*----------------------------------------------------------------------------
+    Parent: #base
+        <XPS_typ_TypeCollection>
+    ----------------------------------------------------------------------------*/
+	["#base",XPS_typ_TypeCollection],
+	/* -----------------------------------------------------------------------
+    Constructor: #create
+		<XPS_typ_TypeCollection.#create>
+    -------------------------------------------------------------------------*/ 
+	["#create",{
+		_self call ["XPS_typ_TypeCollection.#create",_this];
+	}],
+    /*----------------------------------------------------------------------------
+    Parent: #str
+		--- prototype
+		"XPS_typ_JobScheduler"
+		---
+    ----------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------
+    Parent: @interfaces
+        <XPS_typ_TypeCollection.@interfaces>
+		<XPS_ifc_IJobScheduler>
+    ----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
 	["_handle",nil],
 	["_queueObject", nil, [["CTOR","createhashmapobject [XPS_typ_Queue]"]]],
@@ -46,6 +70,8 @@ Flags:
     	get "CurrentUID"
     	---
     
+        <XPS_ifc_IJobScheduler>
+
     Returns: 
 		<String> - The key of the item currently being processed
 	-----------------------------------------------------------------------------*/
@@ -70,6 +96,8 @@ Flags:
     	call ["dequeue"]
     	---
 
+		Sets <CurrentItem> and <CurrentUID> to next in queue
+
     Returns: 
 		Nothing 
 	-----------------------------------------------------------------------------*/
@@ -90,6 +118,7 @@ Flags:
     	call ["finalizeCurrent"]
     	---
     
+		calls <XPS_typ_JobScheduler.dequeue> method
 	-----------------------------------------------------------------------------*/
 	["finalizeCurrent",compilefinal {
 		_self call ["dequeue"];
@@ -131,18 +160,6 @@ Flags:
 	["processCurrent",compileFinal {
 		_self get "CurrentItem" call ["Process"];
 	}],
-	/* -----------------------------------------------------------------------
-    Constructor: #create
-
-        ---prototype
-        _myobj = createhashmapobject ["XPS_typ_JobScheduler",[_allowedTypes]];
-        ---
-
-		<XPS_typ_HashmapObjectTypeCollection.#create>
-    -------------------------------------------------------------------------*/ 
-	["#create",{
-		_self call ["XPS_typ_HashmapObjectTypeCollection.#create",_this];
-	}],
     /* -----------------------------------------------------------------------
     Method: AddItem
 
@@ -150,10 +167,12 @@ Flags:
         call ["AddItem",[_item]];
         ---
 
-		overrides <XPS_typ_HashmapObjectTypeCollection.AddItem>
+        <XPS_ifc_ITypeCollection>
+
+		overrides <XPS_typ_TypeCollection.AddItem>
     
     Parameters: 
-        _item - <HashmapObject> - to add to <Items> store
+        _item - <HashmapObject> - to add to item store
 
     Returns:
         <Boolean> - True if successfully added, otherwise False
@@ -162,7 +181,7 @@ Flags:
 	["AddItem", compileFinal {
         if !(params [["_item",nil,[createhashmap]]]) exitwith {false;};
         private _uid = [] call XPS_fnc_createUniqueID;
-        if (_self call ["XPS_typ_HashmapObjectTypeCollection.AddItem",[_uid,_item]]) exitwith {
+        if (_self call ["XPS_typ_TypeCollection.AddItem",[_uid,_item]]) exitwith {
 			_self get "_queueObject" call ["Enqueue",_uid];
 			true;
 		};
@@ -170,12 +189,16 @@ Flags:
     }],
     /* -----------------------------------------------------------------------
     Method: RegisterType
-		<XPS_typ_HashmapObjectTypeCollection.RegisterType>
+		<XPS_typ_TypeCollection.RegisterType>
+
+        <XPS_ifc_ITypeCollection>
 
     -------------------------------------------------------------------------*/ 
     /* -----------------------------------------------------------------------
     Method: RemoveItem
-		<XPS_typ_HashmapObjectTypeCollection.RemoveItem>
+		<XPS_typ_TypeCollection.RemoveItem>
+
+        <XPS_ifc_ITypeCollection>
 
     -------------------------------------------------------------------------*/ 
 	/*----------------------------------------------------------------------------

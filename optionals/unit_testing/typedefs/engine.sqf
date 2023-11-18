@@ -76,7 +76,7 @@ Flags:
         call ["AddItem",[_key,_item]];
         ---
 
-        <XPS_ifc_ICollection>
+        <XPS_ifc_ITypeCollection>
 
 		Overrides base class method : <main. XPS_typ_HashmapObjectTypeCollection. AddItem>
 

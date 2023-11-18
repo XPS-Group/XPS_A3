@@ -1,7 +1,10 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
 Interface: core. XPS_ifc_IBlackboard
-<Interface>
+	<Interface>
+	---prototype
+	XPS_ifc_IBlackboard
+	---
 
 Authors:
     Crashdome

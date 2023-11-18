@@ -1,12 +1,12 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_InvalidArgummentException
+TypeDef: core. XPS_typ_InvalidArgumentException
 	<TypeDefinition>
     	--- Prototype --- 
-		XPS_typ_InvalidArgummentException :  XPS_ifc_IException, XPS_typ_Exception
+		XPS_typ_InvalidArgumentException :  XPS_ifc_IException, XPS_typ_Exception
     	---
         --- prototype
-        createhashmapobject [XPS_typ_InvalidArgummentException, [_source*, _target*, _message*, _data*]]
+        createhashmapobject [XPS_typ_InvalidArgumentException, [_source*, _target*, _message*, _data*]]
         ---
 
 Authors: 
@@ -26,7 +26,7 @@ Returns:
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_typ_InvalidArgummentException"],
+	["#type","XPS_typ_InvalidArgumentException"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
     	<XPS_typ_Exception>
@@ -39,7 +39,7 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
-		XPS_typ_InvalidArgummentException:
+		XPS_typ_InvalidArgumentException:
 		         Source: (source)
 				 Target: (target)
 		         Message: (message)

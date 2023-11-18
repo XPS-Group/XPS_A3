@@ -2,6 +2,11 @@
 /* ----------------------------------------------------------------------------
 TypeDef: core. XPS_typ_Enum
 	<Static>
+    	--- Prototype --- 
+    	XPS_typ_Enum
+    	---
+    	
+    	<XPS_Enum>
 
 Authors: 
 	Crashdome
@@ -9,20 +14,21 @@ Authors:
 Description:
 	Static Class to handle all derived classes of <XPS_typ_Enumeration>
 
-Parent:
-    none
-
-Implements:
-    None
-
-Flags:
-    unscheduled
-
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Enum"],
-	//["#flags",["unscheduled"]],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_typ_Enum"
+		---
+	-----------------------------------------------------------------------------*/
+	["#str",compilefinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements:
+		<XPS_ifc_IEnumeration>
+	-----------------------------------------------------------------------------*/
+	["@interfaces",[XPS_typ_IEnumeration]]
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
     

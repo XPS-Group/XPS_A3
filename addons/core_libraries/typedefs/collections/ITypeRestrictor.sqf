@@ -1,27 +1,20 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_IJobScheduler
+Interface: core. XPS_ifc_ITypeRestrictor
 <Interface>
+---prototype
+XPS_ifc_ITypeRestrictor
+---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	Property: CurrentUID
-	<String>
-
-	Property: CurrentItem
-
-	Property: ProcessesPerFrame
-	<Number>
 	
-	Method: Start
-	
-	Method: Stop
+	Method: RegisterType
+
+	Method: IsAllowed
 ---------------------------------------------------------------------------- */
 [
-	["CurrentItem","ANYTHING"],
-	["CurrentUID","STRING"],
-	["ProcessesPerFrame","SCALAR"],
-	["Start","CODE"],
-	["Stop","CODE"]
+	["RegisterType","CODE"],
+	["IsAllowed","CODE"]
 ]

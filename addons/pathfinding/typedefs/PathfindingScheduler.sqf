@@ -13,7 +13,7 @@ Parent:
 	<main.XPS_typ_JobScheduler>
 
 Implements: 
-	<main.XPS_ifc_IJobScheduler>, <main.XPS_ifc_ICollection>
+	<main.XPS_ifc_IJobScheduler>, <main.XPS_ifc_ITypeCollection>
 
 Flags: 
 	none

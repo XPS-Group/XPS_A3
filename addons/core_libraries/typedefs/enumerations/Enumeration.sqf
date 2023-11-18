@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 TypeDef: core. XPS_typ_Enumeration
 	<TypeDefinition>
+    	--- Prototype --- 
+    	XPS_typ_Enumeration : XPS_ifc_IEnumeration
+    	---
 
 Authors: 
 	Crashdome
@@ -11,22 +14,25 @@ Description:
 	Derived classes created with 
 	<XPS_fnc_createEnumeration: core.typeHandlers.XPS_fnc_createEnumeration> will store
 	a type-safe set of enumeration references to global variables which are constants (compileFinal'd).
-	
-Parent:
-    none
+	Additionally, it will create a static helper class using this definition.
 
-Implements:
-    None
-
-Flags:
-    unscheduled
-
+	See <XPS_fnc_createEnummeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Enumeration"],
-	//["#flags",["unscheduled"]],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_typ_Enum"
+		---
+	-----------------------------------------------------------------------------*/
+	["#str",compilefinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements:
+		<XPS_ifc_IEnumeration>
+	-----------------------------------------------------------------------------*/
+	["@interfaces",[XPS_typ_IEnumeration]]
 	/*----------------------------------------------------------------------------
 	Property: Names
     

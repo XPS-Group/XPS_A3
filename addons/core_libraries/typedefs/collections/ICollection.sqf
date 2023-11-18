@@ -11,11 +11,12 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 	
+	Method: AddItem
+
 	Method: GetItems
 
 	Method: RemoveItem
 	
-	Method: AddItem
 ---------------------------------------------------------------------------- */
 [
 	["AddItem","CODE"],

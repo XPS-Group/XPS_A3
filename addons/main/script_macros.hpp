@@ -33,14 +33,14 @@
 }
 
 #define XPS_CFG_IFC(ifcName) class ifcName {\
-    file = FILEPATH_C_Q(interfaces\ifcName.sqf);\
+    file = FILEPATH_C_Q(typedefs\ifcName.sqf);\
     type = "ifc";\
     recompile = 1;\
     isFinal = 0;\
 }
 
 #define XPS_CFG_IFC_SUB(sub,ifcName) class ifcName {\
-    file = FILEPATH_C_Q(interfaces\sub\ifcName.sqf);\
+    file = FILEPATH_C_Q(typedefs\sub\ifcName.sqf);\
     type = "ifc";\
     recompile = 1;\
     isFinal = 0;\
