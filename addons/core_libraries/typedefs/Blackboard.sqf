@@ -2,6 +2,12 @@
 /* ----------------------------------------------------------------------------
 TypeDef: core. XPS_typ_Blackboard
 	<TypeDefinition>
+    	--- Prototype --- 
+		XPS_typ_Blackboard
+    	---
+    	--- Code --- 
+    	createHashmapObject ["XPS_typ_Blackboard",[_object*,_varName*]]
+    	---
 
 Authors: 
 	Crashdome
@@ -10,27 +16,21 @@ Description:
 	Allows storage of values as keys as any other hashmap but, has a method to
 	attach to an object through setvariable if needed. 
 
-Parent:
-	none
+Optionals: 
+	_object* - <Object> - (Optional - Default : objNull) See: <AttachToObject>
+	_varName* - <String> - (Optional - Default : "XPS_Blackboard") See: <AttachToObject>
 
-Implements: 
-	<XPS_ifc_IBlackboard>
-
-Flags: 
-	none
+Returns:
+	<HashmapObject>
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_typ_Blackboard"],
-	["@interfaces",["XPS_ifc_IBlackboard"]],
-	["attachedTo",objNull],
-	["attachedTo_VariableName",nil],
 	/*-----------------------------------------------------------------------------
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_typ_Blackboard",[_object*,_varName*]]
+    	call ["#create",[_object*,_varName*]]
     	---
     
     Optionals: 
@@ -38,12 +38,26 @@ Flags:
     	_varName* - <String> - (Optional - Default : "XPS_Blackboard") See: <AttachToObject>
 
 	Returns:
-		_result - <HashmapObject>
+		True
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
 		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
 		if !(isNull _object) then {_self call ["AttachToObject",[_object,_varName]]};
 	}],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_typ_Blackboard"
+		---
+	-----------------------------------------------------------------------------*/
+	["#str",compilefinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements:
+		<XPS_ifc_IBlackboard>
+	-----------------------------------------------------------------------------*/
+	["@interfaces",["XPS_ifc_IBlackboard"]],
+	["attachedTo",objNull],
+	["attachedTo_VariableName",nil],
 	/*-----------------------------------------------------------------------------
 	Method: AttachToObject 
     

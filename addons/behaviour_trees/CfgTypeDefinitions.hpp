@@ -6,7 +6,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 		};
 
 		class Enumerations {
-			XPS_CFG_ENUM(Result);
+			XPS_CFG_ENUM(Status);
 		}; 
 
 		class Base {

@@ -2,6 +2,12 @@
 /* ----------------------------------------------------------------------------
 TypeDef: unit_testing. XPS_UT_typ_TestResult
 	<TypeDefinition>
+		---prototype
+		XPS_UT_typ_TestResult : XPS_UT_ifc_ITestResult
+		---
+		---prototype
+		createhashmapobject [XPS_UT_typ_TestResult]
+		---
 
 Authors: 
 	Crashdome
@@ -9,19 +15,20 @@ Authors:
 Description:
 	Contains data about the current status or result of a Unit Test
 
-Parent:
-    none
-
-Implements:
-    <XPS_UT_ifc_ITestResult>
-
-Flags:
-
-
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {_self get "#type" select 0}],
 	["#type","XPS_UT_typ_TestResult"],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_UT_typ_TestResult"
+		---
+	----------------------------------------------------------------------------*/
+	["#str",compilefinal {_self get "#type" select 0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+		<XPS_UT_ifc_ITestResult>
+	----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_UT_ifc_ITestResult"]],
 	/*----------------------------------------------------------------------------
 	Property: ItemID
@@ -74,6 +81,6 @@ Flags:
     Returns: 
 		Nil or <main. XPS_typ_Exception> - if any exception was thrown
 	-----------------------------------------------------------------------------*/
-	["Exception",nil],
+	["Exception",nil]
 	
 ]

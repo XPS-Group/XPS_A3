@@ -2,6 +2,12 @@
 /* -----------------------------------------------------------------------------
 TypeDef: core. XPS_typ_JobScheduler
 	<TypeDefinition>
+	---prototype
+	XPS_typ_JobScheduler : XPS_ifc_ITypeCollection, XPS_ifc_IJobScheduler, XPS_typ_TypeCollection, XPS_typ_TypeCollection
+	---
+	---prototype
+	createhashmapobject ["XPS_typ_JobScheduler",[_allowedTypes*]];
+	---
 
 Authors: 
 	Crashdome
@@ -9,51 +15,42 @@ Authors:
 Description:
 	A collection of items that are processed in order received
 
-Parent:
-	<XPS_typ_HashmapCollection>
+Parameters: 
+    _allowedTypes* - (optional) - <Array> -of <Strings> which are <HashmapObject> '#type's
 
-Implements: 
-	<XPS_ifc_IJobScheduler>
-
-Flags: 
-	none
+Returns:
+	<HashmapObject>
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_typ_JobScheduler"],
-	["#base",XPS_typ_HashmapCollection],
+    /*----------------------------------------------------------------------------
+    Parent: #base
+        <XPS_typ_TypeCollection>
+    ----------------------------------------------------------------------------*/
+	["#base",XPS_typ_TypeCollection],
+	/* -----------------------------------------------------------------------
+    Constructor: #create
+		<XPS_typ_TypeCollection.#create>
+    -------------------------------------------------------------------------*/ 
+	["#create",{
+		_self call ["XPS_typ_TypeCollection.#create",_this];
+	}],
+    /*----------------------------------------------------------------------------
+    Parent: #str
+		--- prototype
+		"XPS_typ_JobScheduler"
+		---
+    ----------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------
+    Parent: @interfaces
+        <XPS_typ_TypeCollection.@interfaces>
+		<XPS_ifc_IJobScheduler>
+    ----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
 	["_handle",nil],
+	["_queueObject", nil, [["CTOR","createhashmapobject [XPS_typ_Queue]"]]],
 	/*----------------------------------------------------------------------------
-	Protected: popQueue
-    
-    	--- Prototype --- 
-    	call ["popQueue"]
-    	---
-
-    Returns: 
-		Nothing 
-	-----------------------------------------------------------------------------*/
-	["popQueue",compileFinal {
-		private _queue = _self get "Queue";
-		if (count _queue > 0) then {
-			private _next = _queue deleteAt 0;
-			_self set ["CurrentItem",_next#1];
-			_self set ["CurrentUID",_next#0];
-		} else {
-			_self set ["CurrentItem",nil];
-			_self set ["CurrentUID",nil];
-		};
-	}],
-	/*----------------------------------------------------------------------------
-    Property: AllowedTypes
-		<XPS_typ_Hashmapcollection.AllowedTypes>
-
-    Property: Items
-		<XPS_typ_Hashmapcollection.Items>
-
-	-------------------------------------------------------------------------------
 	Property: CurrentItem
     
     	--- Prototype --- 
@@ -73,6 +70,8 @@ Flags:
     	get "CurrentUID"
     	---
     
+        <XPS_ifc_IJobScheduler>
+
     Returns: 
 		<String> - The key of the item currently being processed
 	-----------------------------------------------------------------------------*/
@@ -91,27 +90,76 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["ProcessesPerFrame",1],
 	/*----------------------------------------------------------------------------
-	Property: Queue
+	Protected: dequeue
     
     	--- Prototype --- 
-    	get "Queue"
+    	call ["dequeue"]
     	---
 
-        <XPS_ifc_IJobScheduler>
-    
+		Sets <CurrentItem> and <CurrentUID> to next in queue
+
     Returns: 
-		<Array> - an ordered array of items to process
+		Nothing 
 	-----------------------------------------------------------------------------*/
-	["Queue",[]],
-	/* -----------------------------------------------------------------------
-    Constructor: #create
+	["dequeue",compileFinal {
+		private _next = _self get "_queueObject" call ["Dequeue"];
+		if (isNil {_next}) then {
+			_self set ["CurrentItem",nil];
+			_self set ["CurrentUID",nil];
+		} else {
+			_self set ["CurrentItem",_self call ["RemoveItem",[_next]]];
+			_self set ["CurrentUID",_next];
+		};
+	}],
+	/*----------------------------------------------------------------------------
+	Protected: finalizeCurrent
+    
+    	--- Prototype --- 
+    	call ["finalizeCurrent"]
+    	---
+    
+		calls <XPS_typ_JobScheduler.dequeue> method
+	-----------------------------------------------------------------------------*/
+	["finalizeCurrent",compilefinal {
+		_self call ["dequeue"];
+	}],
+	/*----------------------------------------------------------------------------
+	Protected: preprocessCurrent
+    
+    	--- Prototype --- 
+    	call ["preprocessCurrent"]
+    	---
 
-        ---prototype
-        _myobj = createhashmapobject ["XPS_typ_JobScheduler",[_allowedTtypes]];
-        ---
+		Sets up the Currentitem and queues up next item if the current item is empty
+	-----------------------------------------------------------------------------*/
+	["preprocessCurrent",compileFinal {
+		if (isNil {_self get "CurrentItem"}) then {
+			_self call ["dequeue"];
+		};
+		
+		if !(isNil {_self get "CurrentItem"}) then {
+			if (_self call ["processCurrent"]) then {
+				_self call ["finalizeCurrent"];
+			};
+		};
+	}],
+	/*----------------------------------------------------------------------------
+	Protected: processCurrent
+    
+    	--- Prototype --- 
+    	_result = call ["processCurrent"]
+    	---
 
-		<XPS_typ_HashmapCollection.#create>
-    -------------------------------------------------------------------------*/ 
+    	Calls "Process" on current item which expects a true/false result. 
+		
+		Override this method for custom proccessing.
+
+	Returns: 
+		_result - <Boolean> - true if should move on to next item else false (keep processing current item)
+	-----------------------------------------------------------------------------*/
+	["processCurrent",compileFinal {
+		_self get "CurrentItem" call ["Process"];
+	}],
     /* -----------------------------------------------------------------------
     Method: AddItem
 
@@ -119,80 +167,40 @@ Flags:
         call ["AddItem",[_item]];
         ---
 
-		overrides <XPS_typ_Hashmapcollection.AddItem>
+        <XPS_ifc_ITypeCollection>
+
+		overrides <XPS_typ_TypeCollection.AddItem>
     
     Parameters: 
-        _item - <HashmapObject> - to add to <Items> store
+        _item - <HashmapObject> - to add to item store
 
     Returns:
-        <Boolean> - <True> if successfully added, otherwise <False>
+        <Boolean> - True if successfully added, otherwise False
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
         if !(params [["_item",nil,[createhashmap]]]) exitwith {false;};
         private _uid = [] call XPS_fnc_createUniqueID;
-        if (_self call ["XPS_typ_HashmapCollection.AddItem",[_uid,_item]]) exitwith {
-			(_self get "Queue") pushback [_uid,_item];
+        if (_self call ["XPS_typ_TypeCollection.AddItem",[_uid,_item]]) exitwith {
+			_self get "_queueObject" call ["Enqueue",_uid];
 			true;
 		};
 		false;
     }],
-	/*----------------------------------------------------------------------------
-	Method: FinalizeCurrent
-    
-    	--- Prototype --- 
-    	call ["FinalizeCurrent"]
-    	---
-
-        <XPS_ifc_IJobScheduler>
-    
-	-----------------------------------------------------------------------------*/
-	["FinalizeCurrent",compilefinal {
-		private _current = _self get "CurrentUID";
-		(_self get "Items") deleteAt _current;
-		_self call ["popQueue"];
-	}],
-	/*----------------------------------------------------------------------------
-	Method: ProcessCurrent
-    
-    	--- Prototype --- 
-    	call ["ProcessCurrent"]
-    	---
-
-        <XPS_ifc_IJobScheduler>
-
-    Must be Overridden by child type. This method simply pops the top item in the queue
-	to <CurrentItem>. Your child type should can call this method. Example override:
-
-	---code
-	["ProcessCurrent",compileFinal {
-		// uses base object method to pop queue to CurrentItem
-		_self call ["XPS_typ_JobScheduler.ProcessCurrent"];
-
-		//Process the CurrentItem
-		private _current = _self get "CurrentItem";
-		if !(isNil {_current}) then {
-			// do stuff.... 
-		};
-	}]
-	---
-	-----------------------------------------------------------------------------*/
-	["ProcessCurrent",compileFinal {
-		if (isNil {_self get "CurrentItem"}) then {
-			_self call ["popQueue"];
-		};
-	}],
     /* -----------------------------------------------------------------------
     Method: RegisterType
-		<XPS_typ_Hashmapcollection.RegisterType>
+		<XPS_typ_TypeCollection.RegisterType>
+
+        <XPS_ifc_ITypeCollection>
 
     -------------------------------------------------------------------------*/ 
     /* -----------------------------------------------------------------------
     Method: RemoveItem
-		<XPS_typ_Hashmapcollection.RemoveItem>
+		<XPS_typ_TypeCollection.RemoveItem>
+
+        <XPS_ifc_ITypeCollection>
 
     -------------------------------------------------------------------------*/ 
-	
 	/*----------------------------------------------------------------------------
 	Method: Start
     
@@ -212,7 +220,7 @@ Flags:
 				private _count = _thisArgs#1;
 				private _limit = _thisArgs#0 get "ProcessesPerFrame";
 				while {_count < _limit} do {
-					_thisArgs#0 call ["ProcessCurrent"]; 
+					_thisArgs#0 call ["preprocessCurrent"]; 
 					_count = _count + 1;
 				};
 			}, [_self,0]];
@@ -233,7 +241,7 @@ Flags:
 	["Stop",compileFinal {
 		private _hndl = _self get "_handle";
 		if !(isNil "_hndl") then {
-			removeMissionEventHandler ["EachFrame",_handle];
+			removeMissionEventHandler ["EachFrame",_hndl];
 			_self set ["_handle",nil];
 		};
 	}]

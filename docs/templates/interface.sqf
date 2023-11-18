@@ -1,6 +1,9 @@
 /* ----------------------------------------------------------------------------
 Interface: main. XPS_ifc_Name
-<Interface>
+	<Interface>
+	---prototype
+	XPS_ifc_Name
+	---
 
 Authors:
     (Author)

@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 TypeDef: behaviour_trees. XPS_BT_enum_Status
 	<TypeDefinition>
+		---prototype
+		XPS_BT_enum_Status : XPS_ifc_IEnumeration, XPS_typ_Enumeration
+		---
 
 Authors: 
 	Crashdome
@@ -9,28 +12,19 @@ Authors:
 Description:
 	An Enumeration set for node statuses.
 
-Parent:
-    <core. XPS_typ_Enumeration>
-
-Implements:
-	None 
-
-Flags:
-    none
+	See <XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_enum_Status"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_typ_Enumeration>
+	-----------------------------------------------------------------------------*/
 	["#base",XPS_typ_Enumeration],
 	/*----------------------------------------------------------------------------
 	Property: Names
-    
-    	--- Prototype --- 
-    	get "Names"
-    	---
-    
-    Returns: 
-		<Array> - ["Success", "Failure", "Running"]
+		<XPS_typ_Enumeration.Names>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: ValueType
@@ -46,38 +40,14 @@ Flags:
 	["Enumerations", [["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
 	/*----------------------------------------------------------------------------
 	Property: Values
-    
-    	--- Prototype --- 
-    	get "Values"
-    	---
-    
-    Returns: 
-		<Array> - ["SUCCESS", "FAILURE","RUNNING"]
+		<XPS_typ_Enumeration.Values>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
-    
-    	--- Prototype --- 
-    	call ["GetEnum",[_lookup]]
-    	---
-	
-	Prameters:
-		_lookup - Anything - value to look up to get reference
-    
-    Returns: 
-		<HashmapObject> - The reference to the Enumeration constant or nil
+		<XPS_typ_Enumeration.GetEnum>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: IsDefined
-    
-    	--- Prototype --- 
-    	call ["IsDefined",[_lookup]]
-    	---
-	
-	Prameters:
-		_lookup - Anything - value to look up to see if Name or Value exists
-    
-    Returns: 
-		<Boolean> - True if _lookup value exists otherwise False
+		<XPS_typ_Enumeration.IsDefined>
 	-----------------------------------------------------------------------------*/
 ]

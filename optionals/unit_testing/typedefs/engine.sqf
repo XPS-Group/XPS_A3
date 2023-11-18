@@ -1,7 +1,10 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
 TypeDef: unit_testing. XPS_UT_typ_Engine
-	<TypeDefintion>
+	<TypeDefinition>
+	---prototype
+	XPS_UT_typ_Engine
+	---
 
 Authors: 
 	Crashdome
@@ -9,23 +12,65 @@ Authors:
 Description:
 	An object which is a collection of Unit Test Classes that can be run
 	to perform Unit Tests of other <Hashmap Objects>
-
-Parent:
-	none
-
-Implements: 
-	none
-
-Flags: 
-	NoCopy
-	Sealed
  
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self get "#type" select  0}],
 	["#type","XPS_UT_type_Engine"],
+	/*----------------------------------------------------------------------------
+	Constructor: #create
+		---prototype
+		call ["#create"]
+		---
+
+	Returns:
+		True
+	----------------------------------------------------------------------------*/
+	["#create", {
+		_self set ["_collection",createhashmapobject [
+			XPS_typCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_typ_TestClass"]]]]]];
+		_self set ["classOrder",[]];
+		_self set ["Selected",[]];
+		_self set ["TestResults",createhashmap];
+	}],
+	/*----------------------------------------------------------------------------
+	Flags: #flags
+		sealed
+		noCopy
+	----------------------------------------------------------------------------*/
 	["#flags",["sealed","nocopy"]],
-	["#base",XPS_typ_HashmapCollection],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_UT_type_Engine"
+		---
+	----------------------------------------------------------------------------*/
+	["#str", {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+		<core. XPS_ifc_ICollection>
+		<core. XPS_ifc_ITypeRestrictor>
+	----------------------------------------------------------------------------*/
+	["_collection",nil],
+	/*----------------------------------------------------------------------------
+	Protected: classOrder
+		
+		---prototype
+		get "classOrder"
+		---
+
+	Returns:
+		<Array> - of Class Names in the order they should be run
+	----------------------------------------------------------------------------*/
+	["classOrder",[]],
+	/*----------------------------------------------------------------------------
+	Protected: initTestRsults
+		
+		---prototype
+		call ["initTestRsults"]
+		---
+
+
+	----------------------------------------------------------------------------*/
 	["initTestRsults",{
 		private _testResults = createhashmapobject [XPS_UT_typ_TestResults];
 		{
@@ -36,10 +81,35 @@ Flags:
 		_self set ["TestResults",_testRsults];
 
 	}],
-	["#create", {
-		_self call ["XPS_typ_HashmapCollection.#create",[]];
-	}],
+	["TestResults",createhashmap],
 	["Selected",[]],
+    /* -----------------------------------------------------------------------
+    Method: AddClass
+
+        ---prototype
+        call ["AddClass",[_key,_item]];
+
+		Adds item to collection and then appends identifier to classOrder <array>
+    
+    Parameters: 
+        _key - Anything - Key used when adding to <Items> store
+        _item - <HashmapObject> - to add to <Items> store
+
+    -------------------------------------------------------------------------*/ 
+	["AddClass", compileFinal {
+        if !(_self get "_collection" call ["AddItem",[_key,_item]]) then {
+			_self get "classOrder" pushback _key;
+		};
+    }],
+	/*----------------------------------------------------------------------------
+	Method: RunAll
+		
+		---prototype
+		call ["RunAll"]
+		---
+
+		Runs all Tests in a Scheduled Environment
+	----------------------------------------------------------------------------*/
 	["RunAll",{
 		_self spawn {
 			private _engine = _this;
@@ -68,33 +138,5 @@ Flags:
 			} foreach (_engine get "classOrder");
 		};
 	}],
-	["RunSelected",{}],
-    /* -----------------------------------------------------------------------
-    Method: AddItem
-
-        ---prototype
-        call ["AddItem",[_key,_item]];
-        ---
-
-        <XPS_ifc_ICollection>
-
-		Overrides base class method : <main. XPS_typ_HashmapCollection. AddItem>
-
-		Performs base method and then appends identifier to classOrder <array>
-    
-    Parameters: 
-        _key - Anything - Key used when adding to <Items> store
-        _item - <HashmapObject> - to add to <Items> store
-
-    Returns:
-        <Boolean> - <True> if successfully added, otherwise <False>
-
-    -------------------------------------------------------------------------*/ 
-	["AddItem", compileFinal {
-        if !(params [["_key",nil,[""]],["_item",nil,[createhashmap]]]) exitwith {false;};
-        if !(_self call ["XPS_typ_HashmapCollection.AddItem",[_key,_item]]) exitwith {false};
-		_self get "classOrder" pushback _key;
-    }],
-	["classOrder",[],[["CTOR"]]],
-	["TestResults",createhashmap]
+	["RunSelected",{}]
 ];

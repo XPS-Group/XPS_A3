@@ -3,11 +3,11 @@
 Function: main. typeHandlers. XPS_fnc_buildTypeDefinition
 	
 	---prototype
-	_typeDefintion = [_type] call XPS_fnc_buildTypeDefinition
+	_typeDefinition = [_type] call XPS_fnc_buildTypeDefinition
 	---
 
 	---prototype
-	_typeDefintion = [_type, false, true, true] call XPS_fnc_buildTypeDefinition
+	_typeDefinition = [_type, false, true, true] call XPS_fnc_buildTypeDefinition
 	---
 
 Description:

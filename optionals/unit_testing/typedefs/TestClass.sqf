@@ -2,6 +2,12 @@
 /* ----------------------------------------------------------------------------
 TypeDef: unit_testing. XPS_UT_typ_TestClass
 	<TypeDefinition>
+	---prototype
+	XPS_UT_typ_TestClass : XPS_UT_ifc_ITestClass
+	---
+	---prototype
+	createhashmapobject [XPS_UT_typ_TestClass]
+	---
 
 Authors: 
 	Crashdome
@@ -9,21 +15,21 @@ Authors:
 Description:
 	Contains Methods which will be called according to order defined in <TestOrder> property
 
-Parent:
-    none
-
-Implements:
-    <XPS_UT_ifc_ITestClass>
-
-Flags:
-
-
 ---------------------------------------------------------------------------- */
 [
-	["#str",compilefinal {_self get "#type" select 0}],
 	["#type","XPS_UT_typ_TestClass"],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_UT_typ_TestClass"
+		---
+	----------------------------------------------------------------------------*/
+	["#str",compilefinal {_self get "#type" select 0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+		<XPS_UT_ifc_ITestClass>
+	----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_UT_ifc_ITestClass"]],
-	//["#flags",["unscheduled"]],
 	/*----------------------------------------------------------------------------
 	Property: Description
     
