@@ -1,7 +1,10 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
 TypeDef: unit_testing. XPS_UT_typ_Assert
-	<TypeDefintion>
+	<TypeDefinition>
+		---prototype
+		XPS_UT_typ_Assert
+		---
 
 Authors: 
 	Crashdome
@@ -9,20 +12,16 @@ Authors:
 Description:
 	<HashmapObject> with methods to perform equality and type checks
 
-Parent:
-    none
-
-Implements:
-    none
-
-Flags:
-    Sealed
-	NoCopy
-
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self get "#type" select 0}],
 	["#type","XPS_UT_typ_Assert"],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_UT_typ_Assert"
+		---
+	----------------------------------------------------------------------------*/
+	["#str", {_self get "#type" select 0}],
 	/*-----------------------------------------------------------------------------
 	Method: AreEqual 
     

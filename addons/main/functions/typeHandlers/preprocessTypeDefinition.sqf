@@ -3,7 +3,7 @@
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
-	_typeDefintion = [_type, _headers] call XPS_fnc_preprocessTypeDefinition
+	_typeDefinition = [_type, _headers] call XPS_fnc_preprocessTypeDefinition
 	---
 
 Description:

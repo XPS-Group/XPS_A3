@@ -11,7 +11,7 @@ Description:
 	It then sets the missionNamespace variable name to the compileFinal'd <HashmapObject>
 	so that only one ever exists and can never be altered.
 
-	Files should return a <HashmapObject> and therefore XPS_fnc_buildTypeDefintion should be called
+	Files should return a <HashmapObject> and therefore XPS_fnc_buildTypeDefinition should be called
 	manually in SQF file before returning the result if needed.
 
 Authors: 

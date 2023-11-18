@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 TypeDef: unit_testing. XPS_UT_typ_SampleTestClassA
 	<TypeDefinition>
+	---prototype
+	XPS_UT_typ_SampleTestClassA : XPS_UT_ifc_ITestClass, XPS_UT_typ_TestClass
+	---
 
 Authors: 
 	Crashdome
@@ -11,18 +14,13 @@ Description:
 	
 	Contains Methods which will be called according to order defined in <TestOrder> property
 
-Parent:
-    <XPS_UT_typ_TestClass>
-
-Implements:
-    <XPS_UT_ifc_ITestClass>
-
-Flags:
-
-
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_UT_typ_SampleTestClassA"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+		<XPS_UT_typ_TestClass>
+	----------------------------------------------------------------------------*/
 	["#base", XPS_UT_typ_TestClass],
 	["Description","Sample Test Class A"],
 	["TestOrder",[

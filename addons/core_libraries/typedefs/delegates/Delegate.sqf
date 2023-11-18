@@ -167,7 +167,7 @@ Example: Override class to change signature
 		}],
 	];
 
-	Tag_typ_New_Delegate = [_newDelegate, false, true, true] call XPS_fnc_buildTypeDefintion;
+	Tag_typ_New_Delegate = [_newDelegate, false, true, true] call XPS_fnc_buildTypeDefinition;
 	---
 	
 	Now we can use the new delegate type and call Invoke and pass the extra parameters with a strict check.

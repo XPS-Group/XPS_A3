@@ -1,7 +1,10 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
 TypeDef: unit_testing. XPS_UT_typ_Engine
-	<TypeDefintion>
+	<TypeDefinition>
+	---prototype
+	XPS_UT_typ_Engine : core.XPS_ifc_ICollection, core.XPS_ifc_ITypeRestrictor, core.XPS_typ_TypeCollection
+	---
 
 Authors: 
 	Crashdome
@@ -9,23 +12,56 @@ Authors:
 Description:
 	An object which is a collection of Unit Test Classes that can be run
 	to perform Unit Tests of other <Hashmap Objects>
-
-Parent:
-	none
-
-Implements: 
-	none
-
-Flags: 
-	NoCopy
-	Sealed
  
 ---------------------------------------------------------------------------- */
 [
-	["#str", {_self get "#type" select  0}],
 	["#type","XPS_UT_type_Engine"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+		<XPS_typ_TypeCollection>
+	----------------------------------------------------------------------------*/
+	["#base",XPS_typ_TypeCollection],
+	/*----------------------------------------------------------------------------
+	Constructor: #create
+		<XPS_typ_TypeCollection.#create> with added parameters to constrain allowed 
+		types to <XPS_UT_typ_TestClass>
+	----------------------------------------------------------------------------*/
+	["#create", {
+		_self call ["XPS_typ_TypeCollection.#create",[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_typ_TestClass"]]]];
+	}],
+	/*----------------------------------------------------------------------------
+	Flags: #flags
+		sealed
+		noCopy
+	----------------------------------------------------------------------------*/
 	["#flags",["sealed","nocopy"]],
-	["#base",XPS_typ_HashmapObjectTypeCollection],
+	/*----------------------------------------------------------------------------
+	Str: #str
+		---text
+		"XPS_UT_type_Engine"
+		---
+	----------------------------------------------------------------------------*/
+	["#str", {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Protected: classOrder
+		
+		---prototype
+		get "classOrder"
+		---
+
+	Returns:
+		<Array> - of Class Names in the order they should be run
+	----------------------------------------------------------------------------*/
+	["classOrder",[],[["CTOR"]]],
+	/*----------------------------------------------------------------------------
+	Protected: initTestRsults
+		
+		---prototype
+		call ["initTestRsults"]
+		---
+
+
+	----------------------------------------------------------------------------*/
 	["initTestRsults",{
 		private _testResults = createhashmapobject [XPS_UT_typ_TestResults];
 		{
@@ -36,10 +72,17 @@ Flags:
 		_self set ["TestResults",_testRsults];
 
 	}],
-	["#create", {
-		_self call ["XPS_typ_HashmapObjectTypeCollection.#create",[]];
-	}],
+	["TestResults",createhashmap],
 	["Selected",[]],
+	/*----------------------------------------------------------------------------
+	Protected: RunAll
+		
+		---prototype
+		call ["RunAll"]
+		---
+
+		Runs all Tests in a Scheduled Environment
+	----------------------------------------------------------------------------*/
 	["RunAll",{
 		_self spawn {
 			private _engine = _this;
@@ -78,7 +121,7 @@ Flags:
 
         <XPS_ifc_ITypeCollection>
 
-		Overrides base class method : <main. XPS_typ_HashmapObjectTypeCollection. AddItem>
+		Overrides base class method : <main. XPS_typ_TypeCollection. AddItem>
 
 		Performs base method and then appends identifier to classOrder <array>
     
@@ -91,10 +134,8 @@ Flags:
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
-        if !(params [["_key",nil,[""]],["_item",nil,[createhashmap]]]) exitwith {false;};
-        if !(_self call ["XPS_typ_HashmapObjectTypeCollection.AddItem",[_key,_item]]) exitwith {false};
-		_self get "classOrder" pushback _key;
-    }],
-	["classOrder",[],[["CTOR"]]],
-	["TestResults",createhashmap]
+        if !(_self call ["XPS_typ_TypeCollection.AddItem",[_key,_item]]) then {
+			_self get "classOrder" pushback _key;
+		};
+    }]
 ];
