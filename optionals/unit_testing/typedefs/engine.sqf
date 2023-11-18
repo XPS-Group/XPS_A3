@@ -18,7 +18,7 @@ Description:
 	["#type","XPS_UT_type_Engine"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
-		<XPS_typ_TypeCollection>
+		<core. XPS_typ_TypeCollection>
 	----------------------------------------------------------------------------*/
 	["#base",XPS_typ_TypeCollection],
 	/*----------------------------------------------------------------------------
@@ -81,9 +81,9 @@ Description:
         call ["AddItem",[_key,_item]];
         ---
 
-        <XPS_ifc_ITypeCollection>
+        <core. XPS_ifc_ITypeCollection>
 
-		Overrides base class method : <main. XPS_typ_TypeCollection. AddItem>
+		Overrides base class method : <core. XPS_typ_TypeCollection. AddItem>
 
 		Performs base method and then appends identifier to classOrder <array>
     
