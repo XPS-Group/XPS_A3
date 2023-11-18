@@ -95,7 +95,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
 	["Add",{
-		if (isNil "_this") then {throw createhasmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
 		//Deep copy the array
 		if (_this isEqualType []) then {_this = +_this};
 		

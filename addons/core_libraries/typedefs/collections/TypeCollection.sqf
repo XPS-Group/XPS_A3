@@ -43,7 +43,7 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         params [["_typeRestrictor",createhashmapobject [XPS_typ_NoTypeRestrictor],[createhashmap]]];
-        if !(CHECK_IFC1(_typeRestrictor,["XPS_ifc_ITypeRestrictor"])) then {
+        if !(CHECK_IFC1(_typeRestrictor,XPS_ifc_ITypeRestrictor)) then {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","_typeRestrictor parameter was an invalid type",_this]]
         };
         _self set ["_restrictor",_typeRestrictor];
@@ -131,7 +131,7 @@ Returns:
     -------------------------------------------------------------------------*/ 
     ["GetItems",{
         values (_self get "_items");
-    }]
+    }],
     /*----------------------------------------------------------------------------
     Method: RegisterType 
     
@@ -162,15 +162,4 @@ Returns:
     ["IsAllowed",{
         _self get "_restrictor" call ["IsAllowed",_this];
     }]
-
-    
-	["AddItem", compileFinal {
-        if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {false;};
-        private _allowlist = _self get "_allowed";
-        if !(_item isEqualTypeAny _allowlist) exitwith {false;};
-        _self call ["XPS_typ_TypeCollection",[_key,_item]];
-        true;
-    }],
-
-
 ]

@@ -94,7 +94,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
 	["Attach",{
-		if (isNil "_this") then {throw createhasmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil",_this]]};
 		//Deep copy the array
 		if (_this isEqualType []) then {_this = +_this};
 		
@@ -174,7 +174,7 @@ Example: Override class to change signature
 	--- code 
 	_def = [
 		["#type", "Example"],
-		["delegate", createhasmapobject ["Tag_typ_New_Delegate"]],
+		["delegate", createhashmapobject ["Tag_typ_New_Delegate"]],
 		["MyMethod", { 
 			//do some stuff
 			private _someArgs = ["I successfully did some stuff"];

@@ -237,6 +237,7 @@ try
 } catch {
 	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
 	diag_log text _exception;
+	diag_log _this;
 	false;
 };
 
