@@ -1,7 +1,13 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. base. XPS_BT_typ_Leaf
+TypeDef: behaviour_trees. XPS_BT_typ_Leaf
 	<TypeDefinition>
+		---prototype
+		XPS_BT_typ_Leaf : XPS_BT_ifc_INode
+		---
+    	--- Prototype --- 
+    	createHashmapObject ["XPS_BT_typ_Leaf"]
+    	---
 
 Authors: 
 	Crashdome
@@ -10,19 +16,22 @@ Description:
 	A node for a Behaviour Tree that has an <ProcessTick> method which is 
 	called when Ticked
 
-Parent:
-    none
-
-Implements:
-    <XPS_BT_ifc_INode>
-
-Flags:
-    none
-
+Returns:
+	<HashmapObject> of a Leaf Node
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_BT_typ_Leaf"],
+	/*----------------------------------------------------------------------------
+	Str: #str
+    	--- text --- 
+    	"XPS_BT_typ_Leaf"
+    	---
+	-----------------------------------------------------------------------------*/
+	["#str",compileFinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+    	<XPS_BT_ifc_INode>
+	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
@@ -48,7 +57,7 @@ Flags:
 	Protected: processTick
     
     	--- Prototype --- 
-    	_status = _self call ["processTick"]
+    	call ["processTick"]
     	---
 
 	Description:
@@ -56,14 +65,14 @@ Flags:
 		returns a status.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",nil],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",_status]
+    	call ["postTick",_status]
     	---
 
 	Description:
@@ -74,7 +83,7 @@ Flags:
 		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
@@ -150,7 +159,7 @@ Flags:
 		The code that begins the entire Tick cycle process.
 
 	Returns: 
-		_status - <String> - returns <Status> property after execution
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {		
 		_self call ["preTick"];

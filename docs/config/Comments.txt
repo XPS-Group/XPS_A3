@@ -122,6 +122,11 @@ Comment Type: Throws
       throws
 
 
+Alter Comment Type: Variable
+
+   Keywords:
+
+
 Alter Comment Type: Property
 
    Keywords:

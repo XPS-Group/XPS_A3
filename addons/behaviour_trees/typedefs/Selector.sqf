@@ -2,6 +2,12 @@
 /* ----------------------------------------------------------------------------
 TypeDef: behaviour_trees. XPS_BT_typ_Selector
 	<TypeDefinition>
+		---prototype
+		XPS_BT_typ_Selector : XPS_BT_ifc_INode, XPS_BT_typ_Composite
+		---
+    	--- Prototype --- 
+    	createHashmapObject ["XPS_BT_typ_Selector"]
+    	---
 
 Authors: 
 	Crashdome
@@ -9,43 +15,54 @@ Authors:
 Description:
 	A node that ticks children one at a time until success.
 
-Parent:
-    <base. XPS_BT_typ_Composite>
+Returns:
+	<HashmapObject> of a Composite node
 
-Implements:
-    <XPS_BT_ifc_INode>
-
-Flags:
-    none
-
----------------------------------------------------------------------------- */
-/* ----------------------------------------------------------------------------
-Protected: children 
-		<base. XPS_BT_typ_Composite. children>
-
-Protected: currentIndex
-		<base. XPS_BT_typ_Composite. currentIndex>
-	
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_typ_Selector"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_BT_typ_Composite>
+	-----------------------------------------------------------------------------*/
 	["#base",XPS_BT_typ_Composite],
 	/*----------------------------------------------------------------------------
+	Constructor: #create
+		<XPS_BT_typ_Composite. #create>
+	-----------------------------------------------------------------------------*/
+	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}],
+	/*----------------------------------------------------------------------------
+	Str: #str
+    	--- text --- 
+    	"XPS_BT_typ_Selector"
+    	---
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+    	<XPS_BT_typ_Composite. @interfaces>
+	-----------------------------------------------------------------------------*/
+	/* ----------------------------------------------------------------------------
+	Protected: children 
+		<XPS_BT_typ_Composite. children>
+
+	Protected: currentIndex
+		<XPS_BT_typ_Composite. currentIndex>
+		
 	Protected: preTick
-		<base. XPS_BT_typ_Composite. preTick>
+		<XPS_BT_typ_Composite. preTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: processTick
     
     	--- Prototype --- 
-    	_status = _self call ["processTick"]
+    	call ["processTick"]
     	---
 
 	Description:
 		Ticks all children at once. Any failures results in "FAILURE"
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _children = _self get "children";
@@ -72,39 +89,34 @@ Protected: currentIndex
 			default {_status = XPS_BT_Status_Failure};
 		};
 		_status;
-	}],
+	}]
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-		<base. XPS_BT_typ_Composite. postTick>
+		<XPS_BT_typ_Composite. postTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Blackboard
-		<base. XPS_BT_typ_Composite. Blackboard>
+		<XPS_BT_typ_Composite. Blackboard>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: NodeType
-		<base. XPS_BT_typ_Composite. NodeType>
+		<XPS_BT_typ_Composite. NodeType>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Status
-		<base. XPS_BT_typ_Composite. Status>
+		<XPS_BT_typ_Composite. Status>
 	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-		<base. XPS_BT_typ_Composite. #create>
-	-----------------------------------------------------------------------------*/
-	["#create", { _self call ["XPS_BT_typ_Composite.#create"]; }]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
-		<base. XPS_BT_typ_Composite. AddChildNode>
+		<XPS_BT_typ_Composite. AddChildNode>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Init
-		<base. XPS_BT_typ_Composite. Init>
+		<XPS_BT_typ_Composite. Init>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Tick
-		<base. XPS_BT_typ_Composite. Tick>
+		<XPS_BT_typ_Composite. Tick>
 	-----------------------------------------------------------------------------*/
 
 ]

@@ -24,34 +24,31 @@ Description:
 	- <XPS_BT_Status_Running> 
 
 Returns: 
-	<HashmapObject> of type <XPS_BT_enum_Status>
-
+	<HashmapObject> - of type <XPS_BT_enum_Status>
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
 Variable: behaviour_trees. XPS_BT_Status_Success 
 	<Enumeration> 
 
-	Key: Name
-		- "Success"
-		
-	Key: Value 
-		- "SUCCESS"
-
+Keys: 
+	Name - "Success"
+	Value - "SUCCESS"
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
 Variable: behaviour_trees. XPS_BT_Status_Failure
 	<Enumeration> 
 
-	Key: Name
-		- "Failure"
-
-	Key: Value 
-		- "FAILURE"
-
+Keys: 
+	Name - "Failure"
+	Value - "FAILURE"
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
 Variable: behaviour_trees. XPS_BT_Status_Running 
 	<Enumeration> 
 
-	Key: Name
-		- "Running"
-		
-	Key: Value 
-		- "RUNNING"
+Keys: 
+	Name - "Running"
+	Value - "RUNNING"
 ---------------------------------------------------------------------------*/
 ["XPS_BT_Status",XPS_BT_enum_Status] call XPS_fnc_createEnumeration;
 

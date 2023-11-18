@@ -2,6 +2,12 @@
 /* ----------------------------------------------------------------------------
 TypeDef: behaviour_trees. XPS_BT_typ_ActionAsync
 	<TypeDefinition>
+		---prototype
+		XPS_BT_typ_ActionAsync : XPS_BT_ifc_INode, XPS_BT_typ_LeafAsync
+		---
+    	--- Prototype --- 
+    	createHashmapObject ["XPS_BT_typ_ActionAsync"]
+    	---
 
 Authors: 
 	Crashdome
@@ -10,45 +16,57 @@ Description:
 	A node for a Behaviour Tree that has an <ProcessTick> method which is 
 	called asynchronously when Ticked
 
-Parent:
-    <base. XPS_BT_typ_LeafAsync>
-
-Implements:
-    <XPS_BT_ifc_INode>
-
-Flags:
-    none
+Returns:
+	<HashmapObject> of a Leaf Node
 
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_typ_ActionAsync"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_BT_typ_Leaf>
+	-----------------------------------------------------------------------------*/
 	["#base",XPS_BT_typ_LeafAsync],
 	/*----------------------------------------------------------------------------
+	Str: #str
+    	--- text --- 
+    	"XPS_BT_typ_ActionAsync"
+    	---
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+    	<XPS_BT_typ_LeafAsync.@interfaces>
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
 	Property: Blackboard
-		<base. XPS_BT_typ_Leaf. Blackboard>
+		<XPS_BT_typ_LeafAsync. Blackboard>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: NodeType
-		<base. XPS_BT_typ_LeafAsync. NodeType>
+		<XPS_BT_typ_LeafAsync. NodeType>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Status
-		<base. XPS_BT_typ_LeafAsync. Status>
+		<XPS_BT_typ_LeafAsync. Status>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: callback
-		<base. XPS_BT_typ_LeafAsync. callback>
+		<XPS_BT_typ_LeafAsync. callback>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: handle
-		<base. XPS_BT_typ_LeafAsync. handle>
+		<XPS_BT_typ_LeafAsync. handle>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: preTick
-		<base. XPS_BT_typ_LeafAsync. preTick>
+		<XPS_BT_typ_LeafAsync. preTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: processTick
+    
+    	--- Prototype --- 
+    	call ["processTick"]
+    	---
 
 	Description:
 		The code that executes during a Tick cycle of a Behaviour Tree and then
@@ -57,20 +75,20 @@ Flags:
 		which sets the status of the Node.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		_self call ["Action"];
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-		<base. XPS_BT_typ_LeafAsync. postTick>
+		<XPS_BT_typ_LeafAsync. postTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Action
     
     	--- Prototype --- 
-    	_status = _self call ["Action"]
+    	call ["Action"]
     	---
 
 	Description:
@@ -80,19 +98,19 @@ Flags:
 		Must be Overridden.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["Action",nil]
 	/*----------------------------------------------------------------------------
 	Method: Halt
-		<base. XPS_BT_typ_LeafAsync. Halt>
+		<XPS_BT_typ_LeafAsync. Halt>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Init
-		<base. XPS_BT_typ_LeafAsync. Init>
+		<XPS_BT_typ_LeafAsync. Init>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Tick
-		<base. XPS_BT_typ_LeafAsync. Tick>
+		<XPS_BT_typ_LeafAsync. Tick>
 	-----------------------------------------------------------------------------*/
 ]

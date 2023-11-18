@@ -63,7 +63,7 @@ if (isText _file && isText _type) then {
 	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType")} else {0};
 	private _isFinal_Cmd = if (_isFinal==1) then {"compileFinal"} else {""};
 
-	// diag_log text format ["[XPS TD parser]  : var: %1 - recompile: %2",_varname,_recompile];
+	// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
 	if (isNil {_typeDefinition}) then {
 		// diag_log text "[XPS TD parser]  : init namespace variables";
 		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),_isFinal_Cmd,(_headers==1)] call _fnc_loadFile];

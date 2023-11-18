@@ -16,7 +16,7 @@ Description:
 	a type-safe set of enumeration references to global variables which are constants (compileFinal'd).
 	Additionally, it will create a static helper class using this definition.
 
-	See <XPS_fnc_createEnummeration> for more info on usage of types inheriting this type
+	See <XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [

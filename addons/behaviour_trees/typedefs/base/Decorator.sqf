@@ -1,7 +1,13 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. base. XPS_BT_typ_Decorator
+TypeDef: behaviour_trees. XPS_BT_typ_Decorator
 	<TypeDefinition>
+		---prototype
+		XPS_BT_typ_Decorator : XPS_BT_ifc_INode
+		---
+    	--- Prototype --- 
+    	createHashmapObject ["XPS_BT_typ_Decorator"]
+    	---
 
 Authors: 
 	Crashdome
@@ -9,21 +15,37 @@ Authors:
 Description:
 	A node for a Behaviour Tree that has one child
 
-Parent:
-    none
-
-Implements:
-    <XPS_BT_ifc_INode>
-
-Flags:
-    none
+Returns:
+	<HashmapObject> of a Decorator node
 	
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_BT_typ_Decorator"],
+	/*----------------------------------------------------------------------------
+	Constructor: #create
+    
+    	--- Prototype --- 
+    	call ["#create"]
+    	---
+
+	Returns:
+		True
+	-----------------------------------------------------------------------------*/
+	["#create", compileFinal {
+		_self set ["child",nil];
+	}],
+	/*----------------------------------------------------------------------------
+	Str: #str
+    	--- text --- 
+    	"XPS_BT_typ_Decorator"
+    	---
+	-----------------------------------------------------------------------------*/
+	["#str",compileFinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+    	<XPS_BT_ifc_INode>
+	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_BT_ifc_INode"]],
-	
 	/* ----------------------------------------------------------------------------
 	Protected: child
     
@@ -39,7 +61,7 @@ Flags:
 	Protected: preTick
     
     	--- Prototype --- 
-    	_status = _self call ["preTick"]
+    	call ["preTick"]
     	---
 
 	Description:
@@ -47,7 +69,7 @@ Flags:
 		propogates down the tree if possible.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
@@ -59,7 +81,7 @@ Flags:
 	Protected: processTick
     
     	--- Prototype --- 
-    	_status = _self call ["processTick"]
+    	call ["processTick"]
     	---
 
 	Description:
@@ -67,7 +89,7 @@ Flags:
 		returns a status.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _status = _self get "Status";
@@ -84,15 +106,18 @@ Flags:
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",_status]
+    	call ["postTick",_status]
     	---
 
 	Description:
 		The code that executes after a Tick cycle of a Behaviour Tree and then
 		sets the <Status> property before going back up the tree.
 
-	Returns: 
+	Parameters:
 		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+
+	Returns: 
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
@@ -137,19 +162,6 @@ Flags:
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-    
-    	--- Prototype --- 
-    	_result = createHashmapObject ["XPS_BT_typ_Decorator"]
-    	---
-
-	Returns:
-		_result - <HashmapObject> of a Decorator node
-	-----------------------------------------------------------------------------*/
-	["#create", compileFinal {
-		_self set ["child",nil];
-	}],
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
     
@@ -202,14 +214,14 @@ Flags:
     	--- Prototype --- 
     	call ["Tick"]
     	---
-		
-    	<XPS_BT_ifc_INode>
+
+		<XPS_BT_ifc_INode>
 
 	Description:
 		The code that begins the entire Tick cycle process.
 
 	Returns: 
-		_status - <String> - returns <Status> property after execution
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {		
 		_self call ["preTick"];

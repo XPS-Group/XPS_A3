@@ -2,6 +2,12 @@
 /* ----------------------------------------------------------------------------
 TypeDef: behaviour_trees. XPS_BT_typ_Inverter
 	<TypeDefinition>
+		---prototype
+		XPS_BT_typ_Inverter : XPS_BT_ifc_INode, XPS_BT_typ_Decorator
+		---
+    	--- Prototype --- 
+    	createHashmapObject ["XPS_BT_typ_Inverter"]
+    	---
 
 Authors: 
 	Crashdome
@@ -9,14 +15,8 @@ Authors:
 Description:
 	A node for a Behaviour Tree that has one child
 
-Parent:
-    <base. XPS_BT_typ_Decorator>
-
-Implements:
-    <XPS_BT_ifc_INode>
-
-Flags:
-    none
+Returns:
+	<HashmapObject> of a Decorator node
 	
 ---------------------------------------------------------------------------- */
 /* ----------------------------------------------------------------------------
@@ -25,28 +25,47 @@ Protected: child
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_typ_Inverter"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_BT_typ_Decorator>
+	-----------------------------------------------------------------------------*/
 	["#base",XPS_BT_typ_Decorator],
 	/*----------------------------------------------------------------------------
+	Constructor: #create
+		<XPS_BT_typ_Decorator. #create>
+	-----------------------------------------------------------------------------*/
+	["#create", {_self call ["XPS_BT_typ_Decorator.#create"];}],
+	/*----------------------------------------------------------------------------
+	Str: #str
+    	--- text --- 
+    	"XPS_BT_typ_Inverter"
+    	---
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+    	<XPS_BT_typ_Decorator. @interfaces>
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
 	Property: Blackboard
-		<base. XPS_BT_typ_Decorator. Blackboard>
+		<XPS_BT_typ_Decorator. Blackboard>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: NodeType
-		<base. XPS_BT_typ_Decorator. NodeType>
+		<XPS_BT_typ_Decorator. NodeType>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: Status
-		<base. XPS_BT_typ_Decorator. Status>
+		<XPS_BT_typ_Decorator. Status>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: preTick
-		<base. XPS_BT_typ_Decorator. preTick>
+		<XPS_BT_typ_Decorator. preTick>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Protected: processTick
     
     	--- Prototype --- 
-    	_status = _self call ["processTick"]
+    	call ["processTick"]
     	---
 
 	Description:
@@ -54,7 +73,7 @@ Protected: child
 		returns a status.
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _status = _self call ["XPS_BT_typ_Decorator.processTick"];
@@ -64,26 +83,21 @@ Protected: child
             case XPS_BT_Status_Failure : {_status = XPS_BT_Status_Success;};
         };
 		_status;
-	}],
+	}]
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-		<base. XPS_BT_typ_Decorator. postTick>
+		<XPS_BT_typ_Decorator. postTick>
 	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-		<base. XPS_BT_typ_Decorator. #create>
-	-----------------------------------------------------------------------------*/
-	["#create", {_self call ["XPS_BT_typ_Decorator.#create"];}]
 	/*----------------------------------------------------------------------------
 	Method: AddChildNode
-		<base. XPS_BT_typ_Decorator. AddChildNode>
+		<XPS_BT_typ_Decorator. AddChildNode>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Init
-		<base. XPS_BT_typ_Decorator. Tick>
+		<XPS_BT_typ_Decorator. Init>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: Tick
-		<base. XPS_BT_typ_Decorator. Tick>
+		<XPS_BT_typ_Decorator. Tick>
 	-----------------------------------------------------------------------------*/
 ]

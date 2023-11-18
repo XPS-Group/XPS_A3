@@ -1,7 +1,13 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. base. XPS_BT_typ_LeafAsync
+TypeDef: behaviour_trees. XPS_BT_typ_LeafAsync
 	<TypeDefinition>
+		---prototype
+		XPS_BT_typ_LeafAsync : XPS_BT_ifc_INode
+		---
+    	--- Prototype --- 
+    	createHashmapObject ["XPS_BT_typ_LeafAsync"]
+    	---
 
 Authors: 
 	Crashdome
@@ -10,19 +16,23 @@ Description:
 	A node for a Behaviour Tree that has an <ProcessTick> method which is 
 	called when Ticked. 
 
-Parent:
-    none
-
-Implements:
-    <XPS_BT_ifc_INode>
-
-Flags:
-    none
+Returns:
+	<HashmapObject> of a Leaf Node
 
 ---------------------------------------------------------------------------- */
 [
-	["#str",compileFinal {_self get "#type" select  0}],
 	["#type","XPS_BT_typ_LeafAsync"],
+	/*----------------------------------------------------------------------------
+	Str: #str
+    	--- text --- 
+    	"XPS_BT_typ_LeafAsync"
+    	---
+	-----------------------------------------------------------------------------*/
+	["#str",compileFinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+    	<XPS_BT_ifc_INode>
+	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	/*----------------------------------------------------------------------------
 	Protected: callback
@@ -66,7 +76,7 @@ Flags:
 
 	Description:
 		The code that executes before a Tick cycle of a Behaviour Tree. Usually 
-		sets node to RUNNING status.
+		sets node to <XPS_BT_Status_Running>.
 
 	Returns: 
 		Nothing
@@ -81,7 +91,7 @@ Flags:
 	Protected: processTick
     
     	--- Prototype --- 
-    	_status = _self call ["processTick"]
+    	call ["processTick"]
     	---
 
 	Description:
@@ -90,14 +100,14 @@ Flags:
 		Must be Overridden
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",nil],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
     	--- Prototype --- 
-    	_status = _self call ["postTick",_status]
+    	call ["postTick",_status]
     	---
 
 	Description:
@@ -108,7 +118,7 @@ Flags:
 		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 
 	Returns: 
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
@@ -201,11 +211,11 @@ Flags:
 
 	Description:
 		The code that begins the entire Tick cycle process. Calls proccessTick
-		asynchronously. Status should be RUNNING in most cases until processTick
+		asynchronously. Status should be <XPS_BT_Status_Running> in most cases until processTick
 		has finished.
 
 	Returns: 
-		_status - <String> - returns <Status> property after execution
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {		
 		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	

@@ -2,6 +2,9 @@
 /* ----------------------------------------------------------------------------
 Interface: behaviour_trees. XPS_BT_ifc_INode
 <Interface>
+		---prototype
+		XPS_BT_ifc_INode
+		---
 
 Authors:
     Crashdome
@@ -11,10 +14,10 @@ Authors:
 	<HashmapObject>
 
 	Property: NodeType
-	<String> - should only return "COMPOSITE", "DECORATOR", "LEAF"
+	<Enumeration>
 
 	Property: Status
-	<String> - should only be one of the following: Nil , "SUCCESS", "FAILURE", or "RUNNING"
+	<Enumeration>
 
 	Method: Init
 	
