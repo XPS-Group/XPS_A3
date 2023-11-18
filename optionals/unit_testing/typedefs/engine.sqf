@@ -3,7 +3,7 @@
 TypeDef: unit_testing. XPS_UT_typ_Engine
 	<TypeDefinition>
 	---prototype
-	XPS_UT_typ_Engine : core.XPS_ifc_ICollection, core.XPS_ifc_ITypeRestrictor, core.XPS_typ_TypeCollection
+	XPS_UT_typ_Engine
 	---
 
 Authors: 
@@ -17,17 +17,20 @@ Description:
 [
 	["#type","XPS_UT_type_Engine"],
 	/*----------------------------------------------------------------------------
-	Parent: #base
-		<core. XPS_typ_TypeCollection>
-	----------------------------------------------------------------------------*/
-	["#base",XPS_typ_TypeCollection],
-	/*----------------------------------------------------------------------------
 	Constructor: #create
-		<XPS_typ_TypeCollection.#create> with added parameters to constrain allowed 
-		types to <XPS_UT_typ_TestClass>
+		---prototype
+		call ["#create"]
+		---
+
+	Returns:
+		True
 	----------------------------------------------------------------------------*/
 	["#create", {
-		_self call ["XPS_typ_TypeCollection.#create",[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_typ_TestClass"]]]];
+		_self set ["_collection",createhashmapobject [
+			XPS_typCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_typ_TestClass"]]]]];
+		_self set ["classOrder",[]];
+		_self set ["Selected",[]];
+		_self set ["TestResults",createhashmap];
 	}],
 	/*----------------------------------------------------------------------------
 	Flags: #flags
@@ -43,6 +46,12 @@ Description:
 	----------------------------------------------------------------------------*/
 	["#str", {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+		<core. XPS_ifc_ICollection>
+		<core. XPS_ifc_ITypeRestrictor>
+	----------------------------------------------------------------------------*/
+	["_collection",nil],
+	/*----------------------------------------------------------------------------
 	Protected: classOrder
 		
 		---prototype
@@ -52,7 +61,7 @@ Description:
 	Returns:
 		<Array> - of Class Names in the order they should be run
 	----------------------------------------------------------------------------*/
-	["classOrder",[],[["CTOR"]]],
+	["classOrder",[]],
 	/*----------------------------------------------------------------------------
 	Protected: initTestRsults
 		
@@ -75,28 +84,20 @@ Description:
 	["TestResults",createhashmap],
 	["Selected",[]],
     /* -----------------------------------------------------------------------
-    Method: AddItem
+    Method: AddClass
 
         ---prototype
-        call ["AddItem",[_key,_item]];
-        ---
+        call ["AddClass",[_key,_item]];
 
-        <core. XPS_ifc_ITypeCollection>
-
-		Overrides base class method : <core. XPS_typ_TypeCollection. AddItem>
-
-		Performs base method and then appends identifier to classOrder <array>
+		Adds item to collection and then appends identifier to classOrder <array>
     
     Parameters: 
         _key - Anything - Key used when adding to <Items> store
         _item - <HashmapObject> - to add to <Items> store
 
-    Returns:
-        <Boolean> - True if successfully added, otherwise False
-
     -------------------------------------------------------------------------*/ 
-	["AddItem", compileFinal {
-        if !(_self call ["XPS_typ_TypeCollection.AddItem",[_key,_item]]) then {
+	["AddClass", compileFinal {
+        if !(_self get "_collection" call ["AddItem",[_key,_item]]) then {
 			_self get "classOrder" pushback _key;
 		};
     }],

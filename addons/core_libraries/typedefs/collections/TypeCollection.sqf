@@ -77,6 +77,9 @@ Returns:
         _key - <HashmapKey> 
         _item - Anything - except nil
 
+    Returns:
+        True - the item is successfully added
+
     Throws:
         <XPS_typ_ArgumentNilException> - if a parameter was nil
         <XPS_typ_InvalidArgumentException> - if key parameter already exists in this collection - OR- if _item is not allowed 
