@@ -74,8 +74,34 @@ Description:
 	}],
 	["TestResults",createhashmap],
 	["Selected",[]],
+    /* -----------------------------------------------------------------------
+    Method: AddItem
+
+        ---prototype
+        call ["AddItem",[_key,_item]];
+        ---
+
+        <XPS_ifc_ITypeCollection>
+
+		Overrides base class method : <main. XPS_typ_TypeCollection. AddItem>
+
+		Performs base method and then appends identifier to classOrder <array>
+    
+    Parameters: 
+        _key - Anything - Key used when adding to <Items> store
+        _item - <HashmapObject> - to add to <Items> store
+
+    Returns:
+        <Boolean> - True if successfully added, otherwise False
+
+    -------------------------------------------------------------------------*/ 
+	["AddItem", compileFinal {
+        if !(_self call ["XPS_typ_TypeCollection.AddItem",[_key,_item]]) then {
+			_self get "classOrder" pushback _key;
+		};
+    }],
 	/*----------------------------------------------------------------------------
-	Protected: RunAll
+	Method: RunAll
 		
 		---prototype
 		call ["RunAll"]
@@ -111,31 +137,5 @@ Description:
 			} foreach (_engine get "classOrder");
 		};
 	}],
-	["RunSelected",{}],
-    /* -----------------------------------------------------------------------
-    Method: AddItem
-
-        ---prototype
-        call ["AddItem",[_key,_item]];
-        ---
-
-        <XPS_ifc_ITypeCollection>
-
-		Overrides base class method : <main. XPS_typ_TypeCollection. AddItem>
-
-		Performs base method and then appends identifier to classOrder <array>
-    
-    Parameters: 
-        _key - Anything - Key used when adding to <Items> store
-        _item - <HashmapObject> - to add to <Items> store
-
-    Returns:
-        <Boolean> - True if successfully added, otherwise False
-
-    -------------------------------------------------------------------------*/ 
-	["AddItem", compileFinal {
-        if !(_self call ["XPS_typ_TypeCollection.AddItem",[_key,_item]]) then {
-			_self get "classOrder" pushback _key;
-		};
-    }]
+	["RunSelected",{}]
 ];
