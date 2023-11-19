@@ -117,6 +117,26 @@ Returns:
         _self get "_items" deleteAt _key;
     }],
     /* -----------------------------------------------------------------------
+    Method: GetItem
+
+        ---prototype
+        call ["GetItem",[_key]]
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Parameters: 
+        key - <HashmapKey> 
+
+    Returns:
+        Anything - The item if found otherwise nil
+
+    -------------------------------------------------------------------------*/ 
+    ["GetItem",{
+        if !(params [["_key",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetItem",nil,_this]];};
+        _self get "_items" get _key;
+    }],
+    /* -----------------------------------------------------------------------
     Method: GetItems
 
         ---prototype

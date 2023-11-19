@@ -1,25 +1,25 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_Queue
+TypeDef: core. XPS_typ_OrderedCollection
 	<TypeDefinition>
         --- prototype
-        XPS_typ_Queue : XPS_ifc_IQueue
+        XPS_typ_OrderedCollection : XPS_ifc_ICollection
         ---
         --- prototype
-        createhashmapobject [XPS_typ_Queue]
+        createhashmapobject [XPS_typ_OrderedCollection]
         ---
 
 Authors: 
 	Crashdome
    
 Description:
-	A First In First Out (FIFO) collection. 
+	A collection which is ordered by a numerical index.  
 
 Returns:
 	<HashmapObject>
 ---------------------------------------------------------------------------- */
 [
-	["#type", "XPS_typ_Queue"],
+	["#type", "XPS_typ_OrderedCollection"],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -33,35 +33,16 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_Queue"
+		"XPS_typ_OrderedCollection"
 		---
 	----------------------------------------------------------------------------*/
 	["#str", {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-		<XPS_ifc_IQueue>
-		<XPS_ifc_IList>
+		<XPS_ifc_ICollection>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_IQueue"]],
-	["_queueArray",[],[["CTOR"]]],
-    /*----------------------------------------------------------------------------
-    Method: Clear
-    
-        --- Prototype --- 
-        call ["Clear"]
-        ---
-
-        <XPS_ifc_IList>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		Nothing
-    ----------------------------------------------------------------------------*/
-	["Clear",{
-		_self get "_queueArray" resize 0;
-	}],
+    ["@interfaces", ["XPS_ifc_ICollection"]],
+	["_listArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Count
     
@@ -78,7 +59,7 @@ Returns:
 		<Number> - the number of elements in the stack
     ----------------------------------------------------------------------------*/
 	["Count",{
-		count (_self get "_queueArray");
+		count (_self get "_listArray");
 	}],
     /*----------------------------------------------------------------------------
     Method: IsEmpty
@@ -96,65 +77,91 @@ Returns:
 		<Boolean> - True if queue is empty, otherwise False.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_queueArray") == 0;
+		count (_self get "_listArray") == 0;
 	}],
     /*----------------------------------------------------------------------------
-    Method: Peek
+    Method: AddItem
     
         --- Prototype --- 
-        call ["Peek"]
+        call ["AddItem",[_index,_item]]
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Parameters: 
+        _item - Anything - except nil
+
+    Returns:
+        True - the item is successfully added to end of list
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+    ----------------------------------------------------------------------------*/
+	["AddItem", compileFinal {
+        if !(params [["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
+        (_self get "_listArray") pushback _item;
+        true;
+    }],
+    /*----------------------------------------------------------------------------
+    Method: RemoveItem
+    
+        --- Prototype --- 
+        call ["RemoveItem",[_index]]
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Parameters: 
+        _index - <Scalar> - Index of item to remove 
+
+    Returns:
+        Anything - the item removed or nil if not found
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+    ----------------------------------------------------------------------------*/
+	["RemoveItem",compileFinal {
+        if !(params [["_index",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
+        _self get "_listArray" deleteAt _index;
+    }],
+    /*----------------------------------------------------------------------------
+    Method: GetItem
+    
+        --- Prototype --- 
+        call ["GetItem",[_index]]
         ---
 
         <XPS_ifc_IList>
     
     Parameters: 
-		none
+		_index - Must be a non-negative number and must not exceed index of last item
 		
 	Returns:
-		Anything - first element in the queue or nil if empty - does not remove 
-		from queue
+		Anything - N'th element in the list or nil if empty - does not remove 
+		from list
     ----------------------------------------------------------------------------*/
-	["Peek",{
+	["GetItem",{
+		params [["_index",0,[0]]];
+		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,_this]]};
+
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_queueArray" select 0;
+		    _self get "_listArray" select _index;
         } else {nil};
 	}],
-    /*----------------------------------------------------------------------------
-    Method: Dequeue
-    
-        --- Prototype --- 
-        call ["Dequeue"]
+    /* -----------------------------------------------------------------------
+    Method: GetItems
+
+        ---prototype
+        call ["GetItems"];
         ---
 
-        <XPS_ifc_IStack>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		Anything - removes and returns last element in the queue or nil if empty
-    ----------------------------------------------------------------------------*/
-	["Dequeue",{
-        if !(_self call ["IsEmpty"]) then {
-		    _self get "_queueArray" deleteat 0;
-        } else {nil};
-	}],
-    /*----------------------------------------------------------------------------
-    Method: Enqueue
-    
-        --- Prototype --- 
-        call ["Enqueue",_value]
-        ---
+        <XPS_ifc_ICollection>
 
-        <XPS_ifc_IStack>
-    
-    Parameters: 
-		_value - the value to push to top of the queue
-		
-	Returns:
-		Nothing
-    ----------------------------------------------------------------------------*/
-	["Enqueue",{
-		_self get "_queueArray" pushback _this;
-	}]
+    Returns:
+        <Array> - A deep copy of the item store in an array
+
+    -------------------------------------------------------------------------*/ 
+    ["GetItems",{
+        +(_self get "_listArray");
+    }]
 ]

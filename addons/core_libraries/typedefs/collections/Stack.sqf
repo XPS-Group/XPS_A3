@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_Stack
 	<TypeDefinition>
         --- prototype
-        XPS_typ_Stack : XPS_ifc_IOrderedCollection, XPS_ifc_IStack
+        XPS_typ_Stack : XPS_ifc_IStack
         ---
         --- prototype
         createhashmapobject [XPS_typ_Stack]
@@ -40,9 +40,9 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IStack>
-		<XPS_ifc_IOrderedCollection>
+		<XPS_ifc_IList>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_IStack","XPS_ifc_IOrderedCollection"]],
+    ["@interfaces", ["XPS_ifc_IStack"]],
 	["_stackArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Clear
@@ -51,7 +51,7 @@ Returns:
         call ["Clear"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none
@@ -69,7 +69,7 @@ Returns:
         call ["Count"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none
@@ -87,7 +87,7 @@ Returns:
         call ["IsEmpty"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none
@@ -105,7 +105,7 @@ Returns:
         call ["Peek"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none

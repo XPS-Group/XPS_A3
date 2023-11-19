@@ -56,7 +56,7 @@ if (isText _file) then {
 			missionNamespace setvariable [_varName,_testClass];
 		};
 	};
-	XPS_UT_Engine call ["GetInstance"] call ["AddItem",[_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName]];
+	XPS_UT_Engine call ["GetInstance"] call ["AddClass",[_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName]];
 };
 
 {

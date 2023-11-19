@@ -1,4 +1,4 @@
-#define COMPONENT ap
+#define COMPONENT mg
 #include "\x\xps\addons\main\script_mod.hpp"
 
 #undef REQUIRED_VERSION

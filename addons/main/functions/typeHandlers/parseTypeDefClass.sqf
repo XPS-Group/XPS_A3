@@ -37,7 +37,7 @@ private _fnc_loadFile = {
 	params ["_type","_file","_allowNils","_preprocess","_noStack","_isFinal_Cmd","_headers"];
 	private _statement = "";
 	switch (_type) do {
-		case "ifc" : {_statement = "%5 createhashmapfromarray (call compileScript [""%1"",false]);"};
+		case "ifc" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false]] call XPS_fnc_preprocessInterface);"};
 		case "enum";
 		case "typ" : {_statement = /* "%5 createhashmapfromarray " */ "([call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition);"}; // hashmap disabled until bug fix in stable branch
 	};
@@ -64,18 +64,13 @@ if (isText _file && isText _type) then {
 	private _isFinal_Cmd = if (_isFinal==1) then {"compileFinal"} else {""};
 
 	// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
-	if (isNil {_typeDefinition}) then {
+	if (isNil {_typeDefinition} || {_recompile == 1 || isFilePatchingEnabled}) then {
 		// diag_log text "[XPS TD parser]  : init namespace variables";
 		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),_isFinal_Cmd,(_headers==1)] call _fnc_loadFile];
 		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 	} else {
-		if ((_recompile == 1 || isFilePatchingEnabled) /* && _isFinal==0 */) then {
-			// diag_log text "[XPS TD parser]  : recompiling";
-			missionNamespace setvariable [_varName,[_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),"",(_headers==1)] call _fnc_loadFile];
-		} else {
-			// diag_log text "[XPS TD parser]  : using cached";
-			missionNamespace setvariable [_varName,_typeDefinition];
-		};
+		// diag_log text "[XPS TD parser]  : using cached";
+		missionNamespace setvariable [_varName,_typeDefinition];
 	};
 };
 

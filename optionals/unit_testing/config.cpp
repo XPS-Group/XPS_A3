@@ -33,3 +33,4 @@ class CfgPatches {
 #include "CfgFunctions.hpp"
 #include "Cfg3DEN.hpp"
 #include "CfgUnitTests.hpp"
+#include "displays\Dialog_TestConsole.hpp"

@@ -31,6 +31,7 @@ Description:
 		_self set ["classOrder",[]];
 		_self set ["Selected",[]];
 		_self set ["TestResults",createhashmap];
+		_self set ["_viewController",createhashmapobject [XPS_UT_typ_TestConsoleController,"XPS_TestConsoleViewModel"]];
 	}],
 	/*----------------------------------------------------------------------------
 	Flags: #flags
@@ -51,6 +52,7 @@ Description:
 		<core. XPS_ifc_ITypeRestrictor>
 	----------------------------------------------------------------------------*/
 	["_collection",nil],
+	["_viewController",nil],
 	/*----------------------------------------------------------------------------
 	Protected: classOrder
 		
@@ -62,19 +64,46 @@ Description:
 		<Array> - of Class Names in the order they should be run
 	----------------------------------------------------------------------------*/
 	["classOrder",[]],
+	["GetAllTestData",{
+		private _dataArray = [];
+		{
+			private _classKey = _x;
+			private _classItem = _engine get "_collection" call ["GetItem",_classKey];
+			private _className = _classItem get "Description";
+			_dataArray pushback [["X",1,_classKey],_className,"",""];
+
+			private _orderedList = _classItem get "TestOrder";
+			{
+				_dataArray pushback [["X",1,_classKey],"",_x,""];
+			} foreach _orderedlist;
+		} foreach (_self get "classOrder");
+		_dataArray;
+	}],
+	["GetTestData",{
+		params ["_class","_method"];
+		private _dataArray = [];
+		private _classKey = (_self get "classOrder" get _class);
+		private _classItem = _engine get "_collection" call ["GetItem",_classKey];
+		private _className = _classItem get "Description";
+		if (_method isEqualTo "") then {
+			_dataArray = [["X",1,_classKey],_className,"",""];
+		} else {
+			_dataArray = [["X",1,_classKey],"",_method,""];
+		};
+		_dataArray;
+	}],
 	/*----------------------------------------------------------------------------
-	Protected: initTestRsults
+	Protected: initTestResults
 		
 		---prototype
-		call ["initTestRsults"]
+		call ["initTestResults"]
 		---
 
 
 	----------------------------------------------------------------------------*/
-	["initTestRsults",{
+	["initTestResults",{
 		private _testResults = createhashmapobject [XPS_UT_typ_TestResults];
 		{
-			private _class = _self get "Items" get _x;
 
 			//TODO : Should we use just a hashmap or place result directly on test class?
 		} foreach (_self get "classOrder");
@@ -97,6 +126,7 @@ Description:
 
     -------------------------------------------------------------------------*/ 
 	["AddClass", compileFinal {
+		params [["_key",nil,[""]],["_item",createhashmap,[createhashmap]]];
         if !(_self get "_collection" call ["AddItem",[_key,_item]]) then {
 			_self get "classOrder" pushback _key;
 		};
@@ -114,7 +144,7 @@ Description:
 		_self spawn {
 			private _engine = _this;
 			{
-				private _class = _engine get "Items" get _x;
+				private _class = _engine get "_collection" call ["GetItem",_x];
 				private _orderedList = _class get "TestOrder";
 				diag_log text ((_class get "Description") + ": - BEGIN TEST");
 				// Init Class
@@ -138,5 +168,12 @@ Description:
 			} foreach (_engine get "classOrder");
 		};
 	}],
-	["RunSelected",{}]
+	["RunSelected",{}],
+	["ShowTestConsole",{
+		private _controller = _self get "_viewController";
+		_controller call ["ShowDialog"];
+	}],
+	["CloseTestConsole",{
+		private _controller = _self get "_viewController";
+		_controller call ["CloseDialog"];}]
 ];

@@ -1,31 +1,23 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_IOrderedCollection
+Interface: core. XPS_ifc_IList
 <Interface>
 
 	--- prototype
-	XPS_ifc_IOrderedCollection
+	XPS_ifc_IList
 	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Method: Clear
-		<Code>
-
 	Method: Count
 		<Code>
 		
 	Method: IsEmpty
 		<Code>
-
-	Method: Peek
-		<Code>
 ---------------------------------------------------------------------------- */
 [
-	["Clear","CODE"],
 	["Count","CODE"],
-	["IsEmpty","CODE"],
-	["Peek","CODE"]
+	["IsEmpty","CODE"]
 ]

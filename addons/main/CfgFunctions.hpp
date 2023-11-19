@@ -13,6 +13,7 @@ class CfgFunctions {
 			XPS_CFG_FNC_SUB(typeHandlers,createStaticTypeFromFile);
 			XPS_CFG_FNC_SUB(typeHandlers,findReplaceKeyinCode);
 			XPS_CFG_FNC_SUB(typeHandlers,parseTypeDefClass);
+			XPS_CFG_FNC_SUB(typeHandlers,preprocessInterface);
 			XPS_CFG_FNC_SUB(typeHandlers,preprocessTypeDefinition);
 		};
 		
