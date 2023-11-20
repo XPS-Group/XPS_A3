@@ -50,7 +50,7 @@
     file = FILEPATH_C_Q(typedefs\typName.sqf);\
     type = "typ";\
     preprocess = 1;\
-    allowNils = 0;\
+    allowNils = 1;\
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
@@ -60,7 +60,7 @@
     file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
     type = "typ";\
     preprocess = 1;\
-    allowNils = 0;\
+    allowNils = 1;\
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
@@ -70,7 +70,7 @@
     file = FILEPATH_C_Q(typedefs\typName.sqf);\
     type = "enum";\
     preprocess = 1;\
-    allowNils = 0;\
+    allowNils = 1;\
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
@@ -80,7 +80,7 @@
     file = FILEPATH_C_Q(typedefs\sub\typName.sqf);\
     type = "enum";\
     preprocess = 1;\
-    allowNils = 0;\
+    allowNils = 1;\
     noStack = 1;\
     recompile = 1;\
     isFinal = 0;\
