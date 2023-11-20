@@ -182,6 +182,18 @@ Comment Type: HMMethod
       callback, callbacks
 
 
+Comment Type: HMEventHandler
+
+   Display Name: EventHandler
+   Plural Display Name: EventHandlers
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      eventhandler, eventhandlers
+
+
 Comment Type: HMReserved
 
    Display Name: Reserved

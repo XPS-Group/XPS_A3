@@ -1,12 +1,12 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_MultiCastDelegate
+TypeDef: core. XPS_typ_EventHandler
 	<TypeDefinition>
         --- prototype
-        XPS_typ_MultiCastDelegate : XPS_ifc_IMultiCastDelegate
+        XPS_typ_EventHandler : XPS_ifc_IEventHandler
         ---
         --- prototype
-        createhashmapobject [XPS_typ_MultiCastDelegate,_signature]
+        createhashmapobject [XPS_typ_EventHandler,_signature]
         ---
 
 Authors: 
@@ -28,7 +28,7 @@ Returns:
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_typ_MultiCastDelegate"],
+	["#type","XPS_typ_EventHandler"],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -43,26 +43,25 @@ Returns:
 		True
     ----------------------------------------------------------------------------*/
 	["#create",{
-		if !(isnil "_this") then {
-			_self set ["_signature",[_this]];
-		} else {
-			_self set ["_signature",[]];
+		params [["_mcDelegate",nil,[createhashmap]]];
+		if (isNil "_mcDelegate" || {!(CHECK_IFC1(_mcDelegate,"XPS_if_IMultiCastDelegate"))}) then 
+		{
+			_self set ["_delegate",_mcDelegate];
 		};
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_MultiCastDelegate"
+		"XPS_typ_Delegate"
 		---
 	----------------------------------------------------------------------------*/
 	["#str",compilefinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-		<XPS_ifc_IMultiCastDelegate>
+		<XPS_ifc_IEventHandler>
 	----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_ifc_IMultiCastDelegate"]],
-	["_pointers",[],[["CTOR"]]],
-	["_signature",[],[["CTOR"]]], 
+	["@interfaces",["XPS_ifc_IEventHandler"]],
+	["_delegate",nil],
     /*----------------------------------------------------------------------------
     Method: Add
     
@@ -70,7 +69,7 @@ Returns:
         call ["Add",_pointer]
         ---
 
-        <XPS_ifc_IMultiCastDelegate>
+        <XPS_ifc_IEventHandler>
 
 		Adds a function/method pointer to the internal pointer collection
     
@@ -95,21 +94,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
 	["Add",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
-		//Deep copy the array
-		if (_this isEqualType []) then {_this = +_this};
-		
-		if (_this isEqualType {} || {							//if just code we're good
-				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
-				{_this#1 in keys _this#0 && 					//check methodname exists...
-				{_this#0 get _this#1 isEqualType {}}}}			//if methodname is type code - we're good
-			) then {
-				if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
-					throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Functon/Method supplied was already added.",_this]];
-				};
-		} else {
-			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
-		};
+		_delegate call ["Add",_this];
 	}],
     /*----------------------------------------------------------------------------
     Method: Remove
@@ -118,7 +103,7 @@ Returns:
         call ["Remove",_pointer]
         ---
 
-        <XPS_ifc_IMultiCastDelegate>
+        <XPS_ifc_IEventHandler>
 
 		Removes a function/method pointer from the internal pointer collection
     
@@ -131,47 +116,6 @@ Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
 	["Remove",{
-		private _pointers = _self get "_pointers";
-		_pointers deleteat (_pointers find _this);
-	}],
-    /*----------------------------------------------------------------------------
-    Method: Invoke
-    
-        --- Prototype --- 
-        call ["Invoke",_args]
-        ---
-
-        <XPS_ifc_IMultiCastDelegate>
-
-		Calls the attached <code> blocks AND/OR <hashmapobject> methods with _args as the parameters.
-    
-    Parameters: 
-        _args - <Array> - the parameters to pass to the external functions/methods must conform to the default signature or custom signature passed during creation
-	
-	Returns:
-		Nothing
-
-	Throws: 
-		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to defined signature
-		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
-    ----------------------------------------------------------------------------*/
-	["Invoke",{
-		if !([_this] isEqualTypeParams (_self get "_signature")) exitwith {
-			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
-		};
-		{
-			switch (true) do {
-				case (_x isEqualTypeParams [createhashmap,""] && {!isNil {_x#0} && {_x#0 getorDefault[_x#1,[]] isEqualType {}}}) : {
-					_x params ["_object","_method"];
-					_object call [_method,_this];
-				};
-				case (_x isEqualType {}) : {
-					_this call _x;
-				};
-				default {
-					throw createhashmapobject[XPS_typ_InvalidOperationException,[_self,"Invoke","Attached code or method pointer no longer exists",_this]];
-				};
-			};
-		} foreach (_self get "_pointers");
+		_delegate call ["Remove",_this];
 	}]
 ]

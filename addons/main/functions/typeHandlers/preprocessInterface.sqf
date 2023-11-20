@@ -62,8 +62,6 @@ try
 	private _i = 0;
 	while { _i < (count _interface)} do {
 
-		scopeName "MAIN";
-
 		if !((_interface#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
 		
 		private _keyPair = _interface#_i;
@@ -72,7 +70,7 @@ try
 
 		if (_key isEqualTo "@" && {_value isEqualType createhashmap}) then {
 			_interface deleteat _i;
-			_interface append (_value toArray false);
+			_interface insert [-1,_value toArray false,true];
 		} else {
 			_i = _i + 1;
 		};

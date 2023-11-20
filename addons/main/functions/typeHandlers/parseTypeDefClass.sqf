@@ -26,7 +26,7 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 if !(params [["_class",nil,[configFile]],"_tag"]) exitwith {false;};
-
+disableSerialization;
 _tag = [_tag] param [0,configName _class,[""]];
 if (isText (_class >> "tag")) then {
 	//diag_log text format ["[XPS TD parser] : changing TAG: %1",_tag];
