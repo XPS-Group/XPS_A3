@@ -1,4 +1,4 @@
-﻿Format: 2.3 (Development Release 1)
+﻿Format: 2.3
 
 # This is the Natural Docs comments file for this project.  If you change
 # anything here, it will apply to THIS PROJECT ONLY.  You can edit the version
@@ -22,10 +22,37 @@
 # ------------------------------------------------------------------------
 # The syntax reference is after the definitions.
 
+Alter Comment Type: Module
+
+   Display Name: Variable
+   Plural Display Name: Variables
+
+   Scope: Start
+   Flags: Code, Variable Type, Module Hierarchy
+
+   Keywords:
+      variable, variables
+      var, vars
+      gvar, gvars
+
+
+Alter Comment Type: Package
+
+   Display Name: Function
+   Plural Display Name: Functions
+
+   Scope: Start
+   Flags: Code, Variable Type, Package Hierarchy
+
+   Keywords:
+      function, functions
+      Function, Functions
+
+
 Alter Comment Type: Class
 
-   Display Name: Hashmap Object
-   Plural Display Name: Hashmap Objects
+   Display Name: Type Definition
+   Plural Display Name: Type Definitions
 
    Scope: Start
    Flags: Code, Variable Type, Class Hierarchy
@@ -210,33 +237,6 @@ Comment Type: HMReserved
       parent, parents
       inherit, inherits
       implement, implements
-
-
-Alter Comment Type: Package
-
-   Display Name: Function
-   Plural Display Name: Function
-
-   Scope: Start
-   Flags: Code, Variable Type, Package Hierarchy
-
-   Keywords:
-      function, functions
-      Function, Functions
-
-
-Alter Comment Type: Module
-
-   Display Name: Global Variable
-   Plural Display Name: Global Variables
-
-   Scope: Start
-   Flags: Code, Variable Type, Module Hierarchy
-
-   Keywords:
-      variable, variables
-      var, vars
-      gvar, gvars
 
 
 # Each Natural Docs comment has a corresponding type which determine its

@@ -121,37 +121,44 @@ Example: Using a definiton defined locally with no provided values
 	
 	*TAG_Pets* - A Static class 
 
-		#str - "TAG_typ_Pets"
-		#type - ["TAG_typ_Pets", "XPS_typ_Enumeration"]
-		Names - [ "Cat", "Dog", "Bird"]
-		Values - [ 0, 1 ,2 ]
-		Cat - "TAG_Pets_Cat"
-		Dog - "TAG_Pets_Dog"
-		Bird - "TAG_Pets_Bird"
-		0 - "TAG_Pets_Cat"
-		1 - "TAG_Pets_Dog"
-		2 - "TAG_Pets_Bird"
-		GetEnum - Method to retrieve the global variable 'constant'
-		IsDefined - Method to determine if Name or Value exists
-
+	---text
+		#str		"TAG_typ_Pets"
+		#type		["TAG_typ_Pets", "XPS_typ_Enumeration"]
+		Names		[ "Cat", "Dog", "Bird"]
+		Values		[ 0, 1 ,2 ]
+		Cat			TAG_Pets_Cat	:(by ref)
+		Dog			TAG_Pets_Dog	:(by ref)
+		Bird		TAG_Pets_Bird	:(by ref)
+		0			TAG_Pets_Cat	:(by ref)
+		1			TAG_Pets_Dog	:(by ref)
+		2			TAG_Pets_Bird	:(by ref)
+		GetEnum		Method to retrieve the global variable 'constant'
+		IsDefined	Method to determine if Name or Value exists
+	---
 
 	*TAG_Pets_Cat* - Static Class
 
-		#str - "Cat"
-		#type - "TAG_Pets_Cat"
-		Value - 0
+	---text
+		#str	"Cat"
+		#type	"TAG_Pets_Cat"
+		Value	0
+	---
 		
 	*TAG_Pets_Dog* - Static Class
 
-		#str - "Dog"
-		#type - "TAG_Pets_Dog"
-		Value - 1
+	---text
+		#str	"Dog"
+		#type	"TAG_Pets_Dog"
+		Value	1
+	---
 
 	*TAG_Pets_Bird* - Static Class
 
-		#str - "Bird"
-		#type - "TAG_Pets_Bird"
-		Value - 2
+	---text
+		#str	"Bird"
+		#type	"TAG_Pets_Bird"
+		Value	2
+	---
 
 
 	With which you can do the following (and more)

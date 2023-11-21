@@ -8,11 +8,11 @@
     }
     
 .SHKeyword {
-    color: #000080;
+    color: #0808b8;
     }
 
 .DarkTheme .SHComment {
-    color: #82ff82;
+    color: #66af66;
     font-style: italic;
     }
 
@@ -21,20 +21,20 @@
     }
 
 .DarkTheme .SHKeyword {
-    color: #8282ff;
+    color: #7070c5;
     }
     
 .BlackTheme .SHComment {
-    color: #00ff00;
+    color: #45d845;
     font-style: italic;
     }
 
 .BlackTheme .SHString {
-    color: #fd2c2c;
+    color: #fd8282;
     }
 
 .BlackTheme .SHKeyword {
-    color: #2f2fff;
+    color: #8484d6;
     }
 
 .CTopic a:link,
@@ -45,12 +45,12 @@
     .DarkTheme .CTopic a:link,
     .DarkTheme .CTopic a:visited,
     .DarkTheme .CTopic a:hover {
-        color: #8282ff;
+        color: #8d8dff;
         }
     .BlackTheme .CTopic a:link,
     .BlackTheme .CTopic a:visited,
     .BlackTheme .CTopic a:hover {
-        color: #2c2cff;
+        color: #4b4be0;
         }
 .CTopic a:active {
     color: #800000;
@@ -67,7 +67,7 @@
     margin-left: 0.5rem;
     text-transform: none;
     font-size: 1.2rem;
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     border-bottom: unset;
     border-top: 1px solid #C0C0C0;
     }
@@ -82,14 +82,69 @@
     border-bottom: 1px solid #000000;
     border-top: 1px solid #000000;
     }
-    .DarkTheme .CTitle { border-color: #707070; background-color: #3a3a3a; }
-    .BlackTheme .CTitle { border-color: #686868; background-color: #1f1f1f; }
+    .DarkTheme .TGroup .CTitle { border-color: #707070; background-color: #3a3a3a; }
+    .BlackTheme .TGroup .CTitle { border-color: #686868; background-color: #1f1f1f; }
+    .DarkTheme .CTitle { border-color: #707070; background-color: #101010; }
+    .BlackTheme .CTitle { border-color: #686868; background-color: #000000; }
 
 .CHeading {
+    font-weight: normal;
     font-size: 1.1rem;
+    color: #141414;
 }
+.DarkTheme .CHeading { color: #cfbc90 }
+.BlackTheme .CHeading { color: #d3b777 }
 
 .CBody,
 .CHeading {
     margin-left: 0.5rem;
+}
+.NDContentPage.BlackTheme body {
+    color: #c5c5c5;
+    background-color: #000000;
+}
+.NDContentPage.DarkTheme body {
+    color: #DCDCDC;
+    background-color: #101010;
+}
+
+
+
+.DarkTheme .NDClassPrototype .CPEntry {
+    border-color: #62626b #312f68 #312f68 #62626b;
+    background-color: #33334B;
+}
+.DarkTheme .NDClassPrototype .CPEntry.Parent, 
+.DarkTheme .NDClassPrototype .CPEntry.Child {
+    border-color: #62626b #312f68 #312f68 #62626b;
+    background-color: #141430;
+}
+.DarkTheme .NDClassPrototype .CPEntry.TInterface {
+    border-color: #6d8f8f #517678 #517678 #6d8f8f;
+    background-color: #334b46;
+}
+.DarkTheme .NDClassPrototype .CPEntry.TInterface.Parent, 
+.DarkTheme .NDClassPrototype .CPEntry.TInterface.Child {
+    border-color: #6d8f8f #517678 #517678 #6d8f8f;
+    background-color: #142520;
+}
+
+
+.BlackTheme .NDClassPrototype .CPEntry {
+    border-color: #62626b #312f68 #312f68 #62626b;
+    background-color: #33334B;
+}
+.BlackTheme .NDClassPrototype .CPEntry.Parent, 
+.BlackTheme .NDClassPrototype .CPEntry.Child {
+    border-color: #62626b #312f68 #312f68 #62626b;
+    background-color: #0a0a18;
+}
+.BlackTheme .NDClassPrototype .CPEntry.TInterface {
+    border-color: #6d8f8f #517678 #517678 #6d8f8f;
+    background-color: #334b46;
+}
+.BlackTheme .NDClassPrototype .CPEntry.TInterface.Parent, 
+.BlackTheme .NDClassPrototype .CPEntry.TInterface.Child {
+    border-color: #6d8f8f #517678 #517678 #6d8f8f;
+    background-color: #0b1412;
 }

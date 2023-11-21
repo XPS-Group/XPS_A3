@@ -13,7 +13,9 @@ Authors:
 	Crashdome
    
 Description:
-	A collection which is ordered by a numerical index.  
+	A collection which is ordered by a numerical index. Contains event handlers to 
+    notify if the collection has changed via Add, Remove, and Set. If an item is added that 
+    supports the IValueChangedNotifier interface, it will bind to that item also.
 
 Returns:
 	<HashmapObject>
