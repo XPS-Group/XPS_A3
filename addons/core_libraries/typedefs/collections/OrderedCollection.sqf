@@ -89,7 +89,7 @@ Returns:
     Method: AddItem
     
         --- Prototype --- 
-        call ["AddItem",[_index,_item]]
+        call ["AddItem",[_item]]
         ---
 
         <XPS_ifc_ICollection>
