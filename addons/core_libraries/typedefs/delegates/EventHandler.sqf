@@ -6,22 +6,17 @@ TypeDef: core. XPS_typ_EventHandler
         XPS_typ_EventHandler : XPS_ifc_IEventHandler
         ---
         --- prototype
-        createhashmapobject [XPS_typ_EventHandler,_signature]
+        createhashmapobject [XPS_typ_EventHandler,_delegate]
         ---
 
 Authors: 
 	Crashdome
    
 Description:
-	<HashmapObject> which stores pointers to another function/method and calls them when invoked
+	<HashmapObject> which wraps an <XPS_ifc_IMultiCastDelegate> to provide Add?remove functionality without exposing the Invoke function.
 
 Parameters: 
-	_signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
-	
-	This signature is strictly checked when Invoke is called and  will fail if parameters passed are not correct. This ensures a standard
-	parameter set is expected by all receivers of the Invoke method. Since default is 'anything' all parameter compositions are initially allowed.
-
-	However, a custom signature can be injected at creation or overridden by a derived class. See Example below.
+	_delegate - <XPS_ifc_IMultiCastDelegate> - the delegate to wrap Add/Remove functions around.
 
 Returns:
 	<HashmapObject>
@@ -33,12 +28,12 @@ Returns:
     Constructor: #create
     
         --- prototype
-        call ["#create",_signature]
+        call ["#create",_delegate]
         ---
     
-    Parameters: 
-        _signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
-	
+	Parameters: 
+		_delegate - <XPS_ifc_IMultiCastDelegate> - the delegate to wrap Add/Remove functions around.
+		
 	Returns:
 		True
     ----------------------------------------------------------------------------*/
