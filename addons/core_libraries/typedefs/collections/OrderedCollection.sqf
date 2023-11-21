@@ -105,8 +105,8 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         if !(params [["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
-        (_self get "_listArray") pushback _item;
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_item]]];
+        private _index = (_self get "_listArray") pushback _item;
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_index,_item]]];
         true;
     }],
     /*----------------------------------------------------------------------------
@@ -129,8 +129,8 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["RemoveItem",compileFinal {
         if !(params [["_index",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
-        _self get "_listArray" deleteAt _index;
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_item]]];
+        private _item = _self get "_listArray" deleteAt _index;
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_index,_item]]];
     }],
     /*----------------------------------------------------------------------------
     Method: GetItem
@@ -197,7 +197,7 @@ Returns:
         if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
 		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,_this]]};
         (_self get "_listArray") set [_index,_item];
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_this]]];
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_index,_item]]];
         true;
 	}],
     /*----------------------------------------------------------------------------
