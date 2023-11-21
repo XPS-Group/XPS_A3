@@ -1,9 +1,9 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: unit_testing. XPS_UT_typ_Engine
+TypeDef: unit_testing. XPS_UT_typ_TestBuilder
 	<TypeDefinition>
 	---prototype
-	XPS_UT_typ_Engine
+	XPS_UT_typ_TestBuilder
 	---
 
 Authors: 
@@ -29,9 +29,6 @@ Description:
 		_self set ["_collection",createhashmapobject [
 			XPS_typCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_typ_TestClass"]]]]]];
 		_self set ["classOrder",[]];
-		_self set ["Selected",[]];
-		_self set ["TestResults",createhashmap];
-		_self set ["_viewController",createhashmapobject [XPS_UT_typ_TestConsoleController,"XPS_TestConsoleViewModel"]];
 	}],
 	/*----------------------------------------------------------------------------
 	Flags: #flags
@@ -52,7 +49,6 @@ Description:
 		<core. XPS_ifc_ITypeRestrictor>
 	----------------------------------------------------------------------------*/
 	["_collection",nil],
-	["_viewController",nil],
 	/*----------------------------------------------------------------------------
 	Protected: classOrder
 		
@@ -92,26 +88,6 @@ Description:
 		};
 		_dataArray;
 	}],
-	/*----------------------------------------------------------------------------
-	Protected: initTestResults
-		
-		---prototype
-		call ["initTestResults"]
-		---
-
-
-	----------------------------------------------------------------------------*/
-	["initTestResults",{
-		private _testResults = createhashmapobject [XPS_UT_typ_TestResults];
-		{
-
-			//TODO : Should we use just a hashmap or place result directly on test class?
-		} foreach (_self get "classOrder");
-		_self set ["TestResults",_testRsults];
-
-	}],
-	["TestResults",createhashmap],
-	["Selected",[]],
     /* -----------------------------------------------------------------------
     Method: AddClass
 
@@ -130,50 +106,5 @@ Description:
         if !(_self get "_collection" call ["AddItem",[_key,_item]]) then {
 			_self get "classOrder" pushback _key;
 		};
-    }],
-	/*----------------------------------------------------------------------------
-	Method: RunAll
-		
-		---prototype
-		call ["RunAll"]
-		---
-
-		Runs all Tests in a Scheduled Environment
-	----------------------------------------------------------------------------*/
-	["RunAll",{
-		_self spawn {
-			private _engine = _this;
-			{
-				private _class = _engine get "_collection" call ["GetItem",_x];
-				private _orderedList = _class get "TestOrder";
-				diag_log text ((_class get "Description") + ": - BEGIN TEST");
-				// Init Class
-				_class call ["InitTest"];
-				//Run Class Tests
-				{
-					try {
-						_class call [_x];
-						diag_log text ((_class get "Description") + ":" + _x + " -  PASSED");
-					} catch {
-						if (count (["XPS_UT_typ_AssertFailedException","XPS_UT_typ_AssertInconclusiveException"] arrayintersect (_exception get "#type"))>0) then {
-							diag_log text  ((_class get "Description") + ":" + _x + " -  FAILED");
-							diag_log (_exception call ["GetText"]);
-						} else {
-							throw _exception;
-						};
-					}
-				} foreach _orderedList;
-				// Finalize Class
-				_class call ["FinalizeTest"];
-			} foreach (_engine get "classOrder");
-		};
-	}],
-	["RunSelected",{}],
-	["ShowTestConsole",{
-		private _controller = _self get "_viewController";
-		_controller call ["ShowDialog"];
-	}],
-	["CloseTestConsole",{
-		private _controller = _self get "_viewController";
-		_controller call ["CloseDialog"];}]
+    }]
 ];

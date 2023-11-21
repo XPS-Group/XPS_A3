@@ -12,7 +12,7 @@ Authors:
 	Crashdome
 
 Description:
-	Handles the interaction between <XPS_UT_Engine> and a <XPS_UT_typ_TestConsoleViewModel>
+	Handles the interaction between <XPS_UT_TestBuilder> and a <XPS_UT_typ_TestConsoleViewModel>
 
     
 Optionals: 
