@@ -7,8 +7,10 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_IFC_SUB(enumerations,IEnumeration);
 			XPS_CFG_IFC_SUB(delegates,IDelegate);
 			XPS_CFG_IFC_SUB(delegates,IMultiCastDelegate);
+			XPS_CFG_IFC_SUB(delegates,IEventHandler);
 			XPS_CFG_IFC_SUB(collections,IList);
 			XPS_CFG_IFC_SUB(collections,ICollection);
+			XPS_CFG_IFC_SUB(collections,ICollectionNotifier);
 			XPS_CFG_IFC_SUB(collections,IQueue);
 			XPS_CFG_IFC_SUB(collections,IStack);
 			XPS_CFG_IFC_SUB(collections,ITypeRestrictor);
@@ -28,6 +30,8 @@ class XPS_CFG_TD_BASECLASSNAME {
 		class Delegates {
 			XPS_CFG_TYP_SUB(delegates,Delegate);
 			XPS_CFG_TYP_SUB(delegates,MultiCastDelegate);
+			XPS_CFG_TYP_SUB(delegates,Event);
+			XPS_CFG_TYP_SUB(delegates,EventHandler);
 
 		};
 		class Enumerations {
@@ -37,6 +41,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP_SUB(collections,NoTypeRestrictor);
 			XPS_CFG_TYP_SUB(collections,NativeTypeRestrictor);
 			XPS_CFG_TYP_SUB(collections,HashmapObjectTypeRestrictor);
+			XPS_CFG_TYP_SUB(collections,OrderedCollection);
 			XPS_CFG_TYP_SUB(collections,TypeCollection);
 			XPS_CFG_TYP_SUB(collections,Queue);
 			XPS_CFG_TYP_SUB(collections,Stack);
