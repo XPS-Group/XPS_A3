@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_OrderedCollection
 	<TypeDefinition>
         --- prototype
-        XPS_typ_OrderedCollection : XPS_ifc_ICollection
+        XPS_typ_OrderedCollection : XPS_ifc_ICollection, XPS_ifc_ICollectionNotifier
         ---
         --- prototype
         createhashmapobject [XPS_typ_OrderedCollection]
@@ -30,6 +30,11 @@ Returns:
     Return:
         True
     ----------------------------------------------------------------------------*/
+    ["#create",{
+        _self set ["_listArray",[]];
+        _self set ["_onCollectionChangedEvent",createhashmapobject [XPS_typ_Event]];
+        _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,_self get "_onCollectionChangedEvent"]];
+    }],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
@@ -41,8 +46,9 @@ Returns:
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_ICollection"]],
-	["_listArray",[],[["CTOR"]]],
+    ["@interfaces", ["XPS_ifc_ICollection","ICollectionNotifier"]],
+	["_listArray",[]],
+    ["_onCollectionChangedEvent",nil],
     /*----------------------------------------------------------------------------
     Method: Count
     
@@ -100,6 +106,7 @@ Returns:
 	["AddItem", compileFinal {
         if !(params [["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
         (_self get "_listArray") pushback _item;
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_item]]];
         true;
     }],
     /*----------------------------------------------------------------------------
@@ -123,6 +130,7 @@ Returns:
 	["RemoveItem",compileFinal {
         if !(params [["_index",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
         _self get "_listArray" deleteAt _index;
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_item]]];
     }],
     /*----------------------------------------------------------------------------
     Method: GetItem
@@ -131,7 +139,7 @@ Returns:
         call ["GetItem",[_index]]
         ---
 
-        <XPS_ifc_IList>
+        <XPS_ifc_ICollection>
     
     Parameters: 
 		_index - Must be a non-negative number and must not exceed index of last item
@@ -163,5 +171,48 @@ Returns:
     -------------------------------------------------------------------------*/ 
     ["GetItems",{
         +(_self get "_listArray");
-    }]
+    }],
+    /*----------------------------------------------------------------------------
+    Method: SetItem
+    
+        --- Prototype --- 
+        call ["SetItem",[_index, _item]]
+        ---
+
+        <XPS_ifc_ICollection>
+
+        Replaces item at specified Index.
+    
+    Parameters: 
+		_index - Must be a non-negative number and must not exceed index of last item
+        _item - Anything - except nil
+
+    Returns:
+        True - the item is successfully added to end of list
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+    ----------------------------------------------------------------------------*/
+	["SetItem",{
+        if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
+		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,_this]]};
+        (_self get "_listArray") set [_index,_item];
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_this]]];
+        true;
+	}],
+    /*----------------------------------------------------------------------------
+    EventHandler: CollectionChanged
+    
+        --- Prototype --- 
+        get "CollectionChanged"
+        ---
+
+        <XPS_ifc_ICollectionNotifier>
+
+        Handles Subscriptions to the onCollectionChangedEvent
+
+    Returns:
+        <XPS_typ_EventHandler>
+    ----------------------------------------------------------------------------*/
+    ["CollectionChanged",nil]
 ]

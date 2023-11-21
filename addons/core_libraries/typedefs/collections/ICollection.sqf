@@ -25,6 +25,9 @@ Authors:
 
 	Method: RemoveItem
 		<Code>
+
+	Method: SetItem
+		<Code>
 	
 ---------------------------------------------------------------------------- */
 [
@@ -32,5 +35,6 @@ Authors:
 	["AddItem","CODE"],
 	["GetItem","CODE"],
 	["GetItems","CODE"],
-	["RemoveItem","CODE"]
+	["RemoveItem","CODE"],
+	["SetItem","CODE"]
 ]

@@ -88,7 +88,7 @@ Returns:
         if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
         if ((_key == "") || (_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
         if (_self get "_restrictor" call ["IsAllowed",_item]) then {
-            (_self get "_items") set [_key,_item];
+            _self get "_items" set [_key,_item];
         } else {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Item is not allowed in this collection",_this]];
         };
@@ -152,6 +152,38 @@ Returns:
     ["GetItems",{
         values (_self get "_items");
     }],
+    /*----------------------------------------------------------------------------
+    Method: SetItem
+    
+        --- Prototype --- 
+        call ["SetItem",[_key, _item]]
+        ---
+
+        <XPS_ifc_ICollection>
+
+        Replaces item at specified Key.
+    
+    Parameters: 
+		_key - <HashmapKey>
+        _item - Anything - except nil
+
+    Returns:
+        True - the item is successfully added to end of list
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_InvalidArgumentException> - if key parameter does not exist in this collection - OR- if _item is not allowed 
+    ----------------------------------------------------------------------------*/
+	["SetItem",{
+        if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
+        if ((_key == "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
+        if (_self get "_restrictor" call ["IsAllowed",_item]) then {
+            _self get "_items" set [_key,_item];
+        } else {
+            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Item is not allowed in this collection",_this]];
+        };
+        true;
+	}],
     /*----------------------------------------------------------------------------
     Method: RegisterType 
     
