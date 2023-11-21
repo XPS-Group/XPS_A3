@@ -79,7 +79,7 @@ try
 
 		scopeName "MAIN";
 
-		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
+		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
 		
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;
@@ -94,11 +94,12 @@ try
 					private _interfaces = createhashmap;
 					{
 						private _ifc = call compile _x;
+						if (isNil "_ifc") then  {throw format ["Cannot create interface: %1.",_x]};
 						_interfaces merge [createhashmapfromarray [[_x,_ifc]],true];
 					} foreach _value;
 					_value = compileFinal _interfaces;
 					_keyPair set [1,_value];
-				} else {throw format ["Interface list for Key @interfaces is not an array of strings.",_key]};
+				} else {throw format ["Interface list for Key @interfaces is not an array of strings."]};
 			};
 
 		private _attributes = [];
@@ -237,7 +238,7 @@ try
 } catch {
 	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
 	diag_log text _exception;
-	diag_log _this;
+	diag_log _typeName;
 	false;
 };
 

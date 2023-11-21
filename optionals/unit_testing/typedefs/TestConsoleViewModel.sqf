@@ -45,8 +45,11 @@ Returns:
 		True
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_myController",createhashmap,[createhashmap]]];
-		_self set ["_controller",_myController];
+		_self set ["_testCollection",createhashmapobject [XPS_typ_OrderedCollection]];
+		_self set ["CollectionChanged",(_self get "_testCollection") get "CollectionChanged"];
+	}],
+	["#delete",{
+		systemchat "Deleteing VM";
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -60,9 +63,7 @@ Returns:
     	<XPS_ADDON_ifc_IName>
 	-----------------------------------------------------------------------------*/
 	// ["@interfaces",["XPS_ADDON_ifc_IName"]],
-	["_controller",nil],
-	["_displayName","XPS_UT_TestConsole_display"],
-	["_displayHandle",displayNull],
+	["_testCollection",nil],
 	/*----------------------------------------------------------------------------
 	Protected: myProp
     
@@ -94,35 +95,28 @@ Returns:
 		_object* - <Object> - (Optional - Default : objNull) 
 		_var1* - <String> - (Optional - Default : "") 
 	-----------------------------------------------------------------------------*/
-	["initTests",{
-
+	["TEST",{
+		private _list = _self get "_testCollection";
+		_list call ["AddItem",[["Test Class A",true,"Test Class A","","No Result"]]];
+		_list call ["AddItem",[["Test Class A",true,"","1","No Result"]]];
+		_list call ["AddItem",[["Test Class A",true,"","2","No Result"]]];
+		_list call ["AddItem",[["Test Class B",true,"Test Class B","","No Result"]]];
+		_list call ["AddItem",[["Test Class B",true,"","1","No Result"]]];
+		_list call ["AddItem",[["Test Class B",true,"","2","No Result"]]];
 	}],
-	["AddTestRow",{
-		params ["_selected","_class","_method","_result"];
-		private _display = _self getOrDefault ["_displayHandle",displayNull];
-		{
-			private _row = lnbAddRow [1500,_selected select 0];
-			lnbSetValue [1500,[_row,0],_select select 1];
-			lnbSetData [1500,[_row,0],_select select 2];
-			lnbSetText [1500,[_row,1],_class];
-			lnbSetText [1500,[_row,2],_method];
-			lnbSetText [1500,[_row,3],_result];
-		};
+	["AddToSelected",{
+		private _list = _self get "_testCollection";
+		private _item = _list call ["GetItem",[_this]];
+		_item set [1,true];
+		_list call ["SetItem", [_this,_item]];
+		systemchat str _this;
 	}],
-	["ShowDialog",{
-		private _display = _self getOrDefault ["_displayHandle",displayNull];
-		if (isNull _display) then {
-			private _display = createDialog [(_self get "_displayName"),true];
-			_self set ["_displayHandle",_display];
-			_display setVariable ["xps_viewmodel",_self];
-		};
+	["RemoveFromSelected",{
+		private _list = _self get "_testCollection";
+		private _item = _list call ["GetItem",[_this]];
+		_item set [1,false];
+		_list call ["SetItem", [_this,_item]];
+		systemchat str _this;
 	}],
-	["CloseDialog",{
-		private _display = _self getOrDefault ["_displayHandle",displayNull];
-		if !(isNull _display) then {
-			_display setVariable ["xps_viewmodel",nil];
-			_display closeDisplay 1;
-			_self set ["_displayHandle",displayNull];
-		};
-	}]
+	["CollectionChanged",nil]
 ]

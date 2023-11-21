@@ -97,12 +97,12 @@ Returns:
 	["Add",{
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
 		//Deep copy the array
-		if (_this isEqualType []) then {_this = +_this};
+		//if (_this isEqualType []) then {_this = +_this};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
-				{_this#1 in keys _this#0 && 					//check methodname exists...
-				{_this#0 get _this#1 isEqualType {}}}}			//if methodname is type code - we're good
+				{_this#1 in keys (_this#0) && 					//check methodname exists...
+				{_this#0 get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
 				if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
 					throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Functon/Method supplied was already added.",_this]];

@@ -15,6 +15,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP(TestResult);
 			XPS_CFG_TYP(TestConsoleController);
 			XPS_CFG_TYP(TestConsoleViewModel);
+			XPS_CFG_TYP(TestConsoleView);
 		};
 		class Statics {
 			XPS_CFG_TYP(Assert);

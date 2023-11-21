@@ -33,7 +33,7 @@ Returns:
     ["#create",{
         _self set ["_listArray",[]];
         _self set ["_onCollectionChangedEvent",createhashmapobject [XPS_typ_Event]];
-        _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,_self get "_onCollectionChangedEvent"]];
+        _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];
     }],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -46,7 +46,7 @@ Returns:
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_ICollection","ICollectionNotifier"]],
+    ["@interfaces", ["XPS_ifc_ICollection","XPS_ifc_ICollectionNotifier"]],
 	["_listArray",[]],
     ["_onCollectionChangedEvent",nil],
     /*----------------------------------------------------------------------------
@@ -197,7 +197,7 @@ Returns:
         if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
 		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,_this]]};
         (_self get "_listArray") set [_index,_item];
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_index,_item]]];
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_index,_item]]];
         true;
 	}],
     /*----------------------------------------------------------------------------

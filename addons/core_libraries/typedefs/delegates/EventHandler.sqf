@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_EventHandler
         XPS_typ_EventHandler : XPS_ifc_IEventHandler
         ---
         --- prototype
-        createhashmapobject [XPS_typ_EventHandler,_delegate]
+        createhashmapobject [XPS_typ_EventHandler,[_delegate]]
         ---
 
 Authors: 
@@ -21,6 +21,10 @@ Parameters:
 Returns:
 	<HashmapObject>
 
+Throws: 
+	<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
+	<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
+
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_typ_EventHandler"],
@@ -28,7 +32,7 @@ Returns:
     Constructor: #create
     
         --- prototype
-        call ["#create",_delegate]
+        call ["#create",[_delegate]]
         ---
     
 	Parameters: 
@@ -36,13 +40,20 @@ Returns:
 		
 	Returns:
 		True
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameter supplied does not implement <XPS_ifc_IMultiCastDelegate>
     ----------------------------------------------------------------------------*/
 	["#create",{
 		params [["_mcDelegate",nil,[createhashmap]]];
-		if (isNil "_mcDelegate" || {!(CHECK_IFC1(_mcDelegate,"XPS_if_IMultiCastDelegate"))}) then 
-		{
-			_self set ["_delegate",_mcDelegate];
+		if (isNil "_mcDelegate") then {
+			throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil",_this]];
 		};
+		if (!(CHECK_IFC1(_mcDelegate,XPS_ifc_IMultiCastDelegate))) then {
+			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];
+		};
+		_self set ["_delegate",_mcDelegate];
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -89,7 +100,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
 	["Add",{
-		_delegate call ["Add",_this];
+		_self get "_delegate" call ["Add",_this];
 	}],
     /*----------------------------------------------------------------------------
     Method: Remove
@@ -111,6 +122,6 @@ Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
 	["Remove",{
-		_delegate call ["Remove",_this];
+		_self get "_delegate" call ["Remove",_this];
 	}]
 ]

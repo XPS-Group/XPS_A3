@@ -157,7 +157,8 @@ class XPS_UT_TestConsole_display {
 
 	idd = 5000;
 	movingenable = "true";
-
+	onLoad = "private _view = createhashmapobject [XPS_UT_typ_TestConsoleView,[_this#0]]; _this#0 setVariable [""xps_view"",_view]; _view call [""XPS_UT_TestConsole_display_load"",_this]";
+	onUnload = "_this#0 getVariable ""xps_view"" call [""XPS_UT_TestConsole_display_unLoad""]; _this#0 setvariable [""xps_view"",nil];";
 	class Controls 
 	{
 		class XPS_UT_TestConsole_bkgrd: XPS_RscText
@@ -194,7 +195,7 @@ class XPS_UT_TestConsole_display {
 			w = -1;
 			h = -1;
 			text = "-";
-			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_viewModel"") call [""RemoveFromSelected"",lnbData [lnbCurSelRow 1500,0]];";
+			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_unselect_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_select: RscButton
 		{
@@ -204,7 +205,7 @@ class XPS_UT_TestConsole_display {
 			w = -1;
 			h = -1;
 			text = "+";
-			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_viewModel"") call [""AddToSelected"",lnbData [lnbCurSelRow 1500,0]];";
+			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_select_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_tests: XPS_RscListNBox
 		{
@@ -216,6 +217,7 @@ class XPS_UT_TestConsole_display {
 			y = Q(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(35 * GUI_GRID_CENTER_W);
 			h = Q(18 * GUI_GRID_CENTER_H);
+			onLBSelChanged = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_tests_LBSelChanged"",_this];";
 		};
 		class XPS_UT_TestConsole_details: XPS_RscListNBox
 		{
@@ -240,32 +242,32 @@ class XPS_UT_TestConsole_display {
 				};
 			};
 		};
-		class XPS_UT_TestConsole_Button_runSelected: RscButton
+		class XPS_UT_TestConsole_runSelected: RscButton
 		{
 			idc = 1600;
 			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
 			y = Q(5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
-			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_viewModel"") call [""RunSelected""];";
+			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runSelected_buttonClick"",_this];";
 		};
-		class XPS_UT_TestConsole_Button_runAll: RscButton
+		class XPS_UT_TestConsole_runAll: RscButton
 		{
 			idc = 1601;
 			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
 			y = Q(2 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
-			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_viewModel"") call [""RunAll""];}";
+			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runAll_buttonClick"",_this];";
 		};
-		class XPS_UT_TestConsole_Button_reset: RscButton
+		class XPS_UT_TestConsole_reset: RscButton
 		{
 			idc = 1602;
 			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
 			y = Q(15.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
-			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_viewModel"") call [""Reset""];}";
+			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_reset_buttonClick"",_this];";
 		};
 	};
 };

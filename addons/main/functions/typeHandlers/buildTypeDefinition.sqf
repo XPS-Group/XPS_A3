@@ -62,6 +62,8 @@ _preprocess = [_preprocess] param [0,true,[true]];
 _noStack = [_noStack] param [0,false,[true]];
 _headers = [_headers] param [0,false,[true]];
 
+private _errors = false;
+
 private _fnc_recurseBases = {
 	params ["_hashmap"];
 	if ("#base" in keys _hashmap) then {
@@ -72,7 +74,9 @@ private _fnc_recurseBases = {
 };
 
 if (_preprocess) then {
-	if !([_type, _headers] call XPS_fnc_preprocessTypeDefinition) exitwith {false;};
+	if !([_type, _headers] call XPS_fnc_preprocessTypeDefinition) exitwith {
+		_errors = true;
+	};
 };
 
 private _hashmap = createhashmapfromarray _type;
@@ -83,6 +87,7 @@ if ("#base" in keys _hashmap) then {
 	private _pType = _hashmap get "#base";
 	if (isNil {_pType} || !(_pType isEqualType [])) exitwith {
 		diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
+		_errors = true;
 	};
 
 	_preCompiled = createhashmapfromarray _pType;
@@ -142,14 +147,20 @@ if ("#base" in keys _hashmap) then {
 	
 };
 
+if (_errors) exitwith {
+	diag_log text (format ["XPS_fnc_buildTypeDefinition: skipped due to errors:  %1",_hashmap get "#type"]);
+	false;
+};
+
 // Check Interfaces are implemented
 private _interfaces = _preCompiled getOrDefault ["@interfaces",nil];
+
 if (isNil {_interfaces} || {[_preCompiled, keys _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
 	// Passes all checks and is Ok to push out definition
 	_hashmap toArray false;
 } else {
 	diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
-	nil;
+	false;
 };
 
 /*------------------------------------------------------------------------------

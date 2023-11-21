@@ -65,6 +65,42 @@ Returns:
     ["_items",createhashmap],
     ["_restrictor",nil],
     /*----------------------------------------------------------------------------
+    Method: Count
+    
+        --- Prototype --- 
+        call ["Count"]
+        ---
+
+        <XPS_ifc_IList>
+    
+    Parameters: 
+		none
+		
+	Returns:
+		<Number> - the number of elements in the stack
+    ----------------------------------------------------------------------------*/
+	["Count",{
+		count (_self get "_items");
+	}],
+    /*----------------------------------------------------------------------------
+    Method: IsEmpty
+    
+        --- Prototype --- 
+        call ["IsEmpty"]
+        ---
+
+        <XPS_ifc_IList>
+    
+    Parameters: 
+		none
+		
+	Returns:
+		<Boolean> - True if queue is empty, otherwise False.
+    ----------------------------------------------------------------------------*/
+	["IsEmpty",{
+		count (_self get "_items") == 0;
+	}],
+    /*----------------------------------------------------------------------------
     Method: AddItem
     
         --- Prototype --- 
