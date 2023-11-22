@@ -124,16 +124,16 @@ Example: Using a definiton defined locally with no provided values
 	---text
 		#str		"TAG_typ_Pets"
 		#type		["TAG_typ_Pets", "XPS_typ_Enumeration"]
-		Names		[ "Cat", "Dog", "Bird"]
+		Names		[ "None", "Cat", "Dog", "Bird"]
 		Values		[ 0 , 1 , 2 , 3 ]
-		None		{TAG_Pets_None}		:(code) - to get ref use : TAG_Pets call ["None"] -or- call (TAG_Pets get "None")
-		Cat			{TAG_Pets_Cat}		:(code) - to get ref use : TAG_Pets call ["Cat"] -or- call (TAG_Pets get "Cat")
-		Dog			{TAG_Pets_Dog}		:(code) - to get ref use : TAG_Pets call ["Dog"] -or- call (TAG_Pets get "Dog")
-		Bird		{TAG_Pets_Bird}		:(code) - to get ref use : TAG_Pets call ["Bird"] -or- call (TAG_Pets get "Bird")
-		0			{TAG_Pets_None}		:(code) - to get ref use : TAG_Pets call [0] -or- call (TAG_Pets get 0)
-		1			{TAG_Pets_Cat}		:(code) - to get ref use : TAG_Pets call [1] -or- call (TAG_Pets get 1)
-		2			{TAG_Pets_Dog}		:(code) - to get ref use : TAG_Pets call [2] -or- call (TAG_Pets get 2)
-		3			{TAG_Pets_Bird}		:(code) - to get ref use : TAG_Pets call [3] -or- call (TAG_Pets get 3)
+		None		{TAG_Pets_None}		:(code) - to get ref use : TAG_Pets call ["None"]
+		Cat			{TAG_Pets_Cat}		:(code) - to get ref use : TAG_Pets call ["Cat"]
+		Dog			{TAG_Pets_Dog}		:(code) - to get ref use : TAG_Pets call ["Dog"]
+		Bird		{TAG_Pets_Bird}		:(code) - to get ref use : TAG_Pets call ["Bird"]
+		0			{TAG_Pets_None}		:(code) - to get ref use : TAG_Pets call [0]
+		1			{TAG_Pets_Cat}		:(code) - to get ref use : TAG_Pets call [1]
+		2			{TAG_Pets_Dog}		:(code) - to get ref use : TAG_Pets call [2]
+		3			{TAG_Pets_Bird}		:(code) - to get ref use : TAG_Pets call [3]
 		GetEnum		Method to retrieve the global variable 'constant'
 		IsDefined	Method to determine if Name or Value exists
 	---
