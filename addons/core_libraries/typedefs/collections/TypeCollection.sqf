@@ -36,7 +36,7 @@ Returns:
         _typeRestrictor (optional) - <HashmapObject> that implements <XPS_ifc_ITypeRestrictor> 
 
     Returns:
-        True
+        <True>
 
     Throws:
         <XPS_typ_InvalidArgumentException> - if parameter does not implement the <XPS_ifc_ITypeRestrictor> interface
@@ -95,7 +95,7 @@ Returns:
 		none
 		
 	Returns:
-		<Boolean> - True if queue is empty, otherwise False.
+		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
 		count (_self get "_items") == 0;
@@ -111,10 +111,10 @@ Returns:
     
     Parameters: 
         _key - <HashmapKey> 
-        _item - Anything - except nil
+        _item - <Anything> - except nil
 
     Returns:
-        True - the item is successfully added
+        <True> - the item is successfully added
 
     Throws:
         <XPS_typ_ArgumentNilException> - if a parameter was nil
@@ -143,7 +143,7 @@ Returns:
         key - <HashmapKey> 
 
     Returns:
-        Anything - the item removed or nil if not found
+        <Anything> - the item removed or nil if not found
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
@@ -165,7 +165,7 @@ Returns:
         key - <HashmapKey> 
 
     Returns:
-        Anything - The item if found otherwise nil
+        <Anything> - The item if found otherwise nil
 
     -------------------------------------------------------------------------*/ 
     ["GetItem",{
@@ -201,10 +201,10 @@ Returns:
     
     Parameters: 
 		_key - <HashmapKey>
-        _item - Anything - except nil
+        _item - <Anything> - except nil
 
     Returns:
-        True - the item is successfully added to end of list
+        <True> - the item is successfully added to end of list
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
@@ -245,7 +245,7 @@ Returns:
         <XPS_ifc_ITypeRestrictor>
     
     Parameters: 
-        _value - Anything - Value to check to see if it is allowed to be added
+        _value - <Anything> - Value to check to see if it is allowed to be added
 	----------------------------------------------------------------------------*/
     ["IsAllowed",{
         _self get "_restrictor" call ["IsAllowed",_this];

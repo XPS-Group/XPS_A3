@@ -25,21 +25,21 @@ Description:
 
 	Supported Attributes in the preprocessor are:
 
-		- ["OBSOLETE"] - used on methods no longer used but kept for backwards compatibility
-		- ["CTOR",value]
-		- ["DTOR",value]
-		- ["CTOR_LAZ",value]
-		- ["DTOR_LAZY",value]
-		- ["CONDITIONAL",{code}] - must return a boolean
-		- ["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
-		- ["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
-		- ["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
-		- ["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
+		["OBSOLETE"] - used on methods no longer used but kept for backwards compatibility
+		["CTOR","code"] - injects string or code block into #create method : Top 
+		["DTOR","code"] - injects string or code block into #delete method : Top 
+		["CTOR_LAZ","code"] - injects string or code block into #create method : Bottom
+		["DTOR_LAZY","code"] - injects string or code block into #delete method : Bottom 
+		["CONDITIONAL",{code}] - must return a boolean - this method/property will only exist if <True>
+		["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
+		["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
+		["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
+		["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
 
 	However, you can define any Attribute as long as it is in an array. The preprocessor will
 	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
 	run your own custom preprocesser (or extend this one) before instantiating a type with 
-	createHashmapPObject command.
+	<createHashmapObject: https://community.bistudio.com/wiki/createHashMapObject> command.
 
 Authors: 
 	Crashdome
@@ -51,7 +51,7 @@ Parameter: _type
 Optional: _headers 
 	<Boolean> - determines if debug headers should be injected into code blocks  
 
-Return: Nothing
+Returns: Nothing
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};

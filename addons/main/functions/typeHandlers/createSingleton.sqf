@@ -50,7 +50,7 @@ Description:
 		<array> - an argument array sent to #create method of Type Defintion
 
 	Return: _result
-		<Boolean> - True if successful, otherwise false
+		<Boolean> - <True> if successful, otherwise false
 
 ------------------------------------------------------------------------------
 

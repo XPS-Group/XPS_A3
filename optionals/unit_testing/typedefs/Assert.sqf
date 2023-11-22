@@ -32,8 +32,8 @@ Description:
 	Performs an IsEqualTo check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -55,8 +55,8 @@ Description:
 	Performs an IsEqualTo check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -78,8 +78,8 @@ Description:
 	Performs an IsEqualRef check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -101,8 +101,8 @@ Description:
 	Performs an IsEqualRef check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -162,8 +162,8 @@ Description:
 	Performs an IsEqualType check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -185,8 +185,8 @@ Description:
 	Performs an IsEqualType check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -208,8 +208,8 @@ Description:
 	Performs an IsEqualTypeAll check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -231,8 +231,8 @@ Description:
 	Performs an IsEqualTypeAll check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -254,7 +254,7 @@ Description:
 	Performs an IsEqualTypeAny check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
@@ -277,7 +277,7 @@ Description:
 	Performs an IsEqualTypeAny check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
@@ -300,7 +300,7 @@ Description:
 	Performs an IsEqualTypeArray check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
@@ -323,7 +323,7 @@ Description:
 	Performs an IsEqualTypeArray check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
@@ -346,7 +346,7 @@ Description:
 	Performs an IsEqualTypeParams check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
@@ -369,7 +369,7 @@ Description:
 	Performs an IsEqualTypeParams check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
@@ -484,7 +484,7 @@ Description:
 	Performs an IsNil check. Fails with <XPS_UT_typ_AssertFailedException> if Not Nil
 	
     Parameters: 
-		_arg - Anything - The value to check
+		_arg - <Anything> - The value to check
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -506,7 +506,7 @@ Description:
 	Performs an IsNil check. Fails with <XPS_UT_typ_AssertFailedException> if Nil
 	
     Parameters: 
-		_arg - Anything - The value to check
+		_arg - <Anything> - The value to check
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed

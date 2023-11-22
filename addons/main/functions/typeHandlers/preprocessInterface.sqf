@@ -51,7 +51,7 @@ Parameter: _type
 Optional: _headers 
 	<Boolean> - determines if debug headers should be injected into code blocks  
 
-Return: Nothing
+Returns: Nothing
 
 ---------------------------------------------------------------------------- */
 if !(params [["_interface",nil,[[]]]]) exitwith {false};

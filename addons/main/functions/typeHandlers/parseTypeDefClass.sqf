@@ -22,7 +22,7 @@ Authors:
 		<string> - (Optiona - Default is configName of class)  
 
 	Return: _result
-		<Boolean> - True is successful, otherwise false
+		<Boolean> - <True> is successful, otherwise false
 
 ---------------------------------------------------------------------------- */
 if !(params [["_class",nil,[configFile]],"_tag"]) exitwith {false;};

@@ -42,7 +42,7 @@ Returns:
     	_var2* - <String> - (Optional - Default : "") 
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
 		params ["_display"];

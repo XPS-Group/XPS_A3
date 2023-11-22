@@ -38,7 +38,7 @@ Returns:
     	_varName* - <String> - (Optional - Default : "XPS_Blackboard") See: <AttachToObject>
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
 		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];

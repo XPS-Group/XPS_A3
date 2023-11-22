@@ -22,7 +22,7 @@ Authors:
 		<Number> - [Optional - Default : 100] - distance of water in meters  
 
 	Return: _result
-		<Boolean> - True if water exists, otherwise False
+		<Boolean> - <True> if water exists, otherwise <False>
 
 ---------------------------------------------------------------------------- */
 params [["_startPos",[0,0],[[]],[2,3]],["_endPos",[0,0],[[]],[2,3]],["_distanceThreshold",100,[0]]];

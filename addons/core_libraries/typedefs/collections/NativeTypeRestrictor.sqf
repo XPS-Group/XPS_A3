@@ -34,7 +34,7 @@ Returns:
 		_allowedTypes (optional) - <Array> - of Native Types in same format as IsEqualTypeParams (e.g. [objNull,0,[],""] )
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
 		params [["_allowedTypes",[],[[]]]];
@@ -65,11 +65,11 @@ Returns:
     Does nothing for this class. Simply Satisfies Interface
     
     Parameters: 
-        _value - Anything - a Native Type to add to allowed list
+        _value - <Anything> - a Native Type to add to allowed list
 
 	Returns:
-		True - if successfully registered
-		False - type already exists
+		<True> - if successfully registered
+		<False> - type already exists
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
@@ -90,10 +90,10 @@ Returns:
         <XPS_ifc_ITypeRestrictor>
     
     Parameters: 
-        _value - Anything - Value to check to see if it is allowed to be added
+        _value - <Anything> - Value to check to see if it is allowed to be added
 
 	Returns: 
-		True - always
+		<True> - always
 	-----------------------------------------------------------------------------*/
 	["IsAllowed",{
 		params ["_value"];

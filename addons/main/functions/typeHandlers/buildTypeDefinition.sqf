@@ -15,7 +15,7 @@ Description:
 
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
-	_<String> - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
+	_String - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
 	a unique identifier every time the type definition is rebuilt. See <XPS_fnc_preprocessTypeDefinition> for more info
 
 	@String - any key named as such with an @ symbol and also has an <array> value type, will be appended (unique only). For example, "@MyArray" key in parent
@@ -53,7 +53,7 @@ Optional: _headers*
 See <XPS_fnc_preprocessTypeDefinition> for more info.
 
 Return: _typeDefinition
-	<TypeDefinition> - or False if error
+	<TypeDefinition> - or <False> if error
 
 ---------------------------------------------------------------------------- */
 if !(params [["_type",nil,[[]]],"_allowNils","_preprocess","_noStack","_headers"]) exitwith {false;};

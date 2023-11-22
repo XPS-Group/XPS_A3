@@ -20,8 +20,8 @@ Description:
 	
 Parameters:
 	_graph - <XPS_ifc_IAstarGraph> - the graph to perform the search on
-	_startKey - Anything 
-	_endKey - Anything 
+	_startKey - <Anything> 
+	_endKey - <Anything> 
 
 Returns:
 	_result - <HashmapObject>
@@ -37,11 +37,11 @@ Returns:
     
 	Parameters:
 		_graph - <XPS_ifc_IAstarGraph> - the graph to perform the search on
-		_startKey - Anything 
-    	_endKey - Anything 
+		_startKey - <Anything> 
+    	_endKey - <Anything> 
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
 		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]]]) exitwith {nil;};
@@ -161,7 +161,7 @@ Returns:
 
     Parameters:
 		_priority - <Number> - the value which determines index in frontier array. Lowest first.
-		_item - Anything - The key of the item being placed in priority queue
+		_item - <Anything> - The key of the item being placed in priority queue
 
     Returns: 
 		<Array> - of nodes from start to goal
@@ -187,7 +187,7 @@ Returns:
     	---
 
     Returns: 
-		Anything - key of node that is at front of frontier queue. Item is removed from queue
+		<Anything> - key of node that is at front of frontier queue. Item is removed from queue
 	-----------------------------------------------------------------------------*/
 	["frontierPullLowest",compileFinal {
 		private _frontier = _self get "frontier";

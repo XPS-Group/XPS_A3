@@ -36,7 +36,7 @@ Returns:
         ---
 
 	Returns:
-		True
+		<True>
     ----------------------------------------------------------------------------*/
 	["#create",{
 		_self call ["XPS_typ_MultiCastDelegate",[createhashmap,[]]]

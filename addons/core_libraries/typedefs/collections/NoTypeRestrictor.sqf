@@ -28,7 +28,7 @@ Returns:
     	---
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{}],
 	/*----------------------------------------------------------------------------
@@ -55,10 +55,10 @@ Returns:
     Does nothing for this class. Simply Satisfies Interface
     
     Parameters: 
-        _value - Anything - Value type to add to allowed list
+        _value - <Anything> - Value type to add to allowed list
 
 	Returns:
-		True - always
+		<True> - always
 	-----------------------------------------------------------------------------*/
 	["RegisterType",{true}],
 	/*----------------------------------------------------------------------------
@@ -71,10 +71,10 @@ Returns:
         <XPS_ifc_ITypeRestrictor>
     
     Parameters: 
-        _value - Anything - Value to check to see if it is allowed to be added
+        _value - <Anything> - Value to check to see if it is allowed to be added
 
 	Returns: 
-		True - always
+		<True> - always
 	-----------------------------------------------------------------------------*/
 	["IsAllowed",{true}]
 ]

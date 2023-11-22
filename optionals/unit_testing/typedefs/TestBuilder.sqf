@@ -10,8 +10,8 @@ Authors:
 	Crashdome
 
 Description:
-	An object which is a collection of Unit Test Classes that can be run
-	to perform Unit Tests of other <Hashmap Objects>
+	An object which is a collection of Unit Test Classes that can build a
+	collection of UnitTests.
  
 ---------------------------------------------------------------------------- */
 [
@@ -23,7 +23,7 @@ Description:
 		---
 
 	Returns:
-		True
+		<True>
 	----------------------------------------------------------------------------*/
 	["#create", {
 		_self set ["_collection",createhashmapobject [
@@ -60,7 +60,35 @@ Description:
 		<Array> - of Class Names in the order they should be run
 	----------------------------------------------------------------------------*/
 	["classOrder",[]],
-	["GetAllTestData",{
+    /* -----------------------------------------------------------------------
+    Method: AddClass
+
+        ---prototype
+        call ["AddClass",[_key,_item]];
+
+		Adds item to collection and then appends identifier to classOrder <array>
+    
+    Parameters: 
+        _key - <Anything> - Key used when adding to <Items> store
+        _item - <HashmapObject> - to add to <Items> store
+
+    -------------------------------------------------------------------------*/ 
+	["AddClass", compileFinal {
+		params [["_key",nil,[""]],["_item",createhashmap,[createhashmap]]];
+        if !(_self get "_collection" call ["AddItem",[_key,_item]]) then {
+			_self get "classOrder" pushback _key;
+		};
+    }],
+    /* -----------------------------------------------------------------------
+    Method: BuildUnitTests
+
+        ---prototype
+        call ["BuildUnitTests"];
+
+		Builds a UnitTest Collection from added <XPS_typ_TestClasses: XPS_typ_TestClass>.
+
+    -------------------------------------------------------------------------*/ 
+	["BuildUnitTests",{
 		private _dataArray = [];
 		{
 			private _classKey = _x;
@@ -74,37 +102,5 @@ Description:
 			} foreach _orderedlist;
 		} foreach (_self get "classOrder");
 		_dataArray;
-	}],
-	["GetTestData",{
-		params ["_class","_method"];
-		private _dataArray = [];
-		private _classKey = (_self get "classOrder" get _class);
-		private _classItem = _engine get "_collection" call ["GetItem",_classKey];
-		private _className = _classItem get "Description";
-		if (_method isEqualTo "") then {
-			_dataArray = [["X",1,_classKey],_className,"",""];
-		} else {
-			_dataArray = [["X",1,_classKey],"",_method,""];
-		};
-		_dataArray;
-	}],
-    /* -----------------------------------------------------------------------
-    Method: AddClass
-
-        ---prototype
-        call ["AddClass",[_key,_item]];
-
-		Adds item to collection and then appends identifier to classOrder <array>
-    
-    Parameters: 
-        _key - Anything - Key used when adding to <Items> store
-        _item - <HashmapObject> - to add to <Items> store
-
-    -------------------------------------------------------------------------*/ 
-	["AddClass", compileFinal {
-		params [["_key",nil,[""]],["_item",createhashmap,[createhashmap]]];
-        if !(_self get "_collection" call ["AddItem",[_key,_item]]) then {
-			_self get "classOrder" pushback _key;
-		};
-    }]
+	}]
 ];

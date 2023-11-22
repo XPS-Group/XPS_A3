@@ -29,7 +29,7 @@ Returns:
     	---
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
 		_self set ["child",nil];
@@ -176,7 +176,7 @@ Returns:
 		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
 
 	Returns: 
-		<Boolean> - True if successful otherwise False
+		<Boolean> - <True> if successful otherwise <False>
 	-----------------------------------------------------------------------------*/
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]]];

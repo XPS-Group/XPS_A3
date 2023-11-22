@@ -62,6 +62,9 @@
         color: #ff2c2c;
         }
 
+td.CDLEntry { color: #183a18; }
+.DarkTheme td.CDLEntry { color: #7bc77b; }
+.BlackTheme td.CDLEntry { color: #448544; }
 
 .CTitle {
     margin-left: 0.5rem;

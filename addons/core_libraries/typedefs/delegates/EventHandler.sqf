@@ -5,7 +5,7 @@ TypeDef: core. XPS_typ_EventHandler
         --- prototype
         XPS_typ_EventHandler : XPS_ifc_IEventHandler
         ---
-        --- prototype
+        --- code
         createhashmapobject [XPS_typ_EventHandler,[_delegate]]
         ---
 
@@ -39,7 +39,7 @@ Throws:
 		_delegate - <XPS_ifc_IMultiCastDelegate> - the delegate to wrap Add/Remove functions around.
 		
 	Returns:
-		True
+		<True>
 
 	Throws: 
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
@@ -80,19 +80,20 @@ Throws:
 		Adds a function/method pointer to the internal pointer collection
     
     Parameters: 
-        _pointer - <Array> in format [<HashMapObject>,"MethodName"] -OR- <Code>
+        _pointer - <Array> in format [ <HashMapObject> , "MethodName" ] -OR- <Code>
 
 		Example Using Code:
 		--- code 
         call ["Add",{ hint "Hello";}]
 		---
+
 		Example Using <HashmapObject> Method:
 		--- code 
         call ["Add",[_hashmapobject, "MyMethodName"]]
 		---
 		
 	Returns:
-		True - if added
+		<True> - if added
 
 	Throws: 
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value

@@ -15,8 +15,8 @@ Description:
 
 	- The "ValueType" property with a value of either "SCALAR", "STRING", or "TEXT" 
 	- The "Enums" proeprty 
-		- an <Array> of
-			- a <String> - only if "ValueType" is "SCALAR" - value will be an incremental number
+		- an <Array> of either:
+			- <Strings> - only if "ValueType" is "SCALAR" - value will be an incremental number
 			- an <Array> Key/Value pair in format : [ <String> , Value ] where Value is one of the above three acceptable types
 
 
@@ -30,7 +30,7 @@ Description:
 		<array> or <hashmap> - a full Type Definition
 
 	Return: _result
-		<Boolean> - True if successful, otherwise false
+		<Boolean> - <True> if successful, otherwise false
 
 ------------------------------------------------------------------------------*/
 if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[]]] ]) exitwith {false};
@@ -47,8 +47,8 @@ private _fnc_createEnumConstant = {
 	private _gVar = format["%1_%2",_var,_name];
 	private _objInstance = call compile _gVar;
 	if (isNil "_objInstance" || {_objInstance isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];_objInstance = _hashObject};
-	_def set [_name , _gVar ];
-	_def set [_val , _gVar ];
+	_def set [_name , compileFinal _gVar ];
+	_def set [_val , compilefinal _gVar ];
 };
 
 private _baseDef = createhashmapfromarray _typeDef;
@@ -125,23 +125,34 @@ Example: Using a definiton defined locally with no provided values
 		#str		"TAG_typ_Pets"
 		#type		["TAG_typ_Pets", "XPS_typ_Enumeration"]
 		Names		[ "Cat", "Dog", "Bird"]
-		Values		[ 0, 1 ,2 ]
-		Cat			TAG_Pets_Cat	:(by ref)
-		Dog			TAG_Pets_Dog	:(by ref)
-		Bird		TAG_Pets_Bird	:(by ref)
-		0			TAG_Pets_Cat	:(by ref)
-		1			TAG_Pets_Dog	:(by ref)
-		2			TAG_Pets_Bird	:(by ref)
+		Values		[ 0 , 1 , 2 , 3 ]
+		None		{TAG_Pets_None}		:(code) - to get ref use : TAG_Pets call ["None"] -or- call (TAG_Pets get "None")
+		Cat			{TAG_Pets_Cat}		:(code) - to get ref use : TAG_Pets call ["Cat"] -or- call (TAG_Pets get "Cat")
+		Dog			{TAG_Pets_Dog}		:(code) - to get ref use : TAG_Pets call ["Dog"] -or- call (TAG_Pets get "Dog")
+		Bird		{TAG_Pets_Bird}		:(code) - to get ref use : TAG_Pets call ["Bird"] -or- call (TAG_Pets get "Bird")
+		0			{TAG_Pets_None}		:(code) - to get ref use : TAG_Pets call [0] -or- call (TAG_Pets get 0)
+		1			{TAG_Pets_Cat}		:(code) - to get ref use : TAG_Pets call [1] -or- call (TAG_Pets get 1)
+		2			{TAG_Pets_Dog}		:(code) - to get ref use : TAG_Pets call [2] -or- call (TAG_Pets get 2)
+		3			{TAG_Pets_Bird}		:(code) - to get ref use : TAG_Pets call [3] -or- call (TAG_Pets get 3)
 		GetEnum		Method to retrieve the global variable 'constant'
 		IsDefined	Method to determine if Name or Value exists
 	---
+
+	*TAG_Pets_None* - Static Class
+
+	---text
+		#str	"None"
+		#type	"TAG_Pets_None"
+		Value	0
+	---
+		
 
 	*TAG_Pets_Cat* - Static Class
 
 	---text
 		#str	"Cat"
 		#type	"TAG_Pets_Cat"
-		Value	0
+		Value	1
 	---
 		
 	*TAG_Pets_Dog* - Static Class
@@ -149,7 +160,7 @@ Example: Using a definiton defined locally with no provided values
 	---text
 		#str	"Dog"
 		#type	"TAG_Pets_Dog"
-		Value	1
+		Value	2
 	---
 
 	*TAG_Pets_Bird* - Static Class
@@ -157,27 +168,32 @@ Example: Using a definiton defined locally with no provided values
 	---text
 		#str	"Bird"
 		#type	"TAG_Pets_Bird"
-		Value	2
+		Value	3
 	---
 
 
 	With which you can do the following (and more)
 
 	--- code 		
-		private _myPet = TAG_Pets call ["GetEnum",1]; // Dog - 1
-		private _myOtherPet = TAG_Pets call ["GetEnum","Cat"];  // Cat - 0
-		private _myNeighborsPet = TAG_Pets_Bird;  // Bird - 2
+		// Getting an Enumeration by name or value
+		private _myPet = TAG_Pets call [1]; // Dog - 2
+		
+		// Getting an Enumeration by name or value alternative
+		private _myOtherPet = TAG_Pets call ["GetEnum","Cat"];  // Cat -1
 
-		private _myPetValue = _myPet get "Value"; // 1
+		// Getting an Enumeration by variable
+		private _myNeighborsPet = TAG_Pets_Bird;  // Bird - 3
+
+		// Getting an Enumeration's name or value
+		private _myPetValue = _myPet get "Value"; // 2
 		private _myPetName = str _myPet;  // "Dog"
 
+		// Comparing Enumerations
 		private _areSame = _myPet isEqualTo _myOtherPet; // False
-		
 		private _isDog = TAG_Pets_Dog isEqualRef _mypet;  // True
-
 		private _areAnyBird = TAG_Pets_Bird in [_mypet, _myOtherPet]; // False
 
-		_myPet = Tag_Pets call ["GetEnum",selectrandom [0,1,2]];
+		_myPet = Tag_Pets call [selectrandom [1,2,3]];
 		switch (_myPet) do {
 			case TAG_Pets_Dog : {
 				hint "I am a good boy!!"

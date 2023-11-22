@@ -29,7 +29,7 @@ Optional: _allowNils*
 	<Boolean> - (optional) default: true - used to allow keys with nil values
 
 Returns: _result
-	<Boolean> - True if <TypeDefinition> has keys defined with types that match <Interface> definition
+	<Boolean> - <True> if <TypeDefinition> has keys defined with types that match <Interface> definition
 
 Example: Check a hashmap if it supports interface
     --- Code

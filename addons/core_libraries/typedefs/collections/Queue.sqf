@@ -28,7 +28,7 @@ Returns:
         ---
     
     Return:
-        True
+        <True>
     ----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -93,7 +93,7 @@ Returns:
 		none
 		
 	Returns:
-		<Boolean> - True if queue is empty, otherwise False.
+		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
 		count (_self get "_queueArray") == 0;
@@ -111,7 +111,7 @@ Returns:
 		none
 		
 	Returns:
-		Anything - first element in the queue or nil if empty - does not remove 
+		<Anything> - first element in the queue or nil if empty - does not remove 
 		from queue
     ----------------------------------------------------------------------------*/
 	["Peek",{
@@ -132,7 +132,7 @@ Returns:
 		none
 		
 	Returns:
-		Anything - removes and returns last element in the queue or nil if empty
+		<Anything> - removes and returns last element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
 	["Dequeue",{
         if !(_self call ["IsEmpty"]) then {

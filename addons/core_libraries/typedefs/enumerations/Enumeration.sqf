@@ -74,7 +74,7 @@ Description:
     	---
 	
 	Prameters:
-		_lookup - Anything - value to look up to get reference
+		_lookup - <Anything> - value to look up to get reference
     
     Returns: 
 		<HashmapObject> - The reference to the Enumeration constant or nil
@@ -82,7 +82,7 @@ Description:
 	["GetEnum", {
 		params [["_lookup","",[0,"",text ""]]];
 		if (_self call ["IsDefined",_lookup]) then {
-			call compile (_self get _lookup);
+			_self call [_lookup];
 		} else {nil};
 	}],
 	/*----------------------------------------------------------------------------
@@ -93,10 +93,10 @@ Description:
     	---
 	
 	Prameters:
-		_lookup - Anything - value to look up to see if Name or Value exists
+		_lookup - <Anything> - value to look up to see if Name or Value exists
     
     Returns: 
-		<Boolean> - True if _lookup value exists otherwise False
+		<Boolean> - <True> if _lookup value exists otherwise <False>
 	-----------------------------------------------------------------------------*/
 	["IsDefined", {
 		params [["_lookup","",[0,"",text ""]]];

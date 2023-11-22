@@ -30,7 +30,7 @@ Returns:
         ---
     
     Return:
-        True
+        <True>
     ----------------------------------------------------------------------------*/
     ["#create",{
         _self set ["_listArray",[]];
@@ -82,7 +82,7 @@ Returns:
 		none
 		
 	Returns:
-		<Boolean> - True if queue is empty, otherwise False.
+		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
 		count (_self get "_listArray") == 0;
@@ -97,10 +97,10 @@ Returns:
         <XPS_ifc_ICollection>
     
     Parameters: 
-        _item - Anything - except nil
+        _item - <Anything> - except nil
 
     Returns:
-        True - the item is successfully added to end of list
+        <True> - the item is successfully added to end of list
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
@@ -124,7 +124,7 @@ Returns:
         _index - <Scalar> - Index of item to remove 
 
     Returns:
-        Anything - the item removed or nil if not found
+        <Anything> - the item removed or nil if not found
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
@@ -147,7 +147,7 @@ Returns:
 		_index - Must be a non-negative number and must not exceed index of last item
 		
 	Returns:
-		Anything - N'th element in the list or nil if empty - does not remove 
+		<Anything> - N'th element in the list or nil if empty - does not remove 
 		from list
     ----------------------------------------------------------------------------*/
 	["GetItem",{
@@ -187,10 +187,10 @@ Returns:
     
     Parameters: 
 		_index - Must be a non-negative number and must not exceed index of last item
-        _item - Anything - except nil
+        _item - <Anything> - except nil
 
     Returns:
-        True - the item is successfully added to end of list
+        <True> - the item is successfully added to end of list
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil

@@ -40,7 +40,7 @@ Returns:
         _signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
 	
 	Returns:
-		True
+		<True>
     ----------------------------------------------------------------------------*/
 	["#create",{
 		if !(isnil "_this") then {
@@ -87,7 +87,7 @@ Returns:
 		---
 		
 	Returns:
-		True - if added
+		<True> - if added
 
 	Throws: 
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value

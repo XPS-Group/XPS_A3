@@ -175,7 +175,7 @@ Returns:
         _item - <HashmapObject> - to add to item store
 
     Returns:
-        <Boolean> - True if successfully added, otherwise False
+        <Boolean> - <True> if successfully added, otherwise <False>
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {

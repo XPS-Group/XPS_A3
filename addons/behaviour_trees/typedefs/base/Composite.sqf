@@ -29,7 +29,7 @@ Returns:
     	---
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
 		_self set ["children",[]];
@@ -182,7 +182,7 @@ Returns:
 		_index* - (optional - Default : -1) - the index in which to place the child node
 
 	Returns: 
-		<Boolean> - True if successful otherwise False
+		<Boolean> - <True> if successful otherwise <False>
 	-----------------------------------------------------------------------------*/
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];

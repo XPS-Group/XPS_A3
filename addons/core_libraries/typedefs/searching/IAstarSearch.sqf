@@ -14,7 +14,7 @@ Authors:
 		<Array>
 
 	Property: Status
-		Anything
+		<Anything>
 
 	Method: AdjustEstimatedDistance
 

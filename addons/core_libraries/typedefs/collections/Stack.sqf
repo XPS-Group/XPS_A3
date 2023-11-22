@@ -28,7 +28,7 @@ Returns:
         ---
     
     Return:
-        True
+        <True>
     ----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -93,7 +93,7 @@ Returns:
 		none
 		
 	Returns:
-		<Boolean> - True if stack is empty, otherwise False.
+		<Boolean> - <True> if stack is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
 		count (_self get "_stackArray") == 0;
@@ -111,7 +111,7 @@ Returns:
 		none
 		
 	Returns:
-		Anything - last element in the stack or nil if empty - does not remove 
+		<Anything> - last element in the stack or nil if empty - does not remove 
 		from stack
     ----------------------------------------------------------------------------*/
 	["Peek",{
@@ -132,7 +132,7 @@ Returns:
 		none
 		
 	Returns:
-		Anything - removes and returns last element in the stack or nil if empty
+		<Anything> - removes and returns last element in the stack or nil if empty
     ----------------------------------------------------------------------------*/
 	["Pop",{
         if !(_self call ["IsEmpty"]) then {

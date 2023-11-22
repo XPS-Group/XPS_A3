@@ -38,7 +38,7 @@ Description:
 	
 	Prameters:
 		_enumHelper - <HashmapObject> - the helper class object which is derived from <XPS_typ_Enumerations>
-		_lookup - Anything - value to look up to get reference
+		_lookup - <Anything> - value to look up to get reference
     
     Returns: 
 		<HashmapObject> - The reference to the Enumeration constant or nil
@@ -115,10 +115,10 @@ Description:
 	
 	Prameters:
 		_enumHelper - <HashmapObject> - the helper class object which is derived from <XPS_typ_Enumerations>
-		_lookup - Anything - value to look up to see if Name or Value exists
+		_lookup - <Anything> - value to look up to see if Name or Value exists
     
     Returns: 
-		<Boolean> - True if _lookup value exists otherwisse False
+		<Boolean> - <True> if _lookup value exists otherwisse <False>
 	-----------------------------------------------------------------------------*/
 	["IsDefined",{
 		params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]];

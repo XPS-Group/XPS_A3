@@ -8,7 +8,7 @@ Description:
 	preprocessing and building has been completed
 
 Returns: 
-	<Boolean> - Nil prior to preInit function, False once preInit starts, True if preInit has completed
+	<Boolean> - Nil prior to preInit function, <False> once preInit starts, <True> if preInit has completed
 ---------------------------------------------------------------------------*/
 ADDON = false;
 
