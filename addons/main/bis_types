@@ -1,95 +1,151 @@
 #!SQF
 /* ----------------------------------------------------------------------------
+Type: Nothing
+    Nil
+
+Type: Anything
+    A non-Nil value (native type)
+
+Type: True
+    <Boolean>
+
+Type: False
+    <Boolean>
+
 Type: Array
+[1, 2, 3]
+
 External:
 BI Wiki : <Array: https://community.bistudio.com/wiki/Array>
 
 Type: Boolean
+<True> / <False>
+
 External:
 BI Wiki : <Boolean: https://community.bistudio.com/wiki/Boolean>
 
 Type: Code
+{ ...code block... }
+
 External:
 BI Wiki : <Code: https://community.bistudio.com/wiki/Code>
 
 Type: Config
+(configFile >> ... )
+
 External:
 BI Wiki : <Config: https://community.bistudio.com/wiki/Config>
 
 Type: Control
+A UI Control
+
 External:
 BI Wiki : <Control: https://community.bistudio.com/wiki/Control>
 
 Type: Diary Record
+Record that shows in Briefing Menu
+
 External:
 BI Wiki : <Display: https://community.bistudio.com/wiki/Diary_Record>
 
 Type: Display
+A UI Display
+
 External:
 BI Wiki : <Display: https://community.bistudio.com/wiki/Display>
 
 Type: Group
+A Group of Units
+
 External:
 BI Wiki : <Group: https://community.bistudio.com/wiki/Group>
 
 Type: HashMap
+A specialized data structure that contains key-value pairs.
+
 External:
 BI Wiki : <HashMap: https://community.bistudio.com/wiki/HashMap>
 
 Type: HashMapKey
+A virtual compound type containing all the possible types that can be used as keys in a <HashMap>.
+
 External:
 BI Wiki : <HashMapKey: https://community.bistudio.com/wiki/HashMapKey>
 
 Type: HashMapObject
 External: 
-A <Hashmap> with special object-oriented features and behavior see
+A <Hashmap> with special object-oriented features and behavior see:
 BI Wiki : <HashMapObject: https://community.bistudio.com/wiki/createHashMapObject>
 
 Type: Location
+An extended type of marker.
+
 External:
 BI Wiki : <Location: https://community.bistudio.com/wiki/Location>
 
 Type: Namespace
+A container for Variables. 
+
 External:
 BI Wiki : <Namespace: https://community.bistudio.com/wiki/Namespace>
 
 Type: Number
+Single-Precision Floating-Point Number
+
 External:
 BI Wiki : <Number: https://community.bistudio.com/wiki/Number>
 
 Type: Object
+Reference to an Object in the 3D World
+
 External:
 BI Wiki : <Object: https://community.bistudio.com/wiki/Object>
 
 Type: Scalar
+Single-Precision Floating-Point Number
+
 External:
 BI Wiki : <Scalar: https://community.bistudio.com/wiki/Number>
 
 Type: Script
+A reference to a Script Handle
+
 External:
 BI Wiki : <String: https://community.bistudio.com/wiki/Script_Handle>
 
 Type: Side
+A grouping of Objects into a single 'side' category
+
 External:
 BI Wiki : <Side: https://community.bistudio.com/wiki/Side>
 
 Type: String
+"Text String"
+
 External:
 BI Wiki : <String: https://community.bistudio.com/wiki/String>
 
 Type: Structered Text
+A variable that contains Rich Text
+
 External:
 BI Wiki : <Structered Text: https://community.bistudio.com/wiki/Structured_Text>
 
 Type: Task
+A Data Type that contains a task's details, such as location, title and description
+
 External:
 BI Wiki : <Task: https://community.bistudio.com/wiki/Task>
 
 Type: Text
+A variable that contains Rich Text
+
 External:
 BI Wiki : <Text: https://community.bistudio.com/wiki/Structured_Text>
 
 Type: Team Member
+N/A
+
 External:
 BI Wiki : <Team Member: https://community.bistudio.com/wiki/Team_Member>
 ------------------------------------------------------------------------------*/

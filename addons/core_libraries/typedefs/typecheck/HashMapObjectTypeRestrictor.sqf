@@ -1,11 +1,11 @@
 /* -----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_NativeTypeRestrictor
+TypeDef: core. XPS_typ_HashmapObjectTypeRestrictor
 	<TypeDefinition>
 	---prototype
-	XPS_typ_NativeTypeRestrictor : XPS_ifc_ITypeRestrictor
+	XPS_typ_HashmapObjectTypeRestrictor : XPS_ifc_ITypeRestrictor
 	---
 	---prototype
-	createhashmapobject [XPS_typ_NativeTypeRestrictor, _allowedTypes]
+	createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor, _allowedTypes]
 	---
 
 Authors: 
@@ -22,7 +22,7 @@ Returns:
 
 --------------------------------------------------------------------------------*/
 [
-	["#type","XPS_typ_NativeTypeRestrictor"],
+	["#type","XPS_typ_HashmapObjectTypeRestrictor"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -34,7 +34,7 @@ Returns:
 		_allowedTypes (optional) - <Array> - of Native Types in same format as IsEqualTypeParams (e.g. [objNull,0,[],""] )
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
 		params [["_allowedTypes",[],[[]]]];
@@ -43,7 +43,7 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_typ_NativeTypeRestrictor"
+    	"XPS_typ_HashmapObjectTypeRestrictor"
     	---
 	-----------------------------------------------------------------------------*/
 	["#str",{_self get "#type" select 0}],
@@ -65,19 +65,19 @@ Returns:
     Does nothing for this class. Simply Satisfies Interface
     
     Parameters: 
-        _value - Anything - a Native Type to add to allowed list
+        _value - <String> - a <HashmapObject> Type ("#type") to add to allowed list
 
 	Returns:
-		True - if successfully registered
-		False - type already exists
+		<True> - if successfully registered
+		<False> - type already exists
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
 	["RegisterType",{
-        if !(params [["_type",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,_this]];};
+        if !(params [["_type",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,_this]];};
         private _list = _self get "_allowed";
-        if (_type isEqualTypeAny _list) exitwith {false;};
+        if (_type in _list) exitwith {false;};
         _list pushback _type;
 	}],
 	/*----------------------------------------------------------------------------
@@ -90,14 +90,15 @@ Returns:
         <XPS_ifc_ITypeRestrictor>
     
     Parameters: 
-        _value - Anything - Value to check to see if it is allowed to be added
+        _value - <HashmapObject> - Value to check to see if it is allowed to be added
 
 	Returns: 
-		True - always
+		<True> - always
 	-----------------------------------------------------------------------------*/
 	["IsAllowed",{
-		params ["_value"];
+		params ["_value",createhashmap,[createhashmap]];
         private _allowlist = _self get "_allowed";
-		_value isEqualTypeAny _allowList;
+        private _types = _value getOrDefault ["#type",[]];
+        (count (_types arrayIntersect _allowlist) > 0);
 	}]
 ]

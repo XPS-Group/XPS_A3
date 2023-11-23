@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_Queue
 	<TypeDefinition>
         --- prototype
-        XPS_typ_Queue : XPS_ifc_IOrderedCollection, XPS_ifc_IQueue
+        XPS_typ_Queue : XPS_ifc_IQueue
         ---
         --- prototype
         createhashmapobject [XPS_typ_Queue]
@@ -28,7 +28,7 @@ Returns:
         ---
     
     Return:
-        True
+        <True>
     ----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -40,9 +40,9 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IQueue>
-		<XPS_ifc_IOrderedCollection>
+		<XPS_ifc_IList>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_IQueue","XPS_ifc_IOrderedCollection"]],
+    ["@interfaces", ["XPS_ifc_IQueue"]],
 	["_queueArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Clear
@@ -51,7 +51,7 @@ Returns:
         call ["Clear"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none
@@ -69,7 +69,7 @@ Returns:
         call ["Count"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none
@@ -87,13 +87,13 @@ Returns:
         call ["IsEmpty"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none
 		
 	Returns:
-		<Boolean> - True if queue is empty, otherwise False.
+		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
 		count (_self get "_queueArray") == 0;
@@ -105,13 +105,13 @@ Returns:
         call ["Peek"]
         ---
 
-        <XPS_ifc_IOrderedCollection>
+        <XPS_ifc_IList>
     
     Parameters: 
 		none
 		
 	Returns:
-		Anything - first element in the queue or nil if empty - does not remove 
+		<Anything> - first element in the queue or nil if empty - does not remove 
 		from queue
     ----------------------------------------------------------------------------*/
 	["Peek",{
@@ -132,7 +132,7 @@ Returns:
 		none
 		
 	Returns:
-		Anything - removes and returns last element in the queue or nil if empty
+		<Anything> - removes and returns last element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
 	["Dequeue",{
         if !(_self call ["IsEmpty"]) then {

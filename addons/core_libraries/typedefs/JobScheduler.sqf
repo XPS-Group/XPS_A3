@@ -3,10 +3,10 @@
 TypeDef: core. XPS_typ_JobScheduler
 	<TypeDefinition>
 	---prototype
-	XPS_typ_JobScheduler : XPS_ifc_ITypeCollection, XPS_ifc_IJobScheduler, XPS_typ_TypeCollection, XPS_typ_TypeCollection
+	XPS_typ_JobScheduler : XPS_ifc_ICollection, XPS_ifc_ITypeRestrictor, XPS_ifc_IJobScheduler, XPS_typ_TypeCollection
 	---
-	---prototype
-	createhashmapobject ["XPS_typ_JobScheduler",[_allowedTypes*]];
+	---code
+	createhashmapobject [XPS_typ_JobScheduler,[_allowedTypes*]];
 	---
 
 Authors: 
@@ -44,8 +44,8 @@ Returns:
     ----------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------
     Parent: @interfaces
-        <XPS_typ_TypeCollection.@interfaces>
-		<XPS_ifc_IJobScheduler>
+        <XPS_typ_TypeCollection.@interfaces> -
+		<XPS_ifc_IJobScheduler> -
     ----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
 	["_handle",nil],
@@ -155,7 +155,7 @@ Returns:
 		Override this method for custom proccessing.
 
 	Returns: 
-		_result - <Boolean> - true if should move on to next item else false (keep processing current item)
+		<Boolean> - true if should move on to next item else false (keep processing current item)
 	-----------------------------------------------------------------------------*/
 	["processCurrent",compileFinal {
 		_self get "CurrentItem" call ["Process"];
@@ -167,7 +167,7 @@ Returns:
         call ["AddItem",[_item]];
         ---
 
-        <XPS_ifc_ITypeCollection>
+        <XPS_ifc_ICollection>
 
 		overrides <XPS_typ_TypeCollection.AddItem>
     
@@ -175,7 +175,7 @@ Returns:
         _item - <HashmapObject> - to add to item store
 
     Returns:
-        <Boolean> - True if successfully added, otherwise False
+        <Boolean> - <True> if successfully added, otherwise <False>
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
@@ -189,16 +189,24 @@ Returns:
     }],
     /* -----------------------------------------------------------------------
     Method: RegisterType
+
 		<XPS_typ_TypeCollection.RegisterType>
 
-        <XPS_ifc_ITypeCollection>
+        <XPS_ifc_ITypeRestrictor>
 
     -------------------------------------------------------------------------*/ 
+    /*----------------------------------------------------------------------------
+    Method: IsAllowed 
+
+		<XPS_typ_TypeCollection.IsAllowed>
+
+        <XPS_ifc_ITypeRestrictor>
+	----------------------------------------------------------------------------*/
     /* -----------------------------------------------------------------------
     Method: RemoveItem
 		<XPS_typ_TypeCollection.RemoveItem>
 
-        <XPS_ifc_ITypeCollection>
+        <XPS_ifc_ICollection>
 
     -------------------------------------------------------------------------*/ 
 	/*----------------------------------------------------------------------------

@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_Blackboard
 	<TypeDefinition>
     	--- Prototype --- 
-		XPS_typ_Blackboard
+		XPS_typ_Blackboard : XPS_ifc_IBlackboard
     	---
     	--- Code --- 
     	createHashmapObject ["XPS_typ_Blackboard",[_object*,_varName*]]
@@ -38,7 +38,7 @@ Returns:
     	_varName* - <String> - (Optional - Default : "XPS_Blackboard") See: <AttachToObject>
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
 		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];

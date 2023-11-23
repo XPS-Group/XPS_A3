@@ -24,7 +24,7 @@ An Arma 3 Framework Mod
     - A* Searching
     - Job Scheduling
     - Collections
-    - Delegates and Multicast Delegates
+    - Events, Delegates, and Multicast Delegates
     - Type Safe Enumerations
     - Exceptions and Exception Handling
     

@@ -4,7 +4,11 @@ class XPS_CFG_TD_BASECLASSNAME {
 		class Interfaces {
 
 		};
-		
-		
+		class Base {
+
+		};
+		class Virtual {
+
+		};		
 	};
 };

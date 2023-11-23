@@ -9,6 +9,8 @@ Authors:
 		<String>
 
 	Method: AddLayerData
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["LayerName","STRING"],

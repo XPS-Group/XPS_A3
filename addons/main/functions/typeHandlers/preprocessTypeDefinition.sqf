@@ -25,21 +25,21 @@ Description:
 
 	Supported Attributes in the preprocessor are:
 
-		- ["OBSOLETE"] - used on methods no longer used but kept for backwards compatibility
-		- ["CTOR",value]
-		- ["DTOR",value]
-		- ["CTOR_LAZ",value]
-		- ["DTOR_LAZY",value]
-		- ["CONDITIONAL",{code}] - must return a boolean
-		- ["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
-		- ["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
-		- ["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
-		- ["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
+		["OBSOLETE"] - used on methods no longer used but kept for backwards compatibility
+		["CTOR","code"] - injects string or code block into #create method : Top 
+		["DTOR","code"] - injects string or code block into #delete method : Top 
+		["CTOR_LAZ","code"] - injects string or code block into #create method : Bottom
+		["DTOR_LAZY","code"] - injects string or code block into #delete method : Bottom 
+		["CONDITIONAL",{code}] - must return a boolean - this method/property will only exist if <True>
+		["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
+		["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
+		["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
+		["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
 
 	However, you can define any Attribute as long as it is in an array. The preprocessor will
 	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
 	run your own custom preprocesser (or extend this one) before instantiating a type with 
-	createHashmapPObject command.
+	<createHashmapObject: https://community.bistudio.com/wiki/createHashMapObject> command.
 
 Authors: 
 	Crashdome
@@ -51,7 +51,7 @@ Parameter: _type
 Optional: _headers 
 	<Boolean> - determines if debug headers should be injected into code blocks  
 
-Return: Nothing
+Returns: Nothing
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
@@ -79,7 +79,7 @@ try
 
 		scopeName "MAIN";
 
-		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
+		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
 		
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;
@@ -94,11 +94,12 @@ try
 					private _interfaces = createhashmap;
 					{
 						private _ifc = call compile _x;
+						if (isNil "_ifc") then  {throw format ["Cannot create interface: %1.",_x]};
 						_interfaces merge [createhashmapfromarray [[_x,_ifc]],true];
 					} foreach _value;
 					_value = compileFinal _interfaces;
 					_keyPair set [1,_value];
-				} else {throw format ["Interface list for Key @interfaces is not an array of strings.",_key]};
+				} else {throw format ["Interface list for Key @interfaces is not an array of strings."]};
 			};
 
 		private _attributes = [];
@@ -237,7 +238,7 @@ try
 } catch {
 	diag_log text "XPS_fnc_preprocessTypeDefinition: Encountered the following exception:";
 	diag_log text _exception;
-	diag_log _this;
+	diag_log _typeName;
 	false;
 };
 

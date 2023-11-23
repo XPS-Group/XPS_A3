@@ -1,20 +1,23 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_ITypeRestrictor
+Interface: core. XPS_ifc_IList
 <Interface>
----prototype
-XPS_ifc_ITypeRestrictor
----
+
+	--- prototype
+	XPS_ifc_IList
+	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	
-	Method: RegisterType
 
-	Method: IsAllowed
+	Method: Count
+		<Code>
+		
+	Method: IsEmpty
+		<Code>
 ---------------------------------------------------------------------------- */
 [
-	["RegisterType","CODE"],
-	["IsAllowed","CODE"]
+	["Count","CODE"],
+	["IsEmpty","CODE"]
 ]

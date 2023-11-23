@@ -1,27 +1,23 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: unit_testing. XPS_UT_ifc_ITestResult
+Interface: core. XPS_ifc_IEventHandler
 <Interface>
-	---prototype
-	XPS_UT_ifc_ITestResult
+	--- prototype
+	XPS_ifc_IEventHandler
 	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: ItemID
+	Method: Add
+		<code>
 
-	Property: MethodName
+	Method: Remove
+		<code>
 
-	Property: Result
-
-	Property : Exception
-	
 ---------------------------------------------------------------------------- */
 [
-	["ItemID","STRING"],
-	["MethodName", "STRING"],
-	["Result","STRING"],
-	["Exception","ANY"]
+	["Add","CODE"],
+	["Remove","CODE"]
 ]

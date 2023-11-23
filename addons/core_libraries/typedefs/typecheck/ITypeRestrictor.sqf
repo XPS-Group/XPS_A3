@@ -1,22 +1,23 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_IDelegate
+Interface: core. XPS_ifc_ITypeRestrictor
 <Interface>
-	--- prototype
-	XPS_ifc_IDelegate
-	---
+---prototype
+XPS_ifc_ITypeRestrictor
+---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	Method: Attach
+	
+	Method: RegisterType
 		<code>
 
-	Method: Invoke
+	Method: IsAllowed
 		<code>
 
 ---------------------------------------------------------------------------- */
 [
-	["Attach","CODE"],
-	["Invoke","CODE"]
+	["RegisterType","CODE"],
+	["IsAllowed","CODE"]
 ]

@@ -1,18 +1,18 @@
 /* -----------------------------------------------------------------------------
-TypeDef: folder. XPS_ADDON_typ_Name
+TypeDef: unit_testing. XPS_UT_typ_TestConsoleController
 	<TypeDefinition>
 	---prototype
-	XPS_ADDON_typ_Name : XPS_ADDON_ifc_IName, XPS_typ_Name
+	XPS_UT_typ_TestConsoleController : XPS_ADDON_ifc_IName, XPS_typ_Name
 	---
 	---prototype
-	createhashmapobject [XPS_ADDON_typ_Name, []]
+	createhashmapobject [XPS_UT_typ_TestConsoleController, []]
 	---
 
 Authors: 
-	(Author)
+	Crashdome
 
 Description:
-	(Description)
+	Handles the interaction between <XPS_UT_TestBuilder> and a <XPS_UT_typ_TestConsoleViewModel>
 
     
 Optionals: 
@@ -24,12 +24,12 @@ Returns:
 
 --------------------------------------------------------------------------------*/
 [
-	["#type","XPS_ADDON_typ_Name"],
+	["#type","XPS_UT_typ_TestConsoleController"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
     	<XPS_typ_Name>
 	-----------------------------------------------------------------------------*/
-	["#base",XPS_typ_Name],
+	// ["#base",XPS_typ_Name],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -44,11 +44,15 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#create",{}],
+	["#create",{
+		// private _viewModelVarName = param [0,"xps_"+([12] call XPS_fnc_createUniqueID),[""]];
+		// _self set ["_viewModelName",_viewModelVarName];
+		// uiNamespace setvariable [_viewModelVarName,createhashmapobject [XPS_UT_typ_TestConsoleViewModel,[_self]]];
+	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_ADDON_typ_Name"
+    	"XPS_UT_typ_TestConsoleController"
     	---
 	-----------------------------------------------------------------------------*/
 	["#str",{_self get "#type" select 0}],
@@ -56,7 +60,8 @@ Returns:
 	Implements: @interfaces
     	<XPS_ADDON_ifc_IName>
 	-----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_ADDON_ifc_IName"]],
+	// ["@interfaces",["XPS_ADDON_ifc_IName"]],
+	["_viewModelName",nil],
 	/*----------------------------------------------------------------------------
 	Protected: myProp
     
@@ -88,4 +93,12 @@ Returns:
 		_object* - <Object> - (Optional - Default : objNull) 
 		_var1* - <String> - (Optional - Default : "") 
 	-----------------------------------------------------------------------------*/
+	["ShowDialog",{
+		uiNamespace getvariable (_self get "_viewModelName") call ["ShowDialog"];
+	}],
+	["LoadTests",{
+		{
+			uiNamespace getvariable (_self get "_viewModelName") call ["AddTestRow",_x];
+		} foreach _this;
+	}]
 ]

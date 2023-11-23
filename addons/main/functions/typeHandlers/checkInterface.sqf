@@ -29,7 +29,7 @@ Optional: _allowNils*
 	<Boolean> - (optional) default: true - used to allow keys with nil values
 
 Returns: _result
-	<Boolean> - True if <TypeDefinition> has keys defined with types that match <Interface> definition
+	<Boolean> - <True> if <TypeDefinition> has keys defined with types that match <Interface> definition
 
 Example: Check a hashmap if it supports interface
     --- Code
@@ -90,13 +90,15 @@ for "_a" from 0 to (count _interfaces -1) do {
 			if (_type isEqualTo "HASHMAP") then {
 				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
 				private _typeIfcs = (_hashmap get _key) getOrDefault ["@interfaces",_type];
-				if (_typeIfcs isEqualtype createhashmap) then {
-					if (toLower _checkType in ((keys _typeIfcs) apply {toLower _x})) then {
+				// Check type if actual instantiated object
+				if (_types isEqualtype []) then {
+					if (toLower _checkType in (_types apply {toLower _x})) then {
 						continue;
 					};
 				};
-				if (_types isEqualtype []) then {
-					if (toLower _checkType in (_types apply {toLower _x})) then {
+				// Check Interfaces last
+				if (_typeIfcs isEqualtype createhashmap) then {
+					if (toLower _checkType in ((keys _typeIfcs) apply {toLower _x})) then {
 						continue;
 					};
 				};

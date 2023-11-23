@@ -1,9 +1,9 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_ifc_IEnumeration
+Interface: core. XPS_ifc_IEnumeration
 	<Interface>
 	---prototype
-	XPS_ifc_IEnumeration : XPS_ifc_IEnumeration
+	XPS_ifc_IEnumeration
 	---
 
 Authors: 

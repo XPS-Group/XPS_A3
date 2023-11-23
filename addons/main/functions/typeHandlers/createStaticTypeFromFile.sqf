@@ -26,7 +26,7 @@ Authors:
 		<string> - the path to the file  
 
 	Return: _result
-		<Boolean> - True is successful, otherwise false
+		<Boolean> - <True> is successful, otherwise false
 
 	
 Example: File and calling code example

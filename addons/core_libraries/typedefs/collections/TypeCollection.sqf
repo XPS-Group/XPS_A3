@@ -36,7 +36,7 @@ Returns:
         _typeRestrictor (optional) - <HashmapObject> that implements <XPS_ifc_ITypeRestrictor> 
 
     Returns:
-        True
+        <True>
 
     Throws:
         <XPS_typ_InvalidArgumentException> - if parameter does not implement the <XPS_ifc_ITypeRestrictor> interface
@@ -65,6 +65,42 @@ Returns:
     ["_items",createhashmap],
     ["_restrictor",nil],
     /*----------------------------------------------------------------------------
+    Method: Count
+    
+        --- Prototype --- 
+        call ["Count"]
+        ---
+
+        <XPS_ifc_IList>
+    
+    Parameters: 
+		none
+		
+	Returns:
+		<Number> - the number of elements in the stack
+    ----------------------------------------------------------------------------*/
+	["Count",{
+		count (_self get "_items");
+	}],
+    /*----------------------------------------------------------------------------
+    Method: IsEmpty
+    
+        --- Prototype --- 
+        call ["IsEmpty"]
+        ---
+
+        <XPS_ifc_IList>
+    
+    Parameters: 
+		none
+		
+	Returns:
+		<Boolean> - <True> if queue is empty, otherwise <False>.
+    ----------------------------------------------------------------------------*/
+	["IsEmpty",{
+		count (_self get "_items") == 0;
+	}],
+    /*----------------------------------------------------------------------------
     Method: AddItem
     
         --- Prototype --- 
@@ -75,10 +111,10 @@ Returns:
     
     Parameters: 
         _key - <HashmapKey> 
-        _item - Anything - except nil
+        _item - <Anything> - except nil
 
     Returns:
-        True - the item is successfully added
+        <True> - the item is successfully added
 
     Throws:
         <XPS_typ_ArgumentNilException> - if a parameter was nil
@@ -88,7 +124,7 @@ Returns:
         if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
         if ((_key == "") || (_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
         if (_self get "_restrictor" call ["IsAllowed",_item]) then {
-            (_self get "_items") set [_key,_item];
+            _self get "_items" set [_key,_item];
         } else {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Item is not allowed in this collection",_this]];
         };
@@ -107,7 +143,7 @@ Returns:
         key - <HashmapKey> 
 
     Returns:
-        Anything - the item removed or nil if not found
+        <Anything> - the item removed or nil if not found
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
@@ -115,6 +151,26 @@ Returns:
 	["RemoveItem",compileFinal {
         if !(params [["_key",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
         _self get "_items" deleteAt _key;
+    }],
+    /* -----------------------------------------------------------------------
+    Method: GetItem
+
+        ---prototype
+        call ["GetItem",[_key]]
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Parameters: 
+        key - <HashmapKey> 
+
+    Returns:
+        <Anything> - The item if found otherwise nil
+
+    -------------------------------------------------------------------------*/ 
+    ["GetItem",{
+        if !(params [["_key",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetItem",nil,_this]];};
+        _self get "_items" get _key;
     }],
     /* -----------------------------------------------------------------------
     Method: GetItems
@@ -132,6 +188,38 @@ Returns:
     ["GetItems",{
         values (_self get "_items");
     }],
+    /*----------------------------------------------------------------------------
+    Method: SetItem
+    
+        --- Prototype --- 
+        call ["SetItem",[_key, _item]]
+        ---
+
+        <XPS_ifc_ICollection>
+
+        Replaces item at specified Key.
+    
+    Parameters: 
+		_key - <HashmapKey>
+        _item - <Anything> - except nil
+
+    Returns:
+        <True> - the item is successfully added to end of list
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_InvalidArgumentException> - if key parameter does not exist in this collection - OR- if _item is not allowed 
+    ----------------------------------------------------------------------------*/
+	["SetItem",{
+        if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
+        if ((_key == "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
+        if (_self get "_restrictor" call ["IsAllowed",_item]) then {
+            _self get "_items" set [_key,_item];
+        } else {
+            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Item is not allowed in this collection",_this]];
+        };
+        true;
+	}],
     /*----------------------------------------------------------------------------
     Method: RegisterType 
     
@@ -157,7 +245,7 @@ Returns:
         <XPS_ifc_ITypeRestrictor>
     
     Parameters: 
-        _value - Anything - Value to check to see if it is allowed to be added
+        _value - <Anything> - Value to check to see if it is allowed to be added
 	----------------------------------------------------------------------------*/
     ["IsAllowed",{
         _self get "_restrictor" call ["IsAllowed",_this];

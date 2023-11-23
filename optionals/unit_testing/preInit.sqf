@@ -7,7 +7,7 @@ Description:
 	This returns true once preInit has been completed
 
 Returns: 
-	<Boolean> - Nil prior to preInit function, False once preInit starts, True if preInit has completed
+	<Boolean> - Nil prior to preInit function, <False> once preInit starts, <True> if preInit has completed
 ---------------------------------------------------------------------------*/
 ADDON = false;
 
@@ -15,18 +15,18 @@ diag_log text "[XPS UT preInit]";
 
 // Singleton Class Instantiations ------------------------------------------
 /* -------------------------------------------------------------------------
-Variable: unit_testing. XPS_UT_Engine
+Variable: unit_testing. XPS_UT_TestBuilder
 	<Singleton>
 
 Description:
 	A <HashmapObject> which is used to perform and record Unit Tests
 
-	See <XPS_UT_typ_Engine> for more info on operations.
+	See <XPS_UT_typ_TestBuilder> for more info on operations.
 
 Returns: 
-	<Singleton> - of <XPS_UT_typ_Engine>
+	<Singleton> - of <XPS_UT_typ_TestBuilder>
 ---------------------------------------------------------------------------*/
-["XPS_UT_Engine",XPS_UT_typ_Engine,["XPS_UT_typ_TestClass"]] call XPS_fnc_createSingleton;
+["XPS_UT_TestBuilder",XPS_UT_typ_TestBuilder,["XPS_UT_typ_TestClass"]] call XPS_fnc_createSingleton;
 
 // Static Class Instantiations --------------------------------------------
 /* -------------------------------------------------------------------------

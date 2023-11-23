@@ -40,7 +40,7 @@ Returns:
         _signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
 	
 	Returns:
-		True
+		<True>
     ----------------------------------------------------------------------------*/
 	["#create",{
 		if !(isnil "_this") then {
@@ -52,7 +52,7 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_Delegate"
+		"XPS_typ_MultiCastDelegate"
 		---
 	----------------------------------------------------------------------------*/
 	["#str",compilefinal {_self get "#type" select  0}],
@@ -87,7 +87,7 @@ Returns:
 		---
 		
 	Returns:
-		True - if added
+		<True> - if added
 
 	Throws: 
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
@@ -97,12 +97,12 @@ Returns:
 	["Add",{
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
 		//Deep copy the array
-		if (_this isEqualType []) then {_this = +_this};
+		//if (_this isEqualType []) then {_this = +_this};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
-				{_this#1 in keys _this#0 && 					//check methodname exists...
-				{_this#0 get _this#1 isEqualType {}}}}			//if methodname is type code - we're good
+				{_this#1 in keys (_this#0) && 					//check methodname exists...
+				{_this#0 get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
 				if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
 					throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Functon/Method supplied was already added.",_this]];

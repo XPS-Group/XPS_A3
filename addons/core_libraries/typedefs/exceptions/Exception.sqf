@@ -42,10 +42,10 @@ Returns:
         _data - (optional - Default: nil) - <Hashmap> - hashmap of data that provides more detail to cause of exception
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
+		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap,[]]]];
 		_source = [str _source,_source] select (_source isEqualType "");
 		_target = [str _target,_target] select (_target isEqualType "");
 
@@ -105,7 +105,7 @@ Returns:
 		<XPS_ifc_IException>
     
     Returns: 
-		Anything - typcally the source <HashmapObject> that caused this error
+		<Anything> - typcally the source <HashmapObject> that caused this error
 	-----------------------------------------------------------------------------*/
 	["Source",nil],
 	/*----------------------------------------------------------------------------
@@ -118,7 +118,7 @@ Returns:
 		<XPS_ifc_IException>
     
     Returns: 
-		Anything - typcally the Method or Script Name that caused this error
+		<Anything> - typcally the Method or Script Name that caused this error
 	-----------------------------------------------------------------------------*/
 	["Target",nil],
 	/*-----------------------------------------------------------------------------

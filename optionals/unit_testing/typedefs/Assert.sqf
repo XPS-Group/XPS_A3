@@ -32,11 +32,11 @@ Description:
 	Performs an IsEqualTo check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["AreEqual",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -55,11 +55,11 @@ Description:
 	Performs an IsEqualTo check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["AreNotEqual",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -78,11 +78,11 @@ Description:
 	Performs an IsEqualRef check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["AreSame",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -101,11 +101,11 @@ Description:
 	Performs an IsEqualRef check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["AreNotSame",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -118,16 +118,18 @@ Description:
 	Method: Fail 
     
     	--- Prototype --- 
-    	call ["Fail",[_message*]]
+    	call ["Fail",[_target*, _message*, _data*]]
     	---
 	
 	Always Fails with <XPS_UT_typ_AssertFailedException>
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception
+		_target* - <String> - (Optional - Default : "Fail") - Usually the Method Name 
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception
+		_data* - <Hashmap> or <HashmapObject>  - (Optional - Default : Empty Hashmap) - Usually the parameters supplied
 	-----------------------------------------------------------------------------*/
 	["Fail",{
-		params [["_target","",[""]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
+		params [["_target","Fail",[""]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
 		private _e =  compileFinal createhashmapobject [XPS_UT_typ_AssertFailedException,[_self get "#type" select 0,_target,_this#1,_data]];
 		throw _e;
 	}],
@@ -135,16 +137,18 @@ Description:
 	Method: Inconclusive 
     
     	--- Prototype --- 
-    	call ["Inconclusive",[_message*]]
+    	call ["Inconclusive",[_target*, _message*, _data*]]
     	---
 	
-	Always Fails but with an <XPS_UT_typ_AssertInconclusiveEception> 
+	Always Fails but with an <XPS_UT_typ_AssertInconclusiveException> 
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception
+		_target* - <String> - (Optional - Default : "Inconclusive") - Usually the Method Name 
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception
+		_data* - <Hashmap> or <HashmapObject>  - (Optional - Default : Empty Hashmap) - Usually the parameters supplied
 	-----------------------------------------------------------------------------*/
 	["Inconclusive",{
-		params [["_target","",[""]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
+		params [["_target","Inconclusive",[""]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
 		private _e =  compileFinal createhashmapobject [XPS_UT_typ_AssertInconclusiveException,[_self get "#type" select 0,_target,_this#1]];
 		throw _e;
 	}],
@@ -158,11 +162,11 @@ Description:
 	Performs an IsEqualType check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsEqualType",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -181,11 +185,11 @@ Description:
 	Performs an IsEqualType check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualType",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -204,11 +208,11 @@ Description:
 	Performs an IsEqualTypeAll check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeAll",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -227,11 +231,11 @@ Description:
 	Performs an IsEqualTypeAll check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
-    	_arg2 - Anything - The value expected
+		_arg1 - <Anything> - The value to check
+    	_arg2 - <Anything> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeAll",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
@@ -250,11 +254,11 @@ Description:
 	Performs an IsEqualTypeAny check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeAny",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
@@ -273,11 +277,11 @@ Description:
 	Performs an IsEqualTypeAny check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeAny",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
@@ -296,11 +300,11 @@ Description:
 	Performs an IsEqualTypeArray check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeArray",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
@@ -319,11 +323,11 @@ Description:
 	Performs an IsEqualTypeArray check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeArray",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
@@ -342,11 +346,11 @@ Description:
 	Performs an IsEqualTypeParams check. Fails with <XPS_UT_typ_AssertFailedException> if Not Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeParams",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
@@ -365,11 +369,11 @@ Description:
 	Performs an IsEqualTypeParams check. Fails with <XPS_UT_typ_AssertFailedException> if Equal
 	
     Parameters: 
-		_arg1 - Anything - The value to check
+		_arg1 - <Anything> - The value to check
     	_arg2 - <Array> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeParams",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
@@ -391,7 +395,7 @@ Description:
 		_bool - <Boolean> - The value to check
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsFalse",{
 		params [["_bool",false,[true]],["_message",nil,[""]]];
@@ -413,7 +417,7 @@ Description:
 		_bool - <Boolean> - The value to check
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsTrue",{
 		params [["_bool",false,[true]],["_message",nil,[""]]];
@@ -437,7 +441,7 @@ Description:
     	_type - <String> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsInstanceOfType",{
 		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
@@ -461,7 +465,7 @@ Description:
     	_type - <String> - The value expected
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotInstanceOfType",{
 		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
@@ -480,10 +484,10 @@ Description:
 	Performs an IsNil check. Fails with <XPS_UT_typ_AssertFailedException> if Not Nil
 	
     Parameters: 
-		_arg - Anything - The value to check
+		_arg - <Anything> - The value to check
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNil",{
 		params ["_arg",["_message",nil,[""]]];
@@ -502,10 +506,10 @@ Description:
 	Performs an IsNil check. Fails with <XPS_UT_typ_AssertFailedException> if Nil
 	
     Parameters: 
-		_arg - Anything - The value to check
+		_arg - <Anything> - The value to check
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotNil",{
 		params ["_arg",["_message",nil,[""]]];
@@ -539,7 +543,7 @@ Description:
 		<Team Member>
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNull",{
 		params [["_arg",configFile,[objNull]],["_message",nil,[""]]];
@@ -573,7 +577,7 @@ Description:
 		<Team Member>
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotNull",{
 		params [["_arg",objNull,[objNull]],["_message",nil,[""]]];
@@ -597,7 +601,7 @@ Description:
 		- _exceptionType <string> - the exception type to catch (can be a parent class)
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["ThrowsException",{
 		params [["_code",{},[{}]],["_exceptionType","",[""]],["_message",nil,[""]]];
@@ -630,7 +634,7 @@ Description:
 		- _max - <Scalar> - the maximum value _num can be
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["WithinRange",{
 		params [["_num"],0,[0],["_min"],0,[0],["_max",0,[0]],["_message",nil,[""]]];
@@ -654,7 +658,7 @@ Description:
 		- _max - <Scalar> - the maximum value _num cannot be in range of
 
 	Optionals:
-		_message* - <String> - (Optional - Default : "") - The message to place in the Exception if failed
+		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["OutOfRange",{
 		params [["_num"],0,[0],["_min"],0,[0],["_max",0,[0]],["_message",nil,[""]]];

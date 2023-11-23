@@ -15,8 +15,12 @@ Authors:
 	<Hashmap>
 
 	Method: MyMethod1
-	
+		<code>
+
 	Method: MyMethod2
+		<code>
 
 	Method: MyMethod3
+		<code>
+
 ---------------------------------------------------------------------------- */

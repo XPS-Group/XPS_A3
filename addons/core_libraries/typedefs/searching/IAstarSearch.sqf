@@ -14,17 +14,23 @@ Authors:
 		<Array>
 
 	Property: Status
-		Anything
+		<Anything>
 
 	Method: AdjustEstimatedDistance
+		<code>
 
 	Method: AdjustMoveCost
+		<code>
 
 	Method: FilterNeighbors
+		<code>
 
 	Method: Init
+		<code>
 
 	Method: ProcessNextNode
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["Path","ARRAY"],

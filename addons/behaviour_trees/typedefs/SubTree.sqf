@@ -34,7 +34,7 @@ Returns:
     	---
 
 	Returns:
-		True
+		<True>
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
 		_self set ["tree",nil];

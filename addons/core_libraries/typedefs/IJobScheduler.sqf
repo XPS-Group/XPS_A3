@@ -18,8 +18,11 @@ Authors:
 	<Number>
 	
 	Method: Start
-	
+		<code>
+
 	Method: Stop
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["CurrentItem","ANYTHING"],
