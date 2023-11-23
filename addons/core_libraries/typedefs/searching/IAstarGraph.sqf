@@ -11,14 +11,19 @@ Authors:
 ----------------------------------------------------------------------------
 
 	Method: GetEstimatedDistance
+		<code>
 
 	Method: GetMoveCost
+		<code>
 
 	Method: GetNeighbors
+		<code>
 
 	Method: GetNodeAt
+		<code>
 
 	Method: Init
+		<code>
 
 	Optional Method in case the graph needs to initialize some parameters 
 	each search of the graph

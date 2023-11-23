@@ -17,14 +17,20 @@ Authors:
 		<Anything>
 
 	Method: AdjustEstimatedDistance
+		<code>
 
 	Method: AdjustMoveCost
+		<code>
 
 	Method: FilterNeighbors
+		<code>
 
 	Method: Init
+		<code>
 
 	Method: ProcessNextNode
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["Path","ARRAY"],

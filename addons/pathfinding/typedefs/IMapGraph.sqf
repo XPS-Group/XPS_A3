@@ -10,8 +10,11 @@ Authors:
 		<Hashmap>
 
 	Method: AddLayer
+		<code>
 
 	Method: CheckWaterTravel
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["Sectors","HASHMAP"],

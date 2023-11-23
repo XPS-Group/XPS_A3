@@ -20,8 +20,11 @@ Authors:
 	<Enumeration>
 
 	Method: Init
-	
+		<code>
+
 	Method: Tick
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["Blackboard", "HASHMAP"],

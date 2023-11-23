@@ -26,10 +26,14 @@ Authors:
 	<String>
 
 	Method: Init
-	
+		<code>
+
 	Method: Execute
+		<code>
 
 	Method: GetScore
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["Blackboard", "HASHMAP"],

@@ -11,15 +11,20 @@ Authors:
 	<HASHMAP>
 
 	Method: GetPositionByIndex
+		<code>
 
 	Method: GetIndexByPosition
+		<code>
 
 	Method: GetNearbyIndexes
+		<code>
 
 	Method: GetCellByPosition
+		<code>
 
 	Method: GetNearbyCells
-	
+		<code>
+
 ---------------------------------------------------------------------------- */
 [
 	["Cells", "HASHMAP"],
