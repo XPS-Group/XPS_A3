@@ -13,10 +13,10 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_IFC_SUB(collections,ICollectionNotifier);
 			XPS_CFG_IFC_SUB(collections,IQueue);
 			XPS_CFG_IFC_SUB(collections,IStack);
-			XPS_CFG_IFC_SUB(collections,ITypeRestrictor);
 			XPS_CFG_IFC_SUB(searching,IAstarNode);
 			XPS_CFG_IFC_SUB(searching,IAstarGraph);
 			XPS_CFG_IFC_SUB(searching,IAstarSearch);
+			XPS_CFG_IFC_SUB(typecheck,ITypeRestrictor);
 			XPS_CFG_IFC(IBlackboard);
 			XPS_CFG_IFC(IJobScheduler);
 		};
@@ -38,9 +38,6 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP_SUB(enumerations,Enumeration);
 		};
 		class Collections {
-			XPS_CFG_TYP_SUB(collections,NoTypeRestrictor);
-			XPS_CFG_TYP_SUB(collections,NativeTypeRestrictor);
-			XPS_CFG_TYP_SUB(collections,HashmapObjectTypeRestrictor);
 			XPS_CFG_TYP_SUB(collections,OrderedCollection);
 			XPS_CFG_TYP_SUB(collections,TypeCollection);
 			XPS_CFG_TYP_SUB(collections,Queue);
@@ -48,6 +45,11 @@ class XPS_CFG_TD_BASECLASSNAME {
 		};
 		class Searching {
 			XPS_CFG_TYP_SUB(searching,AstarSearch);
+		};
+		class TypeChecking {
+			XPS_CFG_TYP_SUB(typecheck,NoTypeRestrictor);
+			XPS_CFG_TYP_SUB(typecheck,NativeTypeRestrictor);
+			XPS_CFG_TYP_SUB(typecheck,HashmapObjectTypeRestrictor);
 		};
 
 		XPS_CFG_TYP(Blackboard);

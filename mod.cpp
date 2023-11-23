@@ -8,7 +8,7 @@ description = "Issues: https://github.com/Crashdome/XPS_A3/issues";
 tooltip = "eXtensible Project System - Core";
 tooltipOwned = "eXtensible Project System";
 overview = "Work In Progress";
-author = "XPS Team";
+author = "XPS Group";
 // overviewPicture = "logo_cba_ca.paa";
 overviewText = "eXtensible Project System - WIP";
 overviewFootnote = "<br /><br /><t color='#999999'>This content a work in progress.<t />";

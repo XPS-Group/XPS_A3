@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_Blackboard
 	<TypeDefinition>
     	--- Prototype --- 
-		XPS_typ_Blackboard
+		XPS_typ_Blackboard : XPS_ifc_IBlackboard
     	---
     	--- Code --- 
     	createHashmapObject ["XPS_typ_Blackboard",[_object*,_varName*]]
