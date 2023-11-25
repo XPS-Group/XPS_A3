@@ -15,7 +15,7 @@ Description:
  
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_UT_type_Engine"],
+	["#type","XPS_UT_type_TestBuilder"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
 		---prototype
@@ -39,7 +39,7 @@ Description:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
-		"XPS_UT_type_Engine"
+		"XPS_UT_type_TestBuilder"
 		---
 	----------------------------------------------------------------------------*/
 	["#str", {_self get "#type" select  0}],
@@ -90,17 +90,15 @@ Description:
     -------------------------------------------------------------------------*/ 
 	["BuildUnitTests",{
 		private _dataArray = [];
+		private _classOrder = _self get "_classOrder";
 		{
-			private _classKey = _x;
-			private _classItem = _engine get "_collection" call ["GetItem",_classKey];
-			private _className = _classItem get "Description";
-			_dataArray pushback [["X",1,_classKey],_className,"",""];
-
-			private _orderedList = _classItem get "TestOrder";
+			private _class = _self get "_collection" get _x;
+			_dataArray pushback (createhashmapobject ["XPS_UT_typ_UnitTest",[_class, ""]]);
+			private _methodOrder = _class get "TestOrder";
 			{
-				_dataArray pushback [["X",1,_classKey],"",_x,""];
-			} foreach _orderedlist;
-		} foreach (_self get "classOrder");
+				_dataArray pushback (createhashmapobject ["XPS_UT_typ_UnitTest",[_class, _x]]);
+			} foreach _methodOrder;
+		} foreach _classOrder;
 		_dataArray;
 	}]
 ];

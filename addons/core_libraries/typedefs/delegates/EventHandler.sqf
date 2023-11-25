@@ -13,7 +13,7 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which wraps an <XPS_ifc_IMultiCastDelegate> to provide Add?remove functionality without exposing the Invoke function.
+	<HashmapObject> which wraps an <XPS_ifc_IMultiCastDelegate> to provide Add/Remove functionality without exposing the Invoke function.
 
 Parameters: 
 	_delegate - <XPS_ifc_IMultiCastDelegate> - the delegate to wrap Add/Remove functions around.
