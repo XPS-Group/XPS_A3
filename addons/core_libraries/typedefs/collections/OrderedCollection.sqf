@@ -47,6 +47,7 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
+        <XPS_ifc_ICollectionNotifier>
 	----------------------------------------------------------------------------*/
     ["@interfaces", ["XPS_ifc_ICollection","XPS_ifc_ICollectionNotifier"]],
 	["_listArray",[]],
