@@ -55,7 +55,7 @@ Returns:
 	["#delete",{
 		_self get "_viewModel" get "CollectionChanged" call ["Remove",[_self,"onCollectionChanged"]];
 		_self set ["_viewModel",nil];
-		systemchat "Deleteing V";
+		diag_log "Deleteing V";
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
