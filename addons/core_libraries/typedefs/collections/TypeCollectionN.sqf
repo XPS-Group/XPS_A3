@@ -1,31 +1,33 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_OrderedCollectionN
+TypeDef: core. XPS_typ_TypeCollectionN
 	<TypeDefinition>
         --- prototype
-        XPS_typ_OrderedCollectionN : XPS_ifc_ICollection, XPS_ifc_ICollectionNotifier, XPS_typ_OrderedCollection
+        XPS_typ_TypeCollectionN : XPS_ifc_ICollection, XPS_ifc_ITypeRestrictor, XPS_ifc_ICollectionNotifier, XPS_typ_TypeCollection
         ---
         --- prototype
-        createhashmapobject [XPS_typ_OrderedCollectionN]
+        createhashmapobject [XPS_typ_TypeCollection,[_typeRestrictor]]
         ---
 
 Authors: 
 	Crashdome
    
 Description:
-	A collection which is ordered by a numerical index. Contains event handlers to 
-    notify if the collection has changed via Add, Remove, and Set. 
+<HashmapObject> which stores items only if the type is allowed. Implements CollectionChanged Event handler.
+
+Parameters: 
+    _typeRestrictor (optional) - <HashmapObject> that implements <XPS_ifc_ITypeRestrictor> 
 
 Returns:
-	<HashmapObject>
+    <HashmapObject>
 ---------------------------------------------------------------------------- */
 [
-	["#type", "XPS_typ_OrderedCollectionN"],
+	["#type", "XPS_typ_TypeCollectionN"],
     /*----------------------------------------------------------------------------
     Parent: #base
-        <XPS_typ_OrderedCollection>
+        <XPS_typ_TypeCollection>
     ----------------------------------------------------------------------------*/    
-    ["#base",XPS_typ_OrderedCollection],
+    ["#base",XPS_typ_TypeCollection],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -37,14 +39,14 @@ Returns:
         <True>
     ----------------------------------------------------------------------------*/
     ["#create",{
-        _self call ["XPS_typ_OrderedCollection.#create"];
+        _self call ["XPS_typ_TypeCollection.#create",_this];
         _self set ["_onCollectionChangedEvent",createhashmapobject [XPS_typ_Event]];
         _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];
     }],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_OrderedCollectionN"
+		"XPS_typ_TypeCollectionN"
 		---
 	----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
@@ -52,33 +54,33 @@ Returns:
 		<XPS_ifc_ICollection>
         <XPS_ifc_ICollectionNotifier>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_ICollection","XPS_ifc_ICollectionNotifier"]],
+    ["@interfaces", ["XPS_ifc_ICollectionNotifier"]],
     ["_onCollectionChangedEvent",nil],
     /*----------------------------------------------------------------------------
     Method: Count
-        <XPS_typ_OrderedCollection.Count>
+        <XPS_typ_TypeCollection.Count>
     ----------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------
     Method: IsEmpty
-        <XPS_typ_OrderedCollection.IsEmpty>
+        <XPS_typ_TypeCollection.IsEmpty>
     ----------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------
     Method: AddItem
-        <XPS_typ_OrderedCollection.AddItem>
+        <XPS_typ_TypeCollection.AddItem>
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
-        private _index = _self call ["XPS_typ_OrderedCollection.AddItem"];
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_index,_this]]];
-        _index;
+        private _key = _self call ["XPS_typ_TypeCollection.AddItem"];
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_key,_this]]];
+        _key;
     }],
     /*----------------------------------------------------------------------------
     Method: RemoveItem
-        <XPS_typ_OrderedCollection.RemoveItem>
+        <XPS_typ_TypeCollection.RemoveItem>
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
 	["RemoveItem",compileFinal {
-        private _item = _self call ["XPS_typ_OrderedCollection.RemoveItem",_this];
+        private _item = _self call ["XPS_typ_TypeCollection.RemoveItem",_this];
         if !(isNil "_item") then {
             _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_this,_item]]];
         };
@@ -86,20 +88,20 @@ Returns:
     }],
     /*----------------------------------------------------------------------------
     Method: GetItem
-        <XPS_typ_OrderedCollection.GetItem>
+        <XPS_typ_TypeCollection.GetItem>
     ----------------------------------------------------------------------------*/
 
     /* -----------------------------------------------------------------------
     Method: GetItems
-        <XPS_typ_OrderedCollection.GetItems>
+        <XPS_typ_TypeCollection.GetItems>
     -------------------------------------------------------------------------*/ 
     /*----------------------------------------------------------------------------
     Method: SetItem
-        <XPS_typ_OrderedCollection.SetItem>
+        <XPS_typ_TypeCollection.SetItem>
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
 	["SetItem",{
-        if (_self call ["XPS_typ_OrderedCollection.SetItem",_this]) then {
+        if (_self call ["XPS_typ_TypeCollection.SetItem",_this]) then {
             _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_this#0,_this#1]]];
             true;
         } else {false};

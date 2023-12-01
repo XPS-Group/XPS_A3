@@ -53,10 +53,6 @@ Returns:
 		_self set ["Target",_target];
 		if !(isNil "_message") then {_self set ["Message",_message]};
 		_self set ["Data",_data];
-		 //TODO : If I ever get an ingame debugger going
-		// if !(isNil {XPS_MissionDebugger}) then {
-		// 	XPS_MissionDebugger call ["AddToCallStack",[_self]];
-		// };
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str

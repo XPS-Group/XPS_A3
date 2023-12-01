@@ -55,7 +55,7 @@ Returns:
 		"XPS_typ_TypeCollection"
 		---
 	----------------------------------------------------------------------------*/
-	["#str",compileFinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
@@ -114,7 +114,7 @@ Returns:
         _item - <Anything> - except nil
 
     Returns:
-        <True> - the item is successfully added
+        <String> - key of the item if successfully added
 
     Throws:
         <XPS_typ_ArgumentNilException> - if a parameter was nil
@@ -128,7 +128,7 @@ Returns:
         } else {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Item is not allowed in this collection",_this]];
         };
-        true;
+        _key;
     }],
     /*----------------------------------------------------------------------------
     Method: RemoveItem
@@ -148,7 +148,7 @@ Returns:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
-	["RemoveItem",compileFinal {
+	["RemoveItem", compileFinal {
         if !(params [["_key",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
         _self get "_items" deleteAt _key;
     }],
