@@ -57,6 +57,10 @@ Returns:
     ["@interfaces", ["XPS_ifc_ICollectionNotifier"]],
     ["_onCollectionChangedEvent",nil],
     /*----------------------------------------------------------------------------
+    Method: Clear
+        <XPS_typ_TypeCollection.Clear>
+    ----------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------
     Method: Count
         <XPS_typ_TypeCollection.Count>
     ----------------------------------------------------------------------------*/
@@ -70,7 +74,7 @@ Returns:
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
-        private _key = _self call ["XPS_typ_TypeCollection.AddItem"];
+        private _key = _self call ["XPS_typ_TypeCollection.AddItem",_this];
         _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_key,_this]]];
         _key;
     }],
@@ -103,6 +107,17 @@ Returns:
 	["SetItem",{
         if (_self call ["XPS_typ_TypeCollection.SetItem",_this]) then {
             _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_this#0,_this#1]]];
+            true;
+        } else {false};
+	}],
+    /*----------------------------------------------------------------------------
+    Method: UpdateItem
+        <XPS_typ_OrderedCollection.UpdateItem>
+        Invokes CollectionChanged
+    ----------------------------------------------------------------------------*/
+	["UpdateItem",{
+        if (_self call ["XPS_typ_OrderedCollection.UpdateItem",_this]) then {
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["UpdateItem",_this#0,_this#1]]];
             true;
         } else {false};
 	}],

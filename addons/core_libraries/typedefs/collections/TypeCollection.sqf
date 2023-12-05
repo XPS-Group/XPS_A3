@@ -65,6 +65,22 @@ Returns:
     ["_items",createhashmap],
     ["_restrictor",nil],
     /*----------------------------------------------------------------------------
+    Method: Clear
+    
+        --- Prototype --- 
+        call ["Clear"]
+        ---
+
+        <XPS_ifc_IList>
+
+        Removes all items from collection 
+    ----------------------------------------------------------------------------*/
+	["Clear",{
+        {
+            _self call ["RemoveItem",_x];
+        } foreach (keys _items);
+	}],
+    /*----------------------------------------------------------------------------
     Method: Count
     
         --- Prototype --- 
@@ -72,9 +88,6 @@ Returns:
         ---
 
         <XPS_ifc_IList>
-    
-    Parameters: 
-		none
 		
 	Returns:
 		<Number> - the number of elements in the stack
@@ -90,9 +103,6 @@ Returns:
         ---
 
         <XPS_ifc_IList>
-    
-    Parameters: 
-		none
 		
 	Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
@@ -219,7 +229,43 @@ Returns:
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Item is not allowed in this collection",_this]];
         };
         true;
-	}],
+	}],,
+    /*----------------------------------------------------------------------------
+    Method: UpdateItem
+    
+        --- Prototype --- 
+        call ["UpdateItem",[_key, [_itemkey*, _value*]]]
+        ---
+
+        <XPS_ifc_ICollection>
+
+        Updates item at specified Index.
+    
+    Parameters: 
+		_key - the key which contains the <HashmapObject>
+        _itemkey - the property of the item 
+        _value - the value to set the property 
+
+    Returns:
+        <True> - the item is successfully updated
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
+        <XPS_typ_InvalidArgumentException> - if index does not exist
+    ----------------------------------------------------------------------------*/
+	["UpdateItem",{
+        if !(params [["_key",nil,[""]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
+        if ((_key == "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
+        private _item = _self call ["GetItem",_key];
+        if (_item isEqualType createhashmap) then {
+            _proeprtyArray params ["_subkey","_value"];;
+            _self get "_listArray" get _key set [_subkey,_value];
+        } else {
+            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]
+        };
+        true;
+	}]
     /*----------------------------------------------------------------------------
     Method: RegisterType 
     

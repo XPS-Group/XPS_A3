@@ -47,6 +47,22 @@ Returns:
     ["@interfaces", ["XPS_ifc_ICollection"]],
 	["_listArray",[]],
     /*----------------------------------------------------------------------------
+    Method: Clear
+    
+        --- Prototype --- 
+        call ["Clear"]
+        ---
+
+        <XPS_ifc_IList>
+
+        Removes all items from collection.
+    ----------------------------------------------------------------------------*/
+	["Clear",{
+        {
+            _self call ["RemoveItem",_x];
+        } foreach (keys _items);
+	}],
+    /*----------------------------------------------------------------------------
     Method: Count
     
         --- Prototype --- 
@@ -54,9 +70,6 @@ Returns:
         ---
 
         <XPS_ifc_IList>
-    
-    Parameters: 
-		none
 		
 	Returns:
 		<Number> - the number of elements in the stack
@@ -72,9 +85,6 @@ Returns:
         ---
 
         <XPS_ifc_IList>
-    
-    Parameters: 
-		none
 		
 	Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
@@ -127,6 +137,25 @@ Returns:
         private _item = _self get "_listArray" deleteAt _index;
     }],
     /*----------------------------------------------------------------------------
+    Method: FindItem
+    
+        --- Prototype --- 
+        call ["FindItem",[_item]]
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Parameters: 
+        _item - <Anything> - except nil
+		
+	Returns:
+		<Scalar> - index of item or -1 if not found
+    ----------------------------------------------------------------------------*/
+	["FindItem",{
+		params ["_item"];
+        _self get "_listArray" find _item;
+	}],
+    /*----------------------------------------------------------------------------
     Method: GetItem
     
         --- Prototype --- 
@@ -141,6 +170,9 @@ Returns:
 	Returns:
 		<Anything> - N'th element in the list or nil if empty - does not remove 
 		from list
+
+    Throws:
+        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["GetItem",{
 		params [["_index",0,[0]]];
@@ -186,11 +218,48 @@ Returns:
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["SetItem",{
         if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
-		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,_this]]};
+		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"SetItem",nil,_this]]};
         (_self get "_listArray") set [_index,_item];
+        true;
+	}],
+    /*----------------------------------------------------------------------------
+    Method: UpdateItem
+    
+        --- Prototype --- 
+        call ["UpdateItem",[_index, [_key*, _value*]]]
+        ---
+
+        <XPS_ifc_ICollection>
+
+        Updates item at specified Index.
+    
+    Parameters: 
+		_index - Must be a non-negative number and must not exceed index of last item
+        _key - the property of the item if it is a <Hashmap> or <HashmapObject>
+        _value - the value to set the property if it is a <Hashmap> or <HashmapObject>
+
+    Returns:
+        <True> - the item is successfully updated
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
+        <XPS_typ_InvalidArgumentException> - if index does not exist
+    ----------------------------------------------------------------------------*/
+	["UpdateItem",{
+        if !(params [["_index",nil,[0]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,_this]];};
+		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"UpdateItem",nil,_this]]};
+        private _item = _self call ["GetItem",_index];
+        if (_item isEqualType createhashmap) then {
+            _proeprtyArray params ["_key","_value"];;
+            _self get "_listArray" get _index set [_key,_value];
+        } else {
+            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]
+        };
         true;
 	}]
 ]

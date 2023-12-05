@@ -41,6 +41,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP_SUB(collections,OrderedCollection);
 			XPS_CFG_TYP_SUB(collections,OrderedCollectionN);
 			XPS_CFG_TYP_SUB(collections,TypeCollection);
+			XPS_CFG_TYP_SUB(collections,TypeCollectionN);
 			XPS_CFG_TYP_SUB(collections,Queue);
 			XPS_CFG_TYP_SUB(collections,Stack);
 		};

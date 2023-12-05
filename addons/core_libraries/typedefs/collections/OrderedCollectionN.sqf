@@ -55,6 +55,10 @@ Returns:
     ["@interfaces", ["XPS_ifc_ICollection","XPS_ifc_ICollectionNotifier"]],
     ["_onCollectionChangedEvent",nil],
     /*----------------------------------------------------------------------------
+    Method: Clear
+        <XPS_typ_OrderedCollection.Clear>
+    ----------------------------------------------------------------------------*/
+    /*----------------------------------------------------------------------------
     Method: Count
         <XPS_typ_OrderedCollection.Count>
     ----------------------------------------------------------------------------*/
@@ -68,7 +72,7 @@ Returns:
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
-        private _index = _self call ["XPS_typ_OrderedCollection.AddItem"];
+        private _index = _self call ["XPS_typ_OrderedCollection.AddItem",_this];
         _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_index,_this]]];
         _index;
     }],
@@ -84,6 +88,10 @@ Returns:
         };
         _item;
     }],
+    /*----------------------------------------------------------------------------
+    Method: FindItem
+        <XPS_typ_OrderedCollection.FindItem>
+    ----------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------
     Method: GetItem
         <XPS_typ_OrderedCollection.GetItem>
@@ -101,6 +109,17 @@ Returns:
 	["SetItem",{
         if (_self call ["XPS_typ_OrderedCollection.SetItem",_this]) then {
             _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_this#0,_this#1]]];
+            true;
+        } else {false};
+	}],
+    /*----------------------------------------------------------------------------
+    Method: UpdateItem
+        <XPS_typ_OrderedCollection.UpdateItem>
+        Invokes CollectionChanged
+    ----------------------------------------------------------------------------*/
+	["UpdateItem",{
+        if (_self call ["XPS_typ_OrderedCollection.UpdateItem",_this]) then {
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["UpdateItem",_this#0,_this#1]]];
             true;
         } else {false};
 	}],
