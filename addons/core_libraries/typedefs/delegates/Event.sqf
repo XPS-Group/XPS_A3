@@ -27,7 +27,7 @@ Returns:
     Parent: #base 
 		<XPS_typ_MultiCastDelegate>
     ----------------------------------------------------------------------------*/
-	["#base",XPS_typ_MultiCastDelegate],
+	["#base", XPS_typ_MultiCastDelegate],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -39,7 +39,7 @@ Returns:
 		<True>
     ----------------------------------------------------------------------------*/
 	["#create",{
-		_self call ["XPS_typ_MultiCastDelegate",[createhashmap,[]]]
+		_self call ["XPS_typ_MultiCastDelegate.#create",[createhashmap,[]]];
 	}]
 	/*----------------------------------------------------------------------------
 	Str: #str

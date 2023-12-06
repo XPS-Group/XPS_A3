@@ -75,7 +75,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         private _key = _self call ["XPS_typ_TypeCollection.AddItem",_this];
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_key,_this]]];
+        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_this]]];
         _key;
     }],
     /*----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ Returns:
 	["RemoveItem",compileFinal {
         private _item = _self call ["XPS_typ_TypeCollection.RemoveItem",_this];
         if !(isNil "_item") then {
-            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_this,_item]]];
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",[_this,_item]]]];
         };
         _item;
     }],
@@ -106,7 +106,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["SetItem",{
         if (_self call ["XPS_typ_TypeCollection.SetItem",_this]) then {
-            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_this#0,_this#1]]];
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_this]]];
             true;
         } else {false};
 	}],
@@ -116,8 +116,8 @@ Returns:
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
 	["UpdateItem",{
-        if (_self call ["XPS_typ_OrderedCollection.UpdateItem",_this]) then {
-            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["UpdateItem",_this#0,_this#1]]];
+        if (_self call ["XPS_typ_TypeCollection.UpdateItem",_this]) then {
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["UpdateItem",_this]]];
             true;
         } else {false};
 	}],

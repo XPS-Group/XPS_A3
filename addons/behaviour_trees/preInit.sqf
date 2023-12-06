@@ -11,7 +11,7 @@ Returns:
 ---------------------------------------------------------------------------*/
 ADDON = false;
 
-diag_log (text "[XPS BT preInit]");
+diag_log text "[XPS BT preInit]";
 
 /* -------------------------------------------------------------------------
 Variable: behaviour_trees. XPS_BT_Status
@@ -52,6 +52,6 @@ Keys:
 ---------------------------------------------------------------------------*/
 ["XPS_BT_Status",XPS_BT_enum_Status] call XPS_fnc_createEnumeration;
 
-diag_log (text "[XPS BT preInit End]");
+diag_log text "[XPS BT preInit End]";
 
 ADDON = true;

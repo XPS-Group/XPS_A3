@@ -131,8 +131,8 @@ Returns:
         <XPS_typ_InvalidArgumentException> - if key parameter already exists in this collection - OR- if _item is not allowed 
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
-        if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
-        if ((_key == "") || (_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
+        if !(params [["_key",nil,["",[],0,true,{},missionNamespace,sideEmpty]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
+        if ((_key isEqualTo "") || (_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
         if (_self get "_restrictor" call ["IsAllowed",_item]) then {
             _self get "_items" set [_key,_item];
         } else {
@@ -159,7 +159,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["RemoveItem", compileFinal {
-        if !(params [["_key",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
+        if !(params [["_key",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
         _self get "_items" deleteAt _key;
     }],
     /* -----------------------------------------------------------------------
@@ -179,7 +179,7 @@ Returns:
 
     -------------------------------------------------------------------------*/ 
     ["GetItem",{
-        if !(params [["_key",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetItem",nil,_this]];};
+        if !(params [["_key",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetItem",nil,_this]];};
         _self get "_items" get _key;
     }],
     /* -----------------------------------------------------------------------
@@ -221,15 +221,15 @@ Returns:
         <XPS_typ_InvalidArgumentException> - if key parameter does not exist in this collection - OR- if _item is not allowed 
     ----------------------------------------------------------------------------*/
 	["SetItem",{
-        if !(params [["_key",nil,[""]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
-        if ((_key == "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
+        if !(params [["_key",nil,[]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
+        if ((_key isEqualTo "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
         if (_self get "_restrictor" call ["IsAllowed",_item]) then {
             _self get "_items" set [_key,_item];
         } else {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Item is not allowed in this collection",_this]];
         };
         true;
-	}],,
+	}],
     /*----------------------------------------------------------------------------
     Method: UpdateItem
     
@@ -255,8 +255,8 @@ Returns:
         <XPS_typ_InvalidArgumentException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["UpdateItem",{
-        if !(params [["_key",nil,[""]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
-        if ((_key == "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
+        if !(params [["_key",nil,[]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
+        if ((_key isEqualTo "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
         private _item = _self call ["GetItem",_key];
         if (_item isEqualType createhashmap) then {
             _proeprtyArray params ["_subkey","_value"];;
@@ -265,7 +265,7 @@ Returns:
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]
         };
         true;
-	}]
+	}],
     /*----------------------------------------------------------------------------
     Method: RegisterType 
     
