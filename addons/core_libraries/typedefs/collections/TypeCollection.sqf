@@ -77,8 +77,8 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Clear",{
         {
-            _self call ["RemoveItem",_x];
-        } foreach (keys _items);
+            _self call ["RemoveItem",[_x]];
+        } foreach (keys (_self get "_items"));
 	}],
     /*----------------------------------------------------------------------------
     Method: Count

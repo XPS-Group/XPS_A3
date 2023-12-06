@@ -59,8 +59,8 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Clear",{
         {
-            _self call ["RemoveItem",_x];
-        } foreach (keys _items);
+            _self call ["RemoveItem",[_x]];
+        } foreach (keys (_self get "_listArray"));
 	}],
     /*----------------------------------------------------------------------------
     Method: Count
@@ -133,7 +133,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["RemoveItem",compileFinal {
-        if !(params [["_index",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
+        if !(params [["_index",nil,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
         private _item = _self get "_listArray" deleteAt _index;
     }],
     /*----------------------------------------------------------------------------
