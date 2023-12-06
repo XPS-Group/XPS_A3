@@ -30,7 +30,7 @@ Optionals:
 	["#str",{_self get "#type" select 0}],
 	["ClassName",""],
 	["MethodName",""],
-	["Result",""],
-	["Details",""],
+	["Result","Not Run"],
+	["Details",[]],
 	["IsSelected",true]
 ]

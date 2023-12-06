@@ -122,15 +122,17 @@ Returns:
 		} foreach _tests;
 	}],
 	["AddToSelected",{
-		diag_log text str _this;
 		_self call ["updateItem",[_this,["IsSelected",true]]];
 	}],
 	["RemoveFromSelected",{
-		diag_log text str _this;
 		_self call ["updateItem",[_this,["IsSelected",false]]];
 	}],
 	["RunAll",{}],
 	["RunSelected",{}],
-	["Reset",{}],
+	["Reset",{
+		_self get "_testClassCollection" call ["Clear"];
+		_self get "_unitTestCollection" call ["Clear"];
+		_self call ["LoadTests"];
+	}],
 	["CollectionChanged",nil]
 ]

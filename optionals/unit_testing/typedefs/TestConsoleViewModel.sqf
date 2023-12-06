@@ -146,5 +146,15 @@ Returns:
 		_self set ["_testService",nil];
 		_self set ["_onUpdateUnitTest",nil];
 	}],
+	["RunAll",{
+		_self get "_testService" call ["RunAll"];
+	}],
+	["RunSelected",{
+		_self get "_testService" call ["RunSelected"];
+	}],
+	["Reset",{
+		//_self get "_testCollection" call ["Clear"];
+		_self get "_testService" call ["Reset"];
+	}],
 	["UpdateUnitTest",nil]
 ]

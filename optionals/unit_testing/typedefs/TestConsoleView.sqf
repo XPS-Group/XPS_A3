@@ -79,26 +79,31 @@ Returns:
 		private _listbox = _display displayCtrl 1500 ;
 
 		if (_eventType isNotEqualTo "Updated") then {
-			private _id = [_data get "ClassName",_data get "MethodName"];
-			private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" isEqualTo "");
-			private _testMethod = _data get "MethodName";
-			private _result = _data get "Result";
-			private _isSelected = _data get "IsSelected";
 			//private _color = [[1,1,1,1],[0,0,1,0.5]] select (_data get "MethodName" isEqualTo "");
 
 			switch (_eventType) do {
 				case "Added" : {
+					private _id = [_data get "ClassName",_data get "MethodName"];
+					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" isEqualTo "");
+					private _testMethod = _data get "MethodName";
+					private _result = _data get "Result";
+					private _isSelected = _data get "IsSelected";
 					private _row = _listbox lnbAddRow [""];
 					_listBox lnbSetData [[_row,0],_id];
 					if (_isSelected) then {_listBox lnbSetPicture [[_row,0],"\A3\ui_f\data\map\groupicons\waypoint.paa"];};	
 					_listBox lnbSetText [[_row,1],_testclass];
 					_listBox lnbSetText [[_row,2],_testmethod];
 					_listBox lnbSetText [[_row,3],_result];
+					_listBox lnbSetText [[_row,4],""];
 				};
 				case "Removed" : {
 					_listBox lnbDeleteRow _index;
 				};
 				case "Replaced" : {
+					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" isEqualTo "");
+					private _testMethod = _data get "MethodName";
+					private _result = _data get "Result";
+					private _isSelected = _data get "IsSelected";
 					_listBox lnbSetPicture [[_index,0],["","\A3\ui_f\data\map\groupicons\waypoint.paa"] select _isSelected];	
 					_listBox lnbSetText [[_index,1],_testclass];
 					_listBox lnbSetText [[_index,2],_testmethod];
@@ -174,5 +179,17 @@ Returns:
 		_self set ["_viewModel",nil];
 		_vm get "UpdateUnitTest" call ["Remove",[_self,"onUpdateUnitTest"]];
 		_vm call ["Close"];
+	}],
+	["XPS_UT_TestConsole_reset_buttonClick",{
+		diag_log "Button";
+		_self get "_viewModel" call ["Reset"];
+	}],
+	["XPS_UT_TestConsole_runAll_buttonClick",{
+		diag_log "Button";
+		_self get "_viewModel" call ["RunAll"];
+	}],
+	["XPS_UT_TestConsole_runSelected_buttonClick",{
+		diag_log "Button";
+		_self get "_viewModel" call ["RunSelected"];
 	}]
 ]

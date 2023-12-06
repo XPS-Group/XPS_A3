@@ -24,6 +24,6 @@ Authors:
 	["ClassName","STRING"],
 	["MethodName","STRING"],
 	["Result","STRING"],
-	["Details","STRING"],
+	["Details","ARRAY"],
 	["IsSelected","BOOL"]
 ]

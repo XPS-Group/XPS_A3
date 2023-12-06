@@ -139,7 +139,7 @@ class XPS_RscListNBox : RscListNBox
 	colorSelect2[] = {0,0,0,1};
 	colorSelectBackground[] = {0.95,0.95,0.95,1};
 	colorSelectBackground2[] = {1,1,1,0.5};
-	colorBackground[] = {0,0,0,1};
+	colorBackground[] = {0,0,0,0};
 	maxHistoryDelay = 1;
 	class ScrollBar
 	{
@@ -147,7 +147,7 @@ class XPS_RscListNBox : RscListNBox
 		arrowFull = "#(argb,8,8,3)color(1,1,1,1)";
 		border = "#(argb,8,8,3)color(1,1,1,1)";
 		color[] = {1,1,1,0.6};
-		colorActive[] = {1,1,1,1};
+		colorActive[] = {1,1,1,0.85};
 		colorDisabled[] = {1,1,1,0.3};
 		thumb = "#(argb,8,8,3)color(1,1,1,1)";
 	};
@@ -175,6 +175,15 @@ class XPS_UT_TestConsole_display {
 			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
 			y = Q(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(35 * GUI_GRID_CENTER_W);
+			h = Q(18 * GUI_GRID_CENTER_H);
+			colorBackground[] = {0.05,0.05,0.05,1};
+		};
+		class XPS_UT_TestConsole_LB1bkgrd2: XPS_RscText
+		{
+			idc = 2201;
+			x = Q(2.45 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = Q(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = Q(26.25 * GUI_GRID_CENTER_W);
 			h = Q(18 * GUI_GRID_CENTER_H);
 			colorBackground[] = {0,0,0,1};
 		};
@@ -210,7 +219,7 @@ class XPS_UT_TestConsole_display {
 		class XPS_UT_TestConsole_tests: XPS_RscListNBox
 		{
 			idc = 1500;
-			columns[] = {0.02,0.05,0.3,0.85};
+			columns[] = {0.02,0.05,0.3,0.8,0.95};
 			idcLeft = 1400;
 			idcRight = 1401;
 			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
@@ -227,20 +236,6 @@ class XPS_UT_TestConsole_display {
 			y = Q(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(35 * GUI_GRID_CENTER_W);
 			h = Q(5 * GUI_GRID_CENTER_H);
-			class Items
-			{
-				class Name
-				{
-					text = "Name";
-					value = 1;
-					data = "";
-				};
-				class Value
-				{
-					text = "Value";
-					value = -1;
-				};
-			};
 		};
 		class XPS_UT_TestConsole_runSelected: RscButton
 		{
@@ -249,7 +244,7 @@ class XPS_UT_TestConsole_display {
 			y = Q(5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
-			text = "Run Selected";
+			text = "Selected";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runSelected_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_runAll: RscButton
@@ -259,7 +254,7 @@ class XPS_UT_TestConsole_display {
 			y = Q(2 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
-			text = "Run All";
+			text = "All";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runAll_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_reset: RscButton
