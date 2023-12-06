@@ -21,54 +21,16 @@ Optionals:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_UT_typ_UnitTest"],
-	["#str",_self get "#type" select 0],
 	["#create",{
-		params [["_class",createhashmap,[createhashmap]],["_methodName","",[""]]];
-		_self set ["_classRef",_class];
-		_self set ["_className",_class get "Description"];
-		_self set ["_classMethod",_methodName];
-		_self set ["_isMethod",(_methodName isNotEqualTo "")];
-		_self set ["_testResult",""];
-		_self set ["_testDetail","Not Tested"];
-		_self set ["_isSelected",true];
+		params [["_className","",[""]],["_methodName","",[""]]];
+		_self set ["ClassName", _className];
+		_self set ["MethodName", _methodName];
 	}],
 	["@interfaces",["XPS_UT_ifc_IUnitTest"]],
-	["_classRef",nil],
-	["_className",nil],
-	["_classMethod",nil],
-	["_testResult",nil],
-	["_testDetail",nil],
-	["_isSelected",nil],
-	["_isMethod",nil],
-	["IsMethod",{
-		_self get "_isMethod";
-	}],
-	["IsSelected",{
-		_self get "_isSelected";
-	}],
-	["SetSelected",{
-		param [0,true,[true]];
-		_self set ["_isSelected",_this];
-	}],
-	["GetClass",{
-		_self get "_classRef";
-	}],
-	["GetClassName",{
-		_self get "_className";
-	}],
-	["GetData",{
-		[
-			_self get "_isSelected", 
-			_self get "_className",
-			_self get "_isMethod", 
-			_self get "_classMethod", 
-			_self get "_testResult",
-			_self get "_testDetail"
-		]
-	}],
-	["SetResult",{
-		params [["_result","",[""]],["_detail","",[""]]];
-		_self set ["_testResult",_result];
-		_self set ["_testDetail",_detail];
-	}]
+	["#str",{_self get "#type" select 0}],
+	["ClassName",""],
+	["MethodName",""],
+	["Result",""],
+	["Details",""],
+	["IsSelected",true]
 ]

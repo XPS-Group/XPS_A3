@@ -21,7 +21,9 @@ Authors:
 	
 ---------------------------------------------------------------------------- */
 [
-	["GetDataArray","CODE"],
-	["SetSelected","CODE"],
-	["SetTestResult","CODE"]
+	["ClassName","STRING"],
+	["MethodName","STRING"],
+	["Result","STRING"],
+	["Details","STRING"],
+	["IsSelected","BOOL"]
 ]

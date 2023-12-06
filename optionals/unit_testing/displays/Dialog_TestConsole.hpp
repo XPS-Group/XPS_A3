@@ -249,6 +249,7 @@ class XPS_UT_TestConsole_display {
 			y = Q(5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
+			text = "Run Selected";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runSelected_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_runAll: RscButton
@@ -258,6 +259,7 @@ class XPS_UT_TestConsole_display {
 			y = Q(2 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
+			text = "Run All";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runAll_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_reset: RscButton
@@ -267,6 +269,7 @@ class XPS_UT_TestConsole_display {
 			y = Q(15.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
+			text = "Reset";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_reset_buttonClick"",_this];";
 		};
 	};

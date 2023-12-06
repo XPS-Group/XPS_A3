@@ -1,11 +1,11 @@
 /* -----------------------------------------------------------------------------
-TypeDef: unit_testing. XPS_UT_typ_TestRunnerService
+TypeDef: unit_testing. XPS_UT_typ_TestService
 	<TypeDefinition>
 	---prototype
-	XPS_UT_typ_TestRunnerService : XPS_ADDON_ifc_IName, XPS_typ_Name
+	XPS_UT_typ_TestService : XPS_ADDON_ifc_IName, XPS_typ_Name
 	---
 	---prototype
-	createhashmapobject [XPS_UT_typ_TestRunnerService, []]
+	createhashmapobject [XPS_UT_typ_TestService, []]
 	---
 
 Authors: 
@@ -23,7 +23,7 @@ Returns:
 
 --------------------------------------------------------------------------------*/
 [
-	["#type","XPS_UT_typ_TestRunnerService"],
+	["#type","XPS_UT_typ_TestService"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
     	<XPS_typ_Name>
@@ -44,17 +44,22 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		_self set ["_testCollection",createhashmapobject [XPS_typ_OrderedCollection]];
-		_self set ["CollectionChanged",(_self get "_testCollection") get "CollectionChanged"];
-		_self call ["loadTests"];
+		diag_log "Creating Service";
+		_self set ["_testClassCollection",createhashmapobject [XPS_typ_TypeCollection,
+				createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_UT_typ_TestClass"]]]]];
+
+		_self set ["_unitTestCollection",createhashmapobject [XPS_typ_TypeCollectionN,
+				createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_UT_typ_UnitTest"]]]]];
+		_self set ["CollectionChanged",(_self get "_unitTestCollection") get "CollectionChanged"];
+
 	}],
 	["#delete",{
-		diag_log "Deleting Test Runner";
+		diag_log "Deleting Test Service";
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_UT_typ_TestRunnerService"
+    	"XPS_UT_typ_TestService"
     	---
 	-----------------------------------------------------------------------------*/
 	["#str",{_self get "#type" select 0}],
@@ -63,7 +68,8 @@ Returns:
     	<XPS_ADDON_ifc_IName>
 	-----------------------------------------------------------------------------*/
 	// ["@interfaces",["XPS_ADDON_ifc_IName"]],
-	["_testCollection",nil],
+	["_testClassCollection",nil],
+	["_unitTestCollection",nil],
 	/*----------------------------------------------------------------------------
 	Protected: myProp
     
@@ -74,12 +80,10 @@ Returns:
     Returns: 
 		<Object> - description
 	-----------------------------------------------------------------------------*/
-	["loadTests",{
-		private _list = _self get "_testCollection";
-		private _tests = XPS_UT_TestBuilder call ["BuildUnitTests"];
-		{
-			_list call ["AddItem",_x];
-		} foreach _tests;
+	["updateItem",{
+		params ["_classID","_args"];
+		private _list = _self get "_unitTestCollection";
+		_list call ["UpdateItem",_this];
 	}],
 	/*----------------------------------------------------------------------------
 	Property: MyProp
@@ -102,20 +106,31 @@ Returns:
 		_object* - <Object> - (Optional - Default : objNull) 
 		_var1* - <String> - (Optional - Default : "") 
 	-----------------------------------------------------------------------------*/
+	["LoadTests",{
+		private _classes = _self get "_testClassCollection";
+		private _unitTests = _self get "_unitTestCollection";
+
+		private _tests = XPS_UT_TestClasses call ["GetInstance"] call ["GetClasses"];
+		{
+			private _class = _x;
+			private _className = _x get "Description";
+			_classes call ["AddItem",[_className,_class]];
+			_unitTests call ["AddItem",[[_className,""],createhashmapobject [XPS_UT_typ_UnitTest,[_className,""]]]];
+			{
+				_unitTests call ["AddItem",[[_className,_x],createhashmapobject [XPS_UT_typ_UnitTest,[_className,_x]]]];
+			} foreach (_class get "TestOrder");
+		} foreach _tests;
+	}],
 	["AddToSelected",{
-		private _list = _self get "_testCollection";
-		private _item = _list call ["GetItem",[_this]];
-		_item set [1,true];
-		_list call ["SetItem", [_this,_item]];
+		diag_log text str _this;
+		_self call ["updateItem",[_this,["IsSelected",true]]];
 	}],
 	["RemoveFromSelected",{
-		private _list = _self get "_testCollection";
-		private _item = _list call ["GetItem",[_this]];
-		_item set [1,false];
-		_list call ["SetItem", [_this,_item]];
+		diag_log text str _this;
+		_self call ["updateItem",[_this,["IsSelected",false]]];
 	}],
 	["RunAll",{}],
-	["RunSelected".{}],
-	["Reset"]
+	["RunSelected",{}],
+	["Reset",{}],
 	["CollectionChanged",nil]
 ]
