@@ -255,7 +255,7 @@ Returns:
 		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"UpdateItem",nil,_this]]};
         private _item = _self call ["GetItem",_index];
         if (_item isEqualType createhashmap) then {
-            _proeprtyArray params ["_key","_value"];;
+            _propertyArray params ["_key","_value"];;
             _self get "_listArray" get _index set [_key,_value];
         } else {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]

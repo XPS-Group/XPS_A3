@@ -251,15 +251,14 @@ Returns:
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
-        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
         <XPS_typ_InvalidArgumentException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["UpdateItem",{
         if !(params [["_key",nil,[]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
         if ((_key isEqualTo "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
-        private _item = _self call ["GetItem",_key];
+        private _item = _self call ["GetItem",[_key]];
         if (_item isEqualType createhashmap) then {
-            _proeprtyArray params ["_subkey","_value"];;
+            _propertyArray params ["_subkey","_value"];;
             _self get "_listArray" get _key set [_subkey,_value];
         } else {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]
