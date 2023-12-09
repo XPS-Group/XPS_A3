@@ -259,7 +259,7 @@ Returns:
         private _item = _self call ["GetItem",[_key]];
         if (_item isEqualType createhashmap) then {
             _propertyArray params ["_subkey","_value"];;
-            _self get "_listArray" get _key set [_subkey,_value];
+            _item set [_subkey,_value];
         } else {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]
         };
