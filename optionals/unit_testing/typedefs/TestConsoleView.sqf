@@ -51,6 +51,7 @@ Returns:
 		private _viewModel = createhashmapobject [XPS_UT_typ_TestConsoleViewModel];
 		_self set ["_viewModel",_viewModel];
 		_viewModel get "UpdateUnitTest" call ["Add",[_self,"onUpdateUnitTest"]];
+		_viewModel get "StateChanged" call ["Add",[_self,"onTestServiceStateChanged"]];
 	}],
 	["#delete",{
 		diag_log "Deleting V";
@@ -70,6 +71,41 @@ Returns:
 	["_viewModel",nil],
 	["_displayName","XPS_UT_TestConsole_display"],
 	["_displayHandle",displayNull],
+	["clearSelected",{
+		private _display = _self get "_displayHandle";
+		private _listbox = _display displayCtrl 1500;
+		_listBox lnbsetcurselrow -1;
+	}],
+	["onTestServiceStateChanged",{
+		params ["_sender","_args"];
+		_args params ["_state"];
+
+		private _display = _self get "_displayHandle";
+		private _buttons = [];
+		switch (_state) do {
+			case "Running" : {
+				_display displayCtrl 1400 ctrlEnable false;
+				_display displayCtrl 1401 ctrlEnable false;
+				_display displayCtrl 1600 ctrlEnable false;
+				_display displayCtrl 1601 ctrlEnable false;
+				_display displayCtrl 1602 ctrlEnable false;
+			};
+			case "Reset" : {
+				_display displayCtrl 1400 ctrlEnable true;
+				_display displayCtrl 1401 ctrlEnable true;
+				_display displayCtrl 1600 ctrlEnable true;
+				_display displayCtrl 1601 ctrlEnable true;
+				_display displayCtrl 1602 ctrlEnable false;
+			};
+			case "Finished" : {
+				_display displayCtrl 1400 ctrlEnable true;
+				_display displayCtrl 1401 ctrlEnable true;
+				_display displayCtrl 1600 ctrlEnable true;
+				_display displayCtrl 1601 ctrlEnable true;
+				_display displayCtrl 1602 ctrlEnable true;
+			};
+		};
+	}],
 	["onUpdateUnitTest",{
 		params ["_sender","_args"];
 		_args params ["_eventType","_args2"];
@@ -94,6 +130,7 @@ Returns:
 					_listBox lnbSetText [[_row,1],_testclass];
 					_listBox lnbSetText [[_row,2],_testmethod];
 					_listBox lnbSetText [[_row,3],_result];
+					_listBox lnbSetColor [[_row,3],[0,1,1,1]];
 					_listBox lnbSetText [[_row,4],""];
 				};
 				case "Removed" : {
@@ -118,6 +155,11 @@ Returns:
 				};
 				case "Result" : {
 					_listBox lnbSetText [[_index,3],_value];
+					switch (_value) do {
+						case "Passed" : {_listBox lnbSetColor [[_index,3],[0,1,0,1]];};
+						case "Failed" : {_listBox lnbSetColor [[_index,3],[1,0,0,1]];};
+						default {_listBox lnbSetColor [[_index,3],[0,1,1,1]];};
+					};
 				};
 			};
 
@@ -156,24 +198,27 @@ Returns:
 		_var1* - <String> - (Optional - Default : "") 
 	-----------------------------------------------------------------------------*/
 	["XPS_UT_TestConsole_display_load",{
-		diag_log "Loading";
 		_self get "_viewModel" call ["LoadTests"];
 	}],
 	["XPS_UT_TestConsole_select_buttonClick",{
-		diag_log "Button";
 		private _row = lnbCurSelRow 1500;
 		_self get "_viewModel" call ["AddToSelected",_row];
 	}],
 	["XPS_UT_TestConsole_unselect_buttonClick",{
-		diag_log "Button";
 		private _row = lnbCurSelRow 1500;
 		_self get "_viewModel" call ["RemoveFromSelected",_row];
 	}],
 	["XPS_UT_TestConsole_tests_LBSelChanged",{
+		params ["_control", "_lbCurSel"];
+		private _display = _self get "_displayHandle";
+		private _listbox = _display displayCtrl 1501;
+		if (_lbCurSel < 0) exitwith {lnbClear _listbox;};
+		private _details = _self get "_viewModel" call ["GetDetails",_lbCurSel];
 
+		lnbClear _listbox;
+		{_listBox lnbAddRow [_x#0,_x#1];} foreach _details;
 	}],
 	["XPS_UT_TestConsole_display_unLoad",{
-		diag_log "UnLoading";
 		_self set ["_displayHandle",displayNull];
 		private _vm = _self get "_viewModel";
 		_self set ["_viewModel",nil];
@@ -181,15 +226,19 @@ Returns:
 		_vm call ["Close"];
 	}],
 	["XPS_UT_TestConsole_reset_buttonClick",{
-		diag_log "Button";
+		_self call ["clearSelected"];
 		_self get "_viewModel" call ["Reset"];
 	}],
+	["XPS_UT_TestConsole_reload_buttonClick",{
+		_self call ["clearSelected"];
+		_self get "_viewModel" call ["Reload"];
+	}],
 	["XPS_UT_TestConsole_runAll_buttonClick",{
-		diag_log "Button";
+		_self call ["clearSelected"];
 		_self get "_viewModel" call ["RunAll"];
 	}],
 	["XPS_UT_TestConsole_runSelected_buttonClick",{
-		diag_log "Button";
+		_self call ["clearSelected"];
 		_self get "_viewModel" call ["RunSelected"];
 	}]
 ]

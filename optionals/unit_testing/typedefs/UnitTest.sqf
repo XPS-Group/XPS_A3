@@ -25,6 +25,7 @@ Optionals:
 		params [["_className","",[""]],["_methodName","",[""]]];
 		_self set ["ClassName", _className];
 		_self set ["MethodName", _methodName];
+		_self set ["Details",[]];
 	}],
 	["@interfaces",["XPS_UT_ifc_IUnitTest"]],
 	["#str",{_self get "#type" select 0}],

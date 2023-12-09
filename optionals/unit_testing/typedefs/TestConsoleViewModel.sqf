@@ -54,6 +54,8 @@ Returns:
 		private _service = createhashmapobject [XPS_UT_typ_TestService];
 		_Self set ["_testService",_service];
 		_service get "CollectionChanged" call ["Add",[_self,"onTestServiceCollectionChanged"]];
+		
+		_self set ["StateChanged",_service get "StateChanged"];
 	}],
 	["#delete",{
 		diag_log "Deleting VM";
@@ -142,6 +144,7 @@ Returns:
 	["LoadTests",{_self get "_testService" call ["LoadTests"]}],
 	["Close",{
 		_self get "_testService" get "CollectionChanged" call ["Remove",[_self,"onTestServiceCollectionChanged"]];
+		_self set ["StateChanged",nil];
 		_self set ["_testCollection",nil];
 		_self set ["_testService",nil];
 		_self set ["_onUpdateUnitTest",nil];
@@ -153,8 +156,14 @@ Returns:
 		_self get "_testService" call ["RunSelected"];
 	}],
 	["Reset",{
-		//_self get "_testCollection" call ["Clear"];
 		_self get "_testService" call ["Reset"];
 	}],
+	["Reload",{
+		_self get "_testService" call ["Reload"];
+	}],
+	["GetDetails",{
+		_self get "_testService" call ["GetDetails",_self get "_testCollection" call ["GetItem",[_this]]];
+	}],
+	["StateChanged",nil],
 	["UpdateUnitTest",nil]
 ]
