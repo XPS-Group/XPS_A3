@@ -255,7 +255,7 @@ class XPS_UT_TestConsole_display {
 		class XPS_UT_TestConsole_details: XPS_RscListNBox
 		{
 			idc = 1501;
-			columns[] = {-0.01,0.3};
+			columns[] = {0,0.3};
 			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
 			y = Q(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(35 * GUI_GRID_CENTER_W);

@@ -187,7 +187,29 @@ Returns:
 		};		
 		_self get "_onStateChanged" call ["Invoke",[_self,["Finished"]]];
 	}],
-	["RunSelected",{}],
+	["RunSelected",{
+		_self get "_onStateChanged" call ["Invoke",[_self,["Running"]]];
+		_self spawn {
+			private _service = _this;
+			{
+				private _class = _x;
+				if (_service get "_unitTestCollection" call ["GetItem",[[_class get "Description",""]]] getOrDefault ["IsSelected",false]) then {
+					private _orderedList = _class get "TestOrder";
+					// Init Class
+					_service call ["initTest",[_class]];
+					//Run Class Tests
+					{
+						if (_service get "_unitTestCollection" call ["GetItem",[[_class get "Description",_x]]] getOrDefault ["IsSelected",false]) then {
+							_service call ["runTest",[_class,_x]];
+						};
+					} foreach _orderedList;
+					// Finalize Class
+					_service call ["finalizeTest",[_class]];
+				};
+			} foreach (_service get "_testClassCollection" call ["GetItems"]);
+		};		
+		_self get "_onStateChanged" call ["Invoke",[_self,["Finished"]]];
+	}],
 	["Reload",{
 		_self get "_testClassCollection" call ["Clear"];
 		_self get "_unitTestCollection" call ["Clear"];
