@@ -22,6 +22,7 @@ class CfgPatches {
 			// Required addons, used for setting load order.
 			// When any of the addons is missing, pop-up warning will appear when launching the game.
 			requiredAddons[] = { "xps_main" ,"xps_core" };
+			is3DENMod = 1;
 			// List of objects (CfgVehicles classes) contained in the addon. Important also for Zeus content (units and groups) unlocking.
 			units[] = {};
 			// List of weapons (CfgWeapons classes) contained in the addon.

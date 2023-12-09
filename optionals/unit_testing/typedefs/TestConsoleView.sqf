@@ -233,6 +233,10 @@ Returns:
 		_self call ["clearSelected"];
 		_self get "_viewModel" call ["Reload"];
 	}],
+	["XPS_UT_TestConsole_close_buttonClick",{
+		// private _display = _self get "_displayHandle";
+		closeDialog 2;
+	}],
 	["XPS_UT_TestConsole_runAll_buttonClick",{
 		_self call ["clearSelected"];
 		_self get "_viewModel" call ["RunAll"];

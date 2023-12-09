@@ -167,6 +167,15 @@ class XPS_UT_TestConsole_display {
 	onUnload = "_this#0 getVariable ""xps_view"" call [""XPS_UT_TestConsole_display_unLoad""]; _this#0 setvariable [""xps_view"",nil];";
 	class Controls 
 	{
+		class XPS_UT_TestConsole_frame: XPS_RscText
+		{
+			idc = 1200;
+			x = Q(-0.2 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = Q(-1 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = Q(40.4 * GUI_GRID_CENTER_W);
+			h = Q(26.2 * GUI_GRID_CENTER_H);
+			colorBackground[] = {0,0,0,1};
+		};
 		class XPS_UT_TestConsole_bkgrd: XPS_RscText
 		{
 			idc = 2200;
@@ -286,11 +295,21 @@ class XPS_UT_TestConsole_display {
 		{
 			idc = 1603;
 			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(15.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			y = Q(14 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
 			w = Q(3.33333 * GUI_GRID_CENTER_W);
 			h = Q(2.5 * GUI_GRID_CENTER_H);
 			text = "Reload";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_reload_buttonClick"",_this];";
+		};
+		class XPS_UT_TestConsole_close: XPS_RscButton
+		{
+			idc = 1604;
+			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = Q(21.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = Q(3.33333 * GUI_GRID_CENTER_W);
+			h = Q(2.5 * GUI_GRID_CENTER_H);
+			text = "Close";
+			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_close_buttonClick"",_this];";
 		};
 	};
 };
