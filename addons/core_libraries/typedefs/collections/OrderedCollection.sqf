@@ -235,7 +235,8 @@ Returns:
 
         <XPS_ifc_ICollection>
 
-        Updates item at specified Index.
+        Updates item key/value pair at specified Index. 
+        Will throw an exception if Item updated is not a <Hashmap> or <HashmapObject>. Use SetItem instead.
     
     Parameters: 
 		_index - Must be a non-negative number and must not exceed index of last item
