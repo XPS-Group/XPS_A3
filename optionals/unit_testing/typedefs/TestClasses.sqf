@@ -1,9 +1,9 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: unit_testing. XPS_UT_typ_TestBuilder
+TypeDef: unit_testing. XPS_UT_typ_TestClasses
 	<TypeDefinition>
 	---prototype
-	XPS_UT_typ_TestBuilder
+	XPS_UT_typ_TestClasses
 	---
 
 Authors: 
@@ -15,7 +15,7 @@ Description:
  
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_UT_type_Engine"],
+	["#type","XPS_UT_type_TestClasses"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
 		---prototype
@@ -27,7 +27,7 @@ Description:
 	----------------------------------------------------------------------------*/
 	["#create", {
 		_self set ["_collection",createhashmapobject [
-			XPS_typCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_typ_TestClass"]]]]]];
+			XPS_typ_TypeCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_UT_typ_TestClass"]]]]]];
 		_self set ["classOrder",[]];
 	}],
 	/*----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ Description:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
-		"XPS_UT_type_Engine"
+		"XPS_UT_type_TestClasses"
 		---
 	----------------------------------------------------------------------------*/
 	["#str", {_self get "#type" select  0}],
@@ -75,9 +75,7 @@ Description:
     -------------------------------------------------------------------------*/ 
 	["AddClass", compileFinal {
 		params [["_key",nil,[""]],["_item",createhashmap,[createhashmap]]];
-        if !(_self get "_collection" call ["AddItem",[_key,_item]]) then {
-			_self get "classOrder" pushback _key;
-		};
+        _self get "classOrder" pushback (_self get "_collection" call ["AddItem",[_key,_item]]);
     }],
     /* -----------------------------------------------------------------------
     Method: BuildUnitTests
@@ -88,19 +86,13 @@ Description:
 		Builds a UnitTest Collection from added <XPS_typ_TestClasses: XPS_typ_TestClass>.
 
     -------------------------------------------------------------------------*/ 
-	["BuildUnitTests",{
+	["GetClasses",{
 		private _dataArray = [];
+		private _classOrder = _self get "classOrder";
 		{
-			private _classKey = _x;
-			private _classItem = _engine get "_collection" call ["GetItem",_classKey];
-			private _className = _classItem get "Description";
-			_dataArray pushback [["X",1,_classKey],_className,"",""];
-
-			private _orderedList = _classItem get "TestOrder";
-			{
-				_dataArray pushback [["X",1,_classKey],"",_x,""];
-			} foreach _orderedlist;
-		} foreach (_self get "classOrder");
+			private _class = _self get "_collection" call ["GetItem",_x];
+			_dataArray pushback _class;
+		} foreach _classOrder;
 		_dataArray;
 	}]
 ];

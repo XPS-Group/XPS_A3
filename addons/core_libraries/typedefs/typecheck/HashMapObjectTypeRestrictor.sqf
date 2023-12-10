@@ -96,7 +96,7 @@ Returns:
 		<True> - always
 	-----------------------------------------------------------------------------*/
 	["IsAllowed",{
-		params ["_value",createhashmap,[createhashmap]];
+		params [["_value",createhashmap,[createhashmap]]];
         private _allowlist = _self get "_allowed";
         private _types = _value getOrDefault ["#type",[]];
         (count (_types arrayIntersect _allowlist) > 0);

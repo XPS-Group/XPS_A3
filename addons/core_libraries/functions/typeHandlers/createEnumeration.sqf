@@ -100,7 +100,7 @@ switch (true) do {
 	};
 };
 
-call compile format["%1 = compilefinal createhashmapobject [_newDef]",_varName];
+call compile format["%1 = compilefinal createhashmapobject [_newDef,[]]",_varName];
 
 true;
 /*------------------------------------------------------------------------------

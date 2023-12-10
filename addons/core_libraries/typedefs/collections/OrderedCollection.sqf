@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_OrderedCollection
 	<TypeDefinition>
         --- prototype
-        XPS_typ_OrderedCollection : XPS_ifc_ICollection, XPS_ifc_ICollectionNotifier
+        XPS_typ_OrderedCollection : XPS_ifc_ICollection
         ---
         --- prototype
         createhashmapobject [XPS_typ_OrderedCollection]
@@ -13,9 +13,7 @@ Authors:
 	Crashdome
    
 Description:
-	A collection which is ordered by a numerical index. Contains event handlers to 
-    notify if the collection has changed via Add, Remove, and Set. If an item is added that 
-    supports the IValueChangedNotifier interface, it will bind to that item also.
+	A collection which is ordered by a numerical index. 
 
 Returns:
 	<HashmapObject>
@@ -34,8 +32,6 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["#create",{
         _self set ["_listArray",[]];
-        _self set ["_onCollectionChangedEvent",createhashmapobject [XPS_typ_Event]];
-        _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];
     }],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -48,9 +44,24 @@ Returns:
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_ICollection","XPS_ifc_ICollectionNotifier"]],
+    ["@interfaces", ["XPS_ifc_ICollection"]],
 	["_listArray",[]],
-    ["_onCollectionChangedEvent",nil],
+    /*----------------------------------------------------------------------------
+    Method: Clear
+    
+        --- Prototype --- 
+        call ["Clear"]
+        ---
+
+        <XPS_ifc_IList>
+
+        Removes all items from collection.
+    ----------------------------------------------------------------------------*/
+	["Clear",{
+        {
+            _self call ["RemoveItem",[_x]];
+        } foreach (keys (_self get "_listArray"));
+	}],
     /*----------------------------------------------------------------------------
     Method: Count
     
@@ -59,9 +70,6 @@ Returns:
         ---
 
         <XPS_ifc_IList>
-    
-    Parameters: 
-		none
 		
 	Returns:
 		<Number> - the number of elements in the stack
@@ -77,9 +85,6 @@ Returns:
         ---
 
         <XPS_ifc_IList>
-    
-    Parameters: 
-		none
 		
 	Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
@@ -100,16 +105,14 @@ Returns:
         _item - <Anything> - except nil
 
     Returns:
-        <True> - the item is successfully added to end of list
+        <Scalar> - the index of the item
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         if !(params [["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
-        private _index = (_self get "_listArray") pushback _item;
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_index,_item]]];
-        true;
+        (_self get "_listArray") pushback _item;
     }],
     /*----------------------------------------------------------------------------
     Method: RemoveItem
@@ -130,10 +133,28 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["RemoveItem",compileFinal {
-        if !(params [["_index",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
+        if !(params [["_index",nil,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
         private _item = _self get "_listArray" deleteAt _index;
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_index,_item]]];
     }],
+    /*----------------------------------------------------------------------------
+    Method: FindItem
+    
+        --- Prototype --- 
+        call ["FindItem",[_item]]
+        ---
+
+        <XPS_ifc_ICollection>
+    
+    Parameters: 
+        _item - <Anything> - except nil
+		
+	Returns:
+		<Scalar> - index of item or -1 if not found
+    ----------------------------------------------------------------------------*/
+	["FindItem",{
+		params ["_item"];
+        _self get "_listArray" find _item;
+	}],
     /*----------------------------------------------------------------------------
     Method: GetItem
     
@@ -149,6 +170,9 @@ Returns:
 	Returns:
 		<Anything> - N'th element in the list or nil if empty - does not remove 
 		from list
+
+    Throws:
+        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["GetItem",{
 		params [["_index",0,[0]]];
@@ -190,31 +214,53 @@ Returns:
         _item - <Anything> - except nil
 
     Returns:
-        <True> - the item is successfully added to end of list
+        <True> - the item is successfully updated
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["SetItem",{
         if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
-		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,_this]]};
+		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"SetItem",nil,_this]]};
         (_self get "_listArray") set [_index,_item];
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_index,_item]]];
         true;
 	}],
     /*----------------------------------------------------------------------------
-    EventHandler: CollectionChanged
+    Method: UpdateItem
     
         --- Prototype --- 
-        get "CollectionChanged"
+        call ["UpdateItem",[_index, [_key*, _value*]]]
         ---
 
-        <XPS_ifc_ICollectionNotifier>
+        <XPS_ifc_ICollection>
 
-        Handles Subscriptions to the onCollectionChangedEvent
+        Updates item key/value pair at specified Index. 
+        Will throw an exception if Item updated is not a <Hashmap> or <HashmapObject>. Use SetItem instead.
+    
+    Parameters: 
+		_index - Must be a non-negative number and must not exceed index of last item
+        _key - the property of the item if it is a <Hashmap> or <HashmapObject>
+        _value - the value to set the property if it is a <Hashmap> or <HashmapObject>
 
     Returns:
-        <XPS_typ_EventHandler>
+        <True> - the item is successfully updated
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
+        <XPS_typ_InvalidArgumentException> - if index does not exist
     ----------------------------------------------------------------------------*/
-    ["CollectionChanged",nil]
+	["UpdateItem",{
+        if !(params [["_index",nil,[0]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,_this]];};
+		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"UpdateItem",nil,_this]]};
+        private _item = _self call ["GetItem",_index];
+        if (_item isEqualType createhashmap) then {
+            _propertyArray params ["_key","_value"];;
+            _self get "_listArray" get _index set [_key,_value];
+        } else {
+            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]
+        };
+        true;
+	}]
 ]

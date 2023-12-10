@@ -46,17 +46,13 @@ if (isText _file) then {
 	private _varName = format ["%1_%2",_tag,configName _class];
 	private _testClass = uiNamespace getVariable _varName;
 
-	if (isNil {_testClass}) then {
+	if (isNil {_testClass} || isFilePatchingEnabled) then {
 		uiNamespace setvariable [_varName, [_file] call _fnc_loadFile];
 		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 	} else {
-		if (isFilePatchingEnabled) then {
-			missionNamespace setvariable [_varName,[_file] call _fnc_loadFile];
-		} else {
-			missionNamespace setvariable [_varName,_testClass];
-		};
+		missionNamespace setvariable [_varName,_testClass];
 	};
-	XPS_UT_TestBuilder call ["GetInstance"] call ["AddClass",[_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName]];
+	XPS_UT_TestClasses call ["GetInstance"] call ["AddClass",[_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName]];
 };
 
 {

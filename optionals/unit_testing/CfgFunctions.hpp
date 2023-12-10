@@ -12,5 +12,8 @@ class CfgFunctions {
 				preInit = 1;
 			};
 		};
+		class General {
+			XPS_CFG_FNC(openTestConsoleDialog);
+		};
 	};
 };

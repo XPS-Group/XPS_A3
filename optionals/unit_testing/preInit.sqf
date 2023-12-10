@@ -15,18 +15,18 @@ diag_log text "[XPS UT preInit]";
 
 // Singleton Class Instantiations ------------------------------------------
 /* -------------------------------------------------------------------------
-Variable: unit_testing. XPS_UT_TestBuilder
+Variable: unit_testing. XPS_UT_TestClasses
 	<Singleton>
 
 Description:
 	A <HashmapObject> which is used to perform and record Unit Tests
 
-	See <XPS_UT_typ_TestBuilder> for more info on operations.
+	See <XPS_UT_typ_TestClasses> for more info on operations.
 
 Returns: 
-	<Singleton> - of <XPS_UT_typ_TestBuilder>
+	<Singleton> - of <XPS_UT_typ_TestClasses>
 ---------------------------------------------------------------------------*/
-["XPS_UT_TestBuilder",XPS_UT_typ_TestBuilder,["XPS_UT_typ_TestClass"]] call XPS_fnc_createSingleton;
+["XPS_UT_TestClasses",XPS_UT_typ_TestClasses,["XPS_UT_typ_TestClass"]] call XPS_fnc_createSingleton;
 
 // Static Class Instantiations --------------------------------------------
 /* -------------------------------------------------------------------------

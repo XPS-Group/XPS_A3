@@ -45,17 +45,16 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
+		diag_log "Creating V";
 		params ["_display"];
 		_self set ["_displayHandle",_display];
 		private _viewModel = createhashmapobject [XPS_UT_typ_TestConsoleViewModel];
 		_self set ["_viewModel",_viewModel];
-		_viewModel get "CollectionChanged" call ["Add",[_self,"onCollectionChanged"]];
-		_viewModel call ["TEST"];
+		_viewModel get "UpdateUnitTest" call ["Add",[_self,"onUpdateUnitTest"]];
+		_viewModel get "StateChanged" call ["Add",[_self,"onTestServiceStateChanged"]];
 	}],
 	["#delete",{
-		_self get "_viewModel" get "CollectionChanged" call ["Remove",[_self,"onCollectionChanged"]];
-		_self set ["_viewModel",nil];
-		systemchat "Deleteing V";
+		diag_log "Deleting V";
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -72,32 +71,102 @@ Returns:
 	["_viewModel",nil],
 	["_displayName","XPS_UT_TestConsole_display"],
 	["_displayHandle",displayNull],
-	["onCollectionChanged",{
-		diag_log _this;
+	["clearSelected",{
+		private _display = _self get "_displayHandle";
+		private _listbox = _display displayCtrl 1500;
+		_listBox lnbsetcurselrow -1;
+	}],
+	["onTestServiceStateChanged",{
 		params ["_sender","_args"];
-		_args params ["_method","_index","_item"];
-		_item params ["_data","_isSelected","_testclass","_testmethod","_result"];
+		_args params ["_state"];
+
+		private _display = _self get "_displayHandle";
+		switch (_state) do {
+			case "Running" : {
+				_display displayCtrl 1400 ctrlEnable false;
+				_display displayCtrl 1401 ctrlEnable false;
+				_display displayCtrl 1600 ctrlEnable false;
+				_display displayCtrl 1601 ctrlEnable false;
+				_display displayCtrl 1602 ctrlEnable false;
+				_display displayCtrl 1603 ctrlEnable false;
+			};
+			case "Reset" : {
+				_display displayCtrl 1400 ctrlEnable true;
+				_display displayCtrl 1401 ctrlEnable true;
+				_display displayCtrl 1600 ctrlEnable true;
+				_display displayCtrl 1601 ctrlEnable true;
+				_display displayCtrl 1602 ctrlEnable false;
+				_display displayCtrl 1603 ctrlEnable true;
+			};
+			case "Finished" : {
+				_display displayCtrl 1400 ctrlEnable true;
+				_display displayCtrl 1401 ctrlEnable true;
+				_display displayCtrl 1600 ctrlEnable false;
+				_display displayCtrl 1601 ctrlEnable false;
+				_display displayCtrl 1602 ctrlEnable true;
+				_display displayCtrl 1603 ctrlEnable true;
+			};
+		};
+	}],
+	["onUpdateUnitTest",{
+		params ["_sender","_args"];
+		_args params ["_eventType","_args2"];
+		_args2 params ["_index","_data"];
 		
 		private _display = _self get "_displayHandle";
 		private _listbox = _display displayCtrl 1500 ;
-		switch (_method) do {
-			case "AddItem" : {
-				private _row = _listbox lnbAddRow [""];
-				if (_isSelected) then {_listBox lnbSetPicture [[_row,0],"\A3\ui_f\data\map\groupicons\waypoint.paa"];};	
-				_listBox lnbSetText [[_row,1],_testclass];
-				_listBox lnbSetText [[_row,2],_testmethod];
-				_listBox lnbSetText [[_row,3],_result];
+
+		if (_eventType isNotEqualTo "Updated") then {
+			//private _color = [[1,1,1,1],[0,0,1,0.5]] select (_data get "MethodName" isEqualTo "");
+
+			switch (_eventType) do {
+				case "Added" : {
+					private _id = [_data get "ClassName",_data get "MethodName"];
+					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" isEqualTo "");
+					private _testMethod = _data get "MethodName";
+					private _result = _data get "Result";
+					private _isSelected = _data get "IsSelected";
+					private _row = _listbox lnbAddRow [""];
+					_listBox lnbSetData [[_row,0],_id];
+					if (_isSelected) then {_listBox lnbSetPicture [[_row,0],"\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_checked_ca.paa"];};	
+					_listBox lnbSetText [[_row,1],_testclass];
+					_listBox lnbSetText [[_row,2],_testmethod];
+					_listBox lnbSetText [[_row,3],_result];
+					_listBox lnbSetColor [[_row,3],[0,1,1,1]];
+					_listBox lnbSetText [[_row,4],""];
+				};
+				case "Removed" : {
+					_listBox lnbDeleteRow _index;
+				};
+				case "Replaced" : {
+					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" isEqualTo "");
+					private _testMethod = _data get "MethodName";
+					private _result = _data get "Result";
+					private _isSelected = _data get "IsSelected";
+					_listBox lnbSetPicture [[_index,0],["\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_unchecked_ca.paa","\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_checked_ca.paa"] select _isSelected];	
+					_listBox lnbSetText [[_index,1],_testclass];
+					_listBox lnbSetText [[_index,2],_testmethod];
+					_listBox lnbSetText [[_index,3],_result];
+				};
 			};
-			case "RemoveItem" : {
-				_listBox lnbDeleteRow _index;
+		} else {
+			_data params ["_property","_value"];
+			switch (_property) do {
+				case "IsSelected" : {
+					_listBox lnbSetPicture [[_index,0],["\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_unchecked_ca.paa","\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_checked_ca.paa"] select _value];	
+				};
+				case "Result" : {
+					_listBox lnbSetText [[_index,3],_value];
+					switch (_value) do {
+						case "Passed" : {_listBox lnbSetColor [[_index,3],[0,1,0,1]];};
+						case "Failed" : {_listBox lnbSetColor [[_index,3],[1,0,0,1]];};
+						default {_listBox lnbSetColor [[_index,3],[0,1,1,1]];};
+					};
+				};
 			};
-			case "SetItem" : {
-				_listBox lnbSetPicture [[_index,0],["","\A3\ui_f\data\map\groupicons\waypoint.paa"] select _isSelected];	
-				_listBox lnbSetText [[_index,1],_testclass];
-				_listBox lnbSetText [[_index,2],_testmethod];
-				_listBox lnbSetText [[_index,3],_result];
-			};
-		}
+
+		};
+
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: myProp
@@ -130,6 +199,9 @@ Returns:
 		_object* - <Object> - (Optional - Default : objNull) 
 		_var1* - <String> - (Optional - Default : "") 
 	-----------------------------------------------------------------------------*/
+	["XPS_UT_TestConsole_display_load",{
+		_self get "_viewModel" call ["LoadTests"];
+	}],
 	["XPS_UT_TestConsole_select_buttonClick",{
 		private _row = lnbCurSelRow 1500;
 		_self get "_viewModel" call ["AddToSelected",_row];
@@ -139,14 +211,40 @@ Returns:
 		_self get "_viewModel" call ["RemoveFromSelected",_row];
 	}],
 	["XPS_UT_TestConsole_tests_LBSelChanged",{
+		params ["_control", "_lbCurSel"];
+		private _display = _self get "_displayHandle";
+		private _listbox = _display displayCtrl 1501;
+		if (_lbCurSel < 0) exitwith {lnbClear _listbox;};
+		private _details = _self get "_viewModel" call ["GetDetails",_lbCurSel];
 
+		lnbClear _listbox;
+		{_listBox lnbAddRow [_x#0,_x#1];} foreach _details;
 	}],
-	["Close",{
-		private _display = _self getOrDefault ["_displayHandle",displayNull];
-		if !(isNull _display) then {
-			_display setVariable ["xps_view",nil];
-			_display closeDisplay 1;
-			_self set ["_displayHandle",displayNull];
-		};
+	["XPS_UT_TestConsole_display_unLoad",{
+		_self set ["_displayHandle",displayNull];
+		private _vm = _self get "_viewModel";
+		_self set ["_viewModel",nil];
+		_vm get "UpdateUnitTest" call ["Remove",[_self,"onUpdateUnitTest"]];
+		_vm call ["Close"];
+	}],
+	["XPS_UT_TestConsole_reset_buttonClick",{
+		_self call ["clearSelected"];
+		_self get "_viewModel" call ["Reset"];
+	}],
+	["XPS_UT_TestConsole_reload_buttonClick",{
+		_self call ["clearSelected"];
+		_self get "_viewModel" call ["Reload"];
+	}],
+	["XPS_UT_TestConsole_close_buttonClick",{
+		// private _display = _self get "_displayHandle";
+		closeDialog 2;
+	}],
+	["XPS_UT_TestConsole_runAll_buttonClick",{
+		_self call ["clearSelected"];
+		_self get "_viewModel" call ["RunAll"];
+	}],
+	["XPS_UT_TestConsole_runSelected_buttonClick",{
+		_self call ["clearSelected"];
+		_self get "_viewModel" call ["RunSelected"];
 	}]
 ]

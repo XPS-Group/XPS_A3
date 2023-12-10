@@ -36,5 +36,6 @@ Authors:
 	["GetItem","CODE"],
 	["GetItems","CODE"],
 	["RemoveItem","CODE"],
-	["SetItem","CODE"]
+	["SetItem","CODE"],
+	["UpdateItem","CODE"]
 ]
