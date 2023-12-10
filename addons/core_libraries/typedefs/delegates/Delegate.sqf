@@ -43,7 +43,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["#create",{
 		if !(isnil "_this") then {
-			_self set ["_signature",[_this]];
+			_self set ["_signature",_this];
 		} else {
 			_self set ["_signature",[]];
 		};
@@ -96,12 +96,12 @@ Returns:
 	["Attach",{
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil",_this]]};
 		//Deep copy the array
-		if (_this isEqualType []) then {_this = +_this};
+		//if (_this isEqualType []) then {_this = +_this};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
-				{_this#1 in keys _this#0 && 					//check methodname exists...
-				{_this#0 get _this#1 isEqualType {}}}}			//if methodname is type code - we're good
+				{(_this#1) in keys (_this#0) && 					//check methodname exists...
+				{(_this#0) get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
 				_self set ["_pointer",_this];
 				true;
@@ -132,7 +132,7 @@ Returns:
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
 	["Invoke",{
-		if !([_this] isEqualTypeParams (_self get "_signature")) exitwith {
+		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};
 		private _pointer = _self get "_pointer";

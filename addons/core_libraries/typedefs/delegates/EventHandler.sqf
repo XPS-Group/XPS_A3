@@ -48,7 +48,7 @@ Throws:
 	["#create",{
 		params [["_mcDelegate",nil,[createhashmap]]];
 		if (isNil "_mcDelegate") then {
-			throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil",_this]];
+			throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
 		};
 		if (!(CHECK_IFC1(_mcDelegate,XPS_ifc_IMultiCastDelegate))) then {
 			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];

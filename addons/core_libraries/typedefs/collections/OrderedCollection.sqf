@@ -58,9 +58,9 @@ Returns:
         Removes all items from collection.
     ----------------------------------------------------------------------------*/
 	["Clear",{
-        {
-            _self call ["RemoveItem",[_x]];
-        } foreach (keys (_self get "_listArray"));
+        while {count (_self get "_listArray") > 0} do {
+            _self call ["RemoveItem",[-1]];
+        }
 	}],
     /*----------------------------------------------------------------------------
     Method: Count
