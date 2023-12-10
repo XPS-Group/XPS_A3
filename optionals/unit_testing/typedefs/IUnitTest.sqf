@@ -10,14 +10,20 @@ Authors:
 	Crashdome
 ----------------------------------------------------------------------------
 	
-	Method: GetDataArray
-		<Code>
+	Property:  ClassName
+	<String>
+
+	Property:  MethodName
+	<String>
 	
-	Method: SetSelected
-		<Code>
+	Property:  Result
+	<String>
 	
-	Method: SetTestResult
-		<Code>
+	Property:  Details
+	<Array>
+	
+	Property:  IsSelected
+	<Boolean>
 	
 ---------------------------------------------------------------------------- */
 [

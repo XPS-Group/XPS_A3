@@ -11,8 +11,14 @@ Authors:
 ----------------------------------------------------------------------------
 
 	Property: Description
+	<String>
+
+	Method: FinalizeTest	
+
+	Method: InitTest
 
 	Property: TestOrder
+	<Array>
 
 ---------------------------------------------------------------------------- */
 [
