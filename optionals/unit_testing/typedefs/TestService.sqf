@@ -85,21 +85,21 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["initTest",{
 		params ["_class"];
-		_self get "_unitTestCollection" call ["UpdateItem",[[_class get "Description",""],["Result","Initializing"]]];
+		_self call ["updateTest",[[_class get "Description",""],["Result","Initializing"]]];
 		_class call ["InitTest"];
-		_self get "_unitTestCollection" call ["UpdateItem",[[_class get "Description",""],["Result","Inititalized"]]];
+		_self call ["updateTest",[[_class get "Description",""],["Result","Inititalized"]]];
 
 	}],
 	["runTest",{
 		params ["_class","_method"];
 		diag_log text str [_class get "Description",_method];
-		_self get "_unitTestCollection" call ["UpdateItem",[[_class get "Description",_method],["Result","Running"]]];
+		_self call ["updateTest",[[_class get "Description",_method],["Result","Running"]]];
 		private _startTime = diag_ticktime;
 		try {
 			_class call [_method];
-			_self get "_unitTestCollection" call ["UpdateItem",[[_class get "Description",_method],["Result","Passed"]]];
+			_self call ["updateTest",[[_class get "Description",_method],["Result","Passed"]]];
 		} catch {
-			_self get "_unitTestCollection" call ["UpdateItem",[[_class get "Description",_method],["Result","Failed"]]];
+			_self call ["updateTest",[[_class get "Description",_method],["Result","Failed"]]];
 			if (_exception isEqualType createhashmap && {
 				count ((_exception getOrDefault ["#type",[]]) arrayIntersect ["XPS_UT_typ_AssertFailedException","XPS_UT_typ_AssertInconclusiveException"]) > 0}
 			) then {
@@ -117,12 +117,11 @@ Returns:
 	}],
 	["finalizeTest",{
 		params ["_class"];
-		_self get "_unitTestCollection" call ["UpdateItem",[[_class get "Description",""],["Result","Finalizing"]]];
+		_self call ["updateTest",[[_class get "Description",""],["Result","Finalizing"]]];
 		_class call ["FinalizeTest"];
-		_self get "_unitTestCollection" call ["UpdateItem",[[_class get "Description",""],["Result","Finished"]]];
+		_self call ["updateTest",[[_class get "Description",""],["Result","Finished"]]];
 	}],
-	["updateItem",{
-		params ["_classID","_args"];
+	["updateTest",{
 		private _list = _self get "_unitTestCollection";
 		_list call ["UpdateItem",_this];
 	}],
@@ -163,10 +162,10 @@ Returns:
 		_self get "_onStateChanged" call ["Invoke",[_self,["Reset"]]];
 	}],
 	["AddToSelected",{
-		_self call ["updateItem",[_this,["IsSelected",true]]];
+		_self call ["updateTest",[_this,["IsSelected",true]]];
 	}],
 	["RemoveFromSelected",{
-		_self call ["updateItem",[_this,["IsSelected",false]]];
+		_self call ["updateTest",[_this,["IsSelected",false]]];
 	}],
 	["RunAll",{
 		_self get "_onStateChanged" call ["Invoke",[_self,["Running"]]];
@@ -214,14 +213,15 @@ Returns:
 		_self get "_testClassCollection" call ["Clear"];
 		_self get "_unitTestCollection" call ["Clear"];
 		_self call ["LoadTests"];
+		_self get "_onStateChanged" call ["Invoke",[_self,["Reset"]]];
 	}],
-	["Reset",{
-		
+	["Reset",{		
 		private _unitTests = _self get "_unitTestCollection"; 
 		{
 			_unitTests call ["UpdateItem",[[_x get "ClassName",_x get "MethodName"],["Result","Not Run"]]];
 			_x get "Details" resize 0;
 		} foreach (_unitTests call ["GetItems"]);
+		_self get "_onStateChanged" call ["Invoke",[_self,["Reset"]]];
 	}],
 	["GetDetails",{
 		+(_self get "_unitTestCollection" call ["GetItem",[_this]] get "Details");

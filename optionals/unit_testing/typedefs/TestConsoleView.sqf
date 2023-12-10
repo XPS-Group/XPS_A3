@@ -81,7 +81,6 @@ Returns:
 		_args params ["_state"];
 
 		private _display = _self get "_displayHandle";
-		private _buttons = [];
 		switch (_state) do {
 			case "Running" : {
 				_display displayCtrl 1400 ctrlEnable false;
@@ -89,6 +88,7 @@ Returns:
 				_display displayCtrl 1600 ctrlEnable false;
 				_display displayCtrl 1601 ctrlEnable false;
 				_display displayCtrl 1602 ctrlEnable false;
+				_display displayCtrl 1603 ctrlEnable false;
 			};
 			case "Reset" : {
 				_display displayCtrl 1400 ctrlEnable true;
@@ -96,13 +96,15 @@ Returns:
 				_display displayCtrl 1600 ctrlEnable true;
 				_display displayCtrl 1601 ctrlEnable true;
 				_display displayCtrl 1602 ctrlEnable false;
+				_display displayCtrl 1603 ctrlEnable true;
 			};
 			case "Finished" : {
 				_display displayCtrl 1400 ctrlEnable true;
 				_display displayCtrl 1401 ctrlEnable true;
-				_display displayCtrl 1600 ctrlEnable true;
-				_display displayCtrl 1601 ctrlEnable true;
+				_display displayCtrl 1600 ctrlEnable false;
+				_display displayCtrl 1601 ctrlEnable false;
 				_display displayCtrl 1602 ctrlEnable true;
+				_display displayCtrl 1603 ctrlEnable true;
 			};
 		};
 	}],
@@ -126,7 +128,7 @@ Returns:
 					private _isSelected = _data get "IsSelected";
 					private _row = _listbox lnbAddRow [""];
 					_listBox lnbSetData [[_row,0],_id];
-					if (_isSelected) then {_listBox lnbSetPicture [[_row,0],"\A3\ui_f\data\map\groupicons\waypoint.paa"];};	
+					if (_isSelected) then {_listBox lnbSetPicture [[_row,0],"\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_checked_ca.paa"];};	
 					_listBox lnbSetText [[_row,1],_testclass];
 					_listBox lnbSetText [[_row,2],_testmethod];
 					_listBox lnbSetText [[_row,3],_result];
@@ -141,7 +143,7 @@ Returns:
 					private _testMethod = _data get "MethodName";
 					private _result = _data get "Result";
 					private _isSelected = _data get "IsSelected";
-					_listBox lnbSetPicture [[_index,0],["","\A3\ui_f\data\map\groupicons\waypoint.paa"] select _isSelected];	
+					_listBox lnbSetPicture [[_index,0],["\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_unchecked_ca.paa","\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_checked_ca.paa"] select _isSelected];	
 					_listBox lnbSetText [[_index,1],_testclass];
 					_listBox lnbSetText [[_index,2],_testmethod];
 					_listBox lnbSetText [[_index,3],_result];
@@ -151,7 +153,7 @@ Returns:
 			_data params ["_property","_value"];
 			switch (_property) do {
 				case "IsSelected" : {
-					_listBox lnbSetPicture [[_index,0],["","\A3\ui_f\data\map\groupicons\waypoint.paa"] select _value];	
+					_listBox lnbSetPicture [[_index,0],["\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_unchecked_ca.paa","\A3\ui_f\data\GUI\RscCommon\RscCheckbox\Checkbox_checked_ca.paa"] select _value];	
 				};
 				case "Result" : {
 					_listBox lnbSetText [[_index,3],_value];
