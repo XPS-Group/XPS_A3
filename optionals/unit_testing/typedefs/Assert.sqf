@@ -40,10 +40,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["AreEqual",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if !(_arg1 isEqualTo _arg2) then {
-			_self call ["Fail",["AreEqual",_this#2,createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTo _arg2)}) then {
+			_self call ["Fail",["AreEqual",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: AreNotEqual 
@@ -63,10 +63,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["AreNotEqual",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if (_arg1 isEqualTo _arg2) then {
-			_self call ["Fail",["AreNotEqual",_this#2,createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTo _arg2}) then {
+			_self call ["Fail",["AreNotEqual",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: AreSame 
@@ -85,11 +85,11 @@ Description:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["AreSame",{
-		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if !(_arg1 isEqualRef _arg2) then {
-			_self call ["Fail",["AreSame",_this#2,createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		params [["_arg1",objNull,[]],["_arg2",objNull,[]],["_message",nil,[""]]];
+		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualRef _arg2)}) then {
+			_self call ["Fail",["AreSame",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: AreNotSame 
@@ -108,11 +108,11 @@ Description:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["AreNotSame",{
-		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if (_arg1 isEqualRef _arg2) then {
-			_self call ["Fail",["AreNotSame",_this#2,createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		params [["_arg1",objNull,[]],["_arg2",objNull,[]],["_message",nil,[""]]];
+		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualRef _arg2}) then {
+			_self call ["Fail",["AreNotSame",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: Fail 
@@ -170,10 +170,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsEqualType",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if !(_arg1 isEqualType _arg2) then {
-			_self call ["Fail",["IsEqualType",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualType _arg2)}) then {
+			_self call ["Fail",["IsEqualType",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotEqualType 
@@ -193,10 +193,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualType",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if (_arg1 isEqualType _arg2) then {
-			_self call ["Fail",["IsNotEqualType",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualType _arg2}) then {
+			_self call ["Fail",["IsNotEqualType",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsEqualTypeAll 
@@ -216,10 +216,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeAll",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if !(_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsEqualTypeAll",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeAll _arg2)}) then {
+			_self call ["Fail",["IsEqualTypeAll",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotEqualTypeAll 
@@ -239,10 +239,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeAll",{
 		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if (_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeAll",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeAll _arg2}) then {
+			_self call ["Fail",["IsNotEqualTypeAll",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsEqualTypeAny 
@@ -262,10 +262,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeAny",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
-		if !(_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsEqualTypeAny",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeAny _arg2)}) then {
+			_self call ["Fail",["IsEqualTypeAny",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotEqualTypeAny 
@@ -285,10 +285,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeAny",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
-		if (_arg1 isEqualTypeAll _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeAny",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeAny _arg2}) then {
+			_self call ["Fail",["IsNotEqualTypeAny",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsEqualTypeArray 
@@ -308,10 +308,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeArray",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
-		if !(_arg1 isEqualTypeArray _arg2) then {
-			_self call ["Fail",["IsEqualTypeArray",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeArray _arg2)}) then {
+			_self call ["Fail",["IsEqualTypeArray",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotEqualTypeArray 
@@ -331,10 +331,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeArray",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
-		if (_arg1 isEqualTypeArray _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeArray",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeArray _arg2}) then {
+			_self call ["Fail",["IsNotEqualTypeArray",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsEqualTypeParams 
@@ -354,10 +354,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsEqualTypeParams",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
-		if !(_arg1 isEqualTypeParams _arg2) then {
-			_self call ["Fail",["IsEqualTypeParams",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeParams _arg2)}) then {
+			_self call ["Fail",["IsEqualTypeParams",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotEqualTypeParams 
@@ -377,10 +377,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsNotEqualTypeParams",{
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
-		if (_arg1 isEqualTypeParams _arg2) then {
-			_self call ["Fail",["IsNotEqualTypeParams",_this#2, createhashmapfromarray [["_arg1",_arg1],["_arg2",_arg2]]]]
+		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeParams _arg2}) then {
+			_self call ["Fail",["IsNotEqualTypeParams",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#2]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsFalse 
@@ -402,7 +402,7 @@ Description:
 		if (_bool) then {
 			_self call ["Fail",["IsFalse",_this#1, createhashmapfromarray [["_bool",_bool]]]]
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsTrue 
@@ -424,7 +424,7 @@ Description:
 		if !(_bool) then {
 			_self call ["Fail",["IsTrue",_this#1, createhashmapfromarray [["_bool",_bool]]]]
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsInstanceOfType 
@@ -445,10 +445,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsInstanceOfType",{
 		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
-		if !(_type in _hashmapobject get "#type") then {
+		if !(_type in (_hashmapobject get "#type")) then {
 			_self call ["Fail",["IsInstanceOfType",_this#2, createhashmapfromarray [["_hashmapobject",_hashmapobject],["_type",_type]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotInstanceOfType 
@@ -469,10 +469,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["IsNotInstanceOfType",{
 		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
-		if (_type in _hashmapobject get "#type") then {
+		if (_type in (_hashmapobject get "#type")) then {
 			_self call ["Fail",["IsNotInstanceOfType",_this#2, createhashmapfromarray [["_hashmapobject",_hashmapobject],["_type",_type]]]];
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNil 
@@ -494,7 +494,7 @@ Description:
 		if !(isNil {_arg}) then {
 			_self call ["Fail",["IsNil",_this#1, createhashmapfromarray [["_arg",_arg]]]]
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotNil 
@@ -516,7 +516,7 @@ Description:
 		if (isNil {_arg}) then {
 			_self call ["Fail",["IsNotNil",_this#1, createhashmapfromarray [["_arg",_arg]]]]
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNull 
@@ -550,7 +550,7 @@ Description:
 		if !(isNull _arg) then {
 			_self call ["Fail",["IsNull",_this#1, createhashmapfromarray [["_arg",_arg]]]]
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: IsNotNull 
@@ -584,7 +584,7 @@ Description:
 		if (isNull _arg) then {
 			_self call ["Fail",["IsNotNull",_this#1, createhashmapfromarray [["_arg",_arg]]]]
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: ThrowsException 
@@ -617,7 +617,7 @@ Description:
 				_self call ["Fail",["ThrowsException",_this#2, createhashmapfromarray [["_exception",_exception]]]];
 			};
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: WithinRange 
@@ -641,7 +641,7 @@ Description:
 		if (_num > _max || _num < _min) then {
 			_self call ["Fail",["WithinRange",_this#3, createhashmap]]
 		};
-		nil;
+		true;
 	}],
 	/*-----------------------------------------------------------------------------
 	Method: OutOfRange 
@@ -665,6 +665,6 @@ Description:
 		if (_num <= _max && _num >= _min) then {
 			_self call ["Fail",["OutOfRange",_this#3, createhashmap]]
 		};
-		nil;
+		true;
 	}]
 ]

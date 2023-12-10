@@ -134,11 +134,13 @@ Returns:
 
 	}],
 	["AddToSelected",{
-		private _classID = _self get "_testCollection" call ["GetItem",_this];
+		if (_this < 0) exitwith {};
+		private _classID = _self get "_testCollection" call ["GetItem",[_this]];
 		_self get "_testService" call ["AddToSelected",_classID];
 	}],
 	["RemoveFromSelected",{
-		private _classID = _self get "_testCollection" call ["GetItem",_this];
+		if (_this < 0) exitwith {};
+		private _classID = _self get "_testCollection" call ["GetItem",[_this]];
 		_self get "_testService" call ["RemoveFromSelected",_classID];
 	}],
 	["LoadTests",{_self get "_testService" call ["LoadTests"]}],
@@ -162,6 +164,7 @@ Returns:
 		_self get "_testService" call ["Reload"];
 	}],
 	["GetDetails",{
+		if (_this < 0) exitwith {};
 		_self get "_testService" call ["GetDetails",_self get "_testCollection" call ["GetItem",[_this]]];
 	}],
 	["StateChanged",nil],

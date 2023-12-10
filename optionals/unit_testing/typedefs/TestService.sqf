@@ -45,8 +45,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["#create",{
 		diag_log "Creating Service";
-		_self set ["_testClassCollection",createhashmapobject [XPS_typ_TypeCollection,
-				createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_UT_typ_TestClass"]]]]];
+		_self set ["_testClassCollection",createhashmapobject [XPS_typ_OrderedCollection]];
 
 		_self set ["_unitTestCollection",createhashmapobject [XPS_typ_TypeCollectionN,
 				createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_UT_typ_UnitTest"]]]]];
@@ -95,8 +94,12 @@ Returns:
 		diag_log text str [_class get "Description",_method];
 		_self call ["updateTest",[[_class get "Description",_method],["Result","Running"]]];
 		private _startTime = diag_ticktime;
+		private _result = false;
 		try {
-			_class call [_method];
+			_result = _class call [_method];
+			if (isNil "_result" || {!_result}) exitwith {
+				_self call ["updateTest",[[_class get "Description",_method],["Result","Failed"]]];
+			};
 			_self call ["updateTest",[[_class get "Description",_method],["Result","Passed"]]];
 		} catch {
 			_self call ["updateTest",[[_class get "Description",_method],["Result","Failed"]]];
@@ -153,7 +156,7 @@ Returns:
 		{
 			private _class = _x;
 			private _className = _x get "Description";
-			_classes call ["AddItem",[_className,_class]];
+			_classes call ["AddItem",[_class]];
 			_unitTests call ["AddItem",[[_className,""],createhashmapobject [XPS_UT_typ_UnitTest,[_className,""]]]];
 			{
 				_unitTests call ["AddItem",[[_className,_x],createhashmapobject [XPS_UT_typ_UnitTest,[_className,_x]]]];
