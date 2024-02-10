@@ -220,7 +220,7 @@ Returns:
 		_self get "_testClassCollection" call ["Clear"];
 		_self get "_unitTestCollection" call ["Clear"];
 		_self call ["LoadTests"];
-		_self get "_onStateChanged" call ["Invoke",[_self,["Reset"]]];
+		_self get "_onStateChanged" call ["Invoke",[_self,["Reload"]]];
 	}],
 	["Reset",{		
 		private _unitTests = _self get "_unitTestCollection"; 

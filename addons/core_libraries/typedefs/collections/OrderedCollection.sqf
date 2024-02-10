@@ -59,7 +59,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Clear",{
         while {count (_self get "_listArray") > 0} do {
-            _self call ["RemoveItem",[-1]];
+            _self call ["RemoveItem",[count (_self get "_listArray")-1]];
         }
 	}],
     /*----------------------------------------------------------------------------

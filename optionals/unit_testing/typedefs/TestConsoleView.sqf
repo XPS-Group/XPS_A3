@@ -31,14 +31,14 @@ Returns:
     	call ["create",[_display]]
     	---
     
-		Creates a ViewModel (<XPS_UT_typ_TestConsoleViewModel>) and attaches the 
-		<onUpdateUnittest> and <onTestServiceStateChanged> methods to the viewModel's 
+		Additionally creates a ViewModel (<XPS_UT_typ_TestConsoleViewModel>) and attaches the 
+		<onUpdateUnitTest> and <onTestServiceStateChanged> methods to the viewModel's 
 		Event Handlers.
+
 	Parameters: 
 		_display - <Display> - The display handle this view is assigned to
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		diag_log "Creating V";
 		params ["_display"];
 		_self set ["_displayHandle",_display];
 		private _viewModel = createhashmapobject [XPS_UT_typ_TestConsoleViewModel];

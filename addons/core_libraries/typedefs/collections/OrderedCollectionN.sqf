@@ -132,10 +132,16 @@ Returns:
 
         <XPS_ifc_ICollectionNotifier>
 
-        Handles Subscriptions to the onCollectionChangedEvent
-
     Returns:
         <XPS_typ_EventHandler>
+
+    Signature: 
+        [_sender, [_methodName, _item] ]
+
+        _sender - <XPS_typ_OrderedCollection> - this object
+        _methodName - <String> - "AddItem", "RemoveItem", "SetItem", "UpdateItem"
+        _item - the item that changed or in case of <AddItem> an <array> in form [_index, _item]
+
     ----------------------------------------------------------------------------*/
     ["CollectionChanged",nil]
 ]

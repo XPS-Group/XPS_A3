@@ -239,6 +239,18 @@ Comment Type: HMReserved
       implement, implements
 
 
+Comment Type: EventSignature
+
+   Display Name: Signature
+   Plural Display Name: Signatures
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      signature, signatures
+
+
 # Each Natural Docs comment has a corresponding type which determine its
 # behavior.  You can define your own here or override the settings of the
 # existing ones.
