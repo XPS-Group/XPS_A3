@@ -1,5 +1,6 @@
-private_store
-docs/config/working data
+.vscode/
+private_store/
+docs/config/working data/
 docs/noUpload
 .hemttout/
 keys/*
