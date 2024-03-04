@@ -417,8 +417,8 @@ Flags:
 	["CalculateDrivePath", compileFinal {
 		params [["_start",nil,[[]],[2,3]],["_end",nil,[[]],[2,3]],["_path",[],[[]]],["_side","",[""]]];
 
-		if (isNil "_start") then {_start = (path deleteAt 0) get "PosASL"};
-		if (isNil "_end") then {_end = (path deleteAt -1) get "PosASL"};
+		if (isNil "_start") then {_start = (_path deleteAt 0) get "PosASL"};
+		if (isNil "_end") then {_end = (_path deleteAt (count _path -1)) get "PosASL"};
 		if !(_side in ["RHDrive","LHDrive","RHWalk","LHWalk"]) then {_side = "RHDrive"};
 
 		_self call ["SmoothPath",[_path]];

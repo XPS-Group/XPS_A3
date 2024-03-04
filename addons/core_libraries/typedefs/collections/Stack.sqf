@@ -136,7 +136,8 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Pop",{
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_stackArray" deleteat -1;
+		    private _stack = _self get "_stackArray";
+            _stack deleteat (count _stack - 1);
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------
