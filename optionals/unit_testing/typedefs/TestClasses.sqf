@@ -35,7 +35,7 @@ Description:
 		sealed
 		noCopy
 	----------------------------------------------------------------------------*/
-	["#flags",["sealed","nocopy"]],
+	//["#flags",["sealed","nocopy"]],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
@@ -78,12 +78,12 @@ Description:
         _self get "classOrder" pushback (_self get "_collection" call ["AddItem",[_key,_item]]);
     }],
     /* -----------------------------------------------------------------------
-    Method: BuildUnitTests
+    Method: GetClasses
 
         ---prototype
-        call ["BuildUnitTests"];
+        call ["GetClasses"];
 
-		Builds a UnitTest Collection from added <XPS_typ_TestClasses: XPS_typ_TestClass>.
+		Gets Collection from added <XPS_typ_TestClasses: XPS_typ_TestClass>.
 
     -------------------------------------------------------------------------*/ 
 	["GetClasses",{

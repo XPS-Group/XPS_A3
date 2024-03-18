@@ -55,8 +55,8 @@ Returns: Nothing
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
-_debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
-_debugHeaders = [_debugHeaders] param [0,false,[true]];
+// _debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
+// _debugHeaders = [_debugHeaders] param [0,false,[true]];
 
 private _privateKeys = [];
 private _result = true;
@@ -182,15 +182,18 @@ try
 			_a = _a + 1;
 		};
 
+#ifndef XPS_NO_OBFUSCATION
 		// Finally record if private key
 		if (_key isEqualType "" && {_key find "_" == 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
 			_keyPair set [0,_uid]
 		};
+#endif
 
 		_i = _i + 1;
 	};
+
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
 	// Add create / delete methods if they dont exist prior to changing private keys

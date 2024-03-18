@@ -2,6 +2,10 @@
 
 #define ADDON PREFIX##_##COMPONENT
 
+#ifdef __A3_DEBUG__
+	#define XPS_NO_OBFUSCATION 1
+#endif
+
 /* ---------------------------------------*/
 //Type Definitions and Interfaces
 #define VARNAME(var1,var2,var3) var1##_##var2##_##var3

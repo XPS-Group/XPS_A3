@@ -132,7 +132,7 @@ Returns:
 		none
 		
 	Returns:
-		<Anything> - removes and returns last element in the queue or nil if empty
+		<Anything> - removes and returns first element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
 	["Dequeue",{
         if !(_self call ["IsEmpty"]) then {
