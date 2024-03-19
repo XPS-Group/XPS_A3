@@ -35,7 +35,7 @@ Description:
 		sealed
 		noCopy
 	----------------------------------------------------------------------------*/
-	//["#flags",["sealed","nocopy"]],
+	["#flags",["sealed","nocopy"]],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
@@ -94,5 +94,34 @@ Description:
 			_dataArray pushback _class;
 		} foreach _classOrder;
 		_dataArray;
+	}],
+    /* -----------------------------------------------------------------------
+    Method: LoadClasses
+
+        ---prototype
+        call ["LoadClasses"];
+
+    Clears this object and loads Unit Test Classes defined under Enhanced_XPS_Unit_Testing base class from the following:
+
+    - configFile
+    - missionConfigFile
+    - campaignConfigFile
+
+    -------------------------------------------------------------------------*/ 
+	["LoadClasses",{
+		_self get "_collection" call ["Clear"];
+		{
+			private _configFile = _x;
+			{
+				private _prop = _x;
+				if (isClass _prop) then {
+					private _result = [[],_prop] call XPS_fnc_parseUnitTestClass;
+					if !(isnil "_result" || {_result isEqualTo []}) then {
+						{_self call ["AddClass",_x]} foreach _result;
+					};
+				};
+			} foreach configProperties [_configFile >> QXPS_UT_CFG_BASECLASSNAME];
+
+		} foreach [configFile,missionConfigFile,campaignConfigFile];
 	}]
 ];

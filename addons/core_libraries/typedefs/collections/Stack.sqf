@@ -14,6 +14,7 @@ Authors:
    
 Description:
 	A Last In First Out (LIFO) collection. 
+    A.k.a a First In Last Out (FILO) collection.
 
 Returns:
 	<HashmapObject>

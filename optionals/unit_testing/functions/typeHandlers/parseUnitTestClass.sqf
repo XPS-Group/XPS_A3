@@ -18,18 +18,20 @@ Authors:
 		<Config> - the class and assocaiated subclasses to parse 
 
 	Optional: _tag*
-		<string> - (Optiona - Default is configName of class)  
+		<string> - (Optional - Default is configName of class)  
 
 	Return: _result
-		<Boolean> - <True> is successful, otherwise false
+		<Array> - [ variableName, <object : XPS_UT_typ_TestClass>] or empty if not valid file
 
 ---------------------------------------------------------------------------- */
-if !(params [["_class",nil,[configFile]],"_tag"]) exitwith {false;};
+params [["_result",[],[[]]],["_class",nil,[configFile]],"_tag"];
 
 _tag = [_tag] param [0,configName _class,[""]];
 if (isText (_class >> "tag")) then {
 	_tag = getText (_class >> "tag");
 };
+
+private _result = if (isNil "_result") then {[]} else {_result};
 
 private _fnc_loadFile = {
 	params ["_file"];
@@ -52,11 +54,11 @@ if (isText _file) then {
 	} else {
 		missionNamespace setvariable [_varName,_testClass];
 	};
-	XPS_UT_TestClasses call ["GetInstance"] call ["AddClass",[_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName]];
+	_result pushback [_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName];
 };
 
 {
-		if (isClass _x) then {[_x,_tag] call XPS_fnc_parseUnitTestClass;};
+	if (isClass _x) then {[_result,_x,_tag] call XPS_fnc_parseUnitTestClass;};
 } foreach configProperties [_class];
 
-true;
+_result;

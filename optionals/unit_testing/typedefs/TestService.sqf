@@ -44,7 +44,7 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		diag_log "Creating Service";
+		diag_log "Creating TestService";
 		_self set ["_testClassCollection",createhashmapobject [XPS_typ_OrderedCollection]];
 
 		_self set ["_unitTestCollection",createhashmapobject [XPS_typ_TypeCollectionN,
@@ -55,7 +55,7 @@ Returns:
 		_self set ["StateChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onStateChanged"]]];
 	}],
 	["#delete",{
-		diag_log "Deleting Test Service";
+		diag_log "Deleting TestService";
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -217,6 +217,7 @@ Returns:
 		_self get "_onStateChanged" call ["Invoke",[_self,["Finished"]]];
 	}],
 	["Reload",{
+		XPS_UT_TestClasses call ["GetInstance"] call ["LoadClasses"];
 		_self get "_testClassCollection" call ["Clear"];
 		_self get "_unitTestCollection" call ["Clear"];
 		_self call ["LoadTests"];

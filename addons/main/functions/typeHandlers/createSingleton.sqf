@@ -137,11 +137,11 @@ if (isNil _varName) then {
 	private _instanceVar = "xps_" + _uid; 
 	
 	// collision proofing?
-	private _attempts = 0;
-	while {!(isNil _instanceVar) && _attempts < 100} do {
-		_instanceVar = "xps_" + call XPS_fnc_getUniqueID; 
-		_attempts = _attempts + 1;
-	};
+	// private _attempts = 0;
+	// while {!(isNil _instanceVar) && _attempts < 100} do {
+		// _instanceVar = "xps_" + call XPS_fnc_getUniqueID; 
+	// 	_attempts = _attempts + 1;
+	// };
 
 	if (_typeDef isEqualType "") then {
 		_typeDef = call compile _typeDef;
