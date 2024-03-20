@@ -86,7 +86,7 @@ Returns:
 	["RemoveItem",compileFinal {
         private _item = _self call ["XPS_typ_TypeCollection.RemoveItem",_this];
         if !(isNil "_item") then {
-            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_this]]];
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",[_this,_item]]]];
         };
         _item;
     }],

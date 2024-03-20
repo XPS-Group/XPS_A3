@@ -92,15 +92,15 @@ Returns:
 		_args params ["_method","_args2"];
 		_args2 params ["_classID","_item"];
 		
-		private _index = _self get "_testCollection" call ["FindItem",[_classID]];
+		private _index = _self get "_testCollection" call ["FindItem",_classID];
 		private _eventType = "";
 		switch (_method) do {
 			case "AddItem" : {
-				_index = _self get "_testCollection" call ["AddItem",[_classID]];
+				_index = _self get "_testCollection" call ["AddItem",_classID];
 				_eventType = "Added";
 			};
 			case "RemoveItem" : {
-				_self get "_testCollection" call ["RemoveItem",[_index]];
+				_self get "_testCollection" call ["RemoveItem",_index];
 				_eventType = "Removed";
 			};
 			case "SetItem" : {
@@ -128,7 +128,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["AddToSelected",{
 		if (_this < 0) exitwith {};
-		private _classID = _self get "_testCollection" call ["GetItem",[_this]];
+		private _classID = _self get "_testCollection" call ["GetItem",_this];
 		_self get "_testService" call ["AddToSelected",_classID];
 	}],
 	/*----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["RemoveFromSelected",{
 		if (_this < 0) exitwith {};
-		private _classID = _self get "_testCollection" call ["GetItem",[_this]];
+		private _classID = _self get "_testCollection" call ["GetItem",_this];
 		_self get "_testService" call ["RemoveFromSelected",_classID];
 	}],
 	/*----------------------------------------------------------------------------
@@ -243,7 +243,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["GetDetails",{
 		if (_this < 0) exitwith {};
-		_self get "_testService" call ["GetDetails",_self get "_testCollection" call ["GetItem",[_this]]];
+		_self get "_testService" call ["GetDetails",_self get "_testCollection" call ["GetItem",_this]];
 	}],
 	/*----------------------------------------------------------------------------
 	EventHandler: StateChanged

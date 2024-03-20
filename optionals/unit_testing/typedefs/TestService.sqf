@@ -108,7 +108,7 @@ Returns:
 			if (_exception isEqualType createhashmap && {
 				count ((_exception getOrDefault ["#type",[]]) arrayIntersect ["XPS_UT_typ_AssertFailedException","XPS_UT_typ_AssertInconclusiveException"]) > 0}
 			) then {
-				private _details = _self get "_unitTestCollection" call ["GetItem",[[_className,_method]]] get "Details";
+				private _details = _self get "_unitTestCollection" call ["GetItem",[_className,_method]] get "Details";
 				_details pushback ["Exception",_exception get "#type" select 0];
 				_details pushback ["Source",_exception get "Source"];
 				_details pushback ["Target",_exception get "Target"];
@@ -118,7 +118,7 @@ Returns:
 				throw _exception
 			}
 		};
-		_self get "_unitTestCollection" call ["GetItem",[[_className,_method]]] get "Details" pushback ["Execution Time",str (diag_tickTime - _startTime)];
+		_self get "_unitTestCollection" call ["GetItem",[_className,_method]] get "Details" pushback ["Execution Time",str (diag_tickTime - _startTime)];
 	}],
 	["finalizeTest",{
 		private _className = _class get "Description";
@@ -159,7 +159,7 @@ Returns:
 		{
 			private _class = _x;
 			private _className = _x get "Description";
-			_classes call ["AddItem",[_class]];
+			_classes call ["AddItem",_class];
 			_unitTests call ["AddItem",[[_className,""],createhashmapobject [XPS_UT_typ_UnitTest,[_className,""]]]];
 			{
 				_unitTests call ["AddItem",[[_className,_x],createhashmapobject [XPS_UT_typ_UnitTest,[_className,_x]]]];
@@ -199,13 +199,13 @@ Returns:
 			{
 				private _class = _x;
 				private _className = _class get "Description";
-				if (_service get "_unitTestCollection" call ["GetItem",[[_className,""]]] getOrDefault ["IsSelected",false]) then {
+				if (_service get "_unitTestCollection" call ["GetItem",[_className,""]] getOrDefault ["IsSelected",false]) then {
 					private _orderedList = _class get "TestOrder";
 					// Init Class
 					_service call ["initTest",[_class]];
 					//Run Class Tests
 					{
-						if (_service get "_unitTestCollection" call ["GetItem",[[_className,_x]]] getOrDefault ["IsSelected",false]) then {
+						if (_service get "_unitTestCollection" call ["GetItem",[_className,_x]] getOrDefault ["IsSelected",false]) then {
 							_service call ["runTest",[_class,_x]];
 						};
 					} foreach _orderedList;
@@ -232,7 +232,7 @@ Returns:
 		_self get "_onStateChanged" call ["Invoke",[_self,["Reset"]]];
 	}],
 	["GetDetails",{
-		+(_self get "_unitTestCollection" call ["GetItem",[_this]] get "Details");
+		+(_self get "_unitTestCollection" call ["GetItem",_this] get "Details");
 	}],
 	["StateChanged",nil],
 	["CollectionChanged",nil]

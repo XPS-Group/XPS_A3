@@ -77,7 +77,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Clear",{
         {
-            _self call ["RemoveItem",[_x]];
+            _self call ["RemoveItem",_x];
         } foreach (keys (_self get "_items"));
 	}],
     /*----------------------------------------------------------------------------
@@ -144,7 +144,7 @@ Returns:
     Method: RemoveItem
     
         --- Prototype --- 
-        call ["RemoveItem",[_key]]
+        call ["RemoveItem",_key]
         ---
 
         <XPS_ifc_ICollection>
@@ -159,14 +159,14 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["RemoveItem", compileFinal {
-        if !(params [["_key",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
-        _self get "_items" deleteAt _key;
+        if (isNil "_this") exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
+        _self get "_items" deleteAt _this;
     }],
     /* -----------------------------------------------------------------------
     Method: GetItem
 
         ---prototype
-        call ["GetItem",[_key]]
+        call ["GetItem",_key]
         ---
 
         <XPS_ifc_ICollection>
@@ -179,8 +179,8 @@ Returns:
 
     -------------------------------------------------------------------------*/ 
     ["GetItem",{
-        if !(params [["_key",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetItem",nil,_this]];};
-        _self get "_items" get _key;
+        if (isNil "_this") exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetItem",nil,_this]];};
+        _self get "_items" get _this;
     }],
     /* -----------------------------------------------------------------------
     Method: GetItems
@@ -256,7 +256,7 @@ Returns:
 	["UpdateItem",{
         if !(params [["_key",nil,[]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
         if ((_key isEqualTo "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
-        private _item = _self call ["GetItem",[_key]];
+        private _item = _self call ["GetItem",_key];
         if (_item isEqualType createhashmap) then {
             _propertyArray params ["_subkey","_value"];;
             _item set [_subkey,_value];
