@@ -131,26 +131,34 @@ _args = [_args] param [0,[],[[]]];
 
 
 if (isNil _varName) then {
-		
-	//randomize instance variable
-	private _uid = [] call XPS_fnc_createUniqueID;
-	private _instanceVar = "xps_" + _uid; 
-	
-	// collision proofing?
-	// private _attempts = 0;
-	// while {!(isNil _instanceVar) && _attempts < 100} do {
-		// _instanceVar = "xps_" + call XPS_fnc_getUniqueID; 
-	// 	_attempts = _attempts + 1;
-	// };
+				
 
+	private _instanceVar = "xps_sgltn_" + _varName; // static name for debugging
+
+	if !(XPS_DebugMode) then {
+		//Obfuscate instance variable name	
+		private _attempts = 0;
+		private _instanceVar = "_attempts"; // ensure _instanceVar is NOT nil on first attempt	
+		while {!(isNil _instanceVar) && _attempts < 100} do {
+			_instanceVar = "xps_sgltn_" + call XPS_fnc_getUniqueID; 
+			_attempts = _attempts + 1;
+		};
+	};
+
+	// First: Check if String Code
 	if (_typeDef isEqualType "") then {
 		_typeDef = call compile _typeDef;
 	};
 
-	if (_typeDEf isEqualType []) then {
+	// Second: Create hashmap if array
+	if (_typeDef isEqualType []) then {
 		_typeDef = createhashmapfromarray _typeDef;
 	};
 
+	//Throw error if not hashmap by now
+	if !(_typeDef isEqualType createhashmap) exitwith {diag_log text format["XPS_fnc_createSingleton: TypeDef for %1 was not valid.",_varName]; false};
+
+	_typeDef = +_typeDef;
 	//add noCopy
 	if ("#flags" in keys _typeDef ) then {
 		_typeDef get "#flags" pushbackUnique "noCopy";
@@ -160,13 +168,9 @@ if (isNil _varName) then {
 
 	call compile format["%1 = createhashmapobject [%2,%3];",_instanceVar,_typeDef,_args];
 
-	private _staticDef = [
-		["#str",{format["%1",_instanceVar]}],
-		["#type","XPS_typ_StaticSingletonProvider"],
-		["GetInstance",compile format["%1",_instanceVar]]
-	];
+	private _staticDefPath = "x\xps\addons\main\staticSingletonDef.sqf";
 
-	call compile format["%1 = compileFinal createhashmapobject [%2]",_varName,_staticDef];
+	[_varName,_staticDefPath] call XPS_fnc_createStaticTypeFromFile;
 
 	true;
 

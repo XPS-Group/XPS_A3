@@ -85,12 +85,12 @@ private _preCompiled = _hashmap; // In case it doesn't have a parent, we need th
 // Check for parent type
 if ("#base" in keys _hashmap) then {
 	private _pType = _hashmap get "#base";
-	if (isNil {_pType} || !(_pType isEqualType [])) exitwith {
+	if (isNil {_pType} || !(_pType isEqualTypeAny [[],createhashmap])) exitwith {
 		diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
 		_errors = true;
 	};
 
-	_preCompiled = createhashmapfromarray _pType;
+	_preCompiled = if (_pType isEqualType []) then {createhashmapfromarray _pType} else {+_pType};
 
 	private _pTypeName = _preCompiled get "#type";
 	private _keys = keys _hashmap;

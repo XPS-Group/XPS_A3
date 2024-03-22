@@ -89,7 +89,7 @@ Flags:
 		_result - <Boolean> - if node to node traversal is capable using the property <main.XPS_typ_AstarSearch.Doctrine>
 	-----------------------------------------------------------------------------*/
 	["canTraverse",compileFinal {
-		params [["_toNode",nil,[createhashmap]]],["_fromNode",nil,[createhashmap]];
+		params [["_toNode",nil,[createhashmap]],["_fromNode",nil,[createhashmap]]];
 
 		private _doctrine = _self get "Doctrine";
 			private _capabilities = _doctrine get "Capabilities";

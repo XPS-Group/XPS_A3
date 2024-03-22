@@ -33,7 +33,7 @@ Description:
 		<Boolean> - <True> if successful, otherwise false
 
 ------------------------------------------------------------------------------*/
-if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[]]] ]) exitwith {false};
+if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[],createhashmap]] ]) exitwith {false};
 
 private _fnc_createEnumConstant = {
 	params ["_var","_name","_val","_def"];
@@ -51,13 +51,13 @@ private _fnc_createEnumConstant = {
 	_def set [_val , compilefinal _gVar ];
 };
 
-private _baseDef = createhashmapfromarray _typeDef;
+private _baseDef = if (_typeDef isEqualType []) then {createhashmapfromarray _typeDef} else {+_typeDef};
 
 private _newDef = createhashmap;
 	_newDef set ["#str",compilefinal format ["%1",str _varName]];
 	_newDef set ["#type",_baseDef getOrDefault ["#type","unknown type"]];
 	_newDef set ["#base",_baseDef getOrDefault ["#base",XPS_typ_Enumeration]];
-	_newDef set ["#flags",["sealed","nocopy"]],
+	_newDef set ["#flags",["sealed","nocopy"]];
 	_newDef set ["Names",[]];
 	_newDef set ["Values",[]];
 

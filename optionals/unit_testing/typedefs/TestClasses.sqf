@@ -101,7 +101,7 @@ Description:
         ---prototype
         call ["LoadClasses"];
 
-    Clears this object and loads Unit Test Classes defined under Enhanced_XPS_Unit_Testing base class from the following:
+    Clears this object and loads Unit Test Classes defined under XPS_Unit_Testing base class from the following:
 
     - configFile
     - missionConfigFile

@@ -182,14 +182,14 @@ try
 			_a = _a + 1;
 		};
 
-#ifndef XPS_NO_OBFUSCATION
+	if !(XPS_DebugMode) then {
 		// Finally record if private key
 		if (_key isEqualType "" && {_key find "_" == 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
 			_keyPair set [0,_uid]
 		};
-#endif
+	};
 
 		_i = _i + 1;
 	};

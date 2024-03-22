@@ -39,7 +39,7 @@ private _fnc_loadFile = {
 	switch (_type) do {
 		case "ifc" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false]] call XPS_fnc_preprocessInterface);"};
 		case "enum";
-		case "typ" : {_statement = /* "%5 createhashmapfromarray " */ "([call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition);"}; // hashmap disabled until bug fix in stable branch
+		case "typ" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition);"}; // hashmap disabled until bug fix in stable branch
 	};
 	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd,_headers];
 	call compile _code;
@@ -61,7 +61,7 @@ if (isText _file && isText _type) then {
 	private _noStack = if (isNumber (_class >> "noStack")) then {getNumber (_class >> "noStack")} else {0};
 	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal")} else {0};
 	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType")} else {0};
-	private _isFinal_Cmd = if (_isFinal==1) then {"compileFinal"} else {""};
+	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal == 1);
 
 	// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
 	if (isNil {_typeDefinition} || {_recompile == 1 || isFilePatchingEnabled}) then {

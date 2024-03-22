@@ -68,7 +68,7 @@ Returns:
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		private _status = if (_self call ["Condition"]) then {XPS_BT_Status_Success} else {XPS_BT_Status_Failure};
+		private _status = [XPS_BT_Status_Failure, XPS_BT_Status_Success] select (_self call ["Condition"]);
 		_status;
 	}],
 	/*----------------------------------------------------------------------------

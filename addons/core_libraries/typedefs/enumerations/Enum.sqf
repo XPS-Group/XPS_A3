@@ -28,7 +28,7 @@ Description:
 	Implements:
 		<XPS_ifc_IEnumeration>
 	-----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_typ_IEnumeration"]]
+	["@interfaces",["XPS_typ_IEnumeration"]],
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
     

@@ -31,5 +31,19 @@ diag_log text "[XPS preInit]";
 	if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};
 } foreach configProperties [campaignConfigFile >> QXPS_CFG_TD_BASECLASSNAME];
 
+/* -------------------------------------------------------------------------
+Variable: main. XPS_DebugMode
+
+Description:
+	This returns true if game was launched with the -debug parameter -OR- XPS_DEBUG macro is defined elsewhere
+
+Returns: 
+	<Boolean> 
+---------------------------------------------------------------------------*/
+XPS_DebugMode = false;
+#ifdef XPS_DEBUG
+	XPS_DebugMode = true;
+#endif
+
 ADDON = true;
 diag_log text "[XPS preInit End]";
