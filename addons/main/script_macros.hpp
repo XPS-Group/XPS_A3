@@ -2,7 +2,9 @@
 
 #define ADDON PREFIX##_##COMPONENT
 
-#define XPS_DEBUG 1
+#ifdef __A3_DEBUG__
+    #define XPS_DEBUG 1
+#endif
 
 
 /* ---------------------------------------*/
@@ -23,10 +25,10 @@
 #define XPS_MAIN_FNC_SUB(sub,fncName) VARNAME(PREFIX,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\sub\fncName.sqf)]
 #define XPS_ADDON_FNC_SUB(sub,fncName) VARNAME(ADDON,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\sub\fncName.sqf)]
 
-#define XPS_ISFINAL isFinal = 0
 #define XPS_RECOMPILE recompile = 0
+#define XPS_ISFINAL isFinal = 0
 
-#if XPS_DEBUG == 1
+#ifdef XPS_DEBUG
     #undef XPS_RECOMPILE
     #define XPS_RECOMPILE recompile = 1
 #else
