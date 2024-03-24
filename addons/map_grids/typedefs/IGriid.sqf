@@ -32,5 +32,5 @@ Authors:
 	["GetIndexByPosition","CODE"],
 	["GetNearbyIndexes","CODE"],
 	["GetCellByPosition","CODE"],
-	["GetNearbyCells","CODE"],
+	["GetNearbyCells","CODE"]
 ]

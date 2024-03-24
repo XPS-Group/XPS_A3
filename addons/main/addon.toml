@@ -1,5 +1,5 @@
 [files]
 exclude = ["*types"]
 
-[rapify]
-enabled = false
+# [rapify]
+# enabled = false

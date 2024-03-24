@@ -2,11 +2,6 @@
 
 #define ADDON PREFIX##_##COMPONENT
 
-#ifdef __A3_DEBUG__
-    #define XPS_DEBUG 1
-#endif
-
-
 /* ---------------------------------------*/
 //Type Definitions and Interfaces
 #define VARNAME(var1,var2,var3) var1##_##var2##_##var3
@@ -25,41 +20,35 @@
 #define XPS_MAIN_FNC_SUB(sub,fncName) VARNAME(PREFIX,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\sub\fncName.sqf)]
 #define XPS_ADDON_FNC_SUB(sub,fncName) VARNAME(ADDON,fnc,fncName) = compileScript [FILEPATH_C_Q(functions\sub\fncName.sqf)]
 
-#define XPS_RECOMPILE recompile = 0
-#define XPS_ISFINAL isFinal = 0
-
-#ifdef XPS_DEBUG
-    #undef XPS_RECOMPILE
-    #define XPS_RECOMPILE recompile = 1
-#else
-    #undef XPS_ISFINAL
-    #define XPS_ISFINAL isFinal = 1
+#ifdef __A3_DEBUG__
+    #define XPS_DEBUG 1
 #endif
+
 
 #define XPS_CFG_FNC(fncName) class fncName {\
     file = FILEPATH_C_Q(functions\fncName.sqf);\
     headerType = 0;\
-    XPS_RECOMPILE;\
+    recompile = 0;\
 }
 
 #define XPS_CFG_FNC_SUB(sub,fncName) class fncName {\
     file = FILEPATH_C_Q(functions\sub\fncName.sqf);\
     headerType = 0;\
-    XPS_RECOMPILE;\
+    recompile = 0;\
 }
 
 #define XPS_CFG_IFC(ifcName) class ifcName {\
     file = FILEPATH_C_Q(typedefs\ifcName.sqf);\
     type = "ifc";\
-    XPS_RECOMPILE;\
-    XPS_ISFINAL;\
+    recompile = 0;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_IFC_SUB(sub,ifcName) class ifcName {\
     file = FILEPATH_C_Q(typedefs\sub\ifcName.sqf);\
     type = "ifc";\
-    XPS_RECOMPILE;\
-    XPS_ISFINAL;\
+    recompile = 0;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_TYP(typName) class typName {\
@@ -68,8 +57,8 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
-    XPS_RECOMPILE;\
-    XPS_ISFINAL;\
+    recompile = 0;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_TYP_SUB(sub,typName) class typName {\
@@ -78,8 +67,8 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
-    XPS_RECOMPILE;\
-    XPS_ISFINAL;\
+    recompile = 0;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_ENUM(typName) class typName {\
@@ -88,8 +77,8 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
-    XPS_RECOMPILE;\
-    XPS_ISFINAL;\
+    recompile = 0;\
+    isFinal = 1;\
 }
 
 #define XPS_CFG_ENUM_SUB(sub,typName) class typName {\
@@ -98,8 +87,8 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
-    XPS_RECOMPILE;\
-    XPS_ISFINAL;\
+    recompile = 0;\
+    isFinal = 1;\
 }
 
 /* ---------------------------------------*/

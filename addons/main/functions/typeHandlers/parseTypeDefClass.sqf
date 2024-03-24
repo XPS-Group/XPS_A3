@@ -61,10 +61,14 @@ if (isText _file && isText _type) then {
 	private _noStack = if (isNumber (_class >> "noStack")) then {getNumber (_class >> "noStack")} else {0};
 	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal")} else {0};
 	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType")} else {0};
+	
+	// Account if in 'debug mode' and force recompilation
+	if (!(isnil "XPS_DebugMode") && XPS_DebugMode) then { _isFinal = 0; _recompile = 1;}; 
+	
 	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal == 1);
 
 	// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
-	if (isNil {_typeDefinition} || {_recompile == 1 || isFilePatchingEnabled}) then {
+	if (isNil {_typeDefinition} || {(_recompile == 1 || isFilePatchingEnabled) && {_isFinal == 0}}) then {
 		// diag_log text "[XPS TD parser]  : init namespace variables";
 		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),_isFinal_Cmd,(_headers==1)] call _fnc_loadFile];
 		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];

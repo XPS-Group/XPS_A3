@@ -3,12 +3,5 @@ prefix = "xps"
 author= "Crashdome"
 reuse_private_key = false
 
-[asc]
-enabled = false
-
 [files]
 include = ["readme.txt"]
-
-[rapify]
-enabled = false
-
