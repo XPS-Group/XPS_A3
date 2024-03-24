@@ -14,7 +14,7 @@ Authors:
 
 Description:
 	Static Methods for calculating indices along a hexagonal grid independant of
-	size.
+	size. Hexagonal grid uses pointy-top formulas (vs flat-top)
 --------------------------------------------------------------------------------*/
 [
 	["#type","XPS_MG_typ_HexGrid"],
@@ -117,7 +117,7 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["GetNearbyIndexes",{
 		if !(params [["_center",[0,0,0],[[]],[3]], ["_radius",0,[0]], "_includecenter"]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetNearbyIndexes",nil,_this]];};
-		if (isNil "_includeCenter" || !{_includeCenter isEqualType true}) then {_includeCenter = false};
+		if (isNil "_includeCenter" || {!(_includeCenter isEqualType true)}) then {_includeCenter = false};
 
 		private _cells = [];
 
@@ -135,5 +135,73 @@ Description:
 		};
 
 		_cells;
+	}],
+	/*----------------------------------------------------------------------------
+	Method: GenerateGrid
+    
+    	--- Prototype --- 
+    	call ["GenerateGrid",[_sizeHex,_sizeWorld*]]
+    	---
+    
+    	<XPS_MG_ifc_IGrid>
+    
+	Paramters: 
+		_sizeHex - <Number> - width of hex from center point to center of flat edge in world units
+
+    Optionals:
+		_sizeWorld - <Number> - (Default: worldsize) - width (and height) of the hex grid in world units
+
+	Returns:
+		_array - <Array> - a multidimensional array composed of two elements: [indexes,positions]
+
+		- indexes - <Array> - an array of 3d arrays for indexed position
+		- positions - <Array> - an array of 2d arrays for world position
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+	-----------------------------------------------------------------------------*/
+	["GenerateGrid",{
+		if !(params [["_sizeHex",0,[0]],["_sizeWorld",worldsize,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GenerateGrid",nil,_this]];};
+
+		private _indexArray = [];
+		private _posArray = [];
+		private _sqrtThree = sqrt(3);
+		private _yIncrease = 1.5 * _sizeHex;
+
+		private _xStart = 0;
+		private _xkey = 0;
+		private _ykey = 0;
+		private _zkey = 0;
+		private _x = 0;
+		private _y = 0;
+		private _offset = true;
+
+		while {_y < _sizeWorld} do {
+			_xKey = _xStart;
+			while {_x < _sizeWorld} do {
+				_zKey = 0-_xKey-_yKey;
+
+				_indexArray pushback [_xkey, _ykey,_zKey];
+				 _posArray pushback [_x, _y];
+
+				_x = _x + (_sqrtThree * _sizeHex);
+				_xkey = _xkey + 1;
+			};
+			if (_offset) then {
+				_x = _sqrtThree * _sizeHex / 2; 
+				_xStart = _xStart + 1;
+				_ykey = _ykey - 1;
+			} else {
+				_x = 0;
+				_ykey = _ykey - 1;
+			};
+			_y = _y + _yIncrease;
+			_offset = !_offset;
+		};
+
+		// Row_Length = ceil(worldSize / (_sqrtThree * _sizeHex));
+		// Column_Height = ceil(worldSize / _yIncrease);
+
+		[_indexarray,_posArray]
 	}]
 ]

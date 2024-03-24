@@ -16,15 +16,13 @@ Authors:
 	Method: GetNearbyIndexes
 		<code>
 
-	Method: GetCellByPosition
-		<code>
-
-	Method: GetNearbyCells
+	Method: GenerateGrid
 		<code>
 
 ---------------------------------------------------------------------------- */
 [
 	["GetPositionByIndex","CODE"],
 	["GetIndexByPosition","CODE"],
-	["GetNearbyIndexes","CODE"]
+	["GetNearbyIndexes","CODE"],
+	["GenerateGrid","CODE"]
 ]

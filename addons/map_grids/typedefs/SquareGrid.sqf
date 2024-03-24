@@ -115,7 +115,7 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["GetNearbyIndexes",{
 		if !(params [["_center",[0,0],[[]],[2]], ["_radius",0,[0]], "_includecenter"]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetNearbyIndexes",nil,_this]];};
-		if (isNil "_includeCenter" || !{_includeCenter isEqualType true}) then {_includeCenter = false};
+		if (isNil "_includeCenter" || {!(_includeCenter isEqualType true)}) then {_includeCenter = false};
 
 		private _cells = [];
         private _maxDistance = _radius*_radius;
@@ -133,5 +133,59 @@ Description:
 		};
 
 		_cells;
+	}],
+	/*----------------------------------------------------------------------------
+	Method: GenerateGrid
+    
+    	--- Prototype --- 
+    	call ["GenerateGrid",[_sizeSqr,_sizeWorld*]]
+    	---
+    
+    	<XPS_MG_ifc_IGrid>
+    
+	Paramters: 
+		_sizeSqr - <Number> - width of square from center point to center of flat edge in world units
+
+    Optionals:
+		_sizeWorld - <Number> - (Default: worldsize) - width (and height) of the grid in world units
+
+	Returns:
+		_array - <Array> - a multidimensional array composed of two elements: [indexes,positions]
+
+		- indexes - <Array> - an array of 2d arrays for indexed position
+		- positions - <Array> - an array of 2d arrays for world position
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+	-----------------------------------------------------------------------------*/
+	["GenerateGrid",{
+		if !(params [["_sizeSqr",0,[0]],["_sizeWorld",worldsize,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GenerateGrid",nil,_this]];};
+
+		private _indexArray = [];
+		private _posArray = [];
+
+		private _xkey = 0;
+		private _ykey = 0;
+		private _x = 0;
+		private _y = 0;
+		private _increaase = (2 * _sizeSqr);
+
+		while {_y < _sizeWorld} do {
+			while {_x < _sizeWorld} do {
+
+				_indexArray pushback [_xkey, _ykey];
+				 _posArray pushback [_x, _y];
+
+				_x = _x + _increaase;
+				_xkey = _xkey + 1;
+			};
+			_x = 0;
+			_y = _y + _increaase;
+			_ykey = _ykey + 1;
+		};
+
+		// Row_Length = Column_Height = round(worldSize / (2 * _sizeSqr));
+
+		[_indexarray,_posArray];
 	}]
 ]

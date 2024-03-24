@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. XPS_MG_fnc_squareGridSubCelMatrix
+Function: map_grids. XPS_MG_fnc_squareGridSubCelMatrix
 
     --- prototype
     [_radius*] call XPS_MG_fnc_squareGridSubCelMatrix
