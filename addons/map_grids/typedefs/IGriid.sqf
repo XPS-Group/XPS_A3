@@ -7,9 +7,6 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: Cells
-	<HASHMAP>
-
 	Method: GetPositionByIndex
 		<code>
 
@@ -27,10 +24,7 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["Cells", "HASHMAP"],
 	["GetPositionByIndex","CODE"],
 	["GetIndexByPosition","CODE"],
-	["GetNearbyIndexes","CODE"],
-	["GetCellByPosition","CODE"],
-	["GetNearbyCells","CODE"]
+	["GetNearbyIndexes","CODE"]
 ]

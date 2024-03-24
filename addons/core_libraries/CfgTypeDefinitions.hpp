@@ -54,8 +54,10 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP_SUB(typecheck,HashmapObjectTypeRestrictor);
 		};
 
-		XPS_CFG_TYP(Blackboard);
-		XPS_CFG_TYP(JobScheduler);		
+		class Utility {
+			XPS_CFG_TYP(Blackboard);
+			XPS_CFG_TYP(JobScheduler);		
+		};
 
 	};
 };
