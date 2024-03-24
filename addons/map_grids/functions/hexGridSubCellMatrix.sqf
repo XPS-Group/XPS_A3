@@ -7,7 +7,7 @@ Function: map_grids. XPS_MG_fnc_hexGridSubCelMatrix
     ---
 
 Description:
-    Calculates a 49 cell map of relative indexes which can be used to calculate 
+    Calculates a 55 cell map of relative indexes which can be used to calculate 
     sub cell indexes inside of a larger hex. This typically only needs to be done 
     once and then stored somewhere for reference. The radius is predetermined at
     a value of 3 (three hexes in each of the 6 major directions to center of each 
