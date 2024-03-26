@@ -56,7 +56,8 @@ Return: _typeDefinition
 	<TypeDefinition> - or <False> if error
 
 ---------------------------------------------------------------------------- */
-params [["_type",[],[[]]],["_allowNils",true,[true]],["_preprocess",true,[true]],["_noStack",false,[true]],["_headers",false,[true]]]
+params [["_type",[],[[]]],["_allowNils",true,[true]],["_preprocess",true,[true]],["_noStack",false,[true]],["_headers",false,[true]]];
+
 if (_type isEqualTo []) exitwith {false};
 
 private _errors = false;

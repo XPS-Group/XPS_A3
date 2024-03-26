@@ -41,17 +41,16 @@ Example: Check a hashmap if it supports interface
 
 ---------------------------------------------------------------------------- */
 
-params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[]]],["_allowNils",false,[true]]]
+params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[]]],["_allowNils",false,[true]]];
 
-if (_hashmap isEqualTo createhashmap) exitwith {diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
+if (_hashmap isEqualTo createhashmap) exitwith {
+	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
 	false;
 };
 if !(_interfaces isEqualTypeAll "") exitwith {
 	diag_log text (format ["XPS_fnc_checkInterface: Interface parameter must be an array of all strings.  Param:%1",_this select 1]);
 	false;
 };
-
-_allownils = if (isNil "_allowNils") then {false} else {_allowNils};
 
 private _result = true;
 
