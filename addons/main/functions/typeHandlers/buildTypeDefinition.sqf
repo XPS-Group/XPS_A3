@@ -56,11 +56,8 @@ Return: _typeDefinition
 	<TypeDefinition> - or <False> if error
 
 ---------------------------------------------------------------------------- */
-if !(params [["_type",nil,[[]]],"_allowNils","_preprocess","_noStack","_headers"]) exitwith {false;};
-_allowNils = [_allowNils] param [0,true,[true]];
-_preprocess = [_preprocess] param [0,true,[true]];
-_noStack = [_noStack] param [0,false,[true]];
-_headers = [_headers] param [0,false,[true]];
+params [["_type",[],[[]]],["_allowNils",true,[true]],["_preprocess",true,[true]],["_noStack",false,[true]],["_headers",false,[true]]]
+if (_type isEqualTo []) exitwith {false};
 
 private _errors = false;
 

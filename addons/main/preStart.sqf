@@ -1,5 +1,12 @@
 #include "script_component.hpp"
 
+XPS_DebugMode = false;
+#ifdef XPS_DEBUG
+	XPS_DebugMode = true;
+#endif
+
+uinamespace setvariable ["XPS_DebugMode",XPS_DebugMode];
+
 with uiNamespace do{
 	diag_log text "[XPS preStart]";
 	{

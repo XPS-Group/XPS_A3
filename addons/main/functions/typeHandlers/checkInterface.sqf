@@ -50,7 +50,7 @@ if !(_interfaces isEqualTypeAll "") exitwith {
 	false;
 };
 
-_allownils = [_allowNils, false] select (isNil "_allowNils");
+_allownils = if (isNil "_allowNils") then {false} else {_allowNils};
 
 private _result = true;
 

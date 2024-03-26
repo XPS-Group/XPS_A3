@@ -28,12 +28,10 @@ Description:
 Returns: 
 	<Boolean> 
 ---------------------------------------------------------------------------*/
-XPS_DebugMode = false;
-#ifdef XPS_DEBUG
-	XPS_DebugMode = true;
-#endif
 
 diag_log text "[XPS preInit]";
+
+XPS_DebugMode = uinamespace getvariable "XPS_DebugMOde";
 
 {
 	if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};

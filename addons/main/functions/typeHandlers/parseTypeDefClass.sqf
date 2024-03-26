@@ -39,7 +39,7 @@ private _fnc_loadFile = {
 	switch (_type) do {
 		case "ifc" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false]] call XPS_fnc_preprocessInterface);"};
 		case "enum";
-		case "typ" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition);"}; // hashmap disabled until bug fix in stable branch
+		case "typ" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition);"}; 
 	};
 	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd,_headers];
 	call compile _code;
