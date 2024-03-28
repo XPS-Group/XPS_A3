@@ -53,11 +53,12 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP_SUB(typecheck,NativeTypeRestrictor);
 			XPS_CFG_TYP_SUB(typecheck,HashmapObjectTypeRestrictor);
 		};
-
 		class Utility {
 			XPS_CFG_TYP(Blackboard);
 			XPS_CFG_TYP(JobScheduler);		
 		};
-
+		class Statics {
+			XPS_CFG_TYP_SUB(enumerations,Enum);
+		};
 	};
 };
