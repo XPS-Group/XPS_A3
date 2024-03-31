@@ -73,6 +73,7 @@ Alter Comment Type: Interface
 
    Keywords:
       mapinterface, mapinterfaces
+      interface, interfaces
 
 
 Comment Type: Key
