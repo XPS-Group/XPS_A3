@@ -168,7 +168,7 @@ Description:
 		private _ykey = 0;
 		private _x = 0;
 		private _y = 0;
-		private _increaase = (2 * _sizeSqr);
+		private _increase = (2 * _sizeSqr);
 
 		while {_y < _sizeWorld} do {
 			while {_x < _sizeWorld} do {
@@ -176,11 +176,11 @@ Description:
 				_indexArray pushback [_xkey, _ykey];
 				 _posArray pushback [_x, _y];
 
-				_x = _x + _increaase;
+				_x = _x + _increase;
 				_xkey = _xkey + 1;
 			};
 			_x = 0;
-			_y = _y + _increaase;
+			_y = _y + _increase;
 			_ykey = _ykey + 1;
 		};
 
