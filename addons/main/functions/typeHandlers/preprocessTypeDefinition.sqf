@@ -68,7 +68,7 @@ private _hasCtor = false;
 private _hasDtor = false;
 
 private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}};
-private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index == -1);
+private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index isEqualTo -1);
 private _typeName = _typeArray select (count _typeArray > 1);
 
 try 
@@ -184,7 +184,7 @@ try
 
 	if !(XPS_DebugMode) then {
 		// Finally record if private key
-		if (_key isEqualType "" && {_key find "_" == 0}) then {
+		if (_key isEqualType "" && {_key find "_" isEqualTo 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
 			_keyPair set [0,_uid]

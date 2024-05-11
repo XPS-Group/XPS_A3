@@ -45,7 +45,7 @@ for "_x" from -_radius-1 to _radius+1 do {
 				}; 
 			};
 		};
-		if (_max <= _radius || {_max == _radius+1 && _second <= _radius}) then 
+		if (_max <= _radius || {_max isEqualTo _radius+1 && _second <= _radius}) then 
 		{
 			_cells pushback _cellkey;
 		};

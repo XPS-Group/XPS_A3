@@ -359,6 +359,6 @@ Returns:
 		} foreach _neighbors;
 
 		_self set ["lastNode",_currentNode];
-		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
+		if !(_self get "Status" isEqualTo "RUNNING") then {_self set ["Status","RUNNING"]};
 	}]
 ]

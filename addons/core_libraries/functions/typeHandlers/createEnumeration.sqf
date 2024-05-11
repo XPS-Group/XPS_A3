@@ -73,7 +73,7 @@ switch (true) do {
 		{	
 			private _key = _x;
 			private _nameOk = _newDef get "Names" pushBackUnique _key;
-			if (_nameOK == -1) then {continue};
+			if (_nameOK isEqualTo -1) then {continue};
 			_newDef get "Values" pushback _value;
 			
 			[_varName,_key,_value,_newDef] call _fnc_createEnumConstant;
@@ -88,11 +88,11 @@ switch (true) do {
 			if ((_enumType isEqualTo "SCALAR" && {_value isEqualType 0}) ||
 			(_enumType in ["STRING","TEXT"] && {_value isEqualType ""}) ) then {
 				private _nameOk = _newDef get "Names" pushBackUnique _key;
-				if (_nameOK == -1) then {continue};
+				if (_nameOK isEqualTo -1) then {continue};
 				
 				if (_enumType isEqualTo "TEXT") then { _value = text _value}; 
 				private _valOk = _newDef get "Values" pushbackUnique _value;
-				if (_valOk == -1) then {_newDef get "Names" deleteat _nameOK; continue};
+				if (_valOk isEqualTo -1) then {_newDef get "Names" deleteat _nameOK; continue};
 				
 				[_varName,_key,_value,_newDef] call _fnc_createEnumConstant;
 			};

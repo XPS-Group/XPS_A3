@@ -96,7 +96,7 @@ Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_queueArray") == 0;
+		count (_self get "_queueArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Peek

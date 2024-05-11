@@ -91,7 +91,7 @@ Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_listArray") == 0;
+		count (_self get "_listArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: AddItem

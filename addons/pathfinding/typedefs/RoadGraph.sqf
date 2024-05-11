@@ -43,7 +43,7 @@ Flags:
 		private _dirA = 0;
 		private _dirB = 0;
 
-		if (isNil "_int" || count _int == 0) then {
+		if (isNil "_int" || count _int isEqualTo 0) then {
 			_dirA = _posA getdir _posB;
 			_dirB = _posA getdir _posB;
 		} else {
@@ -81,7 +81,7 @@ Flags:
 
 		private _intersect = [_p1,_p2,_p3,_p4] call XPS_PF_fnc_lineIntersect2D;
 		private _intPoints = [];
-		if !(isNil "_intersect" || count _intersect == 0) then {
+		if !(isNil "_intersect" || count _intersect isEqualTo 0) then {
 			if ((_intersect distance2d _posE < _fromPoint distance2d _posE) && (_intersect distance2d _fromPoint < _fromPoint distance2d _posE)) then {
 				private _iB = _intersect getpos [(_intersect distance _frompoint)/2,_intersect getdir _frompoint]; 
 				private _iE = _intersect getpos [(_intersect distance _posE)/2,_intersect getdir _posE]; 
@@ -140,7 +140,7 @@ Flags:
 		private _ct = _node get "ConnectedTo";
 		private _roadArray = [];
 		{
-			if !(_x isEqualto objNull || (str _x) == (str _object) || (str _x) in keys _ct) then {
+			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in keys _ct) then {
 				_roadArray pushbackunique _x;
 			};
 		} foreach roadsconnectedto _object;
@@ -149,7 +149,7 @@ Flags:
 		private _bPos = _node get "BeginPos";
 		private _ePos = _node get "EndPos";
 		private _width = (_node get "Width")/2;
-		if (_width == 0) then {_width = 5.5};
+		if (_width isEqualTo 0) then {_width = 5.5};
 		private _bPosC = _pos getpos [(_pos distance _bPos)+0.02,(_pos getDir _bPos)];
 		private _bPosL = _bPosC getpos [_width,(_pos getDir _bPosC)-90];
 		private _bPosR = _bPosC getpos [_width,(_pos getDir _bPosC)+90];
@@ -159,7 +159,7 @@ Flags:
 		{
 			_x resize 2;
 			private _r = roadAt _x;
-			if !(_r isEqualto objNull || (str _r) == (str _object) || (str _r) in keys _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
+			if !(_r isEqualto objNull || (str _r) isEqualTo (str _object) || (str _r) in keys _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
 				_roadArray pushbackunique _r;
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
@@ -357,7 +357,7 @@ Flags:
 					_rct append values (_hm get "ConnectedTo");
 					if (count _rct < 2) then {_color = "ColorBlue"}; 
 					if (_hm get "IsBridge") then {_color = "ColorWhite"}; 
-					if (_hm get "Type" == "TRAIL") then {_color = "ColorOrange"};
+					if (_hm get "Type" isEqualTo "TRAIL") then {_color = "ColorOrange"};
 					if (count _rct < 1) then {_color = "ColorRed"}; 
 					if (count _rct > 2) then {_color = "ColorGreen"};  
 
@@ -452,8 +452,8 @@ Flags:
 				case "RHWalk" : {_dirOffset = 90; _divisor = [2.5,4];};
 			};
 
-			private _toWidth = (_toObject get "Width")/(_divisor#0); if (isnil "_toWidth" || _toWidth == 0) then {_toWidth=(_divisor#1);};
-			private _nextWidth = (_nextObject get "Width")/(_divisor#0); if (isnil "_nextWidth" || _nextWidth == 0) then {_nextWidth=(_divisor#1);};
+			private _toWidth = (_toObject get "Width")/(_divisor#0); if (isnil "_toWidth" || _toWidth isEqualTo 0) then {_toWidth=(_divisor#1);};
+			private _nextWidth = (_nextObject get "Width")/(_divisor#0); if (isnil "_nextWidth" || _nextWidth isEqualTo 0) then {_nextWidth=(_divisor#1);};
 
 			_result append (_self call ["_getConnectedToPath",[_fromPoint,_direction,_toObject,_toWidth,_nextObject,_nextWidth,_dirOffset]]);
 			_fromPoint = _result select -1;

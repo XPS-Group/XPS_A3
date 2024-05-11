@@ -97,7 +97,7 @@ Returns:
 		<Boolean> - <True> if stack is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_stackArray") == 0;
+		count (_self get "_stackArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Peek

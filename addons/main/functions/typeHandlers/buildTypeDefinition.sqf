@@ -49,7 +49,7 @@ See <XPS_fnc_preprocessTypeDefinition> for more info.
 
 Optional: _headers* 
 
-<Boolean> - (optional) default: false - determines if debug headers should be injected into code blocks - ignored if _preprocess == false
+<Boolean> - (optional) default: false - determines if debug headers should be injected into code blocks - ignored if _preprocess isEqualTo false
 See <XPS_fnc_preprocessTypeDefinition> for more info.
 
 Return: _typeDefinition
@@ -104,7 +104,7 @@ if ("#base" in keys _hashmap) then {
 		// Append keys using @ 
 		if (_x isEqualType "" && {_y isEqualTypeAny [[],createhashmap]}) then {
 
-			private _pAppend = (_x find "@") == 0;
+			private _pAppend = (_x find "@") isEqualTo 0;
 			private _cAppend = ("@" + _x) in _keys;
 
 			if ( _pAppend || _cAppend ) then {

@@ -65,12 +65,12 @@ if (isText _file && isText _type) then {
 	// Account if in 'debug mode' and force recompilation
 	if (!(isnil "XPS_DebugMode") && XPS_DebugMode) then { _isFinal = 0; _recompile = 1;}; 
 	
-	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal == 1);
+	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal isEqualTo 1);
 
 	// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
-	if (isNil {_typeDefinition} || {(_recompile == 1 || isFilePatchingEnabled) && {_isFinal == 0}}) then {
+	if (isNil {_typeDefinition} || {(_recompile isEqualTo 1 || isFilePatchingEnabled) && {_isFinal isEqualTo 0}}) then {
 		// diag_log text "[XPS TD parser]  : init namespace variables";
-		uiNamespace setvariable [_varName, [_type,_file,(_allowNils==1),(_preprocess==1),(_noStack==1),_isFinal_Cmd,(_headers==1)] call _fnc_loadFile];
+		uiNamespace setvariable [_varName, [_type,_file,(_allowNils isEqualTo 1),(_preprocess isEqualTo 1),(_noStack isEqualTo 1),_isFinal_Cmd,(_headers isEqualTo 1)] call _fnc_loadFile];
 		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 	} else {
 		// diag_log text "[XPS TD parser]  : using cached";

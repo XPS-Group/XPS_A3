@@ -108,7 +108,7 @@ Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_items") == 0;
+		count (_self get "_items") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: AddItem
