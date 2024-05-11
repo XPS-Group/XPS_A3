@@ -197,20 +197,20 @@ try
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
 	// Add create / delete methods if they dont exist prior to changing private keys
-	if (!_hasCtor && {_ctor != "" || _ctor_l != ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
-	if (!_hasDtor && {_dtor != "" || _dtor_l != ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
+	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
 
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
 		// Constructor injection but only if it existed prior to above code
-		if (_hasCtor && {_key == "#create" && {_ctor != "" || _ctor_l != ""}}) then {
+		if (_hasCtor && {_key == "#create" && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}}) then {
 			private _strCode = (str _value) insert [1,_ctor];
 			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
 		// Destructor injection but only if it existed prior to above code
-		if (_hasDtor && {_key == "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
+		if (_hasDtor && {_key == "#delete" && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}}) then {
 			private _strCode = (str _value) insert [1,_dtor];
 			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];
