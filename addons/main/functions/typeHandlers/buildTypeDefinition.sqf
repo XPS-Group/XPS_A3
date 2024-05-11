@@ -77,6 +77,11 @@ if (_preprocess) then {
 	};
 };
 
+if (_errors) exitwith {
+	diag_log text ("XPS_fnc_buildTypeDefinition: Skipping a bad preprocessed Array - Any Preprocess Errors above may provide more info");
+	false;
+};
+
 private _hashmap = createhashmapfromarray _type;
 private _preCompiled = _hashmap; // In case it doesn't have a parent, we need this for later
 

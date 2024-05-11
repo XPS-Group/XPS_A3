@@ -79,7 +79,7 @@ try
 
 		scopeName "MAIN";
 
-		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
+		if !((_typeDef#_i) isEqualType [] && {count (_typeDef#_i) > 1}) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
 		
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;

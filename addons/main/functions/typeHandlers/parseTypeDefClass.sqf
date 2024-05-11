@@ -37,9 +37,9 @@ private _fnc_loadFile = {
 	params ["_type","_file","_allowNils","_preprocess","_noStack","_isFinal_Cmd","_headers"];
 	private _statement = "";
 	switch (_type) do {
-		case "ifc" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false]] call XPS_fnc_preprocessInterface);"};
+		case "ifc" : {_statement = "private _ifc = [call compileScript [""%1"",false]] call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createhashmapfromarray _ifc;};"};
 		case "enum";
-		case "typ" : {_statement = "%5 createhashmapfromarray ([call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition);"}; 
+		case "typ" : {_statement = "private _td = [call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition; if (_td isEqualType []) then {%5 createhashmapfromarray _td;};"}; 
 	};
 	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd,_headers];
 	call compile _code;
