@@ -87,7 +87,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 				} else {continue};
 			};
 			// Check if Hashmap Object and get type if exists
-			if (_type isEqualTo "HASHMAP") then {
+			if (_type == "HASHMAP") then {
 				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
 				private _typeIfcs = (_hashmap get _key) getOrDefault ["@interfaces",_type];
 				// Check type if actual instantiated object

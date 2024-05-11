@@ -67,7 +67,7 @@ private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
 
-private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}};
+private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 == "#type"}};
 private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index isEqualTo -1);
 private _typeName = _typeArray select (count _typeArray > 1);
 
@@ -85,11 +85,11 @@ try
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
 
-			if (_key isEqualTo "#create") then {_hasCtor = true};
-			if (_key isEqualTo "#delete") then {_hasDtor = true};
+			if (_key == "#create") then {_hasCtor = true};
+			if (_key == "#delete") then {_hasDtor = true};
 
 			// Convert Interface list of strings to hashmap with ref to interface
-			if (_key isEqualTo "@interfaces") then {
+			if (_key == "@interfaces") then {
 				if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
 					private _interfaces = createhashmap;
 					{
@@ -204,13 +204,13 @@ try
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
 		// Constructor injection but only if it existed prior to above code
-		if (_hasCtor && {_key isEqualTo "#create" && {_ctor != "" || _ctor_l != ""}}) then {
+		if (_hasCtor && {_key == "#create" && {_ctor != "" || _ctor_l != ""}}) then {
 			private _strCode = (str _value) insert [1,_ctor];
 			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
 		// Destructor injection but only if it existed prior to above code
-		if (_hasDtor && {_key isEqualTo "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
+		if (_hasDtor && {_key == "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
 			private _strCode = (str _value) insert [1,_dtor];
 			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];

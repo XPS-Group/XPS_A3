@@ -139,12 +139,12 @@ Returns:
 		private _listbox = _display displayCtrl 1500 ;
 
 		if (_eventType isNotEqualTo "Updated") then {
-			//private _color = [[1,1,1,1],[0,0,1,0.5]] select (_data get "MethodName" isEqualTo "");
+			//private _color = [[1,1,1,1],[0,0,1,0.5]] select (_data get "MethodName" == "");
 
 			switch (_eventType) do {
 				case "Added" : {
 					private _id = [_data get "ClassName",_data get "MethodName"];
-					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" isEqualTo "");
+					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" == "");
 					private _testMethod = _data get "MethodName";
 					private _result = _data get "Result";
 					private _isSelected = _data get "IsSelected";
@@ -161,7 +161,7 @@ Returns:
 					_listBox lnbDeleteRow _index;
 				};
 				case "Replaced" : {
-					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" isEqualTo "");
+					private _testClass = ["",_data get "ClassName"] select (_data get "MethodName" == "");
 					private _testMethod = _data get "MethodName";
 					private _result = _data get "Result";
 					private _isSelected = _data get "IsSelected";

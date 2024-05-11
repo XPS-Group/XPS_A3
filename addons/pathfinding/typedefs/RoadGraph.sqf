@@ -357,7 +357,7 @@ Flags:
 					_rct append values (_hm get "ConnectedTo");
 					if (count _rct < 2) then {_color = "ColorBlue"}; 
 					if (_hm get "IsBridge") then {_color = "ColorWhite"}; 
-					if (_hm get "Type" isEqualTo "TRAIL") then {_color = "ColorOrange"};
+					if (_hm get "Type" == "TRAIL") then {_color = "ColorOrange"};
 					if (count _rct < 1) then {_color = "ColorRed"}; 
 					if (count _rct > 2) then {_color = "ColorGreen"};  
 

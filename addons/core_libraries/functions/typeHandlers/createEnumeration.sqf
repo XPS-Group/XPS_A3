@@ -68,7 +68,7 @@ _newDef set ["ValueType",_enumType];
 private _keyArray = _baseDef getOrDefault ["Enumerations",[]];
 
 switch (true) do {
-	case (_keyArray isEqualTypeAll "" && {_enumType isEqualTo "SCALAR"}) : {
+	case (_keyArray isEqualTypeAll "" && {_enumType == "SCALAR"}) : {
 		private _value = 0;
 		{	
 			private _key = _x;
@@ -85,12 +85,12 @@ switch (true) do {
 		{	
 			if !(_x params [ ["_key","",[""]], ["_value","",[0,""]]]) exitwith {false};
 			
-			if ((_enumType isEqualTo "SCALAR" && {_value isEqualType 0}) ||
+			if ((_enumType == "SCALAR" && {_value isEqualType 0}) ||
 			(_enumType in ["STRING","TEXT"] && {_value isEqualType ""}) ) then {
 				private _nameOk = _newDef get "Names" pushBackUnique _key;
 				if (_nameOK isEqualTo -1) then {continue};
 				
-				if (_enumType isEqualTo "TEXT") then { _value = text _value}; 
+				if (_enumType == "TEXT") then { _value = text _value}; 
 				private _valOk = _newDef get "Values" pushbackUnique _value;
 				if (_valOk isEqualTo -1) then {_newDef get "Names" deleteat _nameOK; continue};
 				

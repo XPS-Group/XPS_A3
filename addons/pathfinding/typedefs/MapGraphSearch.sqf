@@ -112,8 +112,8 @@ Flags:
 
             // Land Unit Check for Water
             if ((_capabilities get "CanUseLand") 
-				&& (_typeTo isEqualTo "COAST" || _typeFrom isEqualTo "COAST") 
-				&& !((_typeTo isEqualTo "BRIDGE" || _typeFrom isEqualTo "BRIDGE") 
+				&& (_typeTo == "COAST" || _typeFrom == "COAST") 
+				&& !((_typeTo == "BRIDGE" || _typeFrom == "BRIDGE") 
 				&& ((_weights get "RoadWeight") < 0)) 
 				&&  (_toTerrain get "WaterModifier" > 0.4 || _fromTerrain get "WaterModifier" > 0.4)
 			) then {
@@ -134,7 +134,7 @@ Flags:
 				switch (_typeTo) do {
 					case "COAST";
                     case "LAND": {
-						if (_typeTo isEqualTo "COAST") then {_canTraverse = (_capabilities get "CanUseWater");};
+						if (_typeTo == "COAST") then {_canTraverse = (_capabilities get "CanUseWater");};
                         if ((_capabilities get "CanUseRoads") && (_toTerrain get "HasRoads")) then {_canTraverse = true;};
                         if ((_capabilities get "CanUseTrails") && (_toTerrain get "HasTrails")) then {_canTraverse = true;};
                         if ((_capabilities get "CanUseLand") && 
