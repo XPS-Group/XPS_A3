@@ -215,7 +215,7 @@ Flags:
                     if (_heightWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toHeight - _fromHeight)/_sectorDistance) * _heightWeight );
                     };
-                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo0) then {
+                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toTerrain get "DensityModifier")/_maxDensity) * _densityWeight);
                     };
                 };
@@ -231,7 +231,7 @@ Flags:
                     if (_heightWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toHeight - _fromHeight)/_sectorDistance) * _heightWeight );
                     };
-                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo0) then {
+                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toTerrain get "DensityModifier")/_maxDensity) * _densityWeight);
                     };
                 }; 
@@ -246,7 +246,7 @@ Flags:
                     if (_heightWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toHeight - _fromHeight)/_sectorDistance) * _heightWeight );
                     };
-                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo0) then {
+                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toTerrain get "DensityModifier")/_maxDensity) * _densityWeight);
                     };
                 };
