@@ -70,26 +70,26 @@ Description:
 	Method: GetEnum
     
     	--- Prototype --- 
-    	call ["GetEnum",[_lookup]]
+    	call ["GetEnum",_lookup]
     	---
-	
+
 	Prameters:
 		_lookup - <Anything> - value to look up to get reference
     
     Returns: 
-		<HashmapObject> - The reference to the Enumeration constant or nil
+		<HashmapObject> - The reference to the Enumeration constant or False if not defined
 	-----------------------------------------------------------------------------*/
 	["GetEnum", {
-		params [["_lookup","",[0,"",text ""]]];
+		[_this] params [["_lookup","",[0,"",text ""]]];
 		if (_self call ["IsDefined",_lookup]) then {
 			_self call [_lookup];
-		} else {nil};
+		} else {false};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: IsDefined
     
     	--- Prototype --- 
-    	call ["IsDefined",[_lookup]]
+    	call ["IsDefined",_lookup]
     	---
 	
 	Prameters:
@@ -99,7 +99,7 @@ Description:
 		<Boolean> - <True> if _lookup value exists otherwise <False>
 	-----------------------------------------------------------------------------*/
 	["IsDefined", {
-		params [["_lookup","",[0,"",text ""]]];
+		[_this] params [["_lookup","",[0,"",text ""]]];
 		_lookup in keys _self;
 	}]
 ]
