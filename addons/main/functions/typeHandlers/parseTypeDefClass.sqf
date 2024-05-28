@@ -34,7 +34,6 @@ if (isText (_class >> "tag")) then {
 };
 
 private _fnc_loadFile = {
-	params ["_type","_file","_allowNils","_preprocess","_noStack","_isFinal_Cmd","_headers"];
 	private _statement = "";
 	switch (_type) do {
 		case "ifc" : {_statement = "private _ifc = [call compileScript [""%1"",false]] call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createhashmapfromarray _ifc;};"};
@@ -55,26 +54,32 @@ if (isText _file && isText _type) then {
 	_file = getText _file;
 	private _varName = format ["%1_%2_%3",_tag,_type,configName _class];
 	private _typeDefinition = uiNamespace getVariable _varName;
-	private _preprocess = if (isNumber (_class >> "preprocess")) then {getNumber (_class >> "preprocess")} else {1};
-	private _allowNils = if (isNumber (_class >> "allowNils")) then {getNumber (_class >> "allowNils")} else {1};
-	private _recompile = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "recompile")} else {0};
-	private _noStack = if (isNumber (_class >> "noStack")) then {getNumber (_class >> "noStack")} else {0};
-	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal")} else {0};
-	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType")} else {0};
+	private _preStart = uiNamespace getVariable XPS_PRESTART_VAR;
+	private _preprocess = if (isNumber (_class >> "preprocess")) then {getNumber (_class >> "preprocess") isEqualTo 1} else {true1};
+	private _allowNils = if (isNumber (_class >> "allowNils")) then {getNumber (_class >> "allowNils") isEqualTo 1} else {true};
+	private _recompile = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "recompile") isEqualTo 1} else {false};
+	private _preCache = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "preCache") isEqualTo 1} else {false};
+	private _noStack = if (isNumber (_class >> "noStack")) then {getNumber (_class >> "noStack") isEqualTo 1} else {false};
+	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal") isEqualTo 1} else {false};
+	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType") isEqualTo 1} else {false};
 	
 	// Account if in 'debug mode' and force recompilation
-	if (!(isnil "XPS_DebugMode") && XPS_DebugMode) then { _isFinal = 0; _recompile = 1;}; 
+	if (!(isnil "XPS_DebugMode") && XPS_DebugMode) then { _isFinal = false; _recompile = true;}; 
 	
-	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal isEqualTo 1);
+	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal);
 
-	// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
-	if (isNil {_typeDefinition} || {(_recompile isEqualTo 1 || isFilePatchingEnabled) && {_isFinal isEqualTo 0}}) then {
-		// diag_log text "[XPS TD parser]  : init namespace variables";
-		uiNamespace setvariable [_varName, [_type,_file,(_allowNils isEqualTo 1),(_preprocess isEqualTo 1),(_noStack isEqualTo 1),_isFinal_Cmd,(_headers isEqualTo 1)] call _fnc_loadFile];
-		missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
-	} else {
-		// diag_log text "[XPS TD parser]  : using cached";
-		missionNamespace setvariable [_varName,_typeDefinition];
+	// Only cache on preStart if specified
+	if ((_preStart && _preCache) || {!_preStart}) then {
+		// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
+		if (isNil {_typeDefinition} || {(_recompile isEqualTo 1 || isFilePatchingEnabled) && {_isFinal isEqualTo 0}}) then {
+			// diag_log text "[XPS TD parser]  : init namespace variables";
+			uiNamespace setvariable [_varName, call _fnc_loadFile];
+			missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
+			diag_log ("CACHED: "+_varname);
+		} else {
+			// diag_log text "[XPS TD parser]  : using cached";
+			missionNamespace setvariable [_varName,_typeDefinition];
+		};
 	};
 };
 

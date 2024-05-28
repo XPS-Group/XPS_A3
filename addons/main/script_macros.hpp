@@ -1,6 +1,8 @@
 #define Q(var1) #var1
 
 #define ADDON PREFIX##_##COMPONENT
+#define XPS_PRESTART xps_prestart
+#define XPS_PRESTART_VAR Q(XPS_PRESTART)
 
 /* ---------------------------------------*/
 //Type Definitions and Interfaces
@@ -40,6 +42,7 @@
 #define XPS_CFG_IFC(ifcName) class ifcName {\
     file = FILEPATH_C_Q(typedefs\ifcName.sqf);\
     type = "ifc";\
+    preCache = 1;\
     recompile = 0;\
     isFinal = 1;\
 }
@@ -47,6 +50,7 @@
 #define XPS_CFG_IFC_SUB(sub,ifcName) class ifcName {\
     file = FILEPATH_C_Q(typedefs\sub\ifcName.sqf);\
     type = "ifc";\
+    preCache = 1;\
     recompile = 0;\
     isFinal = 1;\
 }
@@ -57,6 +61,7 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
+    preCache = 1;\
     recompile = 0;\
     isFinal = 1;\
 }
@@ -67,6 +72,7 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
+    preCache = 1;\
     recompile = 0;\
     isFinal = 1;\
 }
@@ -77,6 +83,7 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
+    preCache = 1;\
     recompile = 0;\
     isFinal = 1;\
 }
@@ -87,6 +94,7 @@
     preprocess = 1;\
     allowNils = 1;\
     noStack = 1;\
+    preCache = 1;\
     recompile = 0;\
     isFinal = 1;\
 }

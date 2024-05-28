@@ -30,6 +30,7 @@ Returns:
 ---------------------------------------------------------------------------*/
 
 diag_log text "[XPS preInit]";
+private _start = diag_ticktime;
 
 XPS_DebugMode = uinamespace getvariable "XPS_DebugMOde";
 
@@ -47,4 +48,4 @@ XPS_DebugMode = uinamespace getvariable "XPS_DebugMOde";
 
 
 ADDON = true;
-diag_log text "[XPS preInit End]";
+diag_log text format ["[XPS preInit End: %1 secs]",diag_tickTime - _start];
