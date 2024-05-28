@@ -36,13 +36,13 @@ Description:
 		_lookup - <Anything> - value to look up to get reference
     
     Returns: 
-		<HashmapObject> - The reference to the Enumeration constant or nil
+		<HashmapObject> - The reference to the Enumeration constant or False if not defined
 	-----------------------------------------------------------------------------*/
 	["GetEnum", {
 		params [["_lookup","",[0,"",text ""]]];
 		if (_self call ["IsDefined",_lookup]) then {
 			call compile (_self get _lookup);
-		} else {nil};
+		} else {false};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNames
