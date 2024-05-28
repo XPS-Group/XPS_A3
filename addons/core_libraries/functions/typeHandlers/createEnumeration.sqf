@@ -61,7 +61,7 @@ private _newDef = createhashmap;
 	_newDef set ["Names",[]];
 	_newDef set ["Values",[]];
 
-private _enumType = if (toUpper (_baseDef get "ValueType") in ["STRING","SCALAR","TEXT"]) then {toUpper (_baseDef get "ValueType")} else {"SCALAR"};
+private _enumType = if (toUpper (_baseDef getOrDefault ["ValueType",""]) in ["STRING","SCALAR","TEXT"]) then {toUpper (_baseDef get "ValueType")} else {"SCALAR"};
 _newDef set ["ValueType",_enumType];
 
 

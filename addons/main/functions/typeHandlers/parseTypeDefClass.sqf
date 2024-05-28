@@ -63,22 +63,30 @@ if (isText _file && isText _type) then {
 	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal") isEqualTo 1} else {false};
 	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType") isEqualTo 1} else {false};
 	
-	// Account if in 'debug mode' and force recompilation
-	if (!(isnil "XPS_DebugMode") && XPS_DebugMode) then { _isFinal = false; _recompile = true;}; 
+	// Account if in 'debug mode' or filePatching enabled then force recompilation 
+	if ((!(isnil "XPS_DebugMode") && XPS_DebugMode) || {isFilePatchingEnabled}) then { _isFinal = false; _recompile = true;}; 
+	
+	// If recompiling, we can ignore preCaching
+	if (_recompile) then {_precache = false;};
 	
 	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal);
 
-	// Only cache on preStart if specified
+	// Only run during preStart if preCached -OR- during preInit
 	if ((_preStart && _preCache) || {!_preStart}) then {
-		// diag_log text format ["[XPS TD parser]  : Variable: %1 - recompile: %2",_varname,_recompile];
-		if (isNil {_typeDefinition} || {(_recompile isEqualTo 1 || isFilePatchingEnabled) && {_isFinal isEqualTo 0}}) then {
-			// diag_log text "[XPS TD parser]  : init namespace variables";
-			uiNamespace setvariable [_varName, call _fnc_loadFile];
-			missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
-			diag_log ("CACHED: "+_varname);
+
+		//use UINamespace only if preCached or compiled and cached on first mission load
+		if (_preCache || {!_reCompile}) then {
+			if (isNil {_typeDefinition} || {_recompile && {!_isFinal}}) then {
+				// diag_log text "[XPS TD parser]  : init namespace variables";
+				uiNamespace setvariable [_varName, call _fnc_loadFile];
+				missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
+			} else {
+				// diag_log text "[XPS TD parser]  : using cached";
+				missionNamespace setvariable [_varName,_typeDefinition];
+			};
 		} else {
-			// diag_log text "[XPS TD parser]  : using cached";
-			missionNamespace setvariable [_varName,_typeDefinition];
+			//We are recompiling each mission
+			missionNamespace setvariable [_varName, call _fnc_loadFile];
 		};
 	};
 };
