@@ -84,7 +84,7 @@ Returns:
 	["RemoveItem",compileFinal {
         private _item = _self call ["XPS_typ_OrderedCollection.RemoveItem",_this];
         if !(isNil "_item") then {
-            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",_this]]];
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["RemoveItem",[_this,_item]]]];
         };
         _item;
     }],
@@ -124,6 +124,17 @@ Returns:
         } else {false};
 	}],
     /*----------------------------------------------------------------------------
+    Method: InsertItem
+        <XPS_typ_OrderedCollection.InsertItem>
+        Invokes CollectionChanged
+    ----------------------------------------------------------------------------*/
+	["InsertItem",{
+        if (_self call ["XPS_typ_OrderedCollection.UpdateItem",_this]) then {
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["InsertItem",_this]]];
+            true;
+        } else {false};
+	}],
+    /*----------------------------------------------------------------------------
     EventHandler: CollectionChanged
     
         --- Prototype --- 
@@ -132,10 +143,16 @@ Returns:
 
         <XPS_ifc_ICollectionNotifier>
 
-        Handles Subscriptions to the onCollectionChangedEvent
-
     Returns:
         <XPS_typ_EventHandler>
+
+    Signature: 
+        [_sender, [_methodName, _item] ]
+
+        _sender - <XPS_typ_OrderedCollection> - this object
+        _methodName - <String> - "AddItem", "RemoveItem", "SetItem", "UpdateItem"
+        _item - the item that changed or in case of <AddItem> an <array> in form [_index, _item]
+
     ----------------------------------------------------------------------------*/
     ["CollectionChanged",nil]
 ]

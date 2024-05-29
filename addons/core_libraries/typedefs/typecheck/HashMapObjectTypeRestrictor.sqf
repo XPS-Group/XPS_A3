@@ -75,7 +75,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
 	["RegisterType",{
-        if !(params [["_type",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,_this]];};
+        if !(params [["_type",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,createhashmapfromarray [["_this",_this]]]];};
         private _list = _self get "_allowed";
         if (_type in _list) exitwith {false;};
         _list pushback _type;

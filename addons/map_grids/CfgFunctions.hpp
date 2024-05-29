@@ -1,8 +1,9 @@
 class CfgFunctions {
 	class ADDON {
-		// class category {
-		// 	XPS_CFG_FNC(functionName);
-		// };
+		class Formulas {
+			XPS_CFG_FNC(hexGridSubCellMatrix);
+			XPS_CFG_FNC(squareGridSubCellMatrix);
+		};
 		class Init {
 			class preInit {
 				file = FILEPATH_C_Q(preInit.sqf);

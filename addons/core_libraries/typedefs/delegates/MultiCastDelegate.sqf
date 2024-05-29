@@ -44,7 +44,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["#create",{
 		if !(isnil "_this") then {
-			_self set ["_signature",[_this]];
+			_self set ["_signature",_this];
 		} else {
 			_self set ["_signature",[]];
 		};
@@ -101,8 +101,8 @@ Returns:
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
-				{_this#1 in keys (_this#0) && 					//check methodname exists...
-				{_this#0 get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
+				{(_this#1) in keys (_this#0) && 					//check methodname exists...
+				{(_this#0) get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
 				if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
 					throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Functon/Method supplied was already added.",_this]];
@@ -156,7 +156,7 @@ Returns:
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
 	["Invoke",{
-		if !([_this] isEqualTypeParams (_self get "_signature")) exitwith {
+		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};
 		{

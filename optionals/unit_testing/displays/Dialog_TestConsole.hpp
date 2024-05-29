@@ -158,7 +158,16 @@ class XPS_RscButton : RscButton {
 	sizeEx = "0.022 / (getResolution select 5)";
 	font = "PuristaLight";
 };
+/* -------------------------------------------------------------------------
+Variable: unit_testing. XPS_UT_TestConsole_display
+	<Display>
 
+Description:
+	Returns the main display for the Unit Testing Console Dialog
+
+Returns: 
+	<Display> - The main display
+---------------------------------------------------------------------------*/
 class XPS_UT_TestConsole_display {
 
 	idd = 5000;

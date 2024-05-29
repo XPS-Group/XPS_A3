@@ -33,7 +33,7 @@ Description:
 		<Boolean> - <True> if successful, otherwise false
 
 ------------------------------------------------------------------------------*/
-if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[]]] ]) exitwith {false};
+if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[],createhashmap]] ]) exitwith {false};
 
 private _fnc_createEnumConstant = {
 	params ["_var","_name","_val","_def"];
@@ -51,29 +51,29 @@ private _fnc_createEnumConstant = {
 	_def set [_val , compilefinal _gVar ];
 };
 
-private _baseDef = createhashmapfromarray _typeDef;
+private _baseDef = if (_typeDef isEqualType []) then {createhashmapfromarray _typeDef} else {+_typeDef};
 
 private _newDef = createhashmap;
 	_newDef set ["#str",compilefinal format ["%1",str _varName]];
 	_newDef set ["#type",_baseDef getOrDefault ["#type","unknown type"]];
 	_newDef set ["#base",_baseDef getOrDefault ["#base",XPS_typ_Enumeration]];
-	_newDef set ["#flags",["sealed","nocopy"]],
+	_newDef set ["#flags",["sealed","nocopy"]];
 	_newDef set ["Names",[]];
 	_newDef set ["Values",[]];
 
-private _enumType = if (toUpper (_baseDef get "ValueType") in ["STRING","SCALAR","TEXT"]) then {toUpper (_baseDef get "ValueType")} else {"SCALAR"};
+private _enumType = if (toUpper (_baseDef getOrDefault ["ValueType",""]) in ["STRING","SCALAR","TEXT"]) then {toUpper (_baseDef get "ValueType")} else {"SCALAR"};
 _newDef set ["ValueType",_enumType];
 
 
 private _keyArray = _baseDef getOrDefault ["Enumerations",[]];
 
 switch (true) do {
-	case (_keyArray isEqualTypeAll "" && {_enumType isEqualTo "SCALAR"}) : {
+	case (_keyArray isEqualTypeAll "" && {_enumType == "SCALAR"}) : {
 		private _value = 0;
 		{	
 			private _key = _x;
 			private _nameOk = _newDef get "Names" pushBackUnique _key;
-			if (_nameOK == -1) then {continue};
+			if (_nameOK isEqualTo -1) then {continue};
 			_newDef get "Values" pushback _value;
 			
 			[_varName,_key,_value,_newDef] call _fnc_createEnumConstant;
@@ -85,14 +85,14 @@ switch (true) do {
 		{	
 			if !(_x params [ ["_key","",[""]], ["_value","",[0,""]]]) exitwith {false};
 			
-			if ((_enumType isEqualTo "SCALAR" && {_value isEqualType 0}) ||
+			if ((_enumType == "SCALAR" && {_value isEqualType 0}) ||
 			(_enumType in ["STRING","TEXT"] && {_value isEqualType ""}) ) then {
 				private _nameOk = _newDef get "Names" pushBackUnique _key;
-				if (_nameOK == -1) then {continue};
+				if (_nameOK isEqualTo -1) then {continue};
 				
-				if (_enumType isEqualTo "TEXT") then { _value = text _value}; 
+				if (_enumType == "TEXT") then { _value = text _value}; 
 				private _valOk = _newDef get "Values" pushbackUnique _value;
-				if (_valOk == -1) then {_newDef get "Names" deleteat _nameOK; continue};
+				if (_valOk isEqualTo -1) then {_newDef get "Names" deleteat _nameOK; continue};
 				
 				[_varName,_key,_value,_newDef] call _fnc_createEnumConstant;
 			};
@@ -100,7 +100,7 @@ switch (true) do {
 	};
 };
 
-call compile format["%1 = compilefinal createhashmapobject [_newDef,[]]",_varName];
+call compile format["%1 = compilefinal createhashmapobject [_newDef]",_varName];
 
 true;
 /*------------------------------------------------------------------------------

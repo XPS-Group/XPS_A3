@@ -41,7 +41,9 @@ Example: Check a hashmap if it supports interface
 
 ---------------------------------------------------------------------------- */
 
-if !(params [["_hashmap",nil,[createhashmap]],["_interfaces",nil,[[]]],"_allowNils"]) exitwith {
+params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[]]],["_allowNils",false,[true]]];
+
+if (_hashmap isEqualTo createhashmap) exitwith {
 	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
 	false;
 };
@@ -49,8 +51,6 @@ if !(_interfaces isEqualTypeAll "") exitwith {
 	diag_log text (format ["XPS_fnc_checkInterface: Interface parameter must be an array of all strings.  Param:%1",_this select 1]);
 	false;
 };
-
-_allownils = if (isNil "_allowNils") then {false} else {_allowNils};
 
 private _result = true;
 
@@ -60,12 +60,18 @@ for "_a" from 0 to (count _interfaces -1) do {
 	if ((_interfaces#_a) in keys (_hashmap getOrDefault ["@interfaces",createhashmap])) then {
 		_interface = _hashmap get "@interfaces" get (_interfaces#_a);
 	} else { 
-	// Strict Check - interface not in declared list - build it
+	// Strict Check - interface not in declared list - build it from string var
 		_interface = call compile (_interfaces#_a);
+		if !(_interface isEqualType createhashmap) then {
+			// Not a valid hashmap - exit without checking and fail
+			diag_log text (format ["XPS_fnc_checkInterface: Interface was not a valid hashmap.  Interface provided:%1",_interfaces#_a]);
+			_interface = createhashmap;
+			_result = false;
+		};
 	};
 
 	if (isNil {_interface}) exitwith {
-		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interfaces:%1",_interfaces#_a]);
+		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interface provided:%1",_interfaces#_a]);
 		_result = false;
 	};
 	
@@ -73,7 +79,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 		[_x,_y] params ["_key","_checkType"];
 		//Check key exists
 		if !(_key in keys _hashmap) then {
-			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
+			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing for Interface: %3",_hashmap get "#type",_key,_interfaces#_a]);
 			_result = false;
 			continue;
 		};
@@ -87,7 +93,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 				} else {continue};
 			};
 			// Check if Hashmap Object and get type if exists
-			if (_type isEqualTo "HASHMAP") then {
+			if (_type == "HASHMAP") then {
 				private _types = (_hashmap get _key) getOrDefault ["#type",_type];
 				private _typeIfcs = (_hashmap get _key) getOrDefault ["@interfaces",_type];
 				// Check type if actual instantiated object

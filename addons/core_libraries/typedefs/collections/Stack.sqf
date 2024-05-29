@@ -14,6 +14,7 @@ Authors:
    
 Description:
 	A Last In First Out (LIFO) collection. 
+    A.k.a a First In Last Out (FILO) collection.
 
 Returns:
 	<HashmapObject>
@@ -96,7 +97,7 @@ Returns:
 		<Boolean> - <True> if stack is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_stackArray") == 0;
+		count (_self get "_stackArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Peek
@@ -136,7 +137,8 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Pop",{
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_stackArray" deleteat -1;
+		    private _stack = _self get "_stackArray";
+            _stack deleteat (count _stack - 1);
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------

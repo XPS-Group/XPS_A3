@@ -1,12 +1,12 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_ArgummentOutOfRangeException
+TypeDef: core. XPS_typ_ArgumentOutOfRangeException
 	<TypeDefinition>
     	--- Prototype --- 
-		XPS_typ_ArgummentOutOfRangeException :  XPS_ifc_IException, XPS_typ_Exception
+		XPS_typ_ArgumentOutOfRangeException :  XPS_ifc_IException, XPS_typ_Exception
     	---
         --- prototype
-        createhashmapobject [XPS_typ_ArgummentOutOfRangeException, [_source*, _target*, _message*, _data*]]
+        createhashmapobject [XPS_typ_ArgumentOutOfRangeException, [_source*, _target*, _message*, _data*]]
         ---
 
 Authors: 
@@ -26,7 +26,7 @@ Returns:
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_typ_ArgummentOutOfRangeException"],
+	["#type","XPS_typ_ArgumentOutOfRangeException"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
     	<XPS_typ_Exception>
@@ -39,7 +39,7 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
-		XPS_typ_ArgummentOutOfRangeException:
+		XPS_typ_ArgumentOutOfRangeException:
 		         Source: (source)
 				 Target: (target)
 		         Message: (message)

@@ -58,9 +58,10 @@ Returns:
         Removes all items from collection.
     ----------------------------------------------------------------------------*/
 	["Clear",{
-        {
-            _self call ["RemoveItem",[_x]];
-        } foreach (keys (_self get "_listArray"));
+        while {count (_self get "_listArray") > 0} do {
+            _self call ["RemoveItem",count (_self get "_listArray")-1];
+        };
+        true;
 	}],
     /*----------------------------------------------------------------------------
     Method: Count
@@ -90,13 +91,13 @@ Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_listArray") == 0;
+		count (_self get "_listArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: AddItem
     
         --- Prototype --- 
-        call ["AddItem",[_item]]
+        call ["AddItem",_item]
         ---
 
         <XPS_ifc_ICollection>
@@ -111,14 +112,14 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
-        if !(params [["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,_this]];};
-        (_self get "_listArray") pushback _item;
+        if (isNil "_this") exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createhashmapfromarray [["_this",_this]]]];};
+        (_self get "_listArray") pushback _this;
     }],
     /*----------------------------------------------------------------------------
     Method: RemoveItem
     
         --- Prototype --- 
-        call ["RemoveItem",[_index]]
+        call ["RemoveItem",_index]
         ---
 
         <XPS_ifc_ICollection>
@@ -130,17 +131,17 @@ Returns:
         <Anything> - the item removed or nil if not found
 
     Throws:
-        <XPS_typ_ArgumentNilException> - if parameter was nil
+        <XPS_typ_InvalidArgumentException> - if parameter was nil or NaN
     ----------------------------------------------------------------------------*/
 	["RemoveItem",compileFinal {
-        if !(params [["_index",nil,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RemoveItem",nil,_this]];};
-        private _item = _self get "_listArray" deleteAt _index;
+        if !(_this isEqualType 0) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RemoveItem",nil,createhashmapfromarray [["_this",_this]]]];};
+        _self get "_listArray" deleteAt _this;
     }],
     /*----------------------------------------------------------------------------
     Method: FindItem
     
         --- Prototype --- 
-        call ["FindItem",[_item]]
+        call ["FindItem",_item]
         ---
 
         <XPS_ifc_ICollection>
@@ -150,36 +151,40 @@ Returns:
 		
 	Returns:
 		<Scalar> - index of item or -1 if not found
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["FindItem",{
-		params ["_item"];
-        _self get "_listArray" find _item;
+        if (isNil "_this") exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createhashmapfromarray [["_this",_this]]]];};
+        _self get "_listArray" find _this;
 	}],
     /*----------------------------------------------------------------------------
     Method: GetItem
     
         --- Prototype --- 
-        call ["GetItem",[_index]]
+        call ["GetItem",_index]
         ---
 
         <XPS_ifc_ICollection>
     
     Parameters: 
-		_index - Must be a non-negative number and must not exceed index of last item
+		_index - can be negative (same rules as BI command 'select' for arrays)
 		
 	Returns:
 		<Anything> - N'th element in the list or nil if empty - does not remove 
 		from list
 
     Throws:
+        <XPS_typ_InvalidArgumentException> - if parameter was nil or NaN
         <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["GetItem",{
-		params [["_index",0,[0]]];
-		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,_this]]};
+        if !(_this isEqualType 0) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RemoveItem",nil,createhashmapfromarray [["_this",_this]]]];};
+		if (_this >= _self call ["Count"]) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,createhashmapfromarray [["_this",_this]]]]};
 
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_listArray" select _index;
+		    _self get "_listArray" select _this;
         } else {nil};
 	}],
     /* -----------------------------------------------------------------------
@@ -196,7 +201,8 @@ Returns:
 
     -------------------------------------------------------------------------*/ 
     ["GetItems",{
-        +(_self get "_listArray");
+        private _array = _self get "_listArray";
+        +_array;
     }],
     /*----------------------------------------------------------------------------
     Method: SetItem
@@ -210,7 +216,7 @@ Returns:
         Replaces item at specified Index.
     
     Parameters: 
-		_index - Must be a non-negative number and must not exceed index of last item
+		_index - can be negative (same rules as BI command 'set' for arrays)
         _item - <Anything> - except nil
 
     Returns:
@@ -218,19 +224,17 @@ Returns:
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
-        <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["SetItem",{
-        if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,_this]];};
-		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"SetItem",nil,_this]]};
-        (_self get "_listArray") set [_index,_item];
+        if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,createhashmapfromarray [["_this",_this]]]];};
+		(_self get "_listArray") set [_index,_item];
         true;
 	}],
     /*----------------------------------------------------------------------------
     Method: UpdateItem
     
         --- Prototype --- 
-        call ["UpdateItem",[_index, [_key*, _value*]]]
+        call ["UpdateItem",[_index, [_key, _value]]]
         ---
 
         <XPS_ifc_ICollection>
@@ -239,7 +243,7 @@ Returns:
         Will throw an exception if Item updated is not a <Hashmap> or <HashmapObject>. Use SetItem instead.
     
     Parameters: 
-		_index - Must be a non-negative number and must not exceed index of last item
+		_index - can be negative (same rules as BI command 'select' for arrays)
         _key - the property of the item if it is a <Hashmap> or <HashmapObject>
         _value - the value to set the property if it is a <Hashmap> or <HashmapObject>
 
@@ -249,18 +253,46 @@ Returns:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
         <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
-        <XPS_typ_InvalidArgumentException> - if index does not exist
+        <XPS_typ_InvalidArgumentException> - if index does not contain  <hashmap> or <hashmapobject>
     ----------------------------------------------------------------------------*/
 	["UpdateItem",{
-        if !(params [["_index",nil,[0]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,_this]];};
-		if (_index < 0 || {_index >= _self call ["Count"]}) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"UpdateItem",nil,_this]]};
+        if !(params [["_index",nil,[0]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]];};
+		if (_index >= _self call ["Count"]) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]]};
         private _item = _self call ["GetItem",_index];
         if (_item isEqualType createhashmap) then {
-            _propertyArray params ["_key","_value"];;
-            _self get "_listArray" get _index set [_key,_value];
+            _propertyArray params ["_key","_value"];
+            _item set [_key,_value];
         } else {
-            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,_this]]
+            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]]
         };
+        true;
+	}],
+    /*----------------------------------------------------------------------------
+    Method: InsertItem
+    
+        --- Prototype --- 
+        call ["InsertItem",[_index, [_item1, _item2*]]]
+        ---
+
+        <XPS_ifc_ICollection>
+
+        Inserts items at the specified index 
+        
+    Parameters: 
+		_index - can be negative (same rules as BI command 'insert' for arrays)
+        _array - array of items to be added
+
+    Returns:
+        <True> - the item is successfully updated
+
+    Throws:
+        <XPS_typ_ArgumentNilException> - if parameter was nil
+    ----------------------------------------------------------------------------*/
+	["InsertItem",{
+        if !(params [["_index",nil,[0]],["_itemArray",nil,[[]]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]];};
+		
+        _self get "_listArray" insert [_index,_propertyArray,false];
+
         true;
 	}]
 ]

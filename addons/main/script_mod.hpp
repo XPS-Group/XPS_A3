@@ -3,4 +3,4 @@
 
 #include "script_version.hpp"
 
-#define REQUIRED_VERSION 2.14
+#define REQUIRED_VERSION 2.16

@@ -5,6 +5,7 @@ class Cfg3DEN
 		class ADDON {
 			onMissionNew = "call XPS_CORE_fnc_preInit;";
 			onMissionLoad = "call XPS_CORE_fnc_preInit;";
+			onMissionPreviewEnd = "call XPS_CORE_fnc_preInit;";
 		};
 	};
 };

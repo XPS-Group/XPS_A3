@@ -8,11 +8,11 @@ Function: main. typeHandlers. XPS_fnc_createStaticTypeFromFile
 
 Description:
     Reads a file containing a private Type Definition and returns a Read-Only <HashmapObject>.
-	It then sets the missionNamespace variable name to the compileFinal'd <HashmapObject>
+	It then sets the current namespace variable name to the compileFinal'd <HashmapObject>
 	so that only one ever exists and can never be altered.
 
 	Files should return a <HashmapObject> and therefore XPS_fnc_buildTypeDefinition should be called
-	manually in SQF file before returning the result if needed.
+	manually in the SQF file before returning the result if needed.
 
 Authors: 
 	Crashdome
@@ -42,7 +42,7 @@ Example: File and calling code example
 		createhashmapobject [_def];
     ---
 
-	To create the Singleton from above file:
+	To create the Static object from above file:
 	--- Code
 		["MyStatic" , "File.sqf"] call XPS_fnc_createStaticTypeFromFile;
 		MyStatic call ["Method"];

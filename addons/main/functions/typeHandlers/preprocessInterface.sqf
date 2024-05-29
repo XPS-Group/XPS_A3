@@ -68,7 +68,7 @@ try
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
 
-		if (_key isEqualTo "@" && {_value isEqualType createhashmap}) then {
+		if (_key == "@" && {_value isEqualType createhashmap}) then {
 			_interface deleteat _i;
 			_interface insert [-1,_value toArray false,true];
 		} else {

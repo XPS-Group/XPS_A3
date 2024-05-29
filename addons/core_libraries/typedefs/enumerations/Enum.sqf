@@ -25,11 +25,6 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["#str",compilefinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
-	Implements:
-		<XPS_ifc_IEnumeration>
-	-----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_typ_IEnumeration"]]
-	/*----------------------------------------------------------------------------
 	Method: GetEnum
     
     	--- Prototype --- 
@@ -41,19 +36,19 @@ Description:
 		_lookup - <Anything> - value to look up to get reference
     
     Returns: 
-		<HashmapObject> - The reference to the Enumeration constant or nil
+		<HashmapObject> - The reference to the Enumeration constant or False if not defined
 	-----------------------------------------------------------------------------*/
 	["GetEnum", {
-		params [["_lookup","",[0,"",text ""]]];
-		if (_self call ["IsDefined",_lookup]) then {
-			call compile (_self get _lookup);
-		} else {nil};
+		params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]];
+		if (_enumHelper call ["IsDefined",_lookup]) then {
+			call compile (_enumHelper get _lookup);
+		} else {false};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNames
     
     	--- Prototype --- 
-    	call ["GetNames",[_enumHelper]]
+    	call ["GetNames",_enumHelper]
     	---
 	
 	Prameters:
@@ -63,7 +58,7 @@ Description:
 		<Array> - of all Names of the Enumeration Type
 	-----------------------------------------------------------------------------*/
 	["GetNames",{
-		params [["_enumHelper",createhashmap,[createhashmap]]];
+		[_this] params [["_enumHelper",createhashmap,[createhashmap]]];
 		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
 		
 		_enumHelper get "Names"; 
@@ -72,7 +67,7 @@ Description:
 	Method: GetValueType
     
     	--- Prototype --- 
-    	call ["GetValueType",[_enumHelper]]
+    	call ["GetValueType",_enumHelper]
     	---
 	
 	Prameters:
@@ -82,7 +77,7 @@ Description:
 		<String> - can be "SCALAR", "STRING" or "TEXT"
 	-----------------------------------------------------------------------------*/
 	["GetValueType",{
-		params [["_enumHelper",createhashmap,[createhashmap]]];
+		[_this] params [["_enumHelper",createhashmap,[createhashmap]]];
 		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
 		
 		_enumHelper get "ValueType"; 
@@ -91,7 +86,7 @@ Description:
 	Method: GetValues
     
     	--- Prototype --- 
-    	call ["GetValues",[_enumHelper]]
+    	call ["GetValues",_enumHelper]
     	---
 	
 	Prameters:
@@ -101,7 +96,7 @@ Description:
 		<Array> - of all Values of the Enumeration Type
 	-----------------------------------------------------------------------------*/
 	["GetValues",{
-		params [["_enumHelper",createhashmap,[createhashmap]]];
+		[_this] params [["_enumHelper",createhashmap,[createhashmap]]];
 		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
 		
 		_enumHelper get "Values"; 

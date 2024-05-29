@@ -1,4 +1,4 @@
-Format: 2.3 (Development Release 1)
+﻿Format: 2.3
 
 # This is the main file you use to configure Natural Docs for your project.
 
@@ -144,6 +144,9 @@ Source Folder 50: ..\..\optionals\unit_testing
 
 # Images
 # ------------------------------------------------------------------------
+
+Image Folder: ..\images
+
 
 # This is where you tell Natural Docs which folders it should look for images
 # in.  When you put something like (see diagram.jpg) in a comment Natural Docs

@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: unit_testing. XPS_UT_ifc_IUnitTest
+Interface: unit_testing. XPS_UT_ifc_IUnitTest
 	<Interface>
 	---prototype
 	XPS_UT_ifc_IUnitTest
@@ -10,14 +10,20 @@ Authors:
 	Crashdome
 ----------------------------------------------------------------------------
 	
-	Method: GetDataArray
-		<Code>
+	Property:  ClassName
+	<String>
+
+	Property:  MethodName
+	<String>
 	
-	Method: SetSelected
-		<Code>
+	Property:  Result
+	<String>
 	
-	Method: SetTestResult
-		<Code>
+	Property:  Details
+	<Array>
+	
+	Property:  IsSelected
+	<Boolean>
 	
 ---------------------------------------------------------------------------- */
 [

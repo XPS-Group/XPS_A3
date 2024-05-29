@@ -89,7 +89,7 @@ Flags:
 		_result - <Boolean> - if node to node traversal is capable using the property <main.XPS_typ_AstarSearch.Doctrine>
 	-----------------------------------------------------------------------------*/
 	["canTraverse",compileFinal {
-		params [["_toNode",nil,[createhashmap]]],["_fromNode",nil,[createhashmap]];
+		params [["_toNode",nil,[createhashmap]],["_fromNode",nil,[createhashmap]]];
 
 		private _doctrine = _self get "Doctrine";
 			private _capabilities = _doctrine get "Capabilities";
@@ -200,7 +200,7 @@ Flags:
         switch (_typeTo) do {
             case "WATER": {
                 _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);
-                if (_heightWeight != 0) then {
+                if (_heightWeight isNotEqualTo 0) then {
                     _adjustedCost = _adjustedCost + (_adjustedCost * ((_toHeight - _fromHeight)/_sectorDistance) * _heightWeight );
                 };
             };
@@ -208,14 +208,14 @@ Flags:
             case "BRIDGE": {
                 if (_isWaterTravel) exitwith {_adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);};
                 if (_capabilities get "CanUseRoads") then { 
-                    if (_roadWeight != 0) then {
+                    if (_roadWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "RoadModifier") * _roadWeight);
                     };
                 } else {  
-                    if (_heightWeight != 0) then {
+                    if (_heightWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toHeight - _fromHeight)/_sectorDistance) * _heightWeight );
                     };
-                    if (_densityWeight != 0 && _maxDensity !=0) then {
+                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toTerrain get "DensityModifier")/_maxDensity) * _densityWeight);
                     };
                 };
@@ -224,14 +224,14 @@ Flags:
             case "COAST": {
                 if (_isWaterTravel) exitwith {_adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);};
                 if (((_capabilities get "CanUseRoads") && (_toTerrain get "HasRoads")) || ((_capabilities get "CanUseTrails") && (_toTerrain get "HasTrails"))) then { 
-                    if (_roadWeight != 0) then {
+                    if (_roadWeight isNotEqualTo 0) then {
                             _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "RoadModifier") * _roadWeight);
                     };
                 } else { 
-                    if (_heightWeight != 0) then {
+                    if (_heightWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toHeight - _fromHeight)/_sectorDistance) * _heightWeight );
                     };
-                    if (_densityWeight != 0 && _maxDensity !=0) then {
+                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toTerrain get "DensityModifier")/_maxDensity) * _densityWeight);
                     };
                 }; 
@@ -239,14 +239,14 @@ Flags:
 
             case "LAND": {
                 if (((_capabilities get "CanUseRoads") && (_toTerrain get "HasRoads")) || ((_capabilities get "CanUseTrails") && (_toTerrain get "HasTrails"))) then { 
-                    if (_roadWeight != 0) then {
+                    if (_roadWeight isNotEqualTo 0) then {
                             _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "RoadModifier") * _roadWeight);
                     };
                 } else { 
-                    if (_heightWeight != 0) then {
+                    if (_heightWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toHeight - _fromHeight)/_sectorDistance) * _heightWeight );
                     };
-                    if (_densityWeight != 0 && _maxDensity !=0) then {
+                    if (_densityWeight isNotEqualTo 0 && _maxDensity isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * ((_toTerrain get "DensityModifier")/_maxDensity) * _densityWeight);
                     };
                 };

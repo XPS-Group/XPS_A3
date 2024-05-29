@@ -1,0 +1,399 @@
+----------------------------------------------------------------------------------------------------------
+ADDONS
+----------------------------------------------------------------------------------------------------------
+
+Function
+----------------------------------------------------------------------------------------------------------
+
+Name                              File                         Folder               
+----                              ----                         ------               
+XPS_MG_fnc_squareGridSubCelMatrix squareGridSubCellMatrix.sqf   map_grids.          
+XPS_fnc_logError                  logError.sqf                  main.               
+XPS_fnc_createUniqueID            createUniqueID.sqf            main.               
+XPS_fnc_createSingleton           createSingleton.sqf           main. typeHandlers. 
+XPS_PF_fnc_lineIntersect2D        lineIntersect2D.sqf           pathfinding.        
+XPS_MG_fnc_hexGridSubCelMatrix    hexGridSubCellMatrix.sqf      map_grids.          
+XPS_fnc_createStaticTypeFromFile  createStaticTypeFromFile.sqf  main. typeHandlers. 
+XPS_fnc_findReplaceKeyInCode      findReplaceKeyInCode.sqf      main. typeHandlers. 
+XPS_fnc_createEnumeration         createEnumeration.sqf         core. typeHandlers. 
+XPS_BT_fnc_buildTree              buildTree.sqf                 behaviour_trees.    
+XPS_fnc_checkCoastTravel          checkCoastTravel.sqf          pathfinding.        
+XPS_fnc_parseTypeDefClass         parseTypeDefClass.sqf         main. typeHandlers. 
+XPS_fnc_buildTypeDefinition       buildTypeDefinition.sqf       main. typeHandlers. 
+XPS_fnc_checkInterface            checkInterface.sqf            main. typeHandlers. 
+XPS_fnc_preprocessTypeDefinition  preprocessTypeDefinition.sqf  main. typeHandlers. 
+
+
+
+
+TypeDef
+----------------------------------------------------------------------------------------------------------
+
+Name                                File                            Folder            
+----                                ----                            ------            
+XPS_typ_OrderedCollection           OrderedCollection.sqf            core.            
+XPS_typ_InvalidOperationException   InvalidOperationException.sqf    core.            
+XPS_typ_NoTypeRestrictor            NoTypeRestrictor.sqf             core.            
+XPS_BT_typ_SubTree                  SubTree.sqf                      behaviour_trees. 
+XPS_typ_Enum                        Enum.sqf                         core.            
+XPS_BT_typ_LeafAsync                LeafAsync.sqf                    behaviour_trees. 
+XPS_BT_typ_Parallel                 Parallel.sqf                     behaviour_trees. 
+XPS_BT_typ_Selector                 Selector.sqf                     behaviour_trees. 
+XPS_BT_typ_Inverter                 Inverter.sqf                     behaviour_trees. 
+XPS_typ_ArgumentNilException        ArgumentNilException.sqf         core.            
+XPS_typ_MultiCastDelegate           MultiCastDelegate.sqf            core.            
+XPS_PF_typ_PathfindingScheduler     PathfindingScheduler.sqf         pathfinding.     
+XPS_BT_typ_Sequence                 Sequence.sqf                     behaviour_trees. 
+XPS_PF_typ_RoadNode                 RoadNode.sqf                     pathfinding.     
+XPS_MG_typ_SquareGrid               SquareGrid.sqf                   map_grids.       
+XPS_typ_Blackboard                  Blackboard.sqf                   core.            
+XPS_PF_typ_TerrainLayerBuilder      TerrainLayerBuilder.sqf          pathfinding.     
+XPS_PF_typ_RoadGraph                RoadGraph.sqf                    pathfinding.     
+XPS_BT_typ_Leaf                     Leaf.sqf                         behaviour_trees. 
+XPS_typ_Exception                   Exception.sqf                    core.            
+XPS_typ_EventHandler                EventHandler.sqf                 core.            
+XPS_BT_typ_Decorator                Decorator.sqf                    behaviour_trees. 
+XPS_BT_typ_Action                   Action.sqf                       behaviour_trees. 
+XPS_PF_typ_RoadGraphDoctrine        RoadGraphDoctrine.sqf            pathfinding.     
+XPS_PF_typ_MapNode                  MapNode.sqf                      pathfinding.     
+XPS_BT_enum_Status                  Status.sqf                       behaviour_trees. 
+XPS_BT_typ_ActionAsync              ActionAsync.sqf                  behaviour_trees. 
+XPS_typ_Stack                       Stack.sqf                        core.            
+XPS_typ_Enumeration                 Enumeration.sqf                  core.            
+XPS_typ_OrderedCollectionN          OrderedCollectionN.sqf           core.            
+XPS_typ_JobScheduler                JobScheduler.sqf                 core.            
+XPS_typ_InvalidArgumentException    InvalidArgumentException.sqf     core.            
+XPS_PF_typ_MapGraphDoctrine         MapGraphDoctrine.sqf             pathfinding.     
+XPS_typ_AstarSearch                 AstarSearch.sqf                  core.            
+XPS_BT_typ_Composite                Composite.sqf                    behaviour_trees. 
+XPS_PF_typ_RoadGraphSearch          RoadGraphSearch.sqf              pathfinding.     
+XPS_MG_typ_HexGrid                  HexGrid.sqf                      map_grids.       
+XPS_typ_Event                       Event.sqf                        core.            
+XPS_BT_typ_Condition                Condition.sqf                    behaviour_trees. 
+XPS_PF_typ_MapGraph                 MapGraph.sqf                     pathfinding.     
+XPS_PF_typ_MapGraphSearch           MapGraphSearch.sqf               pathfinding.     
+XPS_typ_ArgumentOutOfRangeException ArgumentOutOfRangeException.sqf  core.            
+XPS_typ_HashmapObjectTypeRestrictor HashMapObjectTypeRestrictor.sqf  core.            
+XPS_typ_Queue                       Queue.sqf                        core.            
+XPS_typ_NativeTypeRestrictor        NativeTypeRestrictor.sqf         core.            
+XPS_typ_Delegate                    Delegate.sqf                     core.            
+XPS_typ_TypeCollection              TypeCollection.sqf               core.            
+XPS_typ_TypeCollectionN             TypeCollectionN.sqf              core.            
+
+
+
+
+Variable
+----------------------------------------------------------------------------------------------------------
+
+Name                  File        Folder            
+----                  ----        ------            
+XPS_Core              preInit.sqf  core.            
+XPS_Enum              preInit.sqf  core.            
+XPS_BT_Status_Success preInit.sqf  behaviour_trees. 
+XPS_BT                preInit.sqf  behaviour_trees. 
+XPS_MG_HexGrid        preInit.sqf  map_grids.       
+XPS_BT_Status         preInit.sqf  behaviour_trees. 
+XPS_MG_SquareGrid     preInit.sqf  map_grids.       
+XPS_MG                preInit.sqf  map_grids.       
+XPS_DebugMode         preInit.sqf  main.            
+XPS_AP                preInit.sqf  action_planning. 
+XPS_BT_Status_Running preInit.sqf  behaviour_trees. 
+XPS_Main              preInit.sqf  main.            
+XPS_PF                preInit.sqf  pathfinding.     
+XPS_BT_Status_Failure preInit.sqf  behaviour_trees. 
+
+
+
+
+Interface
+----------------------------------------------------------------------------------------------------------
+
+Name                          File                    Folder            
+----                          ----                    ------            
+XPS_ifc_IEnumeration          IEnumeration.sqf         core.            
+XPS_PF_ifc_RoadNode           IRoadNode.sqf            pathfinding.     
+XPS_PF_ifc_IMapGraphDoctrine  IMapGraphDoctrine.sqf    pathfinding.     
+XPS_ifc_ICollectionNotifier   ICollectionNotifier.sqf  core.            
+XPS_MG_ifc_ICell              ICell.sqf                map_grids.       
+XPS_ifc_IAstarNode            IAstarNode.sqf           core.            
+XPS_ifc_IException            IException.sqf           core.            
+XPS_PF_ifc_IRoadGraphDoctrine IRoadGraphDoctrine.sqf   pathfinding.     
+XPS_PF_ifc_ILayerBuilder      ILayerBuilder.sqf        pathfinding.     
+XPS_BT_ifc_INode              INode.sqf                behaviour_trees. 
+XPS_MG_ifc_IGrid              IGrid.sqf                map_grids.       
+XPS_AP_ifc_IAction            IAction.sqf              action_planning. 
+XPS_ifc_ITypeRestrictor       ITypeRestrictor.sqf      core.            
+XPS_ifc_IStack                IStack.sqf               core.            
+XPS_ifc_IBlackboard           IBlackboard.sqf          core.            
+XPS_ifc_IAstarSearch          IAstarSearch.sqf         core.            
+XPS_ifc_IQueue                IQueue.sqf               core.            
+XPS_ifc_IMultiCastDelegate    IMultiCastDelegate.sqf   core.            
+XPS_PF_ifc_IRoadGraph         IRoadGraph.sqf           pathfinding.     
+XPS_ifc_IAstarGraph           IAstarGraph.sqf          core.            
+XPS_ifc_IList                 IList.sqf                core.            
+XPS_PF_ifc_IMapGraph          IMapGraph.sqf            pathfinding.     
+XPS_PF_ifc_IMapNode           IMapNode.sqf             pathfinding.     
+XPS_ifc_IJobScheduler         IJobScheduler.sqf        core.            
+XPS_ifc_IDelegate             IDelegate.sqf            core.            
+XPS_ifc_ICollection           ICollection.sqf          core.            
+XPS_ifc_IEventHandler         IEventHandler.sqf        core.            
+
+
+
+
+Not Found
+----------------------------------------------------------------------------------------------------------
+
+Name  File                     Folder
+----  ----                     ------
+Error buildServiceProvider.sqf Error 
+Error preStart.sqf             Error 
+Error staticSingletonDef.sqf   Error 
+Error IServiceContainer.sqf    Error 
+Error IServiceProvider.sqf     Error 
+
+
+
+----------------------------------------------------------------------------------------------------------
+OPTIONALS
+----------------------------------------------------------------------------------------------------------
+
+Function
+----------------------------------------------------------------------------------------------------------
+
+Name                             File                      Folder                       
+----                             ----                      ------                       
+XPS_fnc_parseUnitTestClass       parseUnitTestClass.sqf     unit_testing. typeHandlers. 
+XPS_UT_fnc_openTestConsoleDialog openTestConsoleDialog.sqf  unit_testing.               
+
+
+
+
+TypeDef
+----------------------------------------------------------------------------------------------------------
+
+Name                                   File                            Folder          
+----                                   ----                            ------          
+XPS_UT_typ_SampleTestClassB            SampleTestClassB.sqf             unit_testing.  
+XPS_UT_typ_AssertFailedException       AssertFailedException.sqf        unit_testing.  
+XPS_UT_typ_SampleTestClassA            SampleTestClassA.sqf             unit_testing.  
+XPS_UT_typ_Assert                      Assert.sqf                       unit_testing.  
+XPS_UT_typ_UnitTest                    UnitTest.sqf                     unit_testing.  
+XPS_UT_typ_TestConsoleView             TestConsoleView.sqf              unit_testing.  
+XPS_UT_typ_TestClass                   TestClass.sqf                    unit_testing.  
+XPS_UT_typ_TestClasses                 TestClasses.sqf                  unit_testing.  
+XPS_UT_typ_AssertInconclusiveException AssertInconclusiveException.sqf  unit_testing.  
+XPS_UT_typ_TestService                 TestService.sqf                  unit_testing.  
+XPS_UT_typ_TestConsoleViewModel        TestConsoleViewModel.sqf         unit_testing.  
+
+
+
+
+Variable
+----------------------------------------------------------------------------------------------------------
+
+Name               File        Folder         
+----               ----        ------         
+XPS_UT_Assert      preInit.sqf  unit_testing. 
+XPS_UT_TestClasses preInit.sqf  unit_testing. 
+XPS_UT             preInit.sqf  unit_testing. 
+
+
+
+
+Interface
+----------------------------------------------------------------------------------------------------------
+
+Name                  File           Folder         
+----                  ----           ------         
+XPS_UT_ifc_ITestClass ITestClass.sqf  unit_testing. 
+XPS_UT_ifc_IUnitTest  IUnitTest.sqf   unit_testing. 
+
+
+
+
+Not Found
+----------------------------------------------------------------------------------------------------------
+
+----------------------------------------------------------------------------------------------------------
+NOTION GLOBALS VALIDATION
+----------------------------------------------------------------------------------------------------------
+Variable
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_Core                       Exists                                                                                                                                        
+XPS_BT                         Exists                                                                                                                                        
+XPS_Enum                       Exists                                                                                                                                        
+XPS_BT_Status_Success          Exists                                                                                                                                        
+XPS_MG_SquareGrid              Exists                                                                                                                                        
+XPS_MG_HexGrid                 Exists                                                                                                                                        
+XPS_BT_Status                  Exists                                                                                                                                        
+XPS_MG                         Exists                                                                                                                                        
+XPS_DebugMode                  Missing                                                                                                                                       
+XPS_AP                         Exists                                                                                                                                        
+XPS_BT_Status_Running          Exists                                                                                                                                        
+XPS_Main                       Exists                                                                                                                                        
+XPS_PF                         Exists                                                                                                                                        
+XPS_BT_Status_Failure          Exists                                                                                                                                        
+
+
+
+Function
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_MG_fnc_squareGridSubCel... Exists                                                                                                                                        
+XPS_fnc_logError               Exists                                                                                                                                        
+XPS_fnc_createUniqueID         Exists                                                                                                                                        
+XPS_fnc_createSingleton        Exists                                                                                                                                        
+XPS_PF_fnc_lineIntersect2D     Missing                                                                                                                                       
+XPS_MG_fnc_hexGridSubCelMatrix Exists                                                                                                                                        
+XPS_fnc_buildTypeDefinition    Exists                                                                                                                                        
+XPS_fnc_findReplaceKeyInCode   Exists                                                                                                                                        
+XPS_fnc_createEnumeration      Exists                                                                                                                                        
+XPS_BT_fnc_buildTree           Exists                                                                                                                                        
+XPS_fnc_checkCoastTravel       Missing                                                                                                                                       
+XPS_fnc_parseTypeDefClass      Exists                                                                                                                                        
+XPS_fnc_createStaticTypeFro... Exists                                                                                                                                        
+XPS_fnc_checkInterface         Exists                                                                                                                                        
+XPS_fnc_preprocessTypeDefin... Exists                                                                                                                                        
+
+
+
+Interface
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_ifc_IEnumeration           Exists                                                                                                                                        
+XPS_PF_ifc_RoadNode            Missing                                                                                                                                       
+XPS_PF_ifc_IMapGraphDoctrine   Missing                                                                                                                                       
+XPS_ifc_ICollectionNotifier    Exists                                                                                                                                        
+XPS_MG_ifc_ICell               Exists                                                                                                                                        
+XPS_ifc_IAstarNode             Exists                                                                                                                                        
+XPS_ifc_IException             Exists                                                                                                                                        
+XPS_PF_ifc_IRoadGraphDoctrine  Missing                                                                                                                                       
+XPS_PF_ifc_ILayerBuilder       Missing                                                                                                                                       
+XPS_BT_ifc_INode               Exists                                                                                                                                        
+XPS_MG_ifc_IGrid               Exists                                                                                                                                        
+XPS_AP_ifc_IAction             Exists                                                                                                                                        
+XPS_ifc_ITypeRestrictor        Exists                                                                                                                                        
+XPS_ifc_IStack                 Exists                                                                                                                                        
+XPS_ifc_IBlackboard            Exists                                                                                                                                        
+XPS_ifc_IAstarSearch           Exists                                                                                                                                        
+XPS_ifc_IQueue                 Exists                                                                                                                                        
+XPS_ifc_IMultiCastDelegate     Exists                                                                                                                                        
+XPS_PF_ifc_IRoadGraph          Missing                                                                                                                                       
+XPS_ifc_IAstarGraph            Exists                                                                                                                                        
+XPS_ifc_IList                  Exists                                                                                                                                        
+XPS_PF_ifc_IMapGraph           Missing                                                                                                                                       
+XPS_PF_ifc_IMapNode            Missing                                                                                                                                       
+XPS_ifc_IJobScheduler          Exists                                                                                                                                        
+XPS_ifc_IDelegate              Exists                                                                                                                                        
+XPS_ifc_ICollection            Exists                                                                                                                                        
+XPS_ifc_IEventHandler          Exists                                                                                                                                        
+
+
+
+TypeDef
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_typ_OrderedCollection      Exists                                                                                                                                        
+XPS_typ_InvalidOperationExc... Exists                                                                                                                                        
+XPS_typ_NoTypeRestrictor       Exists                                                                                                                                        
+XPS_typ_ArgumentOutOfRangeE... Exists                                                                                                                                        
+XPS_BT_typ_SubTree             Exists                                                                                                                                        
+XPS_typ_Enum                   Exists                                                                                                                                        
+XPS_BT_typ_LeafAsync           Exists                                                                                                                                        
+XPS_PF_typ_RoadGraphDoctrine   Missing                                                                                                                                       
+XPS_BT_typ_Parallel            Exists                                                                                                                                        
+XPS_typ_NativeTypeRestrictor   Exists                                                                                                                                        
+XPS_BT_typ_Selector            Exists                                                                                                                                        
+XPS_typ_Delegate               Exists                                                                                                                                        
+XPS_BT_typ_Inverter            Exists                                                                                                                                        
+XPS_PF_typ_MapNode             Missing                                                                                                                                       
+XPS_typ_MultiCastDelegate      Exists                                                                                                                                        
+XPS_PF_typ_PathfindingSched... Missing                                                                                                                                       
+XPS_PF_typ_TerrainLayerBuilder Missing                                                                                                                                       
+XPS_typ_Blackboard             Exists                                                                                                                                        
+XPS_PF_typ_RoadGraph           Missing                                                                                                                                       
+XPS_BT_typ_Leaf                Exists                                                                                                                                        
+XPS_typ_Exception              Exists                                                                                                                                        
+XPS_typ_EventHandler           Exists                                                                                                                                        
+XPS_PF_typ_MapGraphDoctrine    Missing                                                                                                                                       
+XPS_BT_typ_Decorator           Exists                                                                                                                                        
+XPS_BT_typ_Action              Exists                                                                                                                                        
+XPS_BT_enum_Status             Exists                                                                                                                                        
+XPS_BT_typ_ActionAsync         Exists                                                                                                                                        
+XPS_typ_Stack                  Exists                                                                                                                                        
+XPS_typ_TypeCollection         Exists                                                                                                                                        
+XPS_typ_TypeCollectionN        Exists                                                                                                                                        
+XPS_typ_JobScheduler           Exists                                                                                                                                        
+XPS_typ_InvalidArgumentExce... Exists                                                                                                                                        
+XPS_BT_typ_Sequence            Exists                                                                                                                                        
+XPS_typ_AstarSearch            Exists                                                                                                                                        
+XPS_BT_typ_Composite           Exists                                                                                                                                        
+XPS_PF_typ_RoadGraphSearch     Missing                                                                                                                                       
+XPS_MG_typ_HexGrid             Exists                                                                                                                                        
+XPS_typ_OrderedCollectionN     Exists                                                                                                                                        
+XPS_BT_typ_Condition           Exists                                                                                                                                        
+XPS_PF_typ_MapGraph            Missing                                                                                                                                       
+XPS_PF_typ_RoadNode            Missing                                                                                                                                       
+XPS_typ_HashmapObjectTypeRe... Exists                                                                                                                                        
+XPS_typ_Queue                  Exists                                                                                                                                        
+XPS_typ_Event                  Exists                                                                                                                                        
+XPS_MG_typ_SquareGrid          Exists                                                                                                                                        
+XPS_PF_typ_MapGraphSearch      Missing                                                                                                                                       
+XPS_typ_ArgumentNilException   Exists                                                                                                                                        
+XPS_typ_Enumeration            Exists                                                                                                                                        
+
+
+
+Variable
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_UT                         Exists                                                                                                                                        
+XPS_UT_TestClasses             Exists                                                                                                                                        
+XPS_UT_Assert                  Exists                                                                                                                                        
+
+
+
+Function
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_fnc_parseUnitTestClass     Exists                                                                                                                                        
+XPS_UT_fnc_openTestConsoleD... Exists                                                                                                                                        
+
+
+
+Interface
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_UT_ifc_ITestClass          Exists                                                                                                                                        
+XPS_UT_ifc_IUnitTest           Exists                                                                                                                                        
+
+
+
+TypeDef
+
+Name                           Value                                                                                                                                         
+----                           -----                                                                                                                                         
+XPS_UT_typ_TestClass           Exists                                                                                                                                        
+XPS_UT_typ_AssertFailedExce... Exists                                                                                                                                        
+XPS_UT_typ_Assert              Exists                                                                                                                                        
+XPS_UT_typ_UnitTest            Exists                                                                                                                                        
+XPS_UT_typ_TestConsoleView     Exists                                                                                                                                        
+XPS_UT_typ_SampleTestClassB    Missing                                                                                                                                       
+XPS_UT_typ_TestClasses         Exists                                                                                                                                        
+XPS_UT_typ_TestConsoleViewM... Exists                                                                                                                                        
+XPS_UT_typ_AssertInconclusi... Exists                                                                                                                                        
+XPS_UT_typ_TestService         Exists                                                                                                                                        
+XPS_UT_typ_SampleTestClassA    Missing                                                                                                                                       
+
+
+

@@ -49,8 +49,8 @@ Description:
 		"Check A and C are same type",
 		"Check A and B are not the same",
 		"Check A and B are not equal to each other",
-		"Check We can set A to 10",
-		"Check A plus B equals 3"
+		"Check A plus B equals 12",
+		"Check We can set A to 10"
 	 ]],
 	/*----------------------------------------------------------------------------
 	Method: InitTest
@@ -187,7 +187,7 @@ Description:
 	["Check A plus B equals 12",{
 		private _sum = (XPS_SampleTest_Values get "A") + (XPS_SampleTest_Values get "B");
 
-		XPS_UT_Assert call ["AreEqual",[_sum+1,12]];
+		XPS_UT_Assert call ["AreEqual",[_sum,12]];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Check We can set A to 10

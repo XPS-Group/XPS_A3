@@ -7,9 +7,6 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: Cells
-	<HASHMAP>
-
 	Method: GetPositionByIndex
 		<code>
 
@@ -19,18 +16,13 @@ Authors:
 	Method: GetNearbyIndexes
 		<code>
 
-	Method: GetCellByPosition
-		<code>
-
-	Method: GetNearbyCells
+	Method: GenerateGrid
 		<code>
 
 ---------------------------------------------------------------------------- */
 [
-	["Cells", "HASHMAP"],
 	["GetPositionByIndex","CODE"],
 	["GetIndexByPosition","CODE"],
 	["GetNearbyIndexes","CODE"],
-	["GetCellByPosition","CODE"],
-	["GetNearbyCells","CODE"],
+	["GenerateGrid","CODE"]
 ]

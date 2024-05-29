@@ -44,19 +44,7 @@ Returns:
 ---------------------------------------------------------------------------*/
 XPS_UT_Assert = compilefinal createhashmapobject [XPS_UT_typ_Assert];
 
-// Load Unit Test Classes --------------------------------------------------
-
-{
-	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
-} foreach configProperties [configFile >> QXPS_UT_CFG_BASECLASSNAME];
-
-{
-	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
-} foreach configProperties [missionConfigFile >> QXPS_UT_CFG_BASECLASSNAME];
-
-{
-	if (isClass _x) then {_result = [_x] call XPS_fnc_parseUnitTestClass;};
-} foreach configProperties [campaignConfigFile >> QXPS_UT_CFG_BASECLASSNAME];
+XPS_UT_TestClasses call ["GetInstance"] call ["LoadClasses"];
 
 diag_log text "[XPS UT preInit End]";
 

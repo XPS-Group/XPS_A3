@@ -107,7 +107,7 @@ Returns:
 			_self set ["CurrentItem",nil];
 			_self set ["CurrentUID",nil];
 		} else {
-			_self set ["CurrentItem",_self call ["RemoveItem",[_next]]];
+			_self set ["CurrentItem",_self call ["RemoveItem",_next]];
 			_self set ["CurrentUID",_next];
 		};
 	}],
@@ -164,7 +164,7 @@ Returns:
     Method: AddItem
 
         ---prototype
-        call ["AddItem",[_item]];
+        call ["AddItem",_item];
         ---
 
         <XPS_ifc_ICollection>
@@ -179,7 +179,7 @@ Returns:
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
-        if !(params [["_item",nil,[createhashmap]]]) exitwith {false;};
+        if !(_this isEqualType createhashmap) exitwith {false;};
         private _uid = [] call XPS_fnc_createUniqueID;
         if (_self call ["XPS_typ_TypeCollection.AddItem",[_uid,_item]]) exitwith {
 			_self get "_queueObject" call ["Enqueue",_uid];

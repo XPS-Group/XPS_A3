@@ -96,7 +96,7 @@ Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty",{
-		count (_self get "_queueArray") == 0;
+		count (_self get "_queueArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Peek
@@ -132,7 +132,7 @@ Returns:
 		none
 		
 	Returns:
-		<Anything> - removes and returns last element in the queue or nil if empty
+		<Anything> - removes and returns first element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
 	["Dequeue",{
         if !(_self call ["IsEmpty"]) then {

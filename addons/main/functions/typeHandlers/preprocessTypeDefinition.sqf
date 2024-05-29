@@ -11,8 +11,6 @@ Description:
 	Preprocesses a Type Definition array and alters the code based on the following:
 
 	Obfuscates the private Methods/Properties. 
-
-	Takes base Array Properties with an "@" symbol and appends them together.
 	
 	It also has support for "Attributes" of the Methods/Properties. You can classify an Attribute
 	by making it the third element of the Key/Value Pair. These Attributes do not exist once the 
@@ -55,8 +53,8 @@ Returns: Nothing
 
 ---------------------------------------------------------------------------- */
 if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
-_debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
-_debugHeaders = [_debugHeaders] param [0,false,[true]];
+// _debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
+// _debugHeaders = [_debugHeaders] param [0,false,[true]];
 
 private _privateKeys = [];
 private _result = true;
@@ -67,8 +65,8 @@ private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
 
-private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 isEqualTo "#type"}};
-private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index == -1);
+private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 == "#type"}};
+private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index isEqualTo -1);
 private _typeName = _typeArray select (count _typeArray > 1);
 
 try 
@@ -79,17 +77,17 @@ try
 
 		scopeName "MAIN";
 
-		if !((_typeDef#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
+		if !((_typeDef#_i) isEqualType [] && {count (_typeDef#_i) > 1}) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
 		
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
 
-			if (_key isEqualTo "#create") then {_hasCtor = true};
-			if (_key isEqualTo "#delete") then {_hasDtor = true};
+			if (_key == "#create") then {_hasCtor = true};
+			if (_key == "#delete") then {_hasDtor = true};
 
 			// Convert Interface list of strings to hashmap with ref to interface
-			if (_key isEqualTo "@interfaces") then {
+			if (_key == "@interfaces") then {
 				if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
 					private _interfaces = createhashmap;
 					{
@@ -182,32 +180,35 @@ try
 			_a = _a + 1;
 		};
 
+	if !(XPS_DebugMode) then {
 		// Finally record if private key
-		if (_key isEqualType "" && {_key find "_" == 0}) then {
+		if (_key isEqualType "" && {_key find "_" isEqualTo 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
 			_keyPair set [0,_uid]
 		};
+	};
 
 		_i = _i + 1;
 	};
 
+
 	// ------- Code injection for constructor/destructor and private keys -------- //
 	// Add create / delete methods if they dont exist prior to changing private keys
-	if (!_hasCtor && {_ctor != "" || _ctor_l != ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
-	if (!_hasDtor && {_dtor != "" || _dtor_l != ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
+	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
 
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
 		// Constructor injection but only if it existed prior to above code
-		if (_hasCtor && {_key isEqualTo "#create" && {_ctor != "" || _ctor_l != ""}}) then {
+		if (_hasCtor && {_key == "#create" && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}}) then {
 			private _strCode = (str _value) insert [1,_ctor];
 			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
 			_keyPair set [1, _value];
 		};
 		// Destructor injection but only if it existed prior to above code
-		if (_hasDtor && {_key isEqualTo "#delete" && {_dtor != "" || _dtor_l != ""}}) then {
+		if (_hasDtor && {_key == "#delete" && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}}) then {
 			private _strCode = (str _value) insert [1,_dtor];
 			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
 			_keyPair set [1, _value];

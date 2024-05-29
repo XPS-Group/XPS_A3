@@ -69,10 +69,11 @@ Alter Comment Type: Interface
    Plural Display Name: Hashmap Interfaces
 
    Scope: Start
-   Flags: Code, Variable Type, Class Hierarchy
+   Flags: Code, Variable Type, Database Hierarchy
 
    Keywords:
       mapinterface, mapinterfaces
+      interface, interfaces
 
 
 Comment Type: Key
@@ -237,6 +238,18 @@ Comment Type: HMReserved
       parent, parents
       inherit, inherits
       implement, implements
+
+
+Comment Type: EventSignature
+
+   Display Name: Signature
+   Plural Display Name: Signatures
+
+   Scope: Normal
+   Flags: Code
+
+   Keywords:
+      signature, signatures
 
 
 # Each Natural Docs comment has a corresponding type which determine its
