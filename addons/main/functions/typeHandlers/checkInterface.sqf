@@ -60,12 +60,18 @@ for "_a" from 0 to (count _interfaces -1) do {
 	if ((_interfaces#_a) in keys (_hashmap getOrDefault ["@interfaces",createhashmap])) then {
 		_interface = _hashmap get "@interfaces" get (_interfaces#_a);
 	} else { 
-	// Strict Check - interface not in declared list - build it
+	// Strict Check - interface not in declared list - build it from string var
 		_interface = call compile (_interfaces#_a);
+		if !(_interface isEqualType createhashmap) then {
+			// Not a valid hashmap - exit without checking and fail
+			diag_log text (format ["XPS_fnc_checkInterface: Interface was not a valid hashmap.  Interface provided:%1",_interfaces#_a]);
+			_interface = createhashmap;
+			_result = false;
+		};
 	};
 
 	if (isNil {_interface}) exitwith {
-		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interfaces:%1",_interfaces#_a]);
+		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interface provided:%1",_interfaces#_a]);
 		_result = false;
 	};
 	
@@ -73,7 +79,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 		[_x,_y] params ["_key","_checkType"];
 		//Check key exists
 		if !(_key in keys _hashmap) then {
-			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
+			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing for Interface: %3",_hashmap get "#type",_key,_interfaces#_a]);
 			_result = false;
 			continue;
 		};

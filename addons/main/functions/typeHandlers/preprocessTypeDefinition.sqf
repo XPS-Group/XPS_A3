@@ -11,8 +11,6 @@ Description:
 	Preprocesses a Type Definition array and alters the code based on the following:
 
 	Obfuscates the private Methods/Properties. 
-
-	Takes base Array Properties with an "@" symbol and appends them together.
 	
 	It also has support for "Attributes" of the Methods/Properties. You can classify an Attribute
 	by making it the third element of the Key/Value Pair. These Attributes do not exist once the 
