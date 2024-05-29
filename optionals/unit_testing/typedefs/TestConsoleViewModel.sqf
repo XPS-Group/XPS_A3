@@ -53,26 +53,6 @@ Returns:
 	["_testService",nil],
 	["_onUpdateUnitTest",nil],
 	/*----------------------------------------------------------------------------
-	Protected: myProp
-    
-    	--- Prototype --- 
-    	get "myProp"
-    	---
-    
-    Returns: 
-		<Object> - description
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Property: MyProp
-    
-    	--- Prototype --- 
-    	get "MyProp"
-    	---
-    
-    Returns: 
-		<Object> - description
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
 	Protected: onTestServiceCollectionChanged
     
     	--- Prototype --- 
@@ -253,9 +233,20 @@ Returns:
     	---
 
     Returns:
-        <XPS_typ_EventHandler>
+        <core. XPS_typ_EventHandler>
 
 	-----------------------------------------------------------------------------*/
 	["StateChanged",nil],
+	/*----------------------------------------------------------------------------
+	EventHandler: UpdateUnitTest
+    
+    	--- Prototype --- 
+    	get "UpdateUnitTest"
+    	---
+
+    Returns:
+        <core. XPS_typ_EventHandler>
+
+	-----------------------------------------------------------------------------*/
 	["UpdateUnitTest",nil]
 ]

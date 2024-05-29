@@ -71,7 +71,7 @@ Returns:
 		_listBox lnbsetcurselrow -1;
 	}],
 	/*----------------------------------------------------------------------------
-	Protected: clearSonTestServiceStateChangedelected
+	Protected: onTestServiceStateChanged
     
     	--- Prototype --- 
     	call ["onTestServiceStateChanged",[_sender,[_state]]]

@@ -13,8 +13,8 @@ class CfgUserActions
 {
 	class XPS_UT_TestConsoleOpen
 	{
-		displayName = "Open Unit Test Console";
-		tooltip = "Open Unit Test Console";
+		displayName = "Open XPS Unit Test Console";
+		tooltip = "Open XPS Unit Test Console";
 		onActivate = "[] call XPS_UT_fnc_openTestConsoleDialog;";
 		onDeactivate = "";
 		onAnalog = "";
