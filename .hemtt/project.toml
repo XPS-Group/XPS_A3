@@ -4,4 +4,4 @@ author= "Crashdome"
 reuse_private_key = false
 
 [files]
-include = ["license.txt"]
+include = ["readme.md", "license.md"]
