@@ -1,4 +1,4 @@
-﻿Format: 2.3 (Development Release 1)
+﻿Format: 2.3
 
 # This is the Natural Docs languages file for this project.  If you change
 # anything here, it will apply to THIS PROJECT ONLY.  You can edit the version
@@ -9,7 +9,7 @@
 # Ignored Extensions
 # ------------------------------------------------------------------------
 
-Ignore Extensions: c cpp hpp txt toml
+Ignore Extensions: c txt toml
 
 
 # Languages
@@ -18,7 +18,7 @@ Ignore Extensions: c cpp hpp txt toml
 
 Language: SQF
 
-   Extension: sqf
+   Extensions: sqf cpp hpp
    Shebang String: SQF
 
    Line Comment: //
