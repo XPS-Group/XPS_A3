@@ -58,7 +58,7 @@ Description:
 		<Array> - of all Names of the Enumeration Type
 	-----------------------------------------------------------------------------*/
 	["GetNames",{
-		[_this] params [["_enumHelper",createhashmap,[createhashmap]]];
+		params [["_enumHelper",createhashmap,[createhashmap]]];
 		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
 		
 		_enumHelper get "Names"; 
@@ -77,7 +77,7 @@ Description:
 		<String> - can be "SCALAR", "STRING" or "TEXT"
 	-----------------------------------------------------------------------------*/
 	["GetValueType",{
-		[_this] params [["_enumHelper",createhashmap,[createhashmap]]];
+		params [["_enumHelper",createhashmap,[createhashmap]]];
 		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
 		
 		_enumHelper get "ValueType"; 
@@ -96,7 +96,7 @@ Description:
 		<Array> - of all Values of the Enumeration Type
 	-----------------------------------------------------------------------------*/
 	["GetValues",{
-		[_this] params [["_enumHelper",createhashmap,[createhashmap]]];
+		params [["_enumHelper",createhashmap,[createhashmap]]];
 		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
 		
 		_enumHelper get "Values"; 
