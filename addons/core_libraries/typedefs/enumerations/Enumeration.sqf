@@ -80,7 +80,7 @@ Description:
 		<HashmapObject> - The reference to the Enumeration constant or False if not defined
 	-----------------------------------------------------------------------------*/
 	["GetEnum", {
-		[_this] params [["_lookup","",[0,"",text ""]]];
+		params [["_lookup","",[0,"",text ""]]];
 		if (_self call ["IsDefined",_lookup]) then {
 			_self call [_lookup];
 		} else {false};
@@ -99,7 +99,7 @@ Description:
 		<Boolean> - <True> if _lookup value exists otherwise <False>
 	-----------------------------------------------------------------------------*/
 	["IsDefined", {
-		[_this] params [["_lookup","",[0,"",text ""]]];
+		params [["_lookup","",[0,"",text ""]]];
 		_lookup in keys _self;
 	}]
 ]
