@@ -33,7 +33,7 @@ Returns:
 	Implements: @interfaces
     	<XPS_AP_ifc_IPrimitiveTask>
 	-----------------------------------------------------------------------------*/
-    ["@interfaces",["XPS_AP_ifc_IPrimitiveTask"]]
+    ["@interfaces",["XPS_AP_ifc_IPrimitiveTask"]],
 	/*----------------------------------------------------------------------------
 	Method: PreCondition
     

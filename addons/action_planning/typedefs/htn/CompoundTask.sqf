@@ -31,7 +31,7 @@ Returns:
 	Implements: @interfaces
     	<XPS_AP_ifc_ICompoundTask>
 	-----------------------------------------------------------------------------*/
-    ["@interfaces",["XPS_AP_ifc_ICompoundTask"]]
+    ["@interfaces",["XPS_AP_ifc_ICompoundTask"]],
 	/*----------------------------------------------------------------------------
 	Property: Methods
     

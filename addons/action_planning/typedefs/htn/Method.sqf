@@ -33,7 +33,7 @@ Returns:
 	Implements: @interfaces
     	<XPS_AP_ifc_IMethod>
 	-----------------------------------------------------------------------------*/
-    ["@interfaces",["XPS_AP_ifc_IMethod"]]
+    ["@interfaces",["XPS_AP_ifc_IMethod"]],
 	/*----------------------------------------------------------------------------
 	Property: SubTasks
     
