@@ -27,6 +27,19 @@
 #endif
 
 
+#ifdef __A3_DEBUG__
+#define XPS_CFG_FNC(fncName) class fncName {\
+    file = FILEPATH_C_Q(functions\fncName.sqf);\
+    headerType = 0;\
+    recompile = 1;\
+}
+
+#define XPS_CFG_FNC_SUB(sub,fncName) class fncName {\
+    file = FILEPATH_C_Q(functions\sub\fncName.sqf);\
+    headerType = 0;\
+    recompile = 1;\
+}
+#else
 #define XPS_CFG_FNC(fncName) class fncName {\
     file = FILEPATH_C_Q(functions\fncName.sqf);\
     headerType = 0;\
@@ -38,6 +51,7 @@
     headerType = 0;\
     recompile = 0;\
 }
+#endif
 
 #define XPS_CFG_IFC(ifcName) class ifcName {\
     file = FILEPATH_C_Q(typedefs\ifcName.sqf);\
