@@ -81,7 +81,7 @@ private _fnc_HandleChildren = compileFinal {
 		for "_i" from 0 to (count _children)-1 do {
 			private _typeDef = _children#_i#0;
 			private _grandChildren = [];
-			if (count _children#_i > 1 && {_grandchildren#_i isEqualtype []}) then {_grandchildren = _children#_i#1};
+			if (count (_children#_i) > 1 && {_children#_i#1 isEqualtype []}) then {_grandchildren = _children#_i#1};
 			private _childNode = createhashmapobject [call compile _typeDef];
 			_parentNode call ["AddChildNode",_childNode];
 			if (count _grandchildren > 0) then {
