@@ -3,7 +3,7 @@
 TypeDef: behaviour_trees. XPS_BT_enum_Status
 	<TypeDefinition>
 		---prototype
-		XPS_BT_enum_Status : XPS_ifc_IEnumeration, XPS_typ_Enumeration
+		XPS_BT_enum_Status : core.XPS_ifc_IEnumeration, core.XPS_typ_Enumeration
 		---
 
 Authors: 
@@ -12,19 +12,19 @@ Authors:
 Description:
 	An Enumeration set for node statuses.
 
-	See <XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
+	See <core.XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_enum_Status"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
-    	<XPS_typ_Enumeration>
+    	<core.XPS_typ_Enumeration>
 	-----------------------------------------------------------------------------*/
 	["#base",XPS_typ_Enumeration],
 	/*----------------------------------------------------------------------------
 	Property: Names
-		<XPS_typ_Enumeration.Names>
+		<core.XPS_typ_Enumeration.Names>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: ValueType
@@ -40,14 +40,14 @@ Description:
 	["Enumerations", [["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
 	/*----------------------------------------------------------------------------
 	Property: Values
-		<XPS_typ_Enumeration.Values>
+		<core.XPS_typ_Enumeration.Values>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
-		<XPS_typ_Enumeration.GetEnum>
+		<core.XPS_typ_Enumeration.GetEnum>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: IsDefined
-		<XPS_typ_Enumeration.IsDefined>
+		<core.XPS_typ_Enumeration.IsDefined>
 	-----------------------------------------------------------------------------*/
 ]
