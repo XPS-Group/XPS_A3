@@ -2,7 +2,7 @@
 class XPS_CFG_TD_BASECLASSNAME {
 	class ADDON {
 		class Interfaces {
-			XPS_CFG_IFC(INode);
+			XPS_CFG_IFC_SUB(base,INode);
 		};
 
 		class Enumerations {
