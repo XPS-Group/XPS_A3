@@ -1,5 +1,22 @@
 #include "script_component.hpp"
 
+/* -------------------------------------------------------------------------
+Variable: main. XPS_DebugMode
+
+Description:
+	This returns true if game was launched with the -debug parameter -OR- XPS_DEBUG macro is forcefully defined.
+	The effects it has when true is to force:
+	
+	- No obfuscation of 'private' properties
+	- No compileFinal of Type Definitions (ignores isFinal = 1)
+	- Always recompile (forces recompile = 1)
+
+	If false, the above operate as normal or as defined according to the class properties
+
+Returns: 
+	<Boolean> 
+---------------------------------------------------------------------------*/
+
 XPS_DebugMode = false;
 #ifdef XPS_DEBUG
 	XPS_DebugMode = true;

@@ -12,23 +12,6 @@ Returns:
 ---------------------------------------------------------------------------*/
 ADDON = false;
 
-/* -------------------------------------------------------------------------
-Variable: main. XPS_DebugMode
-
-Description:
-	This returns true if game was launched with the -debug parameter -OR- XPS_DEBUG macro is forcefully defined.
-	The effects it has when true is to force:
-	
-	- No obfuscation of 'private' properties
-	- No compileFinal of Type Definitions (ignores isFinal = 1)
-	- Always recompile (forces recompile = 1)
-
-	If false, the above operate as normal or as defined according to the class properties
-
-Returns: 
-	<Boolean> 
----------------------------------------------------------------------------*/
-
 diag_log text "[XPS preInit]";
 private _start = diag_ticktime;
 
