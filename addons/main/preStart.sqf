@@ -7,7 +7,7 @@ XPS_DebugMode = false;
 
 uinamespace setvariable ["XPS_DebugMode",XPS_DebugMode];
 uinamespace setvariable [XPS_PRESTART_VAR,true];
-
+diag_log format ["XPS_DebugMode:%1",XPS_DebugMode];
 with uiNamespace do{
 	diag_log text "[XPS preStart]";
 	private _start = diag_ticktime;

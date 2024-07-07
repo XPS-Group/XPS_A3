@@ -38,6 +38,18 @@
     recompile = 1;\
 }
 
+#define XPS_CFG_FNC_NR(fncName) class fncName {\
+    file = FILEPATH_C_Q(functions\fncName.sqf);\
+    headerType = 0;\
+    recompile = 0;\
+}
+
+#define XPS_CFG_FNC_SUB_NR(sub,fncName) class fncName {\
+    file = FILEPATH_C_Q(functions\sub\fncName.sqf);\
+    headerType = 0;\
+    recompile = 0;\
+}
+
 #define XPS_CFG_IFC(ifcName) class ifcName {\
     file = FILEPATH_C_Q(typedefs\ifcName.sqf);\
     type = "ifc";\
