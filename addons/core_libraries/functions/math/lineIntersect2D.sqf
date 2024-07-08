@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------------
-Function: pathfinding. XPS_PF_fnc_lineIntersect2D
+Function: core. math. XPS_PF_fnc_lineIntersect2D
 	
 	---prototype
 	_result = [_posA1, _posA2, _posB1, _posB2] call XPS_PF_fnc_lineIntersect2D

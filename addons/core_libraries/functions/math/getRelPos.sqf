@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. XPS_fnc_getRelPos
+Function: core. math. XPS_fnc_getRelPos
 	
 	---prototype
 	_pos = [_startPos, _dir, _dist, *_heightAdjust] call XPS_fnc_getRelPos
