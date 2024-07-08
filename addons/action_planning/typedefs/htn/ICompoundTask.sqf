@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: action_planning. XPS_AP_ifc_ICompoundTask
+Interface: action_planning. htn. XPS_AP_ifc_ICompoundTask
 <Interface>
 	---prototype
 	XPS_AP_ifc_ICompoundTask
@@ -13,11 +13,11 @@ Authors:
 	Property: Methods
 	<Array>
         
-	Method: PreCondition
+	Method: Precondition
 	<Code>
 ---------------------------------------------------------------------------- */
 
 [
-    ["PreCondition","CODE"],
+    ["Precondition","CODE"],
 	["Methods","ARRAY"]
 ]

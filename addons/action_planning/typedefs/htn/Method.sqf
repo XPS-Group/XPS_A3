@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_AP_typ_Method
+TypeDef: action_planning. htn. XPS_AP_typ_Method
 	<TypeDefinition>
 		---prototype
 		XPS_AP_typ_Method : XPS_AP_ifc_IMethod
@@ -48,16 +48,16 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["SubTasks",[]],
 	/*----------------------------------------------------------------------------
-	Method: Condition
+	Method: Precondition
     
     	--- Prototype --- 
-    	call ["Condition",_args*]
+    	call ["Precondition",_args*]
     	---
 
         Alternative: 
 
         --- code ---
-        get "Condition"  //allows lazy execution
+        get "Precondition"  //allows lazy execution
         ---
 
 		<XPS_AP_ifc_IMethod>
@@ -69,5 +69,5 @@ Returns:
 		<Boolean> - True if satisfied, otherwise False
 
 	-----------------------------------------------------------------------------*/
-    ["Condition",{}]
+    ["Precondition",{}]
 ]

@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_AP_typ_CompoundTask
+TypeDef: action_planning. htn. XPS_AP_typ_CompoundTask
 	<TypeDefinition>
 		---prototype
 		XPS_AP_typ_CompoundTask : XPS_AP_ifc_ICompoundTask
@@ -33,6 +33,19 @@ Returns:
 	-----------------------------------------------------------------------------*/
     ["@interfaces",["XPS_AP_ifc_ICompoundTask"]],
 	/*----------------------------------------------------------------------------
+	Property: Blackboard
+    
+    	--- Prototype --- 
+    	get "Blackboard"
+    	---
+
+		<XPS_AP_ifc_ICompoundTask>
+    
+    Returns: 
+		<HashmapObject> - hashmap which typically holds a world state
+	-----------------------------------------------------------------------------*/
+	["Blackboard",nil],
+	/*----------------------------------------------------------------------------
 	Property: Methods
     
     	--- Prototype --- 
@@ -46,16 +59,16 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["Methods",[]],
 	/*----------------------------------------------------------------------------
-	Method: PreCondition
+	Method: Precondition
     
     	--- Prototype --- 
-    	call ["PreCondition",_args*]
+    	call ["Precondition",_args*]
     	---
 
         Alternative: 
 
         --- code ---
-        get "PreCondition"  //allows lazy execution
+        get "Precondition"  //allows lazy execution
         ---
 
 		<XPS_AP_ifc_ICompoundTask>
@@ -67,5 +80,5 @@ Returns:
 		<Boolean> - True if satisfied, otherwise False
 
 	-----------------------------------------------------------------------------*/
-    ["PreCondition",{}]
+    ["Precondition",{}]
 ]
