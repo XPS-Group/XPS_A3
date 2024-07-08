@@ -629,9 +629,9 @@ Description:
 	Performs a Within Range check. Fails with <XPS_UT_typ_AssertFailedException> if _num is out of bounds
 	
     Parameters: 
-		- _num - <Scalar> - the number to check
-		- _min - <Scalar> - the minimum value _num can be
-		- _max - <Scalar> - the maximum value _num can be
+		- _num - <Number> - the number to check
+		- _min - <Number> - the minimum value _num can be
+		- _max - <Number> - the maximum value _num can be
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
@@ -653,9 +653,9 @@ Description:
 	Performs an Out of Range check. Fails with <XPS_UT_typ_AssertFailedException> if _num is within bounds
 	
     Parameters: 
-		- _num - <Scalar> - the number to check
-		- _min - <Scalar> - the minimum value _num cannot be in range of
-		- _max - <Scalar> - the maximum value _num cannot be in range of
+		- _num - <Number> - the number to check
+		- _min - <Number> - the minimum value _num cannot be in range of
+		- _max - <Number> - the maximum value _num cannot be in range of
 
 	Optionals:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed

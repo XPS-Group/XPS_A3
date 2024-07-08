@@ -104,7 +104,7 @@ Returns:
 		Calls the test service to request a unit test be "selected"
     
     Parameters: 
-		_index - <Scalar> - the index of the item to "select"
+		_index - <Number> - the index of the item to "select"
 	-----------------------------------------------------------------------------*/
 	["AddToSelected",{
 		if (_this < 0) exitwith {};
@@ -121,7 +121,7 @@ Returns:
 		Calls the test service to request a unit test be "unselected"
     
     Parameters: 
-		_index - <Scalar> - the index of the item to "unselect"
+		_index - <Number> - the index of the item to "unselect"
 	-----------------------------------------------------------------------------*/
 	["RemoveFromSelected",{
 		if (_this < 0) exitwith {};
@@ -218,7 +218,7 @@ Returns:
 		Calls the test service to request a Unit Test's Details Property
     
     Parameters: 
-		_index - <Scalar> - the index of the item 
+		_index - <Number> - the index of the item 
 
 	-----------------------------------------------------------------------------*/
 	["GetDetails",{

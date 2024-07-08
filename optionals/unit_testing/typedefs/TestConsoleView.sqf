@@ -127,7 +127,7 @@ Returns:
 	Parameters:
 		_sender - <Anything> - the function or hashmapobject that raised the event
 		_eventType - <String> - the type of event raised (Added,Removed,Replaced,Updated)
-		_index - <Scalar> - the index of the item 
+		_index - <Number> - the index of the item 
 		_data - <XPS_UT_typ_UnitTest> -or- <Array> - the complete Unit Test object or the [property, value] array of the property changed
 	-----------------------------------------------------------------------------*/
 	["onUpdateUnitTest",{
@@ -237,7 +237,7 @@ Returns:
     
     Parameters: 
 		_control - <Control> - The ListNBox Control 
-		_lbCurSel - <Scalar> - Index of selected row 
+		_lbCurSel - <Number> - Index of selected row 
 	-----------------------------------------------------------------------------*/
 	["XPS_UT_TestConsole_tests_LBSelChanged",{
 		params ["_control", "_lbCurSel"];
