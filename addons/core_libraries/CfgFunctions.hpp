@@ -7,6 +7,7 @@ class CfgFunctions {
 		};
 		class Math {
 			XPS_CFG_FNC_SUB_NR(math,getRelPos);
+			XPS_CFG_FNC_SUB_NR(math,lineIntersect2D);
 		};
 	};
 	class ADDON {
