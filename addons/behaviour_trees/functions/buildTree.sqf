@@ -72,15 +72,17 @@ Authors:
 ---------------------------------------------------------------------------- */
 params [["_definition",[],[[]]],["_blackboard",nil,[createhashmap]]];
 
+//TODO : Add more error checking and reporting - specifically check if it can contain children and how many before attempting to add them
 private _fnc_HandleChildren = compileFinal {
 	params ["_parentNode",["_children",[],[[]]]];
 	
-	private _nodeType = _parentNode get "NodeType";
+	private _nodeType = _parentNode getOrDefault ["NodeType",""];
 	if (_nodeType in ["COMPOSITE","DECORATOR"]) then {
 		for "_i" from 0 to (count _children)-1 do {
 			private _typeDef = _children#_i#0;
-			private _grandchildren = _children#_i#1;
-			private _childNode = createhashmapobject [call compile _typeDef];
+			private _grandChildren = [];
+			if (count (_children#_i) > 1 && {_children#_i#1 isEqualtype []}) then {_grandchildren = _children#_i#1};
+			private _childNode = createhashmapobject [_typeDef];
 			_parentNode call ["AddChildNode",_childNode];
 			if (count _grandchildren > 0) then {
 				[_childNode, _grandChildren] call _fnc_HandleChildren;
@@ -89,10 +91,15 @@ private _fnc_HandleChildren = compileFinal {
 	};
 };
 
-private _rootNode = createhashmapobject [call compile (_definition#0)];
-_rootNode set ["Blackboard",_blackboard];
-private _children = _definition#1;
+if (_definition isEqualType [] && {count _definition > 0}) then {
+	private _rootNode = createhashmapobject [_definition#0];
+	_rootNode set ["Blackboard",_blackboard];
+	private _children = [];
+	if (count _definition > 1 && {_definition#1 isEqualtype []}) then {
+		_children = _definition#1;
+	};
 
-[_rootNode, _children] call _fnc_HandleChildren;
+	[_rootNode, _children] call _fnc_HandleChildren;
 
-_rootNode;
+	_rootNode;
+} else {};

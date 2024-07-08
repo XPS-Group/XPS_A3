@@ -69,7 +69,7 @@ Alter Comment Type: Interface
    Plural Display Name: Hashmap Interfaces
 
    Scope: Start
-   Flags: Code, Variable Type, Database Hierarchy
+   Flags: Code, Variable Type, Class Hierarchy
 
    Keywords:
       mapinterface, mapinterfaces

@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------------
-Function: pathfinding. XPS_fnc_checkCoastTravel
+Function: pathfinding. XPS_PF_fnc_checkCoastTravel
 	
 	---prototype
 	_result = [_startPos, _endPos, _distanceThreshold*] call XPS_PF_fnc_checkCoastTravel

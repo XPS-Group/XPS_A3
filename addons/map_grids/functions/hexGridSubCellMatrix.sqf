@@ -1,9 +1,9 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: map_grids. XPS_MG_fnc_hexGridSubCelMatrix
+Function: map_grids. XPS_MG_fnc_hexGridSubCellMatrix
 
     --- prototype
-    call XPS_MG_fnc_hexGridSubCelMatrix
+    call XPS_MG_fnc_hexGridSubCellMatrix
     ---
 
 Description:

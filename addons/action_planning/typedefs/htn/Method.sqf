@@ -1,0 +1,73 @@
+#include "script_component.hpp"
+/* ----------------------------------------------------------------------------
+TypeDef: behaviour_trees. XPS_AP_typ_Method
+	<TypeDefinition>
+		---prototype
+		XPS_AP_typ_Method : XPS_AP_ifc_IMethod
+		---
+    	--- Prototype --- 
+    	createHashmapObject ["XPS_AP_typ_Method"]
+    	---
+
+Authors: 
+	Crashdome
+
+Description:
+	A Method is a collection used in Heirarchical Task Networks which decompose 
+	into smaller subtasks based on a satisfied condition. These collections are usually 
+	found in a <XPS_AP_typ_CompoundTask> in order of priority.
+
+Returns:
+	<HashmapObject> of a Method
+
+---------------------------------------------------------------------------- */
+[
+	["#type","XPS_AP_typ_Method"],
+	/*----------------------------------------------------------------------------
+	Str: #str
+    	--- text --- 
+    	"XPS_AP_typ_Method"
+    	---
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
+	Implements: @interfaces
+    	<XPS_AP_ifc_IMethod>
+	-----------------------------------------------------------------------------*/
+    ["@interfaces",["XPS_AP_ifc_IMethod"]],
+	/*----------------------------------------------------------------------------
+	Property: SubTasks
+    
+    	--- Prototype --- 
+    	get "SubTasks"
+    	---
+
+		<XPS_AP_ifc_IMethod>
+    
+    Returns: 
+		<Array> - ordered list of usually other <XPS_AP_typ_CompoundTasks> or <XPS_AP_typ_PrimitiveTasks>
+	-----------------------------------------------------------------------------*/
+	["SubTasks",[]],
+	/*----------------------------------------------------------------------------
+	Method: Condition
+    
+    	--- Prototype --- 
+    	call ["Condition",_args*]
+    	---
+
+        Alternative: 
+
+        --- code ---
+        get "Condition"  //allows lazy execution
+        ---
+
+		<XPS_AP_ifc_IMethod>
+    
+    Parameters: 
+        _args* - (Optional) - <Anything> - arguments passed to condition when executed
+
+    Returns: 
+		<Boolean> - True if satisfied, otherwise False
+
+	-----------------------------------------------------------------------------*/
+    ["Condition",{}]
+]

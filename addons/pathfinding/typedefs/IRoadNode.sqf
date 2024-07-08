@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-Interface: pathfinding. XPS_PF_ifc_RoadNode
+Interface: pathfinding. XPS_PF_ifc_IRoadNode
 	<Interface>
 
 Adds additional properties to <main. XPS_ifc_IAstarNode> for use with 
