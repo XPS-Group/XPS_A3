@@ -39,7 +39,7 @@ Flags:
 		private _bPosB = _nextObject get "BeginPos";
 		private _ePosB = _nextObject get "EndPos";
 
-		private _int = [_bPosA,_ePosA,_bPosB,_ePosB] call XPS_PF_fnc_lineIntersect2d;
+		private _int = [_bPosA,_ePosA,_bPosB,_ePosB] call XPS_fnc_lineIntersect2d;
 		private _dirA = 0;
 		private _dirB = 0;
 
@@ -79,7 +79,7 @@ Flags:
 		_m setmarkersize [0.25,0.25]; 
 
 
-		private _intersect = [_p1,_p2,_p3,_p4] call XPS_PF_fnc_lineIntersect2D;
+		private _intersect = [_p1,_p2,_p3,_p4] call XPS_fnc_lineIntersect2D;
 		private _intPoints = [];
 		if !(isNil "_intersect" || count _intersect isEqualTo 0) then {
 			if ((_intersect distance2d _posE < _fromPoint distance2d _posE) && (_intersect distance2d _fromPoint < _fromPoint distance2d _posE)) then {
