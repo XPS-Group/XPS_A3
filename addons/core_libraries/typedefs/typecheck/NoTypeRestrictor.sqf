@@ -12,7 +12,7 @@ Authors:
 	CrashDome
 
 Description:
-	Provides a 'No Restriction' Type checker
+	Provides a 'No Restriction' Type checker. ('IsAllowed' always returns true)
 
 Returns:
 	<HashmapObject>
