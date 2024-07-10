@@ -55,7 +55,7 @@ if (isText _file && isText _type) then {
 	private _varName = format ["%1_%2_%3",_tag,_type,configName _class];
 	private _typeDefinition = uiNamespace getVariable _varName;
 	private _preStart = uiNamespace getVariable XPS_PRESTART_VAR;
-	private _preprocess = if (isNumber (_class >> "preprocess")) then {getNumber (_class >> "preprocess") isEqualTo 1} else {true1};
+	private _preprocess = if (isNumber (_class >> "preprocess")) then {getNumber (_class >> "preprocess") isEqualTo 1} else {true};
 	private _allowNils = if (isNumber (_class >> "allowNils")) then {getNumber (_class >> "allowNils") isEqualTo 1} else {true};
 	private _recompile = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "recompile") isEqualTo 1} else {false};
 	private _preCache = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "preCache") isEqualTo 1} else {false};
