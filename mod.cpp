@@ -1,4 +1,4 @@
-name = "XPS Core";
+name = "XPS [PROJECT] v[0.0.0]-alpha";
 // picture = "logo_xps.paa";
 actionName = "Website";
 action = "https://github.com/XPS-Group/XPS_A3";
