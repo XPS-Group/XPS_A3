@@ -28,6 +28,7 @@ See also:
 
     - <TypeDefinition>
     - <main.typeHandlers.XPS_fnc_checkInterface>
+    - <main.typeHandlers.XPS_fnc_preprocessInterface>
 ------------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------
 Type: Enumeration

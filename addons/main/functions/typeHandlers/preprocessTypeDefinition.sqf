@@ -3,7 +3,9 @@
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
-	_typeDefinition = [_type, _headers] call XPS_fnc_preprocessTypeDefinition
+	_typeDefinition = [_type] call XPS_fnc_preprocessTypeDefinition
+	// OR
+	_typeDefinition = _type call XPS_fnc_preprocessTypeDefinition
 	---
 
 Description:
@@ -44,21 +46,21 @@ Authors:
 ------------------------------------------------------------------------------
 
 Parameter: _type 
-	<Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
+	<Array> - an <array> of <arrays> in the format [[key1,value1],[key2,value2]...]  
 
-Optional: _headers 
-	<Boolean> - determines if debug headers should be injected into code blocks  
-
-Returns: Nothing
+Returns: 
+	<Boolean> - True if 
 
 ---------------------------------------------------------------------------- */
-if !(params [["_typeDef",nil,[[]]],"_debugHeaders"]) exitwith {false};
-// _debugHeaders = if (isNil "_debugHeaders") then {false} else {_debugHeaders};
-// _debugHeaders = [_debugHeaders] param [0,false,[true]];
+if !(_this isEqualType []) exitwith {false};
+
+private _typeDef = _this;
+
+if (count _this == 1 && {_this#0 isEqualTypeAll []}) then {_typeDef = _this#0};
 
 private _privateKeys = [];
 private _result = true;
-private _ctor = "";
+private _ctor = ""; 
 private _dtor = "";
 private _ctor_l = "";
 private _dtor_l = "";
@@ -77,7 +79,7 @@ try
 
 		scopeName "MAIN";
 
-		if !((_typeDef#_i) isEqualType [] && {count (_typeDef#_i) > 1}) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
+		if (isNil {_typeDef#_i} || {!((_typeDef#_i) isEqualType [] && {count (_typeDef#_i) > 1})}) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeName]};
 		
 		private _keyPair = _typeDef#_i;
 		private _key = _keyPair#0;
@@ -181,7 +183,7 @@ try
 		};
 
 	if !(XPS_DebugMode) then {
-		// Finally record if private key
+		// Finally record if a private key for later obfuscation
 		if (_key isEqualType "" && {_key find "_" isEqualTo 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
 			_privateKeys pushback [_key,_uid];
@@ -215,9 +217,6 @@ try
 		};
 
 		if (_value isEqualType {}) then {
-			// // Set header before replacing private keys
-			// private _strHeader = format[XPS_DebugHeader_TYP, _typeName, _keypair#0];
-
 			//Replace Private Keys in any code block
 			{
 				private _find = _x#0;
@@ -225,12 +224,6 @@ try
 				_value = [_find,_replace,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
 			} foreach _privateKeys;
-
-			// //Finally Insert unaltered header
-			// if (_debugHeaders && {_keyPair#0 isNotEqualTo "#str"}) then {
-			// 	private _strCode = (str _value) insert [1,_strHeader];
-			// 	_keyPair set [1, call compile _strCode];
-			// };
 		};
 	};
 
@@ -318,15 +311,19 @@ Example: Validation of values
 	The array :
 
 	---code
+	SomeGlobalVar = "Hello World";
+
 	[
 		["PropertyA",[1,2,3,4,"A"],[["VALIDATE_ALL",0]]], // This would vaildate false and cause the type to not compile and an error would be sent to the RPT
 		["PropertyB",SomeGlobalVar,[["VALIDATE_TYPE",""]]]
 	]
 	---
 
-	Another example of calling this function, if SomeGlobalVar was "Hello World":
+	Another example of calling this function:
 	
 	---code
+	SomeGlobalVar = "Hello World";
+	
 	[
 		["PropertyA", [1,2,3,4] , [["VALIDATE_ALL",0]] ],  // This would vaildate true and continue
 		["PropertyB",SomeGlobalVar,[["VALIDATE_TYPE",objNull]]]  // This would cause the type to not compile and an error would be sent to the RPT

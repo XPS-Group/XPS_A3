@@ -1,45 +1,20 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
+Function: main. typeHandlers. XPS_fnc_preprocessInterface
 	
 	---prototype
-	_typeDefinition = [_type, _headers] call XPS_fnc_preprocessTypeDefinition
+	_typeDefinition = [_interface] call XPS_fnc_preprocessInterface
+	// OR
+	_typeDefinition = _interface call XPS_fnc_preprocessInterface
 	---
 
 Description:
     
-	Preprocesses a Type Definition array and alters the code based on the following:
+	Preprocesses an Interface and validates key/value pairs. If Interface contains a "@" key which 
+	is of type hashmap, it appends unique key/values as needed. This feature allows inheriting
+	from a parent interface.
 
-	Obfuscates the private Methods/Properties. 
-
-	Takes base Array Properties with an "@" symbol and appends them together.
-	
-	It also has support for "Attributes" of the Methods/Properties. You can classify an Attribute
-	by making it the third element of the Key/Value Pair. These Attributes do not exist once the 
-	definition has been converted to a <HashmapObject>. The createHashmapObject command only cares
-	about the first two elements and attributes will be discarded when instantiation occurs.
-
-	---code
-	["Key", "Value", [<Array> of Attribute Arrays] ]
-	---
-
-	Supported Attributes in the preprocessor are:
-
-		- ["OBSOLETE"] - used on methods no longer used but kept for backwards compatibility
-		- ["CTOR",value]
-		- ["DTOR",value]
-		- ["CTOR_LAZ",value]
-		- ["DTOR_LAZY",value]
-		- ["CONDITIONAL",{code}] - must return a boolean
-		- ["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
-		- ["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
-		- ["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
-		- ["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
-
-	However, you can define any Attribute as long as it is in an array. The preprocessor will
-	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
-	run your own custom preprocesser (or extend this one) before instantiating a type with 
-	createHashmapPObject command.
+	This function will modify the original array and also return a reference to it if needed.
 
 Authors: 
 	Crashdome
@@ -48,13 +23,15 @@ Authors:
 Parameter: _type 
 	<Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
 
-Optional: _headers 
-	<Boolean> - determines if debug headers should be injected into code blocks  
-
-Returns: Nothing
+Return: _interface
+	<Interface> - or <False> if error
 
 ---------------------------------------------------------------------------- */
-if !(params [["_interface",nil,[[]]]]) exitwith {false};
+if !(_this isEqualType []) exitwith {false};
+
+private _interface = _this;
+
+if (count _this == 1 && {_this#0 isEqualTypeAll []}) then {_interface = _this#0};
 
 try 
 {
@@ -62,7 +39,7 @@ try
 	private _i = 0;
 	while { _i < (count _interface)} do {
 
-		if !((_interface#_i) isEqualType []) then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
+		if (isNil {_interface#_i} || {!((_interface#_i) isEqualType [] && {count (_interface#_i) > 1})})  then {throw format ["Not a valid key/value array %1 in %2",_typeDef#_i,_typeDef]};
 		
 		private _keyPair = _interface#_i;
 		private _key = _keyPair#0;
