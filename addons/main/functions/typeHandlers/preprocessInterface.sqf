@@ -3,9 +3,10 @@
 Function: main. typeHandlers. XPS_fnc_preprocessInterface
 	
 	---prototype
-	_typeDefinition = [_interface] call XPS_fnc_preprocessInterface
-	// OR
-	_typeDefinition = _interface call XPS_fnc_preprocessInterface
+	_interface = _interfaceArray call XPS_fnc_preprocessInterface
+	---
+	---prototype
+	_interface = [_interfaceArray] call XPS_fnc_preprocessInterface
 	---
 
 Description:
@@ -20,11 +21,11 @@ Authors:
 	Crashdome
 ------------------------------------------------------------------------------
 
-Parameter: _type 
+Parameter: _interfaceArray 
 	<Array> - an <array> of <arrays> in the format [[key1,value],[key2,value]...]  
 
 Return: _interface
-	<Interface> - or <False> if error
+	<Interface> - ref to array or <Boolean> : <False> if error
 
 ---------------------------------------------------------------------------- */
 if !(_this isEqualType []) exitwith {false};

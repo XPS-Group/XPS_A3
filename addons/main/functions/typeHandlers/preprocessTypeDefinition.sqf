@@ -3,14 +3,15 @@
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
-	_typeDefinition = [_type] call XPS_fnc_preprocessTypeDefinition
-	// OR
-	_typeDefinition = _type call XPS_fnc_preprocessTypeDefinition
+	_result = _type call XPS_fnc_preprocessTypeDefinition
+	---
+	---prototype
+	_result = [_type] call XPS_fnc_preprocessTypeDefinition
 	---
 
 Description:
     
-	Preprocesses a Type Definition array and alters the code based on the following:
+	Preprocesses and modifies a Type Definition array and alters the code based on the following:
 
 	Obfuscates the private Methods/Properties. 
 	
@@ -48,8 +49,8 @@ Authors:
 Parameter: _type 
 	<Array> - an <array> of <arrays> in the format [[key1,value1],[key2,value2]...]  
 
-Returns: 
-	<Boolean> - True if 
+Returns: _result
+	<Boolean> - True if successful otherwise False
 
 ---------------------------------------------------------------------------- */
 if !(_this isEqualType []) exitwith {false};
