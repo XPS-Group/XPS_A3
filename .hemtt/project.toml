@@ -6,10 +6,10 @@ reuse_private_key = false
 [files]
 include = [
     "readme.md", 
-    "license.md"
+    "license.md",
+    "version.txt"
     ]
 
 [version]
-build = 123456
 git_hash = 0
 
