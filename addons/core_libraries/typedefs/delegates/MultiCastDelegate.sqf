@@ -96,8 +96,6 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Add",{
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
-		//Deep copy the array
-		//if (_this isEqualType []) then {_this = +_this};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
@@ -161,12 +159,12 @@ Returns:
 		};
 		{
 			switch (true) do {
+				case (_x isEqualType {}) : {
+					_this call _x;
+				};
 				case (_x isEqualTypeParams [createhashmap,""] && {!isNil {_x#0} && {_x#0 getorDefault[_x#1,[]] isEqualType {}}}) : {
 					_x params ["_object","_method"];
 					_object call [_method,_this];
-				};
-				case (_x isEqualType {}) : {
-					_this call _x;
 				};
 				default {
 					throw createhashmapobject[XPS_typ_InvalidOperationException,[_self,"Invoke","Attached code or method pointer no longer exists",_this]];

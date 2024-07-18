@@ -160,7 +160,7 @@ Example: Override class to change signature
 	--- code 
 	private _newDelegate = [
 		["#type", "Tag_typ_New_Delegate"],
-		["#base", XPS_typ_Delegate"],
+		["#base", XPS_typ_Delegate],
 		["#create", {
 			 // new signature : [sender objeCt, methodName, arguments]
 			_self call ["XPS_typ_Delegate.#create", [createhashmap, "", []]];
@@ -174,7 +174,7 @@ Example: Override class to change signature
 	--- code 
 	_def = [
 		["#type", "Example"],
-		["delegate", createhashmapobject ["Tag_typ_New_Delegate"]],
+		["delegate", createhashmapobject [Tag_typ_New_Delegate]],
 		["MyMethod", { 
 			//do some stuff
 			private _someArgs = ["I successfully did some stuff"];
@@ -190,7 +190,7 @@ Example: Override class to change signature
 	---code 
 	Example = createhashmapobject [_def];
 	Example get "delegate" call ["Attach",{
-		params ["_object","_methodname","_args]; 
+		params ["_object","_methodname","_args"]; 
 		hint format["%1 called %2 and returned %3",_object get "#type" select 0, _methodName,_args];
 	}];
 	Example call ["MyMethod"]; 
