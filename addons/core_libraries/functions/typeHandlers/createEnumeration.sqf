@@ -45,8 +45,7 @@ private _fnc_createEnumConstant = {
 		["Value",_val]
 	]];
 	private _gVar = format["%1_%2",_var,_name];
-	private _objInstance = call compile _gVar;
-	if (isNil "_objInstance" || {_objInstance isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];_objInstance = _hashObject};
+	if (isNil _gVar || {(call compile _gVar) isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];};
 	_def set [_name , compileFinal _gVar ];
 	_def set [_val , compilefinal _gVar ];
 };
