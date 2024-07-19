@@ -103,9 +103,15 @@ Description:
     
     Returns: 
 		<Boolean> - <True> if _lookup value exists otherwise <False>
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 	-----------------------------------------------------------------------------*/
 	["IsDefined", {
-		params [["_lookup","",[0,"",text ""]]];
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(params [["_lookup","",[0,"",text ""]]]) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];}
+		
 		_lookup in keys _self;
 	}]
 ]
