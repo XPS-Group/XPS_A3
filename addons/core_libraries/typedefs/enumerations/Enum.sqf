@@ -157,8 +157,10 @@ Description:
 		---
 
     	--- code 
-		private _helper = selectRandom [TAG_Pets, TAG_Horses, TAG_Cars]; 
-		_myResult = XPS_Enum call ["GetEnum",[_helper,1]];  //randomly could be "Dog", "Campolina", or "Sedan"
+		private _helper = selectRandom [TAG_Pets, TAG_Horses, TAG_Cars, TAG_DoesNotExist]; 
+		_myResult = XPS_Enum call ["GetEnum",[_helper,1]];  
+		// randomly could be "Dog", "Campolina", "Sedan" or
+		// will throw an exception if TAG_DoesNotExist (nil) is randomly selected
 		--- 
 
 		NOTE: The above is functionally equivalent and a shorter version to the following
