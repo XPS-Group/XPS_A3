@@ -12,6 +12,12 @@ Authors:
 Description:
 	An Enumeration set for node statuses.
 
+	--- code
+	XPS_BT_Status_Success	Success		SUCCESS
+	XPS_BT_Status_Failure	Failure		FAILURE
+	XPS_BT_Status_Running	Running		RUNNING
+	---
+
 	See <core.XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
