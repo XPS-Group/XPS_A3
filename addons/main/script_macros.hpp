@@ -93,3 +93,11 @@
 #define CHECK_IFC1(var1,ifc1) [var1,[Q(ifc1)]] call XPS_fnc_checkInterface
 #define CHECK_IFC2(var1,ifc1,ifc2) [var1,[Q(ifc1),Q(ifc2)]] call XPS_fnc_checkInterface
 #define CHECK_IFC3(var1,ifc1,ifc2,ifc3) [var1,[Q(ifc1),Q(ifc2),Q(ifc3)]] call XPS_fnc_checkInterface
+
+/* ---------------------------------------*/
+//cfg3DEN preInit
+#define XPS_CFG3DEN_FNC(tag) call tag##_fnc_preInit;
+#define XPS_CFG3DEN_PREINIT(tag)	onTerrainNew = Q(XPS_CFG3DEN_FNC(tag));\
+            onMissionNew = Q(XPS_CFG3DEN_FNC(tag));\
+			onMissionLoad = Q(XPS_CFG3DEN_FNC(tag));\
+			onMissionPreviewEnd = Q(XPS_CFG3DEN_FNC(tag));
