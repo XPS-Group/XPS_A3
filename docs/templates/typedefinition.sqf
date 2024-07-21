@@ -1,15 +1,15 @@
 /* -----------------------------------------------------------------------------
-TypeDef: folder. XPS_ADDON_typ_Name
+TypeDef: |folder|. |ADDON|_typ_|TYP_NAME|
 	<TypeDefinition>
 	---prototype
-	XPS_ADDON_typ_Name : XPS_ADDON_ifc_IName, XPS_typ_Name
+	|ADDON|_typ_|TYP_NAME| : |ADDON|_ifc_|TYP_NAME|, |ADDON|_typ_|TYP_NAME|
 	---
 	---prototype
-	createhashmapobject [XPS_ADDON_typ_Name, []]
+	createhashmapobject [|ADDON|_typ_|TYP_NAME|, [_var1*, _var2*]]
 	---
 
 Authors: 
-	(Author)
+	|author|
 
 Description:
 	(Description)

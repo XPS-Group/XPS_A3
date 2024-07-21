@@ -1,18 +1,19 @@
 /* ----------------------------------------------------------------------------
-Interface: main. XPS_ifc_Name
+Interface: main. |ADDON|_ifc_|IFC_NAME|
 	<Interface>
+
 	---prototype
-	XPS_ifc_Name
+	|ADDON|_ifc_|IFC_NAME|
 	---
 
 Authors:
-    (Author)
+    |author|
 
 	Property: Prop1
-	<Array>
+		<type>
 	
 	Property: Prop2
-	<Hashmap>
+		<type>
 
 	Method: MyMethod1
 		<code>
