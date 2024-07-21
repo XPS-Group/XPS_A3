@@ -86,7 +86,8 @@ Returns:
         <XPS_ifc_IJobScheduler>
     
     Returns: 
-		<Number> - Number of times <ProcessCurrent> is called per frame
+		<Number> - Number of times <ProcessCurrent> is called per frame. Any number less than 1
+		will be the equivalent of '1' per frame.
 	-----------------------------------------------------------------------------*/
 	["ProcessesPerFrame",1],
 	/*----------------------------------------------------------------------------

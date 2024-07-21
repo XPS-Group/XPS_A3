@@ -30,6 +30,44 @@ Returns:
 ---------------------------------------------------------------------------*/
 XPS_Enum = compilefinal createhashmapobject [XPS_typ_Enum];
 
+/* -------------------------------------------------------------------------
+Variable: core. XPS_LifeTime
+
+Description:
+	A Helper class for an <Enumeration> set
+
+	- <XPS_LifeTime_Transient> 
+	- <XPS_LifeTime_Scoped> 
+	- <XPS_LifeTime_Singleton> 
+
+Returns: 
+	<HashmapObject> - of type <XPS_enum_LifeTime>
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
+Variable: core. XPS_LifeTime_Transient 
+	<Enumeration> 
+
+Keys: 
+	#str - "Transient"
+	Value - "0"
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
+Variable: core. XPS_LifeTime_Scoped
+	<Enumeration> 
+
+Keys: 
+	#str - "Scoped"
+	Value - "1"
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
+Variable: core. XPS_LifeTime_Singleton 
+	<Enumeration> 
+
+Keys: 
+	#str - "Singleton"
+	Value - "2"
+---------------------------------------------------------------------------*/
+["XPS_LifeTime",XPS_enum_LifeTime] call XPS_fnc_createEnumeration;
 diag_log text "[XPS Core preInit End]";
 
 ADDON = true;

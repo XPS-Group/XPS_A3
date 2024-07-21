@@ -106,7 +106,7 @@ Returns:
         _item - <Anything> - except nil
 
     Returns:
-        <Scalar> - the index of the item
+        <Number> - the index of the item
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
@@ -125,7 +125,7 @@ Returns:
         <XPS_ifc_ICollection>
     
     Parameters: 
-        _index - <Scalar> - Index of item to remove 
+        _index - <Number> - Index of item to remove 
 
     Returns:
         <Anything> - the item removed or nil if not found
@@ -150,7 +150,7 @@ Returns:
         _item - <Anything> - except nil
 		
 	Returns:
-		<Scalar> - index of item or -1 if not found
+		<Number> - index of item or -1 if not found
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil

@@ -24,6 +24,7 @@ Description:
 		---
 	-----------------------------------------------------------------------------*/
 	["#str",compilefinal {_self get "#type" select  0}],
+	["_isEnumerationType",{"#type" in keys _this && {"XPS_typ_Enumeration" in (_this get "#type")}}],
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
     
@@ -32,17 +33,21 @@ Description:
     	---
 	
 	Prameters:
-		_enumHelper - <HashmapObject> - the helper class object which is derived from <XPS_typ_Enumerations>
-		_lookup - <Anything> - value to look up to get reference
+		_enumHelper - <XPS_typ_Enumeration> - the helper class object which is derived from <XPS_typ_Enumerations>
+		_lookup - <Number>, <String>, or <Text> - value to look up to get reference
     
     Returns: 
-		<HashmapObject> - The reference to the Enumeration constant or False if not defined
+		<HashmapObject> - The reference to the Enumeration constant
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when argument supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetEnum", {
-		params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]];
-		if (_enumHelper call ["IsDefined",_lookup]) then {
-			call compile (_enumHelper get _lookup);
-		} else {false};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object or lookup was not a number, string, or structured text.",_this]];};
+		
+		_enumHelper call ["GetEnum",_lookup];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: GetNames
@@ -52,14 +57,18 @@ Description:
     	---
 	
 	Prameters:
-		_enumHelper - <HashmapObject> - the helper class object which is derived from <XPS_typ_Enumerations>
+		_enumHelper - <XPS_typ_Enumerations> - the helper class object which is derived from <XPS_typ_Enumerations>
     
     Returns: 
 		<Array> - of all Names of the Enumeration Type
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when argument supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetNames",{
-		params [["_enumHelper",createhashmap,[createhashmap]]];
-		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(params [["_enumHelper",createhashmap,[createhashmap]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object.",_this]];};
 		
 		_enumHelper get "Names"; 
 	}],
@@ -71,14 +80,18 @@ Description:
     	---
 	
 	Prameters:
-		_enumHelper - <HashmapObject> - the helper class object which is derived from <XPS_typ_Enumerations>
+		_enumHelper - <XPS_typ_Enumerations> - the helper class object which is derived from <XPS_typ_Enumerations>
     
     Returns: 
 		<String> - can be "SCALAR", "STRING" or "TEXT"
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when argument supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetValueType",{
-		params [["_enumHelper",createhashmap,[createhashmap]]];
-		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(params [["_enumHelper",createhashmap,[createhashmap]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object.",_this]];};
 		
 		_enumHelper get "ValueType"; 
 	}],
@@ -90,14 +103,18 @@ Description:
     	---
 	
 	Prameters:
-		_enumHelper - <HashmapObject> - the helper class object which is derived from <XPS_typ_Enumerations>
+		_enumHelper - <XPS_typ_Enumerations> - the helper class object which is derived from <XPS_typ_Enumerations>
     
     Returns: 
 		<Array> - of all Values of the Enumeration Type
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when argument supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetValues",{
-		params [["_enumHelper",createhashmap,[createhashmap]]];
-		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(params [["_enumHelper",createhashmap,[createhashmap]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object.",_this]];};
 		
 		_enumHelper get "Values"; 
 	}],
@@ -109,15 +126,20 @@ Description:
     	---
 	
 	Prameters:
-		_enumHelper - <HashmapObject> - the helper class object which is derived from <XPS_typ_Enumerations>
-		_lookup - <Anything> - value to look up to see if Name or Value exists
+		_enumHelper - <XPS_typ_Enumeration> - the helper class object which is derived from <XPS_typ_Enumerations>
+		_lookup - <Number>, <String>, or <Text> - value to look up to get reference
     
     Returns: 
 		<Boolean> - <True> if _lookup value exists otherwisse <False>
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when argument supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
+    
 	-----------------------------------------------------------------------------*/
 	["IsDefined",{
-		params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]];
-		if !("#type" in keys _enumHelper && {"XPS_typ_Enumeration" in _enumHelper get "#type"}) exitwith {false};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object or lookup was not a number, string, or structured text.",_this]];};
 		
 		_lookup in keys _enumHelper; 
 	}]
@@ -135,8 +157,27 @@ Description:
 		---
 
     	--- code 
+		private _helper = selectRandom [TAG_Pets, TAG_Horses, TAG_Cars, TAG_DoesNotExist]; 
+		_myResult = XPS_Enum call ["GetEnum",[_helper,1]];  
+		// randomly could be "Dog", "Campolina", "Sedan" or
+		// will throw an exception if TAG_DoesNotExist (nil) is randomly selected
+		--- 
+
+		NOTE: The above is functionally equivalent and a shorter version to the following
+		because all type safety checks are done prior to returning a result: 
+		
+		--- code
 		private _helper = selectRandom [TAG_Pets, TAG_Horses, TAG_Cars]; 
-		_myResult = XPS_Enum call ["GetEnum",[_helper,1]];  //randomly could be "Dog", "Campolina", or "Sedan"
-    	---
+
+		if (_helper isEqualType createhashmap &&  				// make sure valid hashmap
+			{"#type" in keys _helper && 						// is a hashmap "object"
+			{"XPS_typ_Enumeration" in (_helper get "#type") && 	// inherits from XPS Enumeration Class
+			{1 in keys _helper}}}) then {						// the value 1 is a valid key
+			
+			_helper call [1];						// finally, return the enumeration if successful
+		} else {
+			//throw some error
+		}
+		---
 	
 	-----------------------------------------------------------------------------*/

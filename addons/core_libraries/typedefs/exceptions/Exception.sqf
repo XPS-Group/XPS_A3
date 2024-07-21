@@ -45,13 +45,14 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[createhashmap,[]]]];
+		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[]]];
 		_source = [str _source,_source] select (_source isEqualType "");
 		_target = [str _target,_target] select (_target isEqualType "");
 
 		_self set ["Source",_source];
 		_self set ["Target",_target];
 		if !(isNil "_message") then {_self set ["Message",_message]};
+		if !(_data isEqualTypeAny [createhashmap,[]]) then {_data = createhashmapfromarray [["params (_this)",_data]]};
 		_self set ["Data",_data];
 	}],
 	/*----------------------------------------------------------------------------

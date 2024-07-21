@@ -12,10 +12,10 @@ Authors:
 	CrashDome
 
 Description:
-	Provides a Native Type checker
+	Provides a Hashmap Object Type checker
 
 Parameters:
-    _allowedTypes (optional) - <Array> - of Native Types in same format as IsEqualTypeParams (e.g. [objNull,0,[],""] )
+    _allowedTypes (optional) - <Array> - of Hashmap Object Types in string format (e.g. ["XPS_typ_Blackboard"] )
 
 Returns:
 	<HashmapObject>
@@ -31,7 +31,7 @@ Returns:
     	---
 
 	Parameters:
-		_allowedTypes (optional) - <Array> - of Native Types in same format as IsEqualTypeParams (e.g. [objNull,0,[],""] )
+		_allowedTypes (optional) - <Array> - of Hashmap Object Types in string format (e.g. ["XPS_typ_Blackboard"] )
 
 	Returns:
 		<True>

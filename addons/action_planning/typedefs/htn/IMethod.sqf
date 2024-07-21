@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: action_planning. XPS_AP_ifc_IMethod
+Interface: action_planning. htn. XPS_AP_ifc_IMethod
 <Interface>
 	---prototype
 	XPS_AP_ifc_IMethod
@@ -10,7 +10,7 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: Condition
+	Property: Precondition
 	<Code>
         
 	Property: SubTasks
@@ -18,6 +18,6 @@ Authors:
 ---------------------------------------------------------------------------- */
 
 [
-    ["Condition","CODE"],
+    ["Precondition","CODE"],
 	["SubTasks","ARRAY"]
 ]

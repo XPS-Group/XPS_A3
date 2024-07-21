@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Function: main. XPS_fnc_getRelPos
+Function: core. math. XPS_fnc_getRelPos
 	
 	---prototype
 	_pos = [_startPos, _dir, _dist, *_heightAdjust] call XPS_fnc_getRelPos
@@ -18,13 +18,13 @@ Authors:
 		<Array> - Coordinates in 2D or 3D format. If 2D is given, Z is assumed 0  
 
 	Parameter: _dir
-		<Scalar> - The direction (in degrees 'world')   
+		<Number> - The direction (in degrees 'world')   
 
 	Parameter: _dist
-		<Scalar> - The distance (in meters 'world')   
+		<Number> - The distance (in meters 'world')   
 
 	Optional: _hieghtAdjust
-		<Scalar> - [Optional - Default : 0] - The difference in height (in meters 'world')  
+		<Number> - [Optional - Default : 0] - The difference in height (in meters 'world')  
 
 	Return: _pos
 		<Array> - The relative position in 3D world coordinates

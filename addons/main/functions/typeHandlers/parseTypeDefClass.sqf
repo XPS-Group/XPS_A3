@@ -36,11 +36,11 @@ if (isText (_class >> "tag")) then {
 private _fnc_loadFile = {
 	private _statement = "";
 	switch (_type) do {
-		case "ifc" : {_statement = "private _ifc = [call compileScript [""%1"",false]] call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createhashmapfromarray _ifc;};"};
+		case "ifc" : {_statement = "private _ifc = (call compileScript [""%1"",false]) call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createhashmapfromarray _ifc;};"};
 		case "enum";
-		case "typ" : {_statement = "private _td = [call compileScript [""%1"",false],%2,%3,%4,%6] call XPS_fnc_buildTypeDefinition; if (_td isEqualType []) then {%5 createhashmapfromarray _td;};"}; 
+		case "typ" : {_statement = "private _td = [call compileScript [""%1"",false],%2,%3,%4] call XPS_fnc_buildTypeDefinition; if (_td isEqualType []) then {%5 createhashmapfromarray _td;};"}; 
 	};
-	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd,_headers];
+	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd];
 	call compile _code;
 };
 
@@ -55,13 +55,12 @@ if (isText _file && isText _type) then {
 	private _varName = format ["%1_%2_%3",_tag,_type,configName _class];
 	private _typeDefinition = uiNamespace getVariable _varName;
 	private _preStart = uiNamespace getVariable XPS_PRESTART_VAR;
-	private _preprocess = if (isNumber (_class >> "preprocess")) then {getNumber (_class >> "preprocess") isEqualTo 1} else {true1};
+	private _preprocess = if (isNumber (_class >> "preprocess")) then {getNumber (_class >> "preprocess") isEqualTo 1} else {true};
 	private _allowNils = if (isNumber (_class >> "allowNils")) then {getNumber (_class >> "allowNils") isEqualTo 1} else {true};
 	private _recompile = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "recompile") isEqualTo 1} else {false};
-	private _preCache = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "preCache") isEqualTo 1} else {false};
+	private _preCache = if (isNumber (_class >> "preCache")) then {getNumber (_class >> "preCache") isEqualTo 1} else {false};
 	private _noStack = if (isNumber (_class >> "noStack")) then {getNumber (_class >> "noStack") isEqualTo 1} else {false};
 	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal") isEqualTo 1} else {false};
-	private _headers = if (isNumber (_class >> "headerType")) then {getNumber (_class >> "headerType") isEqualTo 1} else {false};
 	
 	// Account if in 'debug mode' or filePatching enabled then force recompilation 
 	if ((!(isnil "XPS_DebugMode") && XPS_DebugMode) || {isFilePatchingEnabled}) then { _isFinal = false; _recompile = true;}; 

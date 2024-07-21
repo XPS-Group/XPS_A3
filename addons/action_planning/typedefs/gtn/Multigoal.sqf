@@ -3,34 +3,36 @@
 TypeDef: action_planning. htn. XPS_AP_typ_Multigoal
 	<TypeDefinition>
 		---prototype
-		XPS_AP_typ_CompoundTask : XPS_AP_ifc_ICompoundTask
+		XPS_AP_typ_Multigoal : XPS_AP_ifc_IMultigoal
 		---
     	--- Prototype --- 
-    	createHashmapObject ["XPS_AP_typ_CompoundTask"]
+    	createHashmapObject ["XPS_AP_typ_Multigoal"]
     	---
 
 Authors: 
 	Crashdome
 
 Description:
-	A Compound task is a collection of methods tested in order until a condition
-	is Satisfied within the Method
+	A collection of methods tested in order until a goal condition
+	is Satisfied. Multigoals have multiple conditions to satisfy versus 
+    a UniGoal which typically only satisfies one goal condition.
+
 Returns:
-	<HashmapObject> of a Method
+	<HashmapObject> of a Multigoal
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_AP_typ_CompoundTask"],
+	["#type","XPS_AP_typ_Multigoal"],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_AP_typ_CompoundTask"
+    	"XPS_AP_typ_Multigoal"
     	---
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-    	<XPS_AP_ifc_ICompoundTask>
+    	<XPS_AP_ifc_IMultigoal>
 	-----------------------------------------------------------------------------*/
-    ["@interfaces",["XPS_AP_ifc_ICompoundTask"]],
+    ["@interfaces",["XPS_AP_ifc_IMultigoal"]],
     []
 ]

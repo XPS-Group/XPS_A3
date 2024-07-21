@@ -1,6 +1,6 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_AP_typ_PrimitiveTask
+TypeDef: action_planning. htn. XPS_AP_typ_PrimitiveTask
 	<TypeDefinition>
 		---prototype
 		XPS_AP_typ_PrimitiveTask : XPS_AP_ifc_IPrimitiveTask
@@ -35,16 +35,29 @@ Returns:
 	-----------------------------------------------------------------------------*/
     ["@interfaces",["XPS_AP_ifc_IPrimitiveTask"]],
 	/*----------------------------------------------------------------------------
-	Method: PreCondition
+	Property: Blackboard
     
     	--- Prototype --- 
-    	call ["PreCondition",_args*]
+    	get "Blackboard"
+    	---
+
+		<XPS_AP_ifc_ICompoundTask>
+    
+    Returns: 
+		<HashmapObject> - hashmap which typically holds a world state
+	-----------------------------------------------------------------------------*/
+	["Blackboard",nil],
+	/*----------------------------------------------------------------------------
+	Method: Precondition
+    
+    	--- Prototype --- 
+    	call ["Precondition",_args*]
     	---
 
         Alternative: 
 
         --- code ---
-        get "PreCondition"  //allows lazy execution
+        get "Precondition"  //allows lazy execution
         ---
 
 		<XPS_AP_ifc_IPrimitiveTask>
@@ -59,7 +72,7 @@ Returns:
 		<Boolean> - True if satisfied, otherwise False
 
 	-----------------------------------------------------------------------------*/
-    ["PreCondition",{}],
+    ["Precondition",{}],
 	/*----------------------------------------------------------------------------
 	Method: Operation
     

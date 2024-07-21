@@ -31,7 +31,7 @@ Variable: behaviour_trees. XPS_BT_Status_Success
 	<Enumeration> 
 
 Keys: 
-	Name - "Success"
+	#str - "Success"
 	Value - "SUCCESS"
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
@@ -39,7 +39,7 @@ Variable: behaviour_trees. XPS_BT_Status_Failure
 	<Enumeration> 
 
 Keys: 
-	Name - "Failure"
+	#str - "Failure"
 	Value - "FAILURE"
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
@@ -47,7 +47,7 @@ Variable: behaviour_trees. XPS_BT_Status_Running
 	<Enumeration> 
 
 Keys: 
-	Name - "Running"
+	#str - "Running"
 	Value - "RUNNING"
 ---------------------------------------------------------------------------*/
 ["XPS_BT_Status",XPS_BT_enum_Status] call XPS_fnc_createEnumeration;

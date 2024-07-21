@@ -4,4 +4,12 @@ author= "Crashdome"
 reuse_private_key = false
 
 [files]
-include = ["readme.md", "license.md"]
+include = [
+    "readme.md", 
+    "license.md",
+    "version.txt"
+    ]
+
+[version]
+git_hash = 0
+

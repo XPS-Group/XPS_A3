@@ -12,12 +12,20 @@ Authors:
 Property: ValueType
 	<String>
 
+Property: Names
+	<Array>
+
+Property: Values
+	<Array>
+
 Method: GetEnum 
 
 Method: IsDefined
 ---------------------------------------------------------------------------- */
 [
 	["ValueType","STRING"],
+	["Names","ARRAY"],
+	["Values","ARRAY"],
 	["GetEnum", "CODE"],
 	["IsDefined", "CODE"]
 ]

@@ -52,7 +52,7 @@ Description:
     	---
     
     Returns: 
-		<String> - can be "<SCALAR>", "<STRING>" or "<TEXT>"
+		<String> - can be "<Number>", "<STRING>" or "<TEXT>"
 	-----------------------------------------------------------------------------*/
 	["ValueType","SCALAR"],
 	/*----------------------------------------------------------------------------
@@ -74,16 +74,22 @@ Description:
     	---
 
 	Prameters:
-		_lookup - <Anything> - value to look up to get reference
+		_lookup - <Number>,<String>, or <Text> - value to look up to get reference
     
     Returns: 
-		<HashmapObject> - The reference to the Enumeration constant or False if not defined
+		<HashmapObject> - The reference to the Enumeration constant
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
+		<XPS_typ_ArgumentOutOfRangeException> - when parameter supplied was not defined in the underlying enumeration
 	-----------------------------------------------------------------------------*/
 	["GetEnum", {
-		params [["_lookup","",[0,"",text ""]]];
-		if (_self call ["IsDefined",_lookup]) then {
-			_self call [_lookup];
-		} else {false};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(_this isEqualTypeAny [0,"",text ""]) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];};
+		if (_self call ["IsDefined",_this]) then {
+			_self call [_this];
+		} else {throw createhashmapobject[XPS_typ_ArgumentOutOfRangeException,[_self,"GetEnum","Argument supplied was not found.",_this]];};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: IsDefined
@@ -93,13 +99,19 @@ Description:
     	---
 	
 	Prameters:
-		_lookup - <Anything> - value to look up to see if Name or Value exists
+		_lookup - <Number>,<String>, or <Text> - value to look up to get reference
     
     Returns: 
 		<Boolean> - <True> if _lookup value exists otherwise <False>
+
+	Throws: 
+		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
+		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 	-----------------------------------------------------------------------------*/
 	["IsDefined", {
-		params [["_lookup","",[0,"",text ""]]];
-		_lookup in keys _self;
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if !(_this isEqualTypeAny [0,"",text ""]) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];};
+		
+		_this in keys _self;
 	}]
 ]
