@@ -1,27 +1,27 @@
 /* ----------------------------------------------------------------------------
-Function: main. XPS_fnc_buildTypeDefinition
+Function: |FOLDER|. |ADDON|_fnc_|FNC_NAME|
 	
 	---prototype
-	(code)
+	[_paramA, _paramB, _paramC*] call |ADDON|_fnc_|FNC_NAME|;
 	---
 
 Description:
     (Description)
 
 Authors: 
-	{author}
+	|author|
 ------------------------------------------------------------------------------
 
-	Parameter: paramA
+	Parameter: _paramA
 		<type> - (description)  
 
-	Parameter: paramB
+	Parameter: _paramB
 		<type> - (description)  
 
-	Optional: paramC* 
+	Optional: _paramC* 
 		<type> - [Optional - Default : value] - (description)  
 
-	Return: valueA
+	Returns: 
 		<Type> - (description)
 
 	Example: (Label)
