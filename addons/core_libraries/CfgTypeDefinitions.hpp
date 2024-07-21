@@ -5,6 +5,8 @@ class XPS_CFG_TD_BASECLASSNAME {
 		class Interfaces {
 			XPS_CFG_IFC_SUB(exceptions,IException);
 			XPS_CFG_IFC_SUB(enumerations,IEnumeration);
+			XPS_CFG_IFC_SUB(di,IServiceContainer);
+			XPS_CFG_IFC_SUB(di,IServiceProvider);
 			XPS_CFG_IFC_SUB(delegates,IDelegate);
 			XPS_CFG_IFC_SUB(delegates,IMultiCastDelegate);
 			XPS_CFG_IFC_SUB(delegates,IEventHandler);
@@ -26,6 +28,11 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP_SUB(exceptions,ArgumentOutOfRangeException);
 			XPS_CFG_TYP_SUB(exceptions,InvalidArgumentException);
 			XPS_CFG_TYP_SUB(exceptions,InvalidOperationException);
+		};
+		class DependancyInjection {
+			XPS_CFG_ENUM_SUB(di,LifeTime);
+			XPS_CFG_TYP_SUB(di,ServiceContainer);
+			XPS_CFG_TYP_SUB(di,ServiceProvider);
 		};
 		class Delegates {
 			XPS_CFG_TYP_SUB(delegates,Delegate);
