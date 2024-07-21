@@ -27,7 +27,7 @@ Description:
 	----------------------------------------------------------------------------*/
 	["#create", {
 		_self set ["_collection",createhashmapobject [
-			XPS_typ_TypeCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_UT_typ_TestClass"]]]]]];
+			XPS_typ_TypeCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_UT_typ_TestClass"]]]]];
 		_self set ["classOrder",[]];
 	}],
 	/*----------------------------------------------------------------------------

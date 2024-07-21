@@ -44,7 +44,7 @@ Description:
 		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetEnum", {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
 		if !(params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object or lookup was not a number, string, or structured text.",_this]];};
 		
 		_enumHelper call ["GetEnum",_lookup];
@@ -67,7 +67,7 @@ Description:
 		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetNames",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
 		if !(params [["_enumHelper",createhashmap,[createhashmap]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object.",_this]];};
 		
 		_enumHelper get "Names"; 
@@ -90,7 +90,7 @@ Description:
 		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetValueType",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
 		if !(params [["_enumHelper",createhashmap,[createhashmap]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object.",_this]];};
 		
 		_enumHelper get "ValueType"; 
@@ -113,7 +113,7 @@ Description:
 		<XPS_typ_InvalidArgumentException> - when parameters supplied do not conform to the above
 	-----------------------------------------------------------------------------*/
 	["GetValues",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
 		if !(params [["_enumHelper",createhashmap,[createhashmap]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object.",_this]];};
 		
 		_enumHelper get "Values"; 
@@ -138,7 +138,7 @@ Description:
     
 	-----------------------------------------------------------------------------*/
 	["IsDefined",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
 		if !(params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object or lookup was not a number, string, or structured text.",_this]];};
 		
 		_lookup in keys _enumHelper; 

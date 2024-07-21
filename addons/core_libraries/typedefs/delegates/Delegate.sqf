@@ -94,7 +94,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
 	["Attach",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
 		//Deep copy the array
 		//if (_this isEqualType []) then {_this = +_this};
 		

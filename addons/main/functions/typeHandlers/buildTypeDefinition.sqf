@@ -47,11 +47,6 @@ Optional: _noStack*
 <Boolean> - (optional) default: false - determines if "#base" definition should stack "#create" and "#delete" methods during inheritance
 See <XPS_fnc_preprocessTypeDefinition> for more info.
 
-Optional: _headers* 
-
-<Boolean> - (optional) default: false - determines if debug headers should be injected into code blocks - ignored if _preprocess isEqualTo false
-See <XPS_fnc_preprocessTypeDefinition> for more info.
-
 Return: _typeDefinition
 	<TypeDefinition> - or <False> if error
 
@@ -98,6 +93,8 @@ if ("#base" in keys _hashmap) then {
 	private _pTypeName = _preCompiled get "#type";
 	private _keys = keys _hashmap;
 	{
+		if (isNil "_y") then {continue};
+		
 		// Create base methods as "ParentType.Method"
 		if (!(isNil {_pTypeName}) && {_x in _keys && _x isEqualType "" && _y isEqualType {}}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
 

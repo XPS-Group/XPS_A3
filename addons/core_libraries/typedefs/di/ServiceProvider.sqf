@@ -116,7 +116,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was not found
 	-----------------------------------------------------------------------------*/
     ["GetService",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
 		
         if !(params [["_key","",[""]],"_args"]) then {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"GetService","Key was not a valid string.",_this]]; };
         
@@ -163,7 +163,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when type parameter supplied is not a string
 	-----------------------------------------------------------------------------*/
     ["RegisterService",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
 		
         if !(params [["_key","",[""]],["_type",createhashmap,["",createhashmap]],"_lifeTime"]) then {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Parameters supplied were invalid.",_this]];
