@@ -61,7 +61,6 @@ Returns:
         while {count (_self get "_listArray") > 0} do {
             _self call ["RemoveItem",count (_self get "_listArray")-1];
         };
-        true;
 	}],
     /*----------------------------------------------------------------------------
     Method: Count

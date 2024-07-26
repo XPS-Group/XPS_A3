@@ -37,8 +37,12 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_allowedTypes",[],[[]]]];
-		_self set ["_allowed",_allowedTypes];
+		if (isNil "_this") then {_self set ["_allowed",[]];};
+		if (_this isEqualType []) then {
+			_self set ["_allowed",_this];
+		} else {
+			//TODO throw
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str

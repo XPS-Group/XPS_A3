@@ -38,8 +38,13 @@ if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[],createhashmap]] ]) exit
 private _fnc_createEnumConstant = {
 	params ["_var","_name","_val","_def"];
 
+	private _baseDef = [
+		["#type", _var]
+	];
+
 	private _hashObject = compilefinal createhashmapobject [[
 		["#str", compilefinal format["%1",str _name]],
+		["#base",_baseDef],
 		["#type", format["%1_%2",_var,_name]],
 		["#flags",["sealed","nocopy"]],
 		["Value",_val]

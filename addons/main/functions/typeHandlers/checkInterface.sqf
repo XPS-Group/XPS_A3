@@ -26,27 +26,30 @@ Parameter: _interfaces
 	<Array> - an <array> of <Strings> in the format ["Interface1","Interface2"...] string should be a global variable of type <Interface>
 
 Optional: _allowNils* 
-	<Boolean> - (optional) default: true - used to allow keys with nil values
+	<Boolean> - (optional - Default: false) - used to allow keys with nil values. Nil values might be required if a <TypeDefinition> 
+	contains properties 'by ref' where the <TypeDefinition> is set to nil but the concrete <HashmapObject> instantiates the property at #create.
 
 Returns: _result
-	<Boolean> - <True> if <TypeDefinition> has keys defined with types that match <Interface> definition
+	<Boolean> - <True> if <TypeDefinition>/<Hashmap> or <HashmapObject> has keys defined with types that match <Interface> definition
 
 Example: Check a hashmap if it supports interface
     --- Code
 		MyHashmap = createhashmapfromArray [["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
+		MyInterface = [["PropertyA","STRING"],["Method","CODE"],["PropertyB","SCALAR"]];
         private _result = [MyHashmap,["MyInterface"]] call XPS_fnc_checkInterface; 
 		// _result is 'true'
     ---
 
 ---------------------------------------------------------------------------- */
 
-params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[]]],["_allowNils",false,[true]]];
+params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[],""]],["_allowNils",false,[true]]];
 
 if (_hashmap isEqualTo createhashmap) exitwith {
 	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
 	false;
 };
+
+if (_interfaces isEqualType "") then {_interfaces = [_interfaces]};
 if !(_interfaces isEqualTypeAll "") exitwith {
 	diag_log text (format ["XPS_fnc_checkInterface: Interface parameter must be an array of all strings.  Param:%1",_this select 1]);
 	false;
@@ -75,6 +78,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 		_result = false;
 	};
 	
+	//Check each interface loop
 	{
 		[_x,_y] params ["_key","_checkType"];
 		//Check key exists

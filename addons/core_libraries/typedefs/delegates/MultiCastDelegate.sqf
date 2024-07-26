@@ -95,7 +95,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
 	["Add",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil",_this]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...

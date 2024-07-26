@@ -39,7 +39,7 @@ Returns:
 		_self set ["_testClassCollection",createhashmapobject [XPS_typ_OrderedCollection]];
 
 		_self set ["_unitTestCollection",createhashmapobject [XPS_typ_TypeCollectionN,
-				createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,[["XPS_UT_typ_UnitTest"]]]]];
+				createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_UT_typ_UnitTest"]]]];
 		_self set ["CollectionChanged",(_self get "_unitTestCollection") get "CollectionChanged"];
 
 		_self set ["_onStateChanged",createhashmapobject [XPS_typ_Event]];

@@ -42,6 +42,8 @@ Description:
 	run your own custom preprocesser (or extend this one) before instantiating a type with 
 	<createHashmapObject: https://community.bistudio.com/wiki/createHashMapObject> command.
 
+More Info - <XPS Wiki - Preprocessor and Type Builder:https://www.notion.so/xps-group/Preprocessor-and-Type-Builder-2ca223d0e3ba40949b6655930d0fbf47>
+
 Authors: 
 	Crashdome
 ------------------------------------------------------------------------------

@@ -47,11 +47,6 @@ Optional: _noStack*
 <Boolean> - (optional) default: false - determines if "#base" definition should stack "#create" and "#delete" methods during inheritance
 See <XPS_fnc_preprocessTypeDefinition> for more info.
 
-Optional: _headers* 
-
-<Boolean> - (optional) default: false - determines if debug headers should be injected into code blocks - ignored if _preprocess isEqualTo false
-See <XPS_fnc_preprocessTypeDefinition> for more info.
-
 Return: _typeDefinition
 	<TypeDefinition> - or <False> if error
 
@@ -98,6 +93,8 @@ if ("#base" in keys _hashmap) then {
 	private _pTypeName = _preCompiled get "#type";
 	private _keys = keys _hashmap;
 	{
+		if (isNil "_y") then {continue};
+		
 		// Create base methods as "ParentType.Method"
 		if (!(isNil {_pTypeName}) && {_x in _keys && _x isEqualType "" && _y isEqualType {}}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
 
@@ -109,19 +106,19 @@ if ("#base" in keys _hashmap) then {
 
 			if ( _pAppend || _cAppend ) then {
 				
-				private _valuesToAppend = _hashmap getorDefault [_x,true];
-				if (_valuesToAppend isEqualType true) then {_valuesToAppend = _hashmap getorDefault ["@" + _x,true];};
+				private _valuesToMerge = _hashmap getorDefault [_x,true];
+				if (_valuesToMerge isEqualType true) then {_valuesToMerge = _hashmap getorDefault ["@" + _x,true];};
 
-				if (_valuesToAppend isEqualType _y) then {
-					switch (typeName _valuesToAppend) do {
+				if (_valuesToMerge isEqualType _y) then {
+					switch (typeName _valuesToMerge) do {
 						case "ARRAY" : {
-								_valuesToAppend = +_valuesToAppend;
-								_y pushbackUnique _valuestoAppend; // does not allow duplicates
-								_hashmap set [_x,_valuesToAppend]; 
+								private _dCopy = +_y;
+								{_dCopy pushbackUnique _x} foreach _valuesToMerge; // does not allow duplicates
+								_hashmap set [_x,_dCopy]; 
 							};
 						case "HASHMAP" : {
 							private _dCopy = +_y;
-							_dCopy merge [+_valuesToAppend,true]; // overwrites parent keys 
+							_dCopy merge [+_valuesToMerge,true]; // overwrites parent keys 
 							_hashMap set [_x,_dCopy]; 
 						};
 					};

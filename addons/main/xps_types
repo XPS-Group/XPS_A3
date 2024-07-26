@@ -1,11 +1,11 @@
 #! SQF
 /* ----------------------------------------------------------------------------
 Type: TypeDefinition
-    <Array> of <arrays> in format: [[key1,value1],[key2,value2]...]
+    <Array> of <arrays> in format: [[key1,value1],[key2,value2]...] (converted to <Hashmap> for 2.16 onwards)
 
 Description:
     Similar to the array used when making hashmaps but, contains extra
-    features such as the preset keys "#str" and "#create" for use in 
+    features such as: the preset keys "#str" and "#create" for use in 
     <HashmapObjects> 
 
 See also: 
@@ -13,11 +13,12 @@ See also:
 	- <HashmapObjects>
     - <main.typeHandlers.XPS_fnc_buildTypeDefinition>
     - <main.typeHandlers.XPS_fnc_preprocessTypeDefinition>
+    - <XPS Wiki - Type Definitions:https://www.notion.so/xps-group/Type-Definitions-4bf36952032b4bef9cd210a6ae6026ce>
 ---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------
 
 Type: Interface
-    <Array> of <arrays> in format: [[key1,type1],[key2,type2]...] where
+    <Array> of <arrays> in format: [[key1,type1],[key2,type2]...] (converted to <Hashmap in 2.16 onwards) where
     'type' is the STRING of the native type (e.g. "STRING","HASHMAP","CODE",etc...)
     of the command <typeName: https://community.bistudio.com/wiki/typeName>
 
@@ -29,6 +30,7 @@ See also:
     - <TypeDefinition>
     - <main.typeHandlers.XPS_fnc_checkInterface>
     - <main.typeHandlers.XPS_fnc_preprocessInterface>
+    - <XPS Wiki - Interfaces:https://www.notion.so/xps-group/Interfaces-bc3a2dc4919143e69862327dd60cc30a>
 ------------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------
 Type: Enumeration
@@ -44,6 +46,7 @@ See also:
 	- <HashmapObjects>
     - <core. XPS_typ_Enumeration>
     - <core.typeHandlers.XPS_fnc_createEnumeration>
+    - <XPS Wiki - Enumerations:https://www.notion.so/xps-group/Enumerations-fbd5d5e8bec74bde97ef4c23de62710a>
 ---------------------------------------------------------------------------*/
 /* ----------------------------------------------------------------------------
 Type: Singleton
