@@ -106,19 +106,19 @@ if ("#base" in keys _hashmap) then {
 
 			if ( _pAppend || _cAppend ) then {
 				
-				private _valuesToAppend = _hashmap getorDefault [_x,true];
-				if (_valuesToAppend isEqualType true) then {_valuesToAppend = _hashmap getorDefault ["@" + _x,true];};
+				private _valuesToMerge = _hashmap getorDefault [_x,true];
+				if (_valuesToMerge isEqualType true) then {_valuesToMerge = _hashmap getorDefault ["@" + _x,true];};
 
-				if (_valuesToAppend isEqualType _y) then {
-					switch (typeName _valuesToAppend) do {
+				if (_valuesToMerge isEqualType _y) then {
+					switch (typeName _valuesToMerge) do {
 						case "ARRAY" : {
-								_valuesToAppend = +_valuesToAppend;
-								_y pushbackUnique _valuestoAppend; // does not allow duplicates
-								_hashmap set [_x,_valuesToAppend]; 
+								private _dCopy = +_y;
+								{_dCopy pushbackUnique _x} foreach _valuesToMerge; // does not allow duplicates
+								_hashmap set [_x,_dCopy]; 
 							};
 						case "HASHMAP" : {
 							private _dCopy = +_y;
-							_dCopy merge [+_valuesToAppend,true]; // overwrites parent keys 
+							_dCopy merge [+_valuesToMerge,true]; // overwrites parent keys 
 							_hashMap set [_x,_dCopy]; 
 						};
 					};
