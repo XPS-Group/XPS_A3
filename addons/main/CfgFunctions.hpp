@@ -12,6 +12,7 @@ class CfgFunctions {
 			XPS_CFG_FNC_SUB_NR(typeHandlers,createSingleton);
 			XPS_CFG_FNC_SUB_NR(typeHandlers,createStaticTypeFromFile);
 			XPS_CFG_FNC_SUB_NR(typeHandlers,findReplaceKeyinCode);
+			XPS_CFG_FNC_SUB_NR(typeHandlers,isEqualHashmapObjectType);
 			XPS_CFG_FNC_SUB_NR(typeHandlers,parseTypeDefClass);
 			XPS_CFG_FNC_SUB_NR(typeHandlers,preprocessInterface);
 			XPS_CFG_FNC_SUB_NR(typeHandlers,preprocessTypeDefinition);
