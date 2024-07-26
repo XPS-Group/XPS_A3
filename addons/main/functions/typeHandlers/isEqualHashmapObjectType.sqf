@@ -27,7 +27,7 @@ Parameter: _strict*
 Returns: _result
 	<Boolean> - <True> if both <HashmapObjects> have a common parent type or in case of strict checking, are exactly the same type
 
-Example: Check two types strictly
+Example: Check two of same type
     --- Code
     private _def = [["#type","Tag_typ_MyType"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
 		
@@ -41,9 +41,9 @@ Example: Check two types strictly
 		// _result is 'true'
     ---
 
-Example: Check if common parent between two child types
+Example: Check two child types
     --- Code
-	private _baseDef = [["#type","Tag_typ_MyBase]];
+	private _baseDef = [["#type","Tag_typ_MyBase"]];
     private _def1 = [["#type","Tag_typ_MyType1"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
     private _def1 = [["#type","Tag_typ_MyType2"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
 		

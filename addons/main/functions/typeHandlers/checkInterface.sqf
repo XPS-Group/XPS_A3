@@ -26,15 +26,16 @@ Parameter: _interfaces
 	<Array> - an <array> of <Strings> in the format ["Interface1","Interface2"...] string should be a global variable of type <Interface>
 
 Optional: _allowNils* 
-	<Boolean> - (optional) default: true - used to allow keys with nil values
+	<Boolean> - (optional - Default: false) - used to allow keys with nil values. Nil values might be required if a <TypeDefinition> 
+	contains properties 'by ref' where the <TypeDefinition> is set to nil but the concrete <HashmapObject> instantiates the property at #create.
 
 Returns: _result
-	<Boolean> - <True> if <TypeDefinition> has keys defined with types that match <Interface> definition
+	<Boolean> - <True> if <TypeDefinition>/<Hashmap> or <HashmapObject> has keys defined with types that match <Interface> definition
 
 Example: Check a hashmap if it supports interface
     --- Code
 		MyHashmap = createhashmapfromArray [["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-		MyInterface = [["PropertyA","STRING"],["Method","CODE"]];
+		MyInterface = [["PropertyA","STRING"],["Method","CODE"],["PropertyB","SCALAR"]];
         private _result = [MyHashmap,["MyInterface"]] call XPS_fnc_checkInterface; 
 		// _result is 'true'
     ---
