@@ -1,3 +1,4 @@
 Name : XPS - [PROJECT]
 Version : [0.0.0]-Alpha
+Build : [000000]
 Build Date : [DATE]
