@@ -1,22 +1,25 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: action_planning. XPS_AP_ifc_IAction
+Interface: action_planning. XPS_AP_ifc_IActionStrategy
 <Interface>
 	---prototype
-	XPS_AP_ifc_IAction
+	XPS_AP_ifc_IActionStrategy
 	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
+	Method: GetLocation
+		<code>
+
+	Method: Evaluate
+		<code>
 
 ---------------------------------------------------------------------------- */
 [
-	["Preconditions","HASHMAP"],
-	["Effects","HASHMAP"],
-	["GetCost","CODE"],
-	["IsComplete","CODE"],
+    ["CanPerform","CODE"],
+    ["IsComplete","CODE"],
 	["Start","CODE"],
 	["Update","CODE"],
 	["Stop","CODE"]
