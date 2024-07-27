@@ -198,17 +198,6 @@ Returns:
 	}],
 
 	/*----------------------------------------------------------------------------
-	Property: Doctrine
-    
-    	--- Prototype --- 
-    	get "Doctrine"
-    	---
-    
-    Returns: 
-		<HashmapObject> - A <HashmapObject> of heuristical values to apply to the graph
-	-----------------------------------------------------------------------------*/
-	["Doctrine",nil],
-	/*----------------------------------------------------------------------------
 	Property: Path
     
     	--- Prototype --- 

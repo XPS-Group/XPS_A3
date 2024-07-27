@@ -60,7 +60,7 @@ Returns:
 	Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
-	["Clear",{
+	["Clear", compileFinal {
 		_self get "_stackArray" resize 0;
 	}],
     /*----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ Returns:
 	Returns:
 		<Number> - the number of elements in the stack
     ----------------------------------------------------------------------------*/
-	["Count",{
+	["Count", compileFinal {
 		count (_self get "_stackArray");
 	}],
     /*----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ Returns:
 	Returns:
 		<Boolean> - <True> if stack is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
-	["IsEmpty",{
+	["IsEmpty", compileFinal {
 		count (_self get "_stackArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
@@ -115,7 +115,7 @@ Returns:
 		<Anything> - last element in the stack or nil if empty - does not remove 
 		from stack
     ----------------------------------------------------------------------------*/
-	["Peek",{
+	["Peek", compileFinal {
         if !(_self call ["IsEmpty"]) then {
 		    _self get "_stackArray" select -1;
         } else {nil};
@@ -135,7 +135,7 @@ Returns:
 	Returns:
 		<Anything> - removes and returns last element in the stack or nil if empty
     ----------------------------------------------------------------------------*/
-	["Pop",{
+	["Pop", compileFinal {
         if !(_self call ["IsEmpty"]) then {
 		    private _stack = _self get "_stackArray";
             _stack deleteat (count _stack - 1);
@@ -156,7 +156,7 @@ Returns:
 	Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
-	["Push",{
+	["Push", compileFinal {
 		_self get "_stackArray" pushback _this;
 	}]
 ]

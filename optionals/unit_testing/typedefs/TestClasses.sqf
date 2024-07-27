@@ -86,7 +86,7 @@ Description:
 		Gets Collection from added <XPS_typ_TestClasses: XPS_typ_TestClass>.
 
     -------------------------------------------------------------------------*/ 
-	["GetClasses",{
+	["GetClasses", compileFinal {
 		private _dataArray = [];
 		private _classOrder = _self get "classOrder";
 		{
@@ -108,7 +108,7 @@ Description:
     - campaignConfigFile
 
     -------------------------------------------------------------------------*/ 
-	["LoadClasses",{
+	["LoadClasses", compileFinal {
 		_self get "_collection" call ["Clear"];
 		{
 			private _configFile = _x;

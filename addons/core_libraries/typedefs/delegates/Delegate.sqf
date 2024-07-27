@@ -93,7 +93,7 @@ Returns:
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
-	["Attach",{
+	["Attach", compileFinal {
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
 		//Deep copy the array
 		//if (_this isEqualType []) then {_this = +_this};
@@ -131,7 +131,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to defined signature
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
-	["Invoke",{
+	["Invoke", compileFinal {
 		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};
@@ -175,7 +175,7 @@ Example: Override class to change signature
 	_def = [
 		["#type", "Example"],
 		["delegate", createhashmapobject [Tag_typ_New_Delegate]],
-		["MyMethod", { 
+		["MyMethod",  compileFinal { 
 			//do some stuff
 			private _someArgs = ["I successfully did some stuff"];
 

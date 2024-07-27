@@ -59,7 +59,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_AP_ifc_IBelief"]],
 
-	["_condition",{false}],
+	["_condition", compileFinal {false}],
 	["_location",[0,0,0]],
 	/*----------------------------------------------------------------------------
 	Method: GetLocation

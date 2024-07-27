@@ -94,7 +94,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
-	["Add",{
+	["Add", compileFinal {
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
 		
 		if (_this isEqualType {} || {							//if just code we're good
@@ -128,7 +128,7 @@ Returns:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Remove",{
+	["Remove", compileFinal {
 		private _pointers = _self get "_pointers";
 		_pointers deleteat (_pointers find _this);
 	}],
@@ -153,7 +153,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to defined signature
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
-	["Invoke",{
+	["Invoke", compileFinal {
 		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};

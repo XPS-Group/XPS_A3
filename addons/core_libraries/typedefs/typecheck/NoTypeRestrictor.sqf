@@ -60,7 +60,7 @@ Returns:
 	Returns:
 		<True> - always
 	-----------------------------------------------------------------------------*/
-	["RegisterType",{true}],
+	["RegisterType", compileFinal {true}],
 	/*----------------------------------------------------------------------------
 	Method: IsAllowed
     
@@ -76,5 +76,5 @@ Returns:
 	Returns: 
 		<True> - always
 	-----------------------------------------------------------------------------*/
-	["IsAllowed",{true}]
+	["IsAllowed", compileFinal {true}]
 ]

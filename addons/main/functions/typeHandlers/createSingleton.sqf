@@ -60,7 +60,7 @@ Example: Using a definiton defined locally and built using XPS Preprocessor and 
 		private _typeDef = [
 			["#type","Tag_typ_mySingleton],
 			["PropA","Hello World!"],
-			["Method",{hint (_self get "PropA");}]
+			["Method", compileFinal {hint (_self get "PropA");}]
 		];
 
 		private _processedTypeDef = [ _typeDef, false, true, true ] call XPS_fnc_buildTypeDefinition 
@@ -78,7 +78,7 @@ Example: Using an external File and using XPS Preprocessor and Type Builder
 		[
 			["#type","Tag_typ_mySingleton],
 			["PropA","Hello World!"],
-			["Method",{hint (_self get "PropA");}]
+			["Method", compileFinal {hint (_self get "PropA");}]
 		]
     ---
 

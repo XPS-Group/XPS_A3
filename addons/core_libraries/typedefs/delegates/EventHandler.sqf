@@ -100,7 +100,7 @@ Throws:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
-	["Add",{
+	["Add", compileFinal {
 		_self get "_delegate" call ["Add",_this];
 	}],
     /*----------------------------------------------------------------------------
@@ -122,7 +122,7 @@ Throws:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Remove",{
+	["Remove", compileFinal {
 		_self get "_delegate" call ["Remove",_this];
 	}]
 ]

@@ -52,10 +52,6 @@ Flags:
     
 		<main.XPS_typ_AstarSearch.Graph>
 		
-	Property: Doctrine
-    
-		<main.XPS_typ_AstarSearch.Doctrine>
-		
 	Property: Path
     
 		<main.XPS_typ_AstarSearch.Path>
@@ -105,5 +101,16 @@ Flags:
 				_neighbors deleteat _i;
 			} else {_i = _i + 1;};
 		};
-	}]
+	}],
+	/*----------------------------------------------------------------------------
+	Property: Doctrine
+    
+    	--- Prototype --- 
+    	get "Doctrine"
+    	---
+    
+    Returns: 
+		<HashmapObject> - A <HashmapObject> of heuristical values to apply to the graph
+	-----------------------------------------------------------------------------*/
+	["Doctrine",nil],
 ]

@@ -49,7 +49,7 @@ Description:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
-	["GetPositionByIndex",{
+	["GetPositionByIndex", compileFinal {
 		if !(params [["_cellKey",[0,0],[[]],[2]],["_size",0,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetPositionByIndex",nil,createhashmapfromarray [["_this",_this]]]];};
 
 		private _x = _size * (_cellKey#0);
@@ -76,7 +76,7 @@ Description:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
-	["GetIndexByPosition",{
+	["GetIndexByPosition", compileFinal {
 		if !(params [["_position",[100,100],[[],objnull],[2,3]],["_size",nil,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetIndexByPosition",nil,createhashmapfromarray [["_this",_this]]]];};
 
 		private _pos = [];
@@ -113,7 +113,7 @@ Description:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
-	["GetNearbyIndexes",{
+	["GetNearbyIndexes", compileFinal {
 		if !(params [["_center",[0,0],[[]],[2]], ["_radius",0,[0]], "_includecenter"]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetNearbyIndexes",nil,createhashmapfromarray [["_this",_this]]]];};
 		if (isNil "_includeCenter" || {!(_includeCenter isEqualType true)}) then {_includeCenter = false};
 
@@ -158,7 +158,7 @@ Description:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
-	["GenerateGrid",{
+	["GenerateGrid", compileFinal {
 		if !(params [["_sizeSqr",0,[0]],["_sizeWorld",worldsize,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GenerateGrid",nil,createhashmapfromarray [["_this",_this]]]];};
 
 		private _indexArray = [];

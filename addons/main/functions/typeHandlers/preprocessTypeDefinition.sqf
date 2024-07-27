@@ -31,7 +31,7 @@ Description:
 		["DTOR","code"] - injects string or code block into #delete method : Top 
 		["CTOR_LAZ","code"] - injects string or code block into #create method : Bottom
 		["DTOR_LAZY","code"] - injects string or code block into #delete method : Bottom 
-		["CONDITIONAL",{code}] - must return a boolean - this method/property will only exist if <True>
+		["CONDITIONAL", compileFinal {code}] - must return a boolean - this method/property will only exist if <True>
 		["VAILDATE_ALL", value] - see BIS command isEqualTypeAll
 		["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
 		["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
@@ -249,7 +249,7 @@ Example: Private Properties
 	[
 		["_propertyA",10],
 		["_propertyB",10],
-		["MethodA",{ (_self get "_propertyA") + (_self get "_propertyB")}]
+		["MethodA", compileFinal { (_self get "_propertyA") + (_self get "_propertyB")}]
 	]
 	---
 
@@ -259,7 +259,7 @@ Example: Private Properties
 	[
 		["f372a1c1",10],
 		["9ade556a",10],
-		["MethodA",{ (_self get "f372a1c1") + (_self get "9ade556a")}]
+		["MethodA", compileFinal { (_self get "f372a1c1") + (_self get "9ade556a")}]
 	]
 	---
 
@@ -273,8 +273,8 @@ Example: Obsolete Methods
 	---code
 	[
 		["PropertyA",10], 
-		["MethodA",{ "some old code here"},[["OBSOLETE","diag_log ""Warning! MethodA is old. Use MethodA_New"";"]]], // This has been replaced
-		["MethodA_New",{ "some new code here"}]
+		["MethodA", compileFinal { "some old code here"},[["OBSOLETE","diag_log ""Warning! MethodA is old. Use MethodA_New"";"]]], // This has been replaced
+		["MethodA_New", compileFinal { "some new code here"}]
 	]
 	---
 
@@ -283,8 +283,8 @@ Example: Obsolete Methods
 	---code
 	[
 		["PropertyA",10], 
-		["MethodA",{ "diag_log ""Warning! MethodA is old. Use MethodA_New""; some old code here"}], 
-		["MethodA_New",{ "some new code here"}]
+		["MethodA", compileFinal { "diag_log ""Warning! MethodA is old. Use MethodA_New""; some old code here"}], 
+		["MethodA_New", compileFinal { "some new code here"}]
 	]
 	---
 
@@ -294,8 +294,8 @@ Example: Conditional
 
 	---code
 	[
-		["MethodA",{ "some code dependant on MyVar being >= 10" },[["CONDITIONAL",{MyVar >= 10}]]],
-		["MethodA",{ "some code dependant on MyVar being < 10" },[["CONDITIONAL",{MyVar < 10}]]]
+		["MethodA", compileFinal { "some code dependant on MyVar being >= 10" },[["CONDITIONAL",{MyVar >= 10}]]],
+		["MethodA", compileFinal { "some code dependant on MyVar being < 10" },[["CONDITIONAL",{MyVar < 10}]]]
 	]
 	---
 
@@ -303,7 +303,7 @@ Example: Conditional
 	
 	---code
 	[
-		["MethodA",{ "some code dependant on MyVar being >= 10" }]
+		["MethodA", compileFinal { "some code dependant on MyVar being >= 10" }]
 	]
 	---
 

@@ -78,7 +78,7 @@ Returns:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
-	["RegisterType",{
+	["RegisterType", compileFinal {
         if !(params [["_type",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,createhashmapfromarray [["_this",_this]]]];};
         private _list = _self get "_allowed";
         if (_type isEqualTypeAny _list) exitwith {false;};
@@ -99,7 +99,7 @@ Returns:
 	Returns: 
 		<True> - always
 	-----------------------------------------------------------------------------*/
-	["IsAllowed",{
+	["IsAllowed", compileFinal {
 		params ["_value"];
         private _allowlist = _self get "_allowed";
 		_value isEqualTypeAny _allowList;

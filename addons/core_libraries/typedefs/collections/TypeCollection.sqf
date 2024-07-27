@@ -75,7 +75,7 @@ Returns:
 
         Removes all items from collection 
     ----------------------------------------------------------------------------*/
-	["Clear",{
+	["Clear", compileFinal {
         {
             _self call ["RemoveItem",_x];
         } foreach (keys (_self get "_items"));
@@ -92,7 +92,7 @@ Returns:
 	Returns:
 		<Number> - the number of elements in the stack
     ----------------------------------------------------------------------------*/
-	["Count",{
+	["Count", compileFinal {
 		count (_self get "_items");
 	}],
     /*----------------------------------------------------------------------------
@@ -107,7 +107,7 @@ Returns:
 	Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
-	["IsEmpty",{
+	["IsEmpty", compileFinal {
 		count (_self get "_items") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
@@ -220,7 +220,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
         <XPS_typ_InvalidArgumentException> - if key parameter does not exist in this collection - OR- if _item is not allowed 
     ----------------------------------------------------------------------------*/
-	["SetItem",{
+	["SetItem", compileFinal {
         if !(params [["_key",nil,[]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,createhashmapfromarray [["_this",_this]]]];};
         if ((_key isEqualTo "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
         if (_self get "_restrictor" call ["IsAllowed",_item]) then {
@@ -253,7 +253,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
         <XPS_typ_InvalidArgumentException> - if index does not exist
     ----------------------------------------------------------------------------*/
-	["UpdateItem",{
+	["UpdateItem", compileFinal {
         if !(params [["_key",nil,[]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,createhashmapfromarray [["_this",_this]]]];};
         if ((_key isEqualTo "") || !(_key in (keys (_self get "_items")))) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
         private _item = _self call ["GetItem",_key];

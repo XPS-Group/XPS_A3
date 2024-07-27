@@ -88,8 +88,8 @@ Returns:
 
     ["CanPerform",{true}],
     ["IsComplete",{false}],
-	["Start",{}],
-	["Update",{}],
-	["Stop",{}]
+	["Start", compileFinal {}],
+	["Update", compileFinal {}],
+	["Stop", compileFinal {}]
     
 ]

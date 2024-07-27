@@ -67,7 +67,7 @@ Returns:
 		_classID - <String> - identifier of the Test Class (typically: ["Description","Method"]) 
 		_item - <XPS_UT_typ_UnitTest> - the actual UnitTest hashmapobject that was added, removed, or changed 
 	-----------------------------------------------------------------------------*/
-	["onTestServiceCollectionChanged",{
+	["onTestServiceCollectionChanged", compileFinal {
 		params ["_sender","_args"];
 		_args params ["_method","_args2"];
 		_args2 params ["_classID","_item"];
@@ -106,7 +106,7 @@ Returns:
     Parameters: 
 		_index - <Number> - the index of the item to "select"
 	-----------------------------------------------------------------------------*/
-	["AddToSelected",{
+	["AddToSelected", compileFinal {
 		if (_this < 0) exitwith {};
 		private _classID = _self get "_testCollection" call ["GetItem",_this];
 		_self get "_testService" call ["AddToSelected",_classID];
@@ -123,7 +123,7 @@ Returns:
     Parameters: 
 		_index - <Number> - the index of the item to "unselect"
 	-----------------------------------------------------------------------------*/
-	["RemoveFromSelected",{
+	["RemoveFromSelected", compileFinal {
 		if (_this < 0) exitwith {};
 		private _classID = _self get "_testCollection" call ["GetItem",_this];
 		_self get "_testService" call ["RemoveFromSelected",_classID];
@@ -138,7 +138,7 @@ Returns:
 		Calls the test service to request all Test Classes be (re)loaded into the Test Service with defaults
 
 	-----------------------------------------------------------------------------*/
-	["LoadTests",{_self get "_testService" call ["LoadTests"]}],
+	["LoadTests", compileFinal {_self get "_testService" call ["LoadTests"]}],
 	/*----------------------------------------------------------------------------
 	Method: Close
     
@@ -149,7 +149,7 @@ Returns:
 		Disconnects any Event Handlers and references to a test service
 
 	-----------------------------------------------------------------------------*/
-	["Close",{
+	["Close", compileFinal {
 		_self get "_testService" get "CollectionChanged" call ["Remove",[_self,"onTestServiceCollectionChanged"]];
 		_self set ["StateChanged",nil];
 		_self set ["_testCollection",nil];
@@ -166,7 +166,7 @@ Returns:
 		Calls the test service to request running all Unit Tests 
 
 	-----------------------------------------------------------------------------*/
-	["RunAll",{
+	["RunAll", compileFinal {
 		_self get "_testService" call ["RunAll"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -179,7 +179,7 @@ Returns:
 		Calls the test service to request running only the Unit Tests which are selected
 
 	-----------------------------------------------------------------------------*/
-	["RunSelected",{
+	["RunSelected", compileFinal {
 		_self get "_testService" call ["RunSelected"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ Returns:
 		Calls the test service to request all Unit Tests be reset to Non-Running state
 
 	-----------------------------------------------------------------------------*/
-	["Reset",{
+	["Reset", compileFinal {
 		_self get "_testService" call ["Reset"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -205,7 +205,7 @@ Returns:
 		Calls the test service to request everything be cleared and reloaded at default state
 
 	-----------------------------------------------------------------------------*/
-	["Reload",{
+	["Reload", compileFinal {
 		_self get "_testService" call ["Reload"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -221,7 +221,7 @@ Returns:
 		_index - <Number> - the index of the item 
 
 	-----------------------------------------------------------------------------*/
-	["GetDetails",{
+	["GetDetails", compileFinal {
 		if (_this < 0) exitwith {};
 		_self get "_testService" call ["GetDetails",_self get "_testCollection" call ["GetItem",_this]];
 	}],

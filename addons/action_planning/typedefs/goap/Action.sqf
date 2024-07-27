@@ -98,10 +98,10 @@ Returns:
 
 	["Effects",createhashmap],
 	["Preconditions",createhashmap],
-	["GetCost",{_self get "_cost"}],
-	["IsComplete",{self get "_strategy" call ["IsComplete"]}],
-	["Start",{self get "_strategy" call ["Start"]}],
-	["Update",{self get "_strategy" call ["Update"]}],
-	["Stop",{self get "_strategy" call ["Stop"]}]
+	["GetCost", compileFinal {_self get "_cost"}],
+	["IsComplete", compileFinal {self get "_strategy" call ["IsComplete"]}],
+	["Start", compileFinal {self get "_strategy" call ["Start"]}],
+	["Update", compileFinal {self get "_strategy" call ["Update"]}],
+	["Stop", compileFinal {self get "_strategy" call ["Stop"]}]
     
 ]
