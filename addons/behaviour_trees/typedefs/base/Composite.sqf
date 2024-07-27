@@ -105,7 +105,7 @@ Returns:
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
-	["processTick", compileFinal {}],
+	["processTick", {}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
