@@ -78,7 +78,7 @@ Flags:
 		params ["_moveCost","_fromNode","_toNode"];
 
 		private _weights = _self get "Doctrine" get "Weights";
-		private _road = _next get "RoadObject";
+		private _road = _toNode get "RoadObject";
 		private _info = getRoadInfo _road;
 		private _modifier = _weights#2;
 		switch (_info#0) do {
@@ -106,11 +106,17 @@ Flags:
 	Property: Doctrine
     
     	--- Prototype --- 
+    	set ["Doctrine",_doctrine]
+    	---
+    	--- Prototype --- 
     	get "Doctrine"
     	---
     
+	Paramters:
+		_doctrine - <XPS_PF_typ_RoadGraphDoctrine>
+		
     Returns: 
 		<HashmapObject> - A <HashmapObject> of heuristical values to apply to the graph
 	-----------------------------------------------------------------------------*/
-	["Doctrine",nil],
+	["Doctrine",nil]
 ]

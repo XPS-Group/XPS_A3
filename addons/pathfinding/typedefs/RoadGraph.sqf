@@ -69,14 +69,14 @@ Flags:
 		private _p3 = _bPosB getpos [_nextWidth,_headB + _dirOffset];
 		private _p4 = _ePosB getpos [_nextWidth,_headB + _dirOffset];
 		
-		_m = createmarker ["db"+ str _fromPoint,_fromPoint]; 
-		_m setmarkertype "mil_circle"; 
-		_m setmarkercolor "ColorOrange"; 
-		_m setmarkersize [0.25,0.25]; 
-		_m = createmarker ["db"+ str str _posE,_posE]; 
-		_m setmarkertype "mil_circle"; 
-		_m setmarkercolor "ColorBlack"; 
-		_m setmarkersize [0.25,0.25]; 
+		// _m = createmarker ["db"+ str _fromPoint,_fromPoint]; 
+		// _m setmarkertype "mil_circle"; 
+		// _m setmarkercolor "ColorOrange"; 
+		// _m setmarkersize [0.25,0.25]; 
+		// _m = createmarker ["db"+ str str _posE,_posE]; 
+		// _m setmarkertype "mil_circle"; 
+		// _m setmarkercolor "ColorBlack"; 
+		// _m setmarkersize [0.25,0.25]; 
 
 
 		private _intersect = [_p1,_p2,_p3,_p4] call XPS_fnc_lineIntersect2D;
@@ -94,10 +94,10 @@ Flags:
 						_points pushback _nPos;
 					//};
 				};
-				_m = createmarker ["db"+ str _intersect,_intersect]; 
-				_m setmarkertype "mil_circle"; 
-				_m setmarkercolor "ColorYellow"; 
-				_m setmarkersize [0.25,0.25]; 
+				// _m = createmarker ["db"+ str _intersect,_intersect]; 
+				// _m setmarkertype "mil_circle"; 
+				// _m setmarkercolor "ColorYellow"; 
+				// _m setmarkersize [0.25,0.25]; 
 			};
 		};
 		_points;
@@ -164,16 +164,16 @@ Flags:
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 
-		_m = createmarker [str _bPosC,_bPosC]; 
-		_m setmarkershape "rectangle"; 
-		_m setmarkercolor "ColorBlue"; 
-		_m setmarkersize [_width,0.1]; 
-		_m setmarkerdir (_pos getdir _bPosC); 
-		_m = createmarker [str _ePosC,_ePosC]; 
-		_m setmarkershape "rectangle"; 
-		_m setmarkercolor "ColorBlack"; 
-		_m setmarkersize [_width,0.1]; 
-		_m setmarkerdir (_pos getdir _ePosC);  
+		// _m = createmarker [str _bPosC,_bPosC]; 
+		// _m setmarkershape "rectangle"; 
+		// _m setmarkercolor "ColorBlue"; 
+		// _m setmarkersize [_width,0.1]; 
+		// _m setmarkerdir (_pos getdir _bPosC); 
+		// _m = createmarker [str _ePosC,_ePosC]; 
+		// _m setmarkershape "rectangle"; 
+		// _m setmarkercolor "ColorBlack"; 
+		// _m setmarkersize [_width,0.1]; 
+		// _m setmarkerdir (_pos getdir _ePosC);  
 
 		{
 			_ct set [str _x,_x];
@@ -413,6 +413,7 @@ Flags:
 			};		
 		};
 	}],
+
 	//TODO : Move this to Formation AI because it can only work in that situation
 	["CalculateDrivePath", compileFinal {
 		params [["_start",nil,[[]],[2,3]],["_end",nil,[[]],[2,3]],["_path",[],[[]]],["_side","",[""]]];

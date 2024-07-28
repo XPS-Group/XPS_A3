@@ -82,7 +82,7 @@ Flags:
 		_fromNode - <HashmapObject> - the node traversing from
 
 	Returns:
-		_result - <Boolean> - if node to node traversal is capable using the property <main.XPS_typ_AstarSearch.Doctrine>
+		_result - <Boolean> - if node to node traversal is capable using the property <Doctrine>
 	-----------------------------------------------------------------------------*/
 	["canTraverse",compileFinal {
 		params [["_toNode",nil,[createhashmap]],["_fromNode",nil,[createhashmap]]];
@@ -161,6 +161,9 @@ Flags:
 	Method: AdjustMoveCost
     
 		<main.XPS_typ_AstarSearch.AdjustMoveCost>
+	
+	Description:
+		Overridden - adjusts movement cost according to <Doctrine>
 	-----------------------------------------------------------------------------*/
 	["AdjustMoveCost",compileFinal {
 		params ["_moveCost","_fromNode","_toNode"];
@@ -274,9 +277,15 @@ Flags:
 	Property: Doctrine
     
     	--- Prototype --- 
+    	set ["Doctrine",_doctrine]
+    	---
+    	--- Prototype --- 
     	get "Doctrine"
     	---
     
+	Paramters:
+		_doctrine - <XPS_PF_typ_MapGraphDoctrine>
+		
     Returns: 
 		<HashmapObject> - A <HashmapObject> of heuristical values to apply to the graph
 	-----------------------------------------------------------------------------*/

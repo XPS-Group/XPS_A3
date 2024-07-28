@@ -238,6 +238,11 @@ Returns:
     	---
 		
 		<XPS_ifc_IAstarSearch>
+
+	Description:
+		This method is called when determining estimated distance from one node to another.
+		It can be used to modify the estimated distance during a search. This implementation
+		simply returns the initial estimated distance but, can be overridden to do more.
     
     Optionals: 
 		_estDist - <Number> 
@@ -256,6 +261,11 @@ Returns:
     	---
 		
 		<XPS_ifc_IAstarSearch>
+
+	Description:
+		This method is called when determining movement cost from one node to another.
+		It can be used to modify the movement cost during a search. This implementation
+		simply returns the initial movement cost but, can be overridden to do more.
     
     Parameters: 
 		_moveCost - <Number> 
@@ -274,6 +284,10 @@ Returns:
     	---
 		
 		<XPS_ifc_IAstarSearch>
+
+	Description:
+		This method is called to filter neighbors of a node. This implementation 
+		simply returns all neighbors but, can be overridden to do more.
     
     Optionals: 
 		_neighbors - <Array> 
@@ -318,10 +332,18 @@ Returns:
 	it on to the working graph.
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
+		//Bail if already finished
+		if (_self get "Status" in ["SUCCESS","FAILURE"]) exitwith {};
+		
+		// Set status Running if not already
+		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
+
 		private _graph = _self get "_workingGraph";
 		private _endNode = _self get "EndNode";
 		private _currentNode = _self call ["frontierPullLowest"];
 		_self set ["currentNode",_currentNode];
+		
+		// Check if path is found or failed to be found
 		if (isNil "_currentNode" || (_endNode get "Index") isEqualTo (_currentNode get "Index")) exitwith {
 			_self call ["getPath"];
 		};
@@ -336,7 +358,7 @@ Returns:
 			private _moveCost = _self call ["AdjustMoveCost",[_graph call ["GetMoveCost",[_currentNode,_x]],_currentNode,_x]];
 			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _moveCost;
 			private _priority = _costSoFar + _estDist;
-			//diag_log [_x get "Index",_estDist,_costSoFar,_priority];
+			
 			private _costSoFarX = _costSoFarMap get (_x get "Index");
 
 			if (isNil {_costSoFarX} || {_costSoFar < _costSoFarX}) then {
@@ -348,6 +370,5 @@ Returns:
 		} foreach _neighbors;
 
 		_self set ["lastNode",_currentNode];
-		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
 	}]
 ]
