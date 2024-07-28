@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /* -----------------------------------------------------------------------------
 TypeDef: action_planning. XPS_AP_typ_Belief
 	<TypeDefinition>
