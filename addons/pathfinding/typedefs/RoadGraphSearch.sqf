@@ -60,9 +60,9 @@ Flags:
     
 		<main.XPS_typ_AstarSearch.Status>
 		
-	Method: AdjustEstimatedDistance
+	Method: AdjustEstimate
     
-		<main.XPS_typ_AstarSearch.AdjustEstimatedDistance>
+		<main.XPS_typ_AstarSearch.AdjustEstimate>
 
 --------------------------------------------------------------------------------*/
 [
@@ -70,12 +70,12 @@ Flags:
 	["#type","XPS_PF_typ_RoadGraphSearch"],
 	["#base",XPS_typ_AstarSearch],
 	/*----------------------------------------------------------------------------
-	Method: AdjustMoveCost
+	Method: AdjustCost
     
-		<main.XPS_typ_AstarSearch.AdjustMoveCost>
+		<main.XPS_typ_AstarSearch.AdjustCost>
 	-----------------------------------------------------------------------------*/
-	["AdjustMoveCost",compileFinal {
-		params ["_moveCost","_fromNode","_toNode"];
+	["AdjustCost",compileFinal {
+		params ["_cost","_fromNode","_toNode"];
 
 		private _weights = _self get "Doctrine" get "Weights";
 		private _road = _toNode get "RoadObject";
@@ -85,7 +85,7 @@ Flags:
 			case "MAIN ROAD" : {_modifier = _weights#0};
 			case "ROAD" : {_modifier = _weights#1};
 		};
-		_moveCost * _modifier;
+		_cost * _modifier;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: FilterNeighbors

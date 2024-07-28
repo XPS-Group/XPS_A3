@@ -229,19 +229,19 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Roads",createhashmap],
 	/*----------------------------------------------------------------------------
-	Method: GetEstimatedDistance
+	Method: GetEstimate
     
     	--- Prototype --- 
-    	call ["GetEstimatedDistance",[_currentPos,_endPos]]
+    	call ["GetEstimate",[_currentPos,_endPos]]
     	---
 
-		<main.XPS_ifc_IAstarGraph.GetEstimatedDistance>
+		<main.XPS_ifc_IAstarGraph.GetEstimate>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_endPos - <Array> - goal position
 	-----------------------------------------------------------------------------*/
-	["GetEstimatedDistance",compileFinal {
+	["GetEstimate",compileFinal {
 		params ["_current","_end"];
 		(_current get "RoadObject") distance2D (_end get "RoadObject");
 	}],
@@ -275,19 +275,19 @@ Flags:
 		_result;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: GetMoveCost
+	Method: GetCost
     
     	--- Prototype --- 
-    	call ["GetMoveCost",[_currentPos,_nextPos]]
+    	call ["GetCost",[_currentPos,_nextPos]]
     	---
 
-		<main.XPS_ifc_IAstarGraph.GetMoveCost>
+		<main.XPS_ifc_IAstarGraph.GetCost>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_nextPos - <Array> - connected road location
 	-----------------------------------------------------------------------------*/
-	["GetMoveCost",compileFinal {
+	["GetCost",compileFinal {
 		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]]]) exitwith {nil};
 		
 		(_current get "PosASL") distance (_next get "PosASL");

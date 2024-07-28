@@ -288,19 +288,19 @@ Flags:
 		[_waterTravel,_waterDistance];
 	}],
 	/*----------------------------------------------------------------------------
-	Method: GetEstimatedDistance
+	Method: GetEstimate
     
     	--- Prototype --- 
-    	call ["GetEstimatedDistance",[_current,_end]]
+    	call ["GetEstimate",[_current,_end]]
     	---
 
-		<main.XPS_ifc_IAstarGraph.GetEstimatedDistance>
+		<main.XPS_ifc_IAstarGraph.GetEstimate>
     
     Optionals: 
 		_current - <Hashmap> - current sector
 		_end - <Hashmap> - goal sector
 	-----------------------------------------------------------------------------*/
-	["GetEstimatedDistance",compileFinal {
+	["GetEstimate",compileFinal {
 		params ["_current","_end"];
 		private _pos1 = _current get "PosCenter";
 		private _pos2 = _end get "PosCenter";
@@ -341,20 +341,20 @@ Flags:
 		_neighbors;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: GetMoveCost
+	Method: GetCost
     
     	--- Prototype --- 
-    	call ["GetMoveCost",[_current,_next,_doctrine]]
+    	call ["GetCost",[_current,_next,_doctrine]]
     	---
 
-		<main.XPS_ifc_IAstarGraph.GetMoveCost>
+		<main.XPS_ifc_IAstarGraph.GetCost>
     
     Optionals: 
 		_current - <Hashmap> - current sector of working graph 
 		_next - <Hashmap> - connected sector
 		_doctrine - <Hashmap> - doctrine to use
 	-----------------------------------------------------------------------------*/
-	["GetMoveCost",compileFinal {
+	["GetCost",compileFinal {
 		params ["_current","_next"];
 		private _pos1 = _current get "PosCenter";
 		private _pos2 = _next get "PosCenter";

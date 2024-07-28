@@ -10,10 +10,10 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Method: GetEstimatedDistance
+	Method: GetEstimate
 		<code>
 
-	Method: GetMoveCost
+	Method: GetCost
 		<code>
 
 	Method: GetNeighbors
@@ -29,8 +29,8 @@ Authors:
 	each search of the graph
 ---------------------------------------------------------------------------- */
 [
-	["GetEstimatedDistance","CODE"], 
-	["GetMoveCost","CODE"], 
+	["GetEstimate","CODE"], 
+	["GetCost","CODE"], 
 	["GetNeighbors","CODE"], 
 	["GetNodeAt","CODE"], 
 	["Init","CODE"]

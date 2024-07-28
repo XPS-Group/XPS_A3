@@ -231,10 +231,10 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
-	Method: AdjustEstimatedDistance
+	Method: AdjustEstimate
     
     	--- Prototype --- 
-    	call ["AdjustEstimatedDistance",[_estDist,_fromNode,_toNode]]
+    	call ["AdjustEstimate",[_estimate,_fromNode,_toNode]]
     	---
 		
 		<XPS_ifc_IAstarSearch>
@@ -245,19 +245,19 @@ Returns:
 		simply returns the initial estimated distance but, can be overridden to do more.
     
     Optionals: 
-		_estDist - <Number> 
+		_estimate - <Number> 
 		_fromNode - <HashmapObject>
 		_toNode - <HashmapObject>
 	-----------------------------------------------------------------------------*/
-	["AdjustEstimatedDistance",compileFinal {
-		params ["_estDist","_fromNode","_toNode"];
-		_estDist;
+	["AdjustEstimate",compileFinal {
+		params ["_estimate","_fromNode","_toNode"];
+		_estimate;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: AdjustMoveCost
+	Method: AdjustCost
     
     	--- Prototype --- 
-    	call ["AdjustMoveCost",[_moveCost,_fromNode,_toNode]]
+    	call ["AdjustCost",[_cost,_fromNode,_toNode]]
     	---
 		
 		<XPS_ifc_IAstarSearch>
@@ -268,13 +268,13 @@ Returns:
 		simply returns the initial movement cost but, can be overridden to do more.
     
     Parameters: 
-		_moveCost - <Number> 
+		_cost - <Number> 
 		_fromNode - <HashmapObject>
 		_toNode - <HashmapObject>
 	-----------------------------------------------------------------------------*/
-	["AdjustMoveCost",compileFinal {
-		params ["_moveCost","_fromNode","_toNode"];
-		_moveCost;
+	["AdjustCost",compileFinal {
+		params ["_cost","_fromNode","_toNode"];
+		_cost;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: FilterNeighbors
@@ -354,10 +354,10 @@ Returns:
 
 		{
 			private _costSoFarMap = _self get "costSoFar";
-			private _estDist = _self call ["AdjustEstimatedDistance",[_graph call ["GetEstimatedDistance",[_x,_endNode]],_x,_endNode]];
-			private _moveCost = _self call ["AdjustMoveCost",[_graph call ["GetMoveCost",[_currentNode,_x]],_currentNode,_x]];
-			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _moveCost;
-			private _priority = _costSoFar + _estDist;
+			private _estimate = _self call ["AdjustEstimate",[_graph call ["GetEstimate",[_x,_endNode]],_x,_endNode]];
+			private _cost = _self call ["AdjustCost",[_graph call ["GetCost",[_currentNode,_x]],_currentNode,_x]];
+			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _cost;
+			private _priority = _costSoFar + _estimate;
 			
 			private _costSoFarX = _costSoFarMap get (_x get "Index");
 
