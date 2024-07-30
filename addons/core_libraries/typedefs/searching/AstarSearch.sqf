@@ -32,7 +32,7 @@ Returns:
 	Constructor: #create
     
     	--- Prototype --- 
-    	call ["#create",[_graph,_startKey,_endKey]]
+    	call ["#create",[_graph, _startKey, _endKey, _reversePath*]]
     	---
     
 	Parameters:
@@ -40,15 +40,21 @@ Returns:
 		_startKey - <Anything> 
     	_endKey - <Anything> 
 
+	Optionals:
+		_reversePath - <Boolean> -(Optional - Default : true) - Since path is from: 
+		[End -> Start] , a true value will reverse it to: [Start -> End] which is 
+		typically wanted. A false value will skip this step if unnecessary.
+
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]]]) exitwith {nil;};
+		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],["_reversePath",true,[true]]]) exitwith {nil;};
 		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
 		_self set ["_workingGraph",_graph];
 		_self set ["_workingStartKey",_startKey];
 		_self set ["_workingEndKey",_endKey];
+		_self set ["_reverse",_reversePath];
 		_self call ["Init"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -66,6 +72,7 @@ Returns:
 	["_workingGraph",nil],
 	["_workingStartKey",nil],
 	["_workingEndKey",nil],
+	["_reverse",nil],
 	/*----------------------------------------------------------------------------
 	Protected: cameFrom
     
@@ -147,7 +154,7 @@ Returns:
 		};
 
 		if (_current isEqualTo _start) then {_status = "SUCCESS";};
-		reverse _path;
+		if (_self get "_reverse") then {reverse _path};
 		_self set ["Path",_path];
 		_self set ["Status",_status];
 
