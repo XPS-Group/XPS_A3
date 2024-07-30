@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /* -----------------------------------------------------------------------------
 TypeDef: pathfinding. XPS_PF_typ_MapNode
 	<TypeDefinition>
