@@ -41,8 +41,8 @@ Returns:
     	_endKey - <Anything> 
 
 	Optionals:
-		_reversePath - <Boolean> -(Optional - Default : true) - Since path is from: 
-		[End -> Start] , a true value will reverse it to: [Start -> End] which is 
+		_reversePath - <Boolean> -(Optional - Default : true) - Since path is generated 
+		from: [End -> Start] , a true value will reverse it to: [Start -> End] which is 
 		typically wanted. A false value will skip this step if unnecessary.
 
 	Returns:

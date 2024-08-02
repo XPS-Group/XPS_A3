@@ -239,7 +239,7 @@ Returns:
 
         <XPS_ifc_ICollection>
 
-        Updates item at specified Index.
+        Updates item at specified key.
     
     Parameters: 
 		_key - the key which contains the <HashmapObject>
@@ -251,7 +251,7 @@ Returns:
 
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
-        <XPS_typ_InvalidArgumentException> - if index does not exist
+        <XPS_typ_InvalidArgumentException> - if key does not exist
     ----------------------------------------------------------------------------*/
 	["UpdateItem", compileFinal {
         if !(params [["_key",nil,[]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,createhashmapfromarray [["_this",_this]]]];};
