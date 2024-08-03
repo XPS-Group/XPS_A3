@@ -38,7 +38,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["#create",{
 		if (isNil "_this" || {_this isEqualTo []}) exitwith {_self set ["_allowed",[]];};
-		if (_this isEqualTypeAll createhashmap) then {
+		if (_this isEqualTypeAll "") then {
 			_self set ["_allowed",_this];
 		} else {
 			//TODO throw
