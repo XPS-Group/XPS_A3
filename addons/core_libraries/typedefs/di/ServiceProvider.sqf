@@ -132,7 +132,7 @@ Returns:
 		
         if !(params [["_key","",[""]],"_args"]) then {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"GetService","Key was not a valid string.",_this]]; };
         
-        if (_key in keys (_self get "_services")) then {
+        if (_key in (_self get "_services")) then {
             private _item = _self get "_services" get _key;
             _item params ["_type","_lifeTime"];
             switch (_lifeTime) do {

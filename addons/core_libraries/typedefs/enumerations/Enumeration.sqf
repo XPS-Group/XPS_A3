@@ -112,6 +112,6 @@ Description:
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
 		if !(_this isEqualTypeAny [0,"",text ""]) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];};
 		
-		_this in keys _self;
+		_this in _self;
 	}]
 ]

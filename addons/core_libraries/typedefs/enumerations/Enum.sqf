@@ -24,7 +24,7 @@ Description:
 		---
 	-----------------------------------------------------------------------------*/
 	["#str",compilefinal {_self get "#type" select  0}],
-	["_isEnumerationType", compileFinal {"#type" in keys _this && {"XPS_typ_Enumeration" in (_this get "#type")}}],
+	["_isEnumerationType", compileFinal {"#type" in _this && {"XPS_typ_Enumeration" in (_this get "#type")}}],
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
     
@@ -141,7 +141,7 @@ Description:
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
 		if !(params [["_enumHelper",createhashmap,[createhashmap]],["_lookup","",[0,"",text ""]]] && {(_self call ["_isEnumerationType",_enumHelper])}) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a valid Enumeration object or lookup was not a number, string, or structured text.",_this]];};
 		
-		_lookup in keys _enumHelper; 
+		_lookup in _enumHelper; 
 	}]
 ]
 	/*----------------------------------------------------------------------------
@@ -170,9 +170,9 @@ Description:
 		private _helper = selectRandom [TAG_Pets, TAG_Horses, TAG_Cars]; 
 
 		if (_helper isEqualType createhashmap &&  				// make sure valid hashmap
-			{"#type" in keys _helper && 						// is a hashmap "object"
+			{"#type" in _helper && 						// is a hashmap "object"
 			{"XPS_typ_Enumeration" in (_helper get "#type") && 	// inherits from XPS Enumeration Class
-			{1 in keys _helper}}}) then {						// the value 1 is a valid key
+			{1 in _helper}}}) then {						// the value 1 is a valid key
 			
 			_helper call [1];						// finally, return the enumeration if successful
 		} else {

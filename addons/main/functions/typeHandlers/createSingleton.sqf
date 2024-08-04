@@ -160,7 +160,7 @@ if (isNil _varName) then {
 
 	_typeDef = +_typeDef;
 	//add noCopy
-	if ("#flags" in keys _typeDef ) then {
+	if ("#flags" in _typeDef ) then {
 		_typeDef get "#flags" pushbackUnique "noCopy";
 	} else {
 		_typeDef set ["#flags",["noCopy"]];

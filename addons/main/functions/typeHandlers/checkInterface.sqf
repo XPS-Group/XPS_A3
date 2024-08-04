@@ -60,7 +60,7 @@ private _result = true;
 for "_a" from 0 to (count _interfaces -1) do {
 	private _interface = [];
 	//Loose Check - get interface ref direct from type def
-	if ((_interfaces#_a) in keys (_hashmap getOrDefault ["@interfaces",createhashmap])) then {
+	if ((_interfaces#_a) in (_hashmap getOrDefault ["@interfaces",createhashmap])) then {
 		_interface = _hashmap get "@interfaces" get (_interfaces#_a);
 	} else { 
 	// Strict Check - interface not in declared list - build it from string var
@@ -82,7 +82,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 	{
 		[_x,_y] params ["_key","_checkType"];
 		//Check key exists
-		if !(_key in keys _hashmap) then {
+		if !(_key in _hashmap) then {
 			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing for Interface: %3",_hashmap get "#type",_key,_interfaces#_a]);
 			_result = false;
 			continue;

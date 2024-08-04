@@ -140,7 +140,7 @@ Flags:
 		private _ct = _node get "ConnectedTo";
 		private _roadArray = [];
 		{
-			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in keys _ct) then {
+			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in _ct) then {
 				_roadArray pushbackunique _x;
 			};
 		} foreach roadsconnectedto _object;
@@ -159,7 +159,7 @@ Flags:
 		{
 			_x resize 2;
 			private _r = roadAt _x;
-			if !(_r isEqualto objNull || (str _r) isEqualTo (str _object) || (str _r) in keys _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
+			if !(_r isEqualto objNull || (str _r) isEqualTo (str _object) || (str _r) in _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
 				_roadArray pushbackunique _r;
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
