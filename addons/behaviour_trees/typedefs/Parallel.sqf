@@ -61,6 +61,9 @@ Returns:
 	Description:
 		Ticks all children at once. Any failures results in "FAILURE"
 
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
@@ -71,7 +74,7 @@ Returns:
 		while {(_self get "currentIndex") < count _children} do {
 			private _currentIndex = _self get "currentIndex";
 
-			(_children select _currentIndex) call ["Tick"];
+			(_children select _currentIndex) call ["Tick",_this];
 			
 			if (_currentIndex < count _children-1) then {
 				_self set ["currentIndex",_currentIndex+1];

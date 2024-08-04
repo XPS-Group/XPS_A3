@@ -61,7 +61,7 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
@@ -70,11 +70,14 @@ Returns:
 		method. Once <Action> has completed, it will call the <callback> method
 		which sets the status of the Node.
 
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		_self call ["Action"];
+		_self call ["Action",_this];
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
@@ -84,7 +87,7 @@ Returns:
 	Method: Action
     
     	--- Prototype --- 
-    	call ["Action"]
+    	call ["Action",_context]
     	---
 
 	Description:
@@ -92,6 +95,9 @@ Returns:
 		returns a status. This is run asynchronously in a scheduled environment.
 		
 		Must be Overridden.
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil

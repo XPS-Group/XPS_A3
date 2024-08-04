@@ -61,18 +61,21 @@ Protected: child
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
 		The code that executes during a Tick of this node and then
 		returns a status.
 
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		private _status = _self call ["XPS_BT_typ_Decorator.processTick"];
+		private _status = _self call ["XPS_BT_typ_Decorator.processTick",_this];
         // Invert Status
         switch (_status) do {
             case XPS_BT_Status_Success : {_status = XPS_BT_Status_Failure;};

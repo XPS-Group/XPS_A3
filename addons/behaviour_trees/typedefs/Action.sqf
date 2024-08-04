@@ -53,19 +53,22 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
 		The code that executes during a Tick of this node and then
 		returns a status.
 
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _status = _self get "Status";
-		_status = _self call ["Action"];
+		_status = _self call ["Action",_this];
 		_status;
 	}],
 	/*----------------------------------------------------------------------------
@@ -76,7 +79,7 @@ Returns:
 	Method: Action
     
     	--- Prototype --- 
-    	call ["Action"]
+    	call ["Action",_context]
     	---
 
 	Description:
@@ -84,6 +87,9 @@ Returns:
 		returns a status. 
 		
 		Must be Overridden.
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
