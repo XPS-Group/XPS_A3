@@ -217,9 +217,9 @@ Returns:
 	["Tick",compileFInal {		
 		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
 			_self call ["preTick",_this];	
-				_handle = _self spawn {
-					private _status = _this call ["processTick",_this]; 
-					_this call ["callback",_status]
+				_handle = [_self,_this] spawn {
+					private _status = (_this#0) call ["processTick",_this#1]; 
+					(_this#0) call ["callback",_status]
 				};
 				_self set ["handle",_handle];
 			_self call ["postTick",_status];
