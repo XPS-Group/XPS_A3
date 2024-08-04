@@ -198,7 +198,7 @@ Returns:
 	["Init",compileFinal {
 		_self set ["Status",nil];
 		private _child = _self get "child";
-		if !(isNil "child") then {
+		if !(isNil "_child") then {
 			_child call ["Init"];
 		};
 	}],
