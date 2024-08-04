@@ -71,19 +71,22 @@ Returns:
 	Protected: preTick
     
     	--- Prototype --- 
-    	call ["preTick"]
+    	call ["preTick",_context]
     	---
 
 	Description:
-		The code that executes before a Tick cycle of a Behaviour Tree. Usually 
-		sets node to <XPS_BT_Status_Running>.
+		The code that executes before a Tick of this node. Usually 
+		propogates down the tree if possible.
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		Nothing
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			_status = XPS_BT_Status_Running;
+			private _status = XPS_BT_Status_Running;
 			_self set ["Status",_status];
 		};
 	}],
@@ -91,18 +94,22 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree 
+		The code that executes during a Tick of this node and then
+		returns a status.
 
-		Must be Overridden
+	Must be Overridden - This type contains no functionality
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
-	["processTick",nil],
+	["processTick", {}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
     
@@ -111,7 +118,7 @@ Returns:
     	---
 
 	Description:
-		The code that executes after a Tick cycle of a Behaviour Tree and then
+		The code that executes after a Tick of this node and then
 		sets the <Status> property before going back up the tree.
 
 	Parameters:
@@ -124,19 +131,6 @@ Returns:
 		_self set ["Status",_this];
 		_this;
 	}],
-	/*----------------------------------------------------------------------------
-	Property: Blackboard
-    
-    	--- Prototype --- 
-    	get "Blackboard"
-    	---
-
-		<XPS_BT_ifc_INode>
-    
-    Returns: 
-		<HashmapObject> - A blackboard for use in nodes
-	-----------------------------------------------------------------------------*/
-	["Blackboard",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -204,7 +198,7 @@ Returns:
 	Method: Tick
     
     	--- Prototype --- 
-    	call ["Tick"]
+    	call ["Tick", _context]
     	---
 
 		<XPS_BT_ifc_INode>
@@ -214,14 +208,17 @@ Returns:
 		asynchronously. Status should be <XPS_BT_Status_Running> in most cases until processTick
 		has finished.
 
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>, or nil : <Status> property after execution
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {		
 		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
-			_self call ["preTick"];	
+			_self call ["preTick",_this];	
 				_handle = _self spawn {
-					private _status = _this call ["processTick"]; 
+					private _status = _this call ["processTick",_this]; 
 					_this call ["callback",_status]
 				};
 				_self set ["handle",_handle];

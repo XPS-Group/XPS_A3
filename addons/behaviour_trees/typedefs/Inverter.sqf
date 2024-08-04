@@ -46,10 +46,6 @@ Protected: child
     	<XPS_BT_typ_Decorator. @interfaces>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
-	Property: Blackboard
-		<XPS_BT_typ_Decorator. Blackboard>
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
 	Property: NodeType
 		<XPS_BT_typ_Decorator. NodeType>
 	-----------------------------------------------------------------------------*/
@@ -69,7 +65,7 @@ Protected: child
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns a status.
 
 	Returns: 

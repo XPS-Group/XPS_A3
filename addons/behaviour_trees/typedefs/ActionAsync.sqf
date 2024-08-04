@@ -38,10 +38,6 @@ Returns:
     	<XPS_BT_typ_LeafAsync.@interfaces>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
-	Property: Blackboard
-		<XPS_BT_typ_LeafAsync. Blackboard>
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
 	Property: NodeType
 		<XPS_BT_typ_LeafAsync. NodeType>
 	-----------------------------------------------------------------------------*/
@@ -69,7 +65,7 @@ Returns:
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns a status. This is called asynchronously and initiates the <Action>
 		method. Once <Action> has completed, it will call the <callback> method
 		which sets the status of the Node.
@@ -92,7 +88,7 @@ Returns:
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns a status. This is run asynchronously in a scheduled environment.
 		
 		Must be Overridden.

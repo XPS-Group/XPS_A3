@@ -38,10 +38,6 @@ Returns:
     	<XPS_BT_typ_Leaf.@interfaces>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
-	Property: Blackboard
-		<XPS_BT_typ_Leaf. Blackboard>
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
 	Property: NodeType
 		<XPS_BT_typ_Leaf. NodeType>
 	-----------------------------------------------------------------------------*/
@@ -61,7 +57,7 @@ Returns:
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns a status.
 
 	Returns: 
@@ -83,7 +79,7 @@ Returns:
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns true/false. 
 		
 		Must be Overridden.

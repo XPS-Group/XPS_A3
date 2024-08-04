@@ -32,19 +32,7 @@ Returns:
     	<XPS_AP_ifc_ICompoundTask>
 	-----------------------------------------------------------------------------*/
     ["@interfaces",["XPS_AP_ifc_ICompoundTask"]],
-	/*----------------------------------------------------------------------------
-	Property: Blackboard
-    
-    	--- Prototype --- 
-    	get "Blackboard"
-    	---
 
-		<XPS_AP_ifc_ICompoundTask>
-    
-    Returns: 
-		<HashmapObject> - hashmap which typically holds a world state
-	-----------------------------------------------------------------------------*/
-	["Blackboard",nil],
 	/*----------------------------------------------------------------------------
 	Property: Methods
     
