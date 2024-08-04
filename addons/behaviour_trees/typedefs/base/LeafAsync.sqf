@@ -218,11 +218,12 @@ Returns:
 		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
 			_self call ["preTick",_this];	
 				_handle = [_self,_this] spawn {
-					private _status = (_this#0) call ["processTick",_this#1]; 
-					(_this#0) call ["callback",_status]
+					params ["_node","_context"];
+					private _status = _node call ["processTick",_context]; 
+					_node call ["callback",_status]
 				};
 				_self set ["handle",_handle];
-			_self call ["postTick",_status];
+			_self call ["postTick",_self get "Status"];
 		};
 		_self get "Status";
 	}]

@@ -55,7 +55,7 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
@@ -73,7 +73,7 @@ Returns:
 		private _child = _children#_currentIndex;
 		private _status = _child get "Status";
 
-		_status = _child call ["Tick",_this];
+		private _status = _child call ["Tick",_this];
 
 		switch (_status) do {
 			case XPS_BT_Status_Success : {

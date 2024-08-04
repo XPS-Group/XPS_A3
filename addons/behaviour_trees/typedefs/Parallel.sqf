@@ -55,7 +55,7 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
