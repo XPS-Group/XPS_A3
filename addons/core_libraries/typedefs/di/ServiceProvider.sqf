@@ -16,10 +16,22 @@ Description:
 	Provides a repository of keyed (usually a <String> representation of an <Interface>) object type definitions
 	for the purpose of resolving Dependancy Injection. Can handle scoped instances. If using a ServiceProvider 
 	object directly, handling of scoped instances is done by cloning the object. Singletons inherit but Scoped 
-	objects do not. 
+	objects do not. If you create a scoped hashmapobject and pass it to something by reference that exists outside 
+	of the scoped ServiceProvider, the object is not automatically deleted. Therefore, when using scoped instances,
+	try not to store it as a reference to any mission or game level namespaces (e.g. as a global variable). 
 
 	Alternatively to manual cloning. Consider using a <XPS_typ_ServiceContainer> object instead and calling it's 
 	<XPS_typ_ServiceContainer.GetScope> method.
+
+	Types of lifetime and how it is handled:
+	- Transient - is not stored in service container
+	- Scoped - exists only within the scope of the service container it was created on. When a new scope is generated,
+	the new scope can create a fresh instance. Once the Service Provider goes out of scope, it's stored instances are
+	removed. As long as the object is not held by reference anywhere else, the object should be removed from memory.
+	- Singleton - exists for the entirety of the original Service Provider's lifetime. If a new scope is created, than
+	these are passed into the new scope by ref. Retrieving a service object from a child scope will return the parent
+	scopes instance.
+
 
 Returns:
 	<HashmapObject>
