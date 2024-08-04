@@ -44,7 +44,6 @@ Returns:
 		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
 		if !(isNull _object) then {_self call ["AttachToObject",[_object,_varName]]};
 	}],
-	["_clone"]
 	["#delete",{
 		if !(isNull (_self get "attachedTo")) then {
 			_self get "attachedTo" setVariable [_self get "attachedTo_VariableName",nil];
