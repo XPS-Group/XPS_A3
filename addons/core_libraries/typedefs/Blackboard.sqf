@@ -44,6 +44,20 @@ Returns:
 		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
 		if !(isNull _object) then {_self call ["AttachToObject",[_object,_varName]]};
 	}],
+	
+	/*-----------------------------------------------------------------------------
+	Constructor: #delete
+    
+    	--- Prototype --- 
+    	call ["#delete"]
+    	---
+    
+    Description:
+		Removes this object from it's attachedTo namespace and any references to it if exists
+
+	Returns:
+		<True>
+	-----------------------------------------------------------------------------*/
 	["#delete",{
 		if !(isNull (_self get "attachedTo")) then {
 			_self get "attachedTo" setVariable [_self get "attachedTo_VariableName",nil];
