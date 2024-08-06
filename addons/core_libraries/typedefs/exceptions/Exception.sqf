@@ -32,7 +32,7 @@ Returns:
 	Constructor: #create
     
         --- prototype
-        call [#create, [_source*, _target*, _message*, _data*]]
+        call ["#create", [_source*, _target*, _message*, _data*]]
         ---
     
     Optionals: 

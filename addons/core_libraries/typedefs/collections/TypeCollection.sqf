@@ -29,7 +29,7 @@ Returns:
     Constructor: #create
     
         --- prototype
-        call [#create,[_typeRestrictor]]
+        call ["#create",[_typeRestrictor]]
         ---
     
     Parameters: 
