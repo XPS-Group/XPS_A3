@@ -102,8 +102,13 @@ Returns:
 				{(_this#1) in (_this#0) && 					//check methodname exists...
 				{(_this#0) get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
-				if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
-					throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Functon/Method supplied was already added.",_this]];
+				//pushBackUnique doesn't support unique Hashmap Objects (compares by string)
+				// if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
+				// 	throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Functon/Method supplied was already added.",_this]];
+				// };
+				//Add a RPT log if it's getting overloaded 
+				if ((_self get "_pointers" pushback _this) < 10000) then {true} else {
+					diag_log text format ["MC Delegate %1 has too many subscribers. consider using an intermediary. Last added: %2",_self,_this];
 				};
 		} else {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
