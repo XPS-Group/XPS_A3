@@ -70,9 +70,10 @@ Returns:
 	["processTick",compileFinal {
 		private _children = _self get "children";
 		private _currentIndex = _self get "currentIndex";
-		private _child = _children#_currentIndex;
-		private _status = _child get "Status";
 
+		if (_children isEqualTo []) exitwith {XPS_BT_Status_Failure};
+
+		private _child = _children#_currentIndex;
 		private _status = _child call ["Tick",_this];
 
 		switch (_status) do {

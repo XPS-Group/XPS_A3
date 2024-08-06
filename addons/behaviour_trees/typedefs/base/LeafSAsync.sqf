@@ -1,12 +1,12 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_BT_typ_LeafAsync
+TypeDef: behaviour_trees. XPS_BT_typ_LeafSAsync
 	<TypeDefinition>
 		---prototype
-		XPS_BT_typ_LeafAsync : XPS_BT_ifc_INode
+		XPS_BT_typ_LeafSAsync : XPS_BT_ifc_INode
 		---
     	--- Prototype --- 
-    	createHashmapObject ["XPS_BT_typ_LeafAsync"]
+    	createHashmapObject ["XPS_BT_typ_LeafSAsync"]
     	---
 
 Authors: 
@@ -14,18 +14,19 @@ Authors:
 
 Description:
 	A node for a Behaviour Tree that has an <ProcessTick> method which is 
-	called when Ticked. 
+	called when Ticked. Runs processTick in *Scheduled* code. <processTick>
+	will provide the condition and final status.
 
 Returns:
 	<HashmapObject> of a Leaf Node
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_BT_typ_LeafAsync"],
+	["#type","XPS_BT_typ_LeafSAsync"],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_BT_typ_LeafAsync"
+    	"XPS_BT_typ_LeafSAsync"
     	---
 	-----------------------------------------------------------------------------*/
 	["#str",compileFinal {_self get "#type" select  0}],
@@ -205,8 +206,8 @@ Returns:
 
 	Description:
 		The code that begins the entire Tick cycle process. Calls proccessTick
-		asynchronously. Status should be <XPS_BT_Status_Running> in most cases until processTick
-		has finished.
+		asynchronously in a *Scheduled* environment. Status should be <XPS_BT_Status_Running> 
+		in most cases until processTick has finished.
 
 	Parameters:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface

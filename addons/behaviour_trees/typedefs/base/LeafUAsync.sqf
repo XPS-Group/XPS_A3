@@ -1,44 +1,33 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_BT_typ_Composite
+TypeDef: behaviour_trees. XPS_BT_typ_LeafUAsync
 	<TypeDefinition>
 		---prototype
-		XPS_BT_typ_Composite : XPS_BT_ifc_INode
+		XPS_BT_typ_LeafUAsync : XPS_BT_ifc_INode
 		---
     	--- Prototype --- 
-    	createHashmapObject ["XPS_BT_typ_Composite"]
+    	createHashmapObject ["XPS_BT_typ_LeafUAsync"]
     	---
 
 Authors: 
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has multiple children
+	A node for a Behaviour Tree that has an <ProcessTick> method which is 
+	called when Ticked. Runs processTick in *Unscheduled* code and provides
+	both a <conditional> and <result> code block for determining when it has
+	completed.
 
 Returns:
-	<HashmapObject> of a Composite node
+	<HashmapObject> of a Leaf Node
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_BT_typ_Composite"],
-    /*----------------------------------------------------------------------------
-    Constructor: #create
-    
-        --- prototype
-        call ["#create"]
-        ---
-
-    Returns:
-        <True>
-    ----------------------------------------------------------------------------*/
-	["#create", compileFinal {
-		_self set ["children",[]];
-		_self set ["currentIndex",0];
-	}],
+	["#type","XPS_BT_typ_LeafUAsync"],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_BT_typ_Composite"
+    	"XPS_BT_typ_LeafUAsync"
     	---
 	-----------------------------------------------------------------------------*/
 	["#str",compileFinal {_self get "#type" select  0}],
@@ -48,28 +37,57 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_BT_ifc_INode"]],
 	["#flags",["unscheduled"]],
-	/* ----------------------------------------------------------------------------
-	Protected: children 
+	["_startTime",0],
+	/*----------------------------------------------------------------------------
+	Protected: condition
     
     	--- Prototype --- 
-    	get "children"
+    	call ["condition",_context]
     	---
 
-	Returns:
-		<Array> - of child nodes		
-	---------------------------------------------------------------------------- */
-	["children",[]],
-	/* ----------------------------------------------------------------------------
-	Protected: currentIndex
+	Description:
+		The code that executes during a Tick of this node when processTick has already been called
+
+	Must be Overridden - This type contains no functionality
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
+	Returns: 
+		<Boolean> - condition was ssatified
+	-----------------------------------------------------------------------------*/
+	["condition",{}],
+	/*----------------------------------------------------------------------------
+	Protected: result
     
     	--- Prototype --- 
-    	get "currentIndex"
+    	call ["result",_context]
     	---
 
-	Returns:
-		<Number> - current tasked index of child nodes
-	---------------------------------------------------------------------------- */
-	["currentIndex",0],
+	Description:
+		The code that executes during a Tick of this node when the condition has been met.
+
+	Must be Overridden - This type contains no functionality
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
+	Returns: 
+		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>
+	-----------------------------------------------------------------------------*/
+	["result",{}],
+	/*----------------------------------------------------------------------------
+	Protected: timeout
+    
+    	--- Prototype --- 
+    	get "timeout"
+    	---
+    
+    Returns: 
+		<Number> - the maximum time in seconds (using diag_tickTime) before a processTick will 
+		automatically call it a failure
+	-----------------------------------------------------------------------------*/
+	["timeout",nil],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
@@ -91,6 +109,7 @@ Returns:
 		if (isNil {_self get "Status"}) then {
 			private _status = XPS_BT_Status_Running;
 			_self set ["Status",_status];
+			_self set ["_startTime",diag_tickTime];
 		};
 	}],
 	/*----------------------------------------------------------------------------
@@ -144,9 +163,9 @@ Returns:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "COMPOSITE"
+		<String> - "LEAF"
 	-----------------------------------------------------------------------------*/
-	["NodeType","COMPOSITE"],
+	["NodeType","LEAF"],
 	/*----------------------------------------------------------------------------
 	Property: Status
     
@@ -161,33 +180,20 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
-	Method: AddChildNode
+	Method: Halt
     
     	--- Prototype --- 
-    	call ["AddChildNode",[childNode,_index]]
+    	call ["Halt"]
     	---
 
 	Description:
-		Adds a child node at the specified index. If index is out of bounds or unspecified,
-		it will append the child to the index. 
-
-	Parameters:
-		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
-		_index* - (optional - Default : -1) - the index in which to place the child node
+		Halts any asynchronous call by invoking a failure
 
 	Returns: 
-		<Boolean> - <True> if successful otherwise <False>
+		Nothing
 	-----------------------------------------------------------------------------*/
-	["AddChildNode",compileFinal {
-		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
-		if (isNil "_childNode") exitwith {false};
-		if !( CHECK_IFC1(_childNode,XPS_BT_ifc_INode) ) exitwith {false};
-
-		private _children = _self get "children";
-		private _count = count (_children);
-		if (_index < 0 ||_index >= _count) then {_index = -1};
-		_children insert [_index,[_childNode]];
-		true;
+	["Halt",compileFInal {		
+		_self call ["postTick", XPS_BT_Status_Failure];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -206,13 +212,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
 		_self set ["Status",nil];
-		_self set ["currentIndex",0];
-		private _children = _self get "children";
-		{
-			if !(isNil "_x") then {
-				_x call ["Init"];
-			};
-		} foreach _children;
+		_self set ["_startTime",0];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Tick
@@ -224,7 +224,9 @@ Returns:
 		<XPS_BT_ifc_INode>
 
 	Description:
-		The code that begins the entire Tick cycle process.
+		The code that begins the entire Tick cycle process. Calls proccessTick
+		in a *Unscheduled* environment but defers to a conditional check once "Running". 
+		Status should be <XPS_BT_Status_Running> until condition or timeout are satisfied.
 
 	Parameters:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
@@ -233,9 +235,21 @@ Returns:
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFInal {	
-		_self call ["preTick",_this];
-		_self call ["postTick",
-			_self call ["processTick",_this]
-		];
+		
+		switch (true) do {
+
+			case (isNil {_self get "Status"}): {
+				_self call ["preTick",_this];
+				_self call ["processTick",_this];
+			};
+
+			case (_self call ["condition",_this]): {
+				_self call ["postTick",_self call ["result",_this]];
+			};
+
+			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))): {
+				_self call ["postTick",XPS_BT_Status_Failure];
+			};
+		};
 	}]
 ]
