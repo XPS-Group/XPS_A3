@@ -16,10 +16,10 @@ Authors:
 	Property: Status
 		<Anything>
 
-	Method: AdjustEstimatedDistance
+	Method: AdjustEstimate
 		<code>
 
-	Method: AdjustMoveCost
+	Method: AdjustCost
 		<code>
 
 	Method: FilterNeighbors
@@ -35,8 +35,8 @@ Authors:
 [
 	["Path","ARRAY"],
 	["Status","ANYTHING"],
-	["AdjustEstimatedDistance","CODE"], 
-	["AdjustMoveCost","CODE"], 
+	["AdjustEstimate","CODE"], 
+	["AdjustCost","CODE"], 
 	["FilterNeighbors","CODE"], 
 	["Init","CODE"],
 	["ProcessNextNode","CODE"]

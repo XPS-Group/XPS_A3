@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_Event
 	<TypeDefinition>
         --- prototype
-        XPS_typ_Event : XPS_ifc_IMultiCastDelegate, XPS_typ_MultiCastDelegate
+        XPS_typ_Event : XPS_ifc_IDelegate, XPS_typ_MultiCastDelegate
         ---
         --- prototype
         createhashmapobject [XPS_typ_Event]
@@ -49,15 +49,15 @@ Returns:
 	----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-		<XPS_ifc_IMultiCastDelegate>
+		<XPS_ifc_IDelegate>
 	----------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------
-    Method: Add
-		<XPS_typ_MultiCastDelegate.Add>
+    Method: Attach
+		<XPS_typ_MultiCastDelegate.Attach>
     ----------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------
-    Method: Remove
-		<XPS_typ_MultiCastDelegate.Remove>
+    Method: Detach
+		<XPS_typ_MultiCastDelegate.Detach>
     ----------------------------------------------------------------------------*/
     /*----------------------------------------------------------------------------
     Method: Invoke

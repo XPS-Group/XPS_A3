@@ -59,7 +59,7 @@ private _errors = false;
 
 private _fnc_recurseBases = {
 	params ["_hashmap"];
-	if ("#base" in keys _hashmap) then {
+	if ("#base" in _hashmap) then {
 		private _base = createhashmapfromarray (_hashmap get "#base");
 		[_base] call _fnc_recurseBases;
 		_hashmap merge _base;
@@ -81,7 +81,7 @@ private _hashmap = createhashmapfromarray _type;
 private _preCompiled = _hashmap; // In case it doesn't have a parent, we need this for later
 
 // Check for parent type
-if ("#base" in keys _hashmap) then {
+if ("#base" in _hashmap) then {
 	private _pType = _hashmap get "#base";
 	if (isNil {_pType} || !(_pType isEqualTypeAny [[],createhashmap])) exitwith {
 		diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
@@ -134,7 +134,7 @@ if ("#base" in keys _hashmap) then {
 
 	if (_noStack) then {
 		{
-			if (_x in keys _precompiled) then {
+			if (_x in _precompiled) then {
 				if !(_x in _keys) then {_hashmap set [_x, _precompiled get _x]};
 				_preCompiled deleteat _x;
 			};

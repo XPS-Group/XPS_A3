@@ -46,6 +46,7 @@ Returns:
     	<XPS_BT_ifc_INode>
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_BT_ifc_INode"]],
+	["#flags",["unscheduled"]],
 	/* ----------------------------------------------------------------------------
 	Protected: child
     
@@ -61,12 +62,15 @@ Returns:
 	Protected: preTick
     
     	--- Prototype --- 
-    	call ["preTick"]
+    	call ["preTick",_context]
     	---
 
 	Description:
-		The code that executes before a Tick cycle of a Behaviour Tree. Usually 
+		The code that executes before a Tick of this node. Usually 
 		propogates down the tree if possible.
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
@@ -81,12 +85,17 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns a status.
+
+	Must be Overridden - This type contains no functionality
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
@@ -96,7 +105,7 @@ Returns:
 		private _child = _self get "child";
 		if (isNil "_child") exitwith {XPS_BT_Status_Failure};
 		if (isNil {_child get "Status"}) then {
-			_status = _child call ["Tick"];
+			_status = _child call ["Tick",_this];
 		} else {
 			_status = _child get "Status";
 		};		
@@ -110,7 +119,7 @@ Returns:
     	---
 
 	Description:
-		The code that executes after a Tick cycle of a Behaviour Tree and then
+		The code that executes after a Tick of this node and then
 		sets the <Status> property before going back up the tree.
 
 	Parameters:
@@ -123,19 +132,6 @@ Returns:
 		_self set ["Status",_this];
 		_this;
 	}],	
-	/*----------------------------------------------------------------------------
-	Property: Blackboard
-    
-    	--- Prototype --- 
-    	get "Blackboard"
-    	---
-		
-    	<XPS_BT_ifc_INode>
-    
-    Returns: 
-		<HashmapObject> - A blackboard for use in nodes
-	-----------------------------------------------------------------------------*/
-	["Blackboard",createhashmap],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -183,7 +179,6 @@ Returns:
 		if (isNil "_childNode") exitwith {false};
 		if !(CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitwith {false};
 		_self set ["child",_childNode];
-		_childNode set ["Blackboard",_self get "Blackboard"];
 		true;
 	}],
 	/*----------------------------------------------------------------------------
@@ -204,7 +199,7 @@ Returns:
 	["Init",compileFinal {
 		_self set ["Status",nil];
 		private _child = _self get "child";
-		if !(isNil "child") then {
+		if !(isNil "_child") then {
 			_child call ["Init"];
 		};
 	}],
@@ -212,7 +207,7 @@ Returns:
 	Method: Tick
     
     	--- Prototype --- 
-    	call ["Tick"]
+    	call ["Tick", _context]
     	---
 
 		<XPS_BT_ifc_INode>
@@ -220,13 +215,16 @@ Returns:
 	Description:
 		The code that begins the entire Tick cycle process.
 
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {		
-		_self call ["preTick"];
+	["Tick",compileFInal {	
+		_self call ["preTick",_this];
 		_self call ["postTick",
-			_self call ["processTick"]
+			_self call ["processTick",_this]
 		];
 	}]
 ]

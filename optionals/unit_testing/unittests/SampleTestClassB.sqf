@@ -31,7 +31,7 @@ Description:
 		"Check A and B are not equal to each other",
 		"Check We can append [10] to A"
 	 ]],
-	["InitTest",{
+	["InitTest", compileFinal {
 		//Initialize some testing values
 		XPS_SampleTest_Values = createhashmapfromarray [
 			["A",[1]],
@@ -39,7 +39,7 @@ Description:
 			["C",[3]]
 		];
 	}],
-	["FinalizeTest",{
+	["FinalizeTest", compileFinal {
 		//Destroy testing values
 		XPS_SampleTest_Values = nil;
 	}],

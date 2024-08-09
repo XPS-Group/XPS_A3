@@ -1,3 +1,4 @@
+#include "script_component.hpp"
 /* -----------------------------------------------------------------------------
 Interface: pathfinding. XPS_PF_ifc_IRoadNode
 	<Interface>

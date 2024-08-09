@@ -55,11 +55,14 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
 		Ticks all children at once. Any failures results in "FAILURE"
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>, or nil
@@ -67,10 +70,11 @@ Returns:
 	["processTick",compileFinal {
 		private _children = _self get "children";
 		private _currentIndex = _self get "currentIndex";
-		private _child = _children#_currentIndex;
-		private _status = _child get "Status";
 
-		_status = _child call ["Tick"];
+		if (_children isEqualTo []) exitwith {XPS_BT_Status_Failure};
+
+		private _child = _children#_currentIndex;
+		private _status = _child call ["Tick",_this];
 
 		switch (_status) do {
 			case XPS_BT_Status_Failure : {
@@ -93,10 +97,6 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Protected: postTick
 		<XPS_BT_typ_Composite. postTick>
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Property: Blackboard
-		<XPS_BT_typ_Composite. Blackboard>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Property: NodeType

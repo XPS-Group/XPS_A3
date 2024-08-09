@@ -43,8 +43,8 @@ Returns:
 		_self set ["_displayHandle",_display];
 		private _viewModel = createhashmapobject [XPS_UT_typ_TestConsoleViewModel];
 		_self set ["_viewModel",_viewModel];
-		_viewModel get "UpdateUnitTest" call ["Add",[_self,"onUpdateUnitTest"]];
-		_viewModel get "StateChanged" call ["Add",[_self,"onTestServiceStateChanged"]];
+		_viewModel get "UpdateUnitTest" call ["Attach",[_self,"onUpdateUnitTest"]];
+		_viewModel get "StateChanged" call ["Attach",[_self,"onTestServiceStateChanged"]];
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -65,7 +65,7 @@ Returns:
     
 	Removes the highlight (selection) bar from Test Class ListNBox
 	-----------------------------------------------------------------------------*/
-	["clearSelected",{
+	["clearSelected", compileFinal {
 		private _display = _self get "_displayHandle";
 		private _listbox = _display displayCtrl 1500;
 		_listBox lnbsetcurselrow -1;
@@ -83,7 +83,7 @@ Returns:
 		_sender - <Anything> - the function or hashmapobject that raised the event
 		_state - <String> - the current state of the Test Service 
 	-----------------------------------------------------------------------------*/
-	["onTestServiceStateChanged",{
+	["onTestServiceStateChanged", compileFinal {
 		params ["_sender","_args"];
 		_args params ["_state"];
 
@@ -130,7 +130,7 @@ Returns:
 		_index - <Number> - the index of the item 
 		_data - <XPS_UT_typ_UnitTest> -or- <Array> - the complete Unit Test object or the [property, value] array of the property changed
 	-----------------------------------------------------------------------------*/
-	["onUpdateUnitTest",{
+	["onUpdateUnitTest", compileFinal {
 		params ["_sender","_args"];
 		_args params ["_eventType","_args2"];
 		_args2 params ["_index","_data"];
@@ -199,7 +199,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_display_load",{
+	["XPS_UT_TestConsole_display_load", compileFinal {
 		_self get "_viewModel" call ["LoadTests"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_select_buttonClick",{
+	["XPS_UT_TestConsole_select_buttonClick", compileFinal {
 		private _row = lnbCurSelRow 1500;
 		_self get "_viewModel" call ["AddToSelected",_row];
 	}],
@@ -224,7 +224,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_unselect_buttonClick",{
+	["XPS_UT_TestConsole_unselect_buttonClick", compileFinal {
 		private _row = lnbCurSelRow 1500;
 		_self get "_viewModel" call ["RemoveFromSelected",_row];
 	}],
@@ -239,7 +239,7 @@ Returns:
 		_control - <Control> - The ListNBox Control 
 		_lbCurSel - <Number> - Index of selected row 
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_tests_LBSelChanged",{
+	["XPS_UT_TestConsole_tests_LBSelChanged", compileFinal {
 		params ["_control", "_lbCurSel"];
 		private _display = _self get "_displayHandle";
 		private _listbox = _display displayCtrl 1501;
@@ -258,11 +258,11 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_display_unLoad",{
+	["XPS_UT_TestConsole_display_unLoad", compileFinal {
 		_self set ["_displayHandle",displayNull];
 		private _vm = _self get "_viewModel";
 		_self set ["_viewModel",nil];
-		_vm get "UpdateUnitTest" call ["Remove",[_self,"onUpdateUnitTest"]];
+		_vm get "UpdateUnitTest" call ["Detach",[_self,"onUpdateUnitTest"]];
 		_vm call ["Close"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -274,7 +274,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_reset_buttonClick",{
+	["XPS_UT_TestConsole_reset_buttonClick", compileFinal {
 		_self call ["clearSelected"];
 		_self get "_viewModel" call ["Reset"];
 	}],
@@ -287,7 +287,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_reload_buttonClick",{
+	["XPS_UT_TestConsole_reload_buttonClick", compileFinal {
 		_self call ["clearSelected"];
 		_self get "_viewModel" call ["Reload"];
 	}],
@@ -300,7 +300,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_close_buttonClick",{
+	["XPS_UT_TestConsole_close_buttonClick", compileFinal {
 		// private _display = _self get "_displayHandle";
 		closeDialog 2;
 	}],
@@ -313,7 +313,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_runAll_buttonClick",{
+	["XPS_UT_TestConsole_runAll_buttonClick", compileFinal {
 		_self call ["clearSelected"];
 		_self get "_viewModel" call ["RunAll"];
 	}],
@@ -326,7 +326,7 @@ Returns:
     
 	Called by Display Event
 	-----------------------------------------------------------------------------*/
-	["XPS_UT_TestConsole_runSelected_buttonClick",{
+	["XPS_UT_TestConsole_runSelected_buttonClick", compileFinal {
 		_self call ["clearSelected"];
 		_self get "_viewModel" call ["RunSelected"];
 	}]

@@ -52,10 +52,6 @@ Flags:
     
 		<main.XPS_typ_AstarSearch.Graph>
 		
-	Property: Doctrine
-    
-		<main.XPS_typ_AstarSearch.Doctrine>
-		
 	Property: Path
     
 		<main.XPS_typ_AstarSearch.Path>
@@ -64,9 +60,9 @@ Flags:
     
 		<main.XPS_typ_AstarSearch.Status>
 		
-	Method: AdjustEstimatedDistance
+	Method: AdjustEstimate
     
-		<main.XPS_typ_AstarSearch.AdjustEstimatedDistance>
+		<main.XPS_typ_AstarSearch.AdjustEstimate>
 
 --------------------------------------------------------------------------------*/
 [
@@ -86,7 +82,7 @@ Flags:
 		_fromNode - <HashmapObject> - the node traversing from
 
 	Returns:
-		_result - <Boolean> - if node to node traversal is capable using the property <main.XPS_typ_AstarSearch.Doctrine>
+		_result - <Boolean> - if node to node traversal is capable using the property <Doctrine>
 	-----------------------------------------------------------------------------*/
 	["canTraverse",compileFinal {
 		params [["_toNode",nil,[createhashmap]],["_fromNode",nil,[createhashmap]]];
@@ -162,12 +158,15 @@ Flags:
         _canTraverse;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: AdjustMoveCost
+	Method: AdjustCost
     
-		<main.XPS_typ_AstarSearch.AdjustMoveCost>
+		<main.XPS_typ_AstarSearch.AdjustCost>
+	
+	Description:
+		Overridden - adjusts movement cost according to <Doctrine>
 	-----------------------------------------------------------------------------*/
-	["AdjustMoveCost",compileFinal {
-		params ["_moveCost","_fromNode","_toNode"];
+	["AdjustCost",compileFinal {
+		params ["_cost","_fromNode","_toNode"];
 
 		private _doctrine = _self get "Doctrine";
 			private _capabilities = _doctrine get "Capabilities";
@@ -180,7 +179,7 @@ Flags:
 				private _densityWeight = _weights get "DensityWeight";
 
 		// Exempt Air Units with no bias
-		if (_capabilities get "CanUseAir" && ((values _weights) isEqualTo [0,0,0,0]) ) exitwith {_moveCost}; 
+		if (_capabilities get "CanUseAir" && ((values _weights) isEqualTo [0,0,0,0]) ) exitwith {_cost}; 
 
 		private _toTerrain = _toNode get "Terrain";
 			private _typeTo = _toTerrain get "Type";
@@ -190,9 +189,9 @@ Flags:
 			//private _typeFrom = _fromTerrain get "Type";
         	private _fromHeight = _fromTerrain get "HeightModifier";
 
-		private _sectorDistance = _moveCost; // base moveCost is a function of distance already
+		private _sectorDistance = _cost; // base moveCost is a function of distance already
 
-        private _adjustedCost = _moveCost;
+        private _adjustedCost = _cost;
 
 		private _isWaterTravel = _self get "_currentIsWaterTravel";
      
@@ -252,7 +251,7 @@ Flags:
                 };
             };
         };
-		//diag_log [_typeTo,_moveCost,_adjustedCost];
+		//diag_log [_typeTo,_cost,_adjustedCost];
         _adjustedCost;
 	}],
 	/*----------------------------------------------------------------------------
@@ -273,5 +272,22 @@ Flags:
 				_neighbors deleteat _i;
 			} else {_i = _i + 1;};
 		};
-	}]
+	}],
+	/*----------------------------------------------------------------------------
+	Property: Doctrine
+    
+    	--- Prototype --- 
+    	set ["Doctrine",_doctrine]
+    	---
+    	--- Prototype --- 
+    	get "Doctrine"
+    	---
+    
+	Paramters:
+		_doctrine - <XPS_PF_typ_MapGraphDoctrine>
+		
+    Returns: 
+		<HashmapObject> - A <HashmapObject> of heuristical values to apply to the graph
+	-----------------------------------------------------------------------------*/
+	["Doctrine",nil]
 ]

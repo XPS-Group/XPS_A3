@@ -106,7 +106,7 @@ Returns:
         <XPS_typ_OrderedCollection.SetItem>
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
-	["SetItem",{
+	["SetItem", compileFinal {
         if (_self call ["XPS_typ_OrderedCollection.SetItem",_this]) then {
             _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["SetItem",_this]]];
             true;
@@ -117,7 +117,7 @@ Returns:
         <XPS_typ_OrderedCollection.UpdateItem>
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
-	["UpdateItem",{
+	["UpdateItem", compileFinal {
         if (_self call ["XPS_typ_OrderedCollection.UpdateItem",_this]) then {
             _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["UpdateItem",_this]]];
             true;
@@ -128,7 +128,7 @@ Returns:
         <XPS_typ_OrderedCollection.InsertItem>
         Invokes CollectionChanged
     ----------------------------------------------------------------------------*/
-	["InsertItem",{
+	["InsertItem", compileFinal {
         if (_self call ["XPS_typ_OrderedCollection.UpdateItem",_this]) then {
             _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["InsertItem",_this]]];
             true;

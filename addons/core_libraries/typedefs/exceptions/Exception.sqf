@@ -32,7 +32,7 @@ Returns:
 	Constructor: #create
     
         --- prototype
-        call [#create, [_source*, _target*, _message*, _data*]]
+        call ["#create", [_source*, _target*, _message*, _data*]]
         ---
     
     Optionals: 
@@ -136,7 +136,7 @@ Returns:
 		         Data: (data)
 		---
 	-----------------------------------------------------------------------------*/
-	["GetText",{text format[
+	["GetText", compileFinal {text format[
 			endl+"%1:"+endl+"    Source: %2"+endl+"    Target: %3"+endl+"    Message: %4"+endl+"    Data: %5",
 			_self get "#type" select 0,
 			_self get "Source",

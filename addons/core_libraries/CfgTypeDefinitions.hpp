@@ -8,8 +8,8 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_IFC_SUB(di,IServiceContainer);
 			XPS_CFG_IFC_SUB(di,IServiceProvider);
 			XPS_CFG_IFC_SUB(delegates,IDelegate);
-			XPS_CFG_IFC_SUB(delegates,IMultiCastDelegate);
 			XPS_CFG_IFC_SUB(delegates,IEventHandler);
+			XPS_CFG_IFC_SUB(delegates,IEventRouter);
 			XPS_CFG_IFC_SUB(collections,IList);
 			XPS_CFG_IFC_SUB(collections,ICollection);
 			XPS_CFG_IFC_SUB(collections,ICollectionNotifier);
@@ -39,6 +39,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP_SUB(delegates,MultiCastDelegate);
 			XPS_CFG_TYP_SUB(delegates,Event);
 			XPS_CFG_TYP_SUB(delegates,EventHandler);
+			XPS_CFG_TYP_SUB(delegates,EventRouter);
 
 		};
 		class Enumerations {

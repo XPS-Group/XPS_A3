@@ -69,7 +69,7 @@ Returns:
     Parameters: 
 		_class - <XPS_UT_typ_TestClass> 
 	-----------------------------------------------------------------------------*/
-	["initTest",{
+	["initTest", compileFinal {
 		params ["_class"];
 		private _className = _class get "Description";
 		_self call ["updateTest",[[_className,""],["Result","Initializing"]]];
@@ -88,7 +88,7 @@ Returns:
 		_class - <XPS_UT_typ_TestClass> 
 		_method - <string> - name of method on _class to run
 	-----------------------------------------------------------------------------*/
-	["runTest",{
+	["runTest", compileFinal {
 		params ["_class","_method"];
 		private _className = _class get "Description";
 		// diag_log text ("Testing:" + str [_className,_method]);
@@ -129,7 +129,7 @@ Returns:
     Parameters: 
 		_class - <XPS_UT_typ_TestClass> 
 	-----------------------------------------------------------------------------*/
-	["finalizeTest",{
+	["finalizeTest", compileFinal {
 		params ["_class"];
 		private _className = _class get "Description";
 		_self call ["updateTest",[[_className,""],["Result","Finalizing"]]];
@@ -150,7 +150,7 @@ Returns:
 		_key - <string> - the key of the <XPS_UT_typ_UnitTest> class to update
 		_value - <anything> - the value to set the key to
 	-----------------------------------------------------------------------------*/
-	["updateTest",{
+	["updateTest", compileFinal {
 		private _list = _self get "_unitTestCollection";
 		_list call ["UpdateItem",_this];
 	}],
@@ -162,7 +162,7 @@ Returns:
     	---
     
 	-----------------------------------------------------------------------------*/
-	["LoadTests",{
+	["LoadTests", compileFinal {
 		private _classes = _self get "_testClassCollection";
 		private _unitTests = _self get "_unitTestCollection";
 		private _tests = XPS_UT_TestClasses call ["GetInstance"] call ["GetClasses"];
@@ -191,7 +191,7 @@ Returns:
 		_className - <string> - name of class
 		_methodName - <string> - name of method or "" if header
 	-----------------------------------------------------------------------------*/
-	["AddToSelected",{
+	["AddToSelected", compileFinal {
 		_self call ["updateTest",[_this,["IsSelected",true]]];
 	}],
 	
@@ -208,7 +208,7 @@ Returns:
 		_className - <string> - name of class
 		_methodName - <string> - name of method or "" if header
 	-----------------------------------------------------------------------------*/
-	["RemoveFromSelected",{
+	["RemoveFromSelected", compileFinal {
 		_self call ["updateTest",[_this,["IsSelected",false]]];
 	}],
 	
@@ -221,7 +221,7 @@ Returns:
     
 	Runs all unit tests
 	-----------------------------------------------------------------------------*/
-	["RunAll",{
+	["RunAll", compileFinal {
 		_self get "_onStateChanged" call ["Invoke",[_self,["Running"]]];
 		_self spawn {
 			private _service = _this;
@@ -250,7 +250,7 @@ Returns:
     
 	Runs only selected unit tests
 	-----------------------------------------------------------------------------*/
-	["RunSelected",{
+	["RunSelected", compileFinal {
 		_self get "_onStateChanged" call ["Invoke",[_self,["Running"]]];
 		_self spawn {
 			private _service = _this;
@@ -284,7 +284,7 @@ Returns:
     
 	Reloads unit tests from config file
 	-----------------------------------------------------------------------------*/
-	["Reload",{
+	["Reload", compileFinal {
 		XPS_UT_TestClasses call ["GetInstance"] call ["LoadClasses"];
 		_self get "_testClassCollection" call ["Clear"];
 		_self get "_unitTestCollection" call ["Clear"];
@@ -301,7 +301,7 @@ Returns:
     
 	Resets all unit tests
 	-----------------------------------------------------------------------------*/
-	["Reset",{		
+	["Reset", compileFinal {		
 		private _unitTests = _self get "_unitTestCollection"; 
 		{
 			_unitTests call ["UpdateItem",[[_x get "ClassName",_x get "MethodName"],["Result","Not Run"]]];
@@ -320,7 +320,7 @@ Returns:
 	Parameters:
 		_unitTest - <XPS_UT_typ_UnitTest>
 	-----------------------------------------------------------------------------*/
-	["GetDetails",{
+	["GetDetails", compileFinal {
 		+(_self get "_unitTestCollection" call ["GetItem",_this] get "Details");
 	}],
 	

@@ -38,10 +38,6 @@ Returns:
     	<XPS_BT_typ_Leaf.@interfaces>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
-	Property: Blackboard
-		<XPS_BT_typ_Leaf. Blackboard>
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
 	Property: NodeType
 		<XPS_BT_typ_Leaf. NodeType>
 	-----------------------------------------------------------------------------*/
@@ -57,18 +53,21 @@ Returns:
 	Protected: processTick
     
     	--- Prototype --- 
-    	call ["processTick"]
+    	call ["processTick",_context]
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns a status.
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		private _status = [XPS_BT_Status_Failure, XPS_BT_Status_Success] select (_self call ["Condition"]);
+		private _status = [XPS_BT_Status_Failure, XPS_BT_Status_Success] select (_self call ["Condition",_this]);
 		_status;
 	}],
 	/*----------------------------------------------------------------------------
@@ -79,14 +78,17 @@ Returns:
 	Method: Condition
     
     	--- Prototype --- 
-    	call ["Condition"]
+    	call ["Condition",_context]
     	---
 
 	Description:
-		The code that executes during a Tick cycle of a Behaviour Tree and then
+		The code that executes during a Tick of this node and then
 		returns true/false. 
 		
 		Must be Overridden.
+
+	Parameters:
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
 		
 	Returns: 
 		<Boolean> - <True> or <False>

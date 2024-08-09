@@ -13,7 +13,8 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which stores a pointer to another function/method and calls it when invoked
+	<HashmapObject> which stores a pointer to another function/method and calls it when invoked.
+	This object can only hold a single pointer (Single-Casting)
 
 Parameters: 
 	_signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
@@ -69,7 +70,7 @@ Returns:
         call ["Attach",_pointer]
         ---
 
-        <XPS_ifc_IMultiCastDelegate>
+        <XPS_ifc_IDelegate>
 
 		Attachs a pointer to another function/method
     
@@ -93,14 +94,14 @@ Returns:
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
-	["Attach",{
+	["Attach", compileFinal {
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
 		//Deep copy the array
 		//if (_this isEqualType []) then {_this = +_this};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
-				{(_this#1) in keys (_this#0) && 					//check methodname exists...
+				{(_this#1) in (_this#0) && 					//check methodname exists...
 				{(_this#0) get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
 				_self set ["_pointer",_this];
@@ -108,6 +109,25 @@ Returns:
 		} else {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
 		};
+	}],
+    /*----------------------------------------------------------------------------
+    Method: Detach
+    
+        --- Prototype --- 
+        call ["Detach"]
+        ---
+
+        <XPS_ifc_IDelegate>
+
+		Detachs the current function/method pointer from the internal pointer 
+
+	Returns:
+		Deleted element or nothing if not found
+    ----------------------------------------------------------------------------*/
+	["Detach", compileFinal {
+		private _pointer = _self get "_pointer";
+		_self set ["_pointer",nil];
+		_pointer;
 	}],
     /*----------------------------------------------------------------------------
     Method: Invoke
@@ -131,7 +151,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to defined signature
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
-	["Invoke",{
+	["Invoke", compileFinal {
 		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};
@@ -175,7 +195,7 @@ Example: Override class to change signature
 	_def = [
 		["#type", "Example"],
 		["delegate", createhashmapobject [Tag_typ_New_Delegate]],
-		["MyMethod", { 
+		["MyMethod",  compileFinal { 
 			//do some stuff
 			private _someArgs = ["I successfully did some stuff"];
 

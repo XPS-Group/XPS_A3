@@ -13,10 +13,10 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which wraps an <XPS_ifc_IMultiCastDelegate> to provide Add/Remove functionality without exposing the Invoke function.
+	<HashmapObject> which wraps an <XPS_ifc_IDelegate> to provide Attach/Detach functionality without exposing the Invoke function.
 
 Parameters: 
-	_delegate - <XPS_ifc_IMultiCastDelegate> - the delegate to wrap Add/Remove functions around.
+	_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Attach/Detach functions around.
 
 Returns:
 	<HashmapObject>
@@ -36,21 +36,21 @@ Throws:
         ---
     
 	Parameters: 
-		_delegate - <XPS_ifc_IMultiCastDelegate> - the delegate to wrap Add/Remove functions around.
+		_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Attach/Detach functions around.
 		
 	Returns:
 		<True>
 
 	Throws: 
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
-		<XPS_typ_InvalidArgumentException> - when parameter supplied does not implement <XPS_ifc_IMultiCastDelegate>
+		<XPS_typ_InvalidArgumentException> - when parameter supplied does not implement <XPS_ifc_IDelegate>
     ----------------------------------------------------------------------------*/
 	["#create",{
 		params [["_mcDelegate",nil,[createhashmap]]];
 		if (isNil "_mcDelegate") exitwith {
 			throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
 		};
-		if (!(CHECK_IFC1(_mcDelegate,XPS_ifc_IMultiCastDelegate))) exitwith {
+		if (!(CHECK_IFC1(_mcDelegate,XPS_ifc_IDelegate))) exitwith {
 			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];
 		};
 		_self set ["_delegate",_mcDelegate];
@@ -58,7 +58,7 @@ Throws:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_Delegate"
+		"XPS_typ_EventHandler"
 		---
 	----------------------------------------------------------------------------*/
 	["#str",compilefinal {_self get "#type" select  0}],
@@ -69,27 +69,27 @@ Throws:
 	["@interfaces",["XPS_ifc_IEventHandler"]],
 	["_delegate",nil],
     /*----------------------------------------------------------------------------
-    Method: Add
+    Method: Attach
     
         --- Prototype --- 
-        call ["Add",_pointer]
+        call ["Attach",_pointer]
         ---
 
         <XPS_ifc_IEventHandler>
 
-		Adds a function/method pointer to the internal pointer collection
+		Attachs a function/method pointer to the internal pointer collection
     
     Parameters: 
         _pointer - <Array> in format [ <HashMapObject> , "MethodName" ] -OR- <Code>
 
 		Example Using Code:
 		--- code 
-        call ["Add",{ hint "Hello";}]
+        call ["Attach",{ hint "Hello";}]
 		---
 
 		Example Using <HashmapObject> Method:
 		--- code 
-        call ["Add",[_hashmapobject, "MyMethodName"]]
+        call ["Attach",[_hashmapobject, "MyMethodName"]]
 		---
 		
 	Returns:
@@ -100,19 +100,19 @@ Throws:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
-	["Add",{
-		_self get "_delegate" call ["Add",_this];
+	["Attach", compileFinal {
+		_self get "_delegate" call ["Attach",_this];
 	}],
     /*----------------------------------------------------------------------------
-    Method: Remove
+    Method: Detach
     
         --- Prototype --- 
-        call ["Remove",_pointer]
+        call ["Detach",_pointer]
         ---
 
         <XPS_ifc_IEventHandler>
 
-		Removes a function/method pointer from the internal pointer collection
+		Detachs a function/method pointer from the internal pointer collection
     
     Parameters: 
         _pointer - <Array> in format [<HashMapObject>,"MethodName"] -OR- <Code>
@@ -122,7 +122,7 @@ Throws:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Remove",{
-		_self get "_delegate" call ["Remove",_this];
+	["Detach", compileFinal {
+		_self get "_delegate" call ["Detach",_this];
 	}]
 ]

@@ -32,7 +32,7 @@ Returns:
 	Constructor: #create
     
     	--- Prototype --- 
-    	call ["#create",[_graph,_startKey,_endKey]]
+    	call ["#create",[_graph, _startKey, _endKey, _reversePath*]]
     	---
     
 	Parameters:
@@ -40,15 +40,21 @@ Returns:
 		_startKey - <Anything> 
     	_endKey - <Anything> 
 
+	Optionals:
+		_reversePath - <Boolean> -(Optional - Default : true) - Since path is generated 
+		from: [End -> Start] , a true value will reverse it to: [Start -> End] which is 
+		typically wanted. A false value will skip this step if unnecessary.
+
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]]]) exitwith {nil;};
+		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],["_reversePath",true,[true]]]) exitwith {nil;};
 		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
 		_self set ["_workingGraph",_graph];
 		_self set ["_workingStartKey",_startKey];
 		_self set ["_workingEndKey",_endKey];
+		_self set ["_reverse",_reversePath];
 		_self call ["Init"];
 	}],
 	/*----------------------------------------------------------------------------
@@ -66,6 +72,7 @@ Returns:
 	["_workingGraph",nil],
 	["_workingStartKey",nil],
 	["_workingEndKey",nil],
+	["_reverse",nil],
 	/*----------------------------------------------------------------------------
 	Protected: cameFrom
     
@@ -147,7 +154,7 @@ Returns:
 		};
 
 		if (_current isEqualTo _start) then {_status = "SUCCESS";};
-		reverse _path;
+		if (_self get "_reverse") then {reverse _path};
 		_self set ["Path",_path];
 		_self set ["Status",_status];
 
@@ -198,17 +205,6 @@ Returns:
 	}],
 
 	/*----------------------------------------------------------------------------
-	Property: Doctrine
-    
-    	--- Prototype --- 
-    	get "Doctrine"
-    	---
-    
-    Returns: 
-		<HashmapObject> - A <HashmapObject> of heuristical values to apply to the graph
-	-----------------------------------------------------------------------------*/
-	["Doctrine",nil],
-	/*----------------------------------------------------------------------------
 	Property: Path
     
     	--- Prototype --- 
@@ -242,40 +238,50 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
-	Method: AdjustEstimatedDistance
+	Method: AdjustEstimate
     
     	--- Prototype --- 
-    	call ["AdjustEstimatedDistance",[_estDist,_fromNode,_toNode]]
+    	call ["AdjustEstimate",[_estimate,_fromNode,_toNode]]
     	---
 		
 		<XPS_ifc_IAstarSearch>
+
+	Description:
+		This method is called when determining estimated distance from one node to another.
+		It can be used to modify the estimated distance during a search. This implementation
+		simply returns the initial estimated distance but, can be overridden to do more.
     
     Optionals: 
-		_estDist - <Number> 
+		_estimate - <Number> 
 		_fromNode - <HashmapObject>
 		_toNode - <HashmapObject>
 	-----------------------------------------------------------------------------*/
-	["AdjustEstimatedDistance",compileFinal {
-		params ["_estDist","_fromNode","_toNode"];
-		_estDist;
+	["AdjustEstimate",compileFinal {
+		params ["_estimate","_fromNode","_toNode"];
+		_estimate;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: AdjustMoveCost
+	Method: AdjustCost
     
     	--- Prototype --- 
-    	call ["AdjustMoveCost",[_moveCost,_fromNode,_toNode]]
+    	call ["AdjustCost",[_cost,_fromNode,_toNode]]
     	---
 		
 		<XPS_ifc_IAstarSearch>
+
+	Description:
+		This method is called when determining movement cost from one node to another.
+		It can be used to modify the movement cost during a search. This implementation
+		simply returns the initial movement cost but, can be overridden to do more.
     
     Parameters: 
-		_moveCost - <Number> 
+		_cost - <Number> 
 		_fromNode - <HashmapObject>
 		_toNode - <HashmapObject>
 	-----------------------------------------------------------------------------*/
-	["AdjustMoveCost",compileFinal {
-		params ["_moveCost","_fromNode","_toNode"];
-		_moveCost;
+	["AdjustCost",compileFinal {
+		params ["_cost","_fromNode","_toNode"];
+		_cost;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: FilterNeighbors
@@ -285,6 +291,10 @@ Returns:
     	---
 		
 		<XPS_ifc_IAstarSearch>
+
+	Description:
+		This method is called to filter neighbors of a node. This implementation 
+		simply returns all neighbors but, can be overridden to do more.
     
     Optionals: 
 		_neighbors - <Array> 
@@ -329,10 +339,18 @@ Returns:
 	it on to the working graph.
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
+		//Bail if already finished
+		if (_self get "Status" in ["SUCCESS","FAILURE"]) exitwith {};
+		
+		// Set status Running if not already
+		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
+
 		private _graph = _self get "_workingGraph";
 		private _endNode = _self get "EndNode";
 		private _currentNode = _self call ["frontierPullLowest"];
 		_self set ["currentNode",_currentNode];
+		
+		// Check if path is found or failed to be found
 		if (isNil "_currentNode" || (_endNode get "Index") isEqualTo (_currentNode get "Index")) exitwith {
 			_self call ["getPath"];
 		};
@@ -343,11 +361,11 @@ Returns:
 
 		{
 			private _costSoFarMap = _self get "costSoFar";
-			private _estDist = _self call ["AdjustEstimatedDistance",[_graph call ["GetEstimatedDistance",[_x,_endNode]],_x,_endNode]];
-			private _moveCost = _self call ["AdjustMoveCost",[_graph call ["GetMoveCost",[_currentNode,_x]],_currentNode,_x]];
-			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _moveCost;
-			private _priority = _costSoFar + _estDist;
-			//diag_log [_x get "Index",_estDist,_costSoFar,_priority];
+			private _estimate = _self call ["AdjustEstimate",[_graph call ["GetEstimate",[_x,_endNode]],_x,_endNode]];
+			private _cost = _self call ["AdjustCost",[_graph call ["GetCost",[_currentNode,_x]],_currentNode,_x]];
+			private _costSofar = (_costSoFarMap get (_currentNode get "Index")) + _cost;
+			private _priority = _costSoFar + _estimate;
+			
 			private _costSoFarX = _costSoFarMap get (_x get "Index");
 
 			if (isNil {_costSoFarX} || {_costSoFar < _costSoFarX}) then {
@@ -359,6 +377,5 @@ Returns:
 		} foreach _neighbors;
 
 		_self set ["lastNode",_currentNode];
-		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
 	}]
 ]

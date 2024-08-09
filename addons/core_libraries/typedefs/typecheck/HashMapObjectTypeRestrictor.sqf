@@ -37,8 +37,8 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		if (isNil "_this") then {_self set ["_allowed",[]];};
-		if (_this isEqualType []) then {
+		if (isNil "_this" || {_this isEqualTo []}) exitwith {_self set ["_allowed",[]];};
+		if (_this isEqualTypeAll "") then {
 			_self set ["_allowed",_this];
 		} else {
 			//TODO throw
@@ -78,7 +78,7 @@ Returns:
     Throws:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
-	["RegisterType",{
+	["RegisterType", compileFinal {
         if !(params [["_type",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,createhashmapfromarray [["_this",_this]]]];};
         private _list = _self get "_allowed";
         if (_type in _list) exitwith {false;};
@@ -99,7 +99,7 @@ Returns:
 	Returns: 
 		<True> - always
 	-----------------------------------------------------------------------------*/
-	["IsAllowed",{
+	["IsAllowed", compileFinal {
 		params [["_value",createhashmap,[createhashmap]]];
         private _allowlist = _self get "_allowed";
         private _types = _value getOrDefault ["#type",[]];

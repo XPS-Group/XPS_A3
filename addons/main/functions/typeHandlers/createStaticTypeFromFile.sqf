@@ -36,7 +36,7 @@ Example: File and calling code example
 
 		private _def = [ [ 
 			["#type","Tag_typ_MyStaticClass"],
-			["Method", { hint "Hello World!"}]
+			["Method",  compileFinal { hint "Hello World!"}]
 		] ,false,true,true] call XPS_fnc_buildTypeDefinition;
 
 		createhashmapobject [_def];

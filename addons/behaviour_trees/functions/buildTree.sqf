@@ -70,7 +70,7 @@ Authors:
 					- ChildI
 
 ---------------------------------------------------------------------------- */
-params [["_definition",[],[[]]],["_blackboard",nil,[createhashmap]]];
+params [["_definition",[],[[]]]];
 
 //TODO : Add more error checking and reporting - specifically check if it can contain children and how many before attempting to add them
 private _fnc_HandleChildren = compileFinal {
@@ -93,7 +93,6 @@ private _fnc_HandleChildren = compileFinal {
 
 if (_definition isEqualType [] && {count _definition > 0}) then {
 	private _rootNode = createhashmapobject [_definition#0];
-	_rootNode set ["Blackboard",_blackboard];
 	private _children = [];
 	if (count _definition > 1 && {_definition#1 isEqualtype []}) then {
 		_children = _definition#1;

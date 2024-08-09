@@ -65,7 +65,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["InitTest",{
+	["InitTest", compileFinal {
 		//Initialize some testing values
 		XPS_SampleTest_Values = createhashmapfromarray [
 			["A",1],
@@ -82,7 +82,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["FinalizeTest",{
+	["FinalizeTest", compileFinal {
 		//Destroy testing values
 		XPS_SampleTest_Values = nil;
 	}],

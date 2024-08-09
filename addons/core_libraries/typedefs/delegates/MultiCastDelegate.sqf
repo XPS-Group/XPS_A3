@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_MultiCastDelegate
 	<TypeDefinition>
         --- prototype
-        XPS_typ_MultiCastDelegate : XPS_ifc_IMultiCastDelegate
+        XPS_typ_MultiCastDelegate : XPS_ifc_IDelegate
         ---
         --- prototype
         createhashmapobject [XPS_typ_MultiCastDelegate,_signature]
@@ -13,7 +13,8 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which stores pointers to another function/method and calls them when invoked
+	<HashmapObject> which stores pointers to another function/method and calls them when invoked.
+	All subscribers are notified for every event (Multi-Casting).
 
 Parameters: 
 	_signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
@@ -58,32 +59,32 @@ Returns:
 	["#str",compilefinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-		<XPS_ifc_IMultiCastDelegate>
+		<XPS_ifc_IDelegate>
 	----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_ifc_IMultiCastDelegate"]],
+	["@interfaces",["XPS_ifc_IDelegate"]],
 	["_pointers",[],[["CTOR"]]],
 	["_signature",[]], 
     /*----------------------------------------------------------------------------
-    Method: Add
+    Method: Attach
     
         --- Prototype --- 
-        call ["Add",_pointer]
+        call ["Attach",_pointer]
         ---
 
-        <XPS_ifc_IMultiCastDelegate>
+        <XPS_ifc_IDelegate>
 
-		Adds a function/method pointer to the internal pointer collection
+		Attachs a function/method pointer to the internal pointer collection
     
     Parameters: 
         _pointer - <Array> in format [<HashMapObject>,"MethodName"] -OR- <Code>
 
 		Example Using Code:
 		--- code 
-        call ["Add",{ hint "Hello";}]
+        call ["Attach",{ hint "Hello";}]
 		---
 		Example Using <HashmapObject> Method:
 		--- code 
-        call ["Add",[_hashmapobject, "MyMethodName"]]
+        call ["Attach",[_hashmapobject, "MyMethodName"]]
 		---
 		
 	Returns:
@@ -94,31 +95,36 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
-	["Add",{
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
+	["Attach", compileFinal {
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
-				{(_this#1) in keys (_this#0) && 					//check methodname exists...
+				{(_this#1) in (_this#0) && 					//check methodname exists...
 				{(_this#0) get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
-				if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
-					throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Functon/Method supplied was already added.",_this]];
+				//pushBackUnique doesn't support unique Hashmap Objects (compares by string)
+				// if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
+				// 	throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Attach","Functon/Method supplied was already added.",_this]];
+				// };
+				//Just accept it and add a RPT log if it's getting overloaded 
+				if ((_self get "_pointers" pushback _this) < 10000) then {true} else {
+					diag_log text format ["MC Delegate %1 has too many subscribers. consider using an intermediary. Last added: %2",_self,_this];
 				};
 		} else {
-			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Add","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
+			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
 		};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Remove
+    Method: Detach
     
         --- Prototype --- 
-        call ["Remove",_pointer]
+        call ["Detach",_pointer]
         ---
 
-        <XPS_ifc_IMultiCastDelegate>
+        <XPS_ifc_IDelegate>
 
-		Removes a function/method pointer from the internal pointer collection
+		Detachs a function/method pointer from the internal pointer collection
     
     Parameters: 
         _pointer - <Array> in format [<HashMapObject>,"MethodName"] -OR- <Code>
@@ -128,7 +134,7 @@ Returns:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Remove",{
+	["Detach", compileFinal {
 		private _pointers = _self get "_pointers";
 		_pointers deleteat (_pointers find _this);
 	}],
@@ -139,7 +145,7 @@ Returns:
         call ["Invoke",_args]
         ---
 
-        <XPS_ifc_IMultiCastDelegate>
+        <XPS_ifc_IDelegate>
 
 		Calls the attached <code> blocks AND/OR <hashmapobject> methods with _args as the parameters.
     
@@ -153,7 +159,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to defined signature
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
-	["Invoke",{
+	["Invoke", compileFinal {
 		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
 			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};

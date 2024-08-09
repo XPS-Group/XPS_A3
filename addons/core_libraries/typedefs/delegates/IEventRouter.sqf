@@ -1,23 +1,25 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: action_planning. XPS_AP_ifc_IAction
+Interface: core. XPS_ifc_IEventRouter
 <Interface>
-	---prototype
-	XPS_AP_ifc_IAction
+	--- prototype
+	XPS_ifc_IEventRouter : XPS_ifc_IEventHandler
 	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
+	Method: Attach
+		<code>
 
+	Method: Detach
+		<code>
+
+	Method: RouteEvent
+		<code>
 ---------------------------------------------------------------------------- */
 [
-	["Preconditions","HASHMAP"],
-	["Effects","HASHMAP"],
-	["GetCost","CODE"],
-	["IsComplete","CODE"],
-	["Start","CODE"],
-	["Update","CODE"],
-	["Stop","CODE"]
+	["@",XPS_ifc_IEventHandler],
+	["RouteEvent","CODE"]
 ]

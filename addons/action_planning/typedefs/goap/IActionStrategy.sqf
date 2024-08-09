@@ -1,27 +1,26 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_IMultiCastDelegate
+Interface: action_planning. XPS_AP_ifc_IActionStrategy
 <Interface>
-	--- prototype
-	XPS_ifc_IMultiCastDelegate
+	---prototype
+	XPS_AP_ifc_IActionStrategy
 	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Method: Add
+	Method: GetLocation
 		<code>
 
-	Method: Remove
-		<code>
-
-	Method: Invoke
+	Method: Evaluate
 		<code>
 
 ---------------------------------------------------------------------------- */
 [
-	["Add","CODE"],
-	["Remove","CODE"],
-	["Invoke","CODE"]
+    ["CanPerform","CODE"],
+    ["IsComplete","CODE"],
+	["Start","CODE"],
+	["Update","CODE"],
+	["Stop","CODE"]
 ]

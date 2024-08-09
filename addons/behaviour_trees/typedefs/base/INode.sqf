@@ -10,9 +10,6 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: Blackboard
-	<HashmapObject>
-
 	Property: NodeType
 	<Enumeration>
 
@@ -27,7 +24,6 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["Blackboard", "HASHMAP"],
 	["NodeType", "STRING"],
 	["Status","ANYTHING"],
 	["Init","CODE"],

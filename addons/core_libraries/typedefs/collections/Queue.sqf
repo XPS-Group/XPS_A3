@@ -59,7 +59,7 @@ Returns:
 	Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
-	["Clear",{
+	["Clear", compileFinal {
 		_self get "_queueArray" resize 0;
 	}],
     /*----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ Returns:
 	Returns:
 		<Number> - the number of elements in the stack
     ----------------------------------------------------------------------------*/
-	["Count",{
+	["Count", compileFinal {
 		count (_self get "_queueArray");
 	}],
     /*----------------------------------------------------------------------------
@@ -95,7 +95,7 @@ Returns:
 	Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
-	["IsEmpty",{
+	["IsEmpty", compileFinal {
 		count (_self get "_queueArray") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ Returns:
 		<Anything> - first element in the queue or nil if empty - does not remove 
 		from queue
     ----------------------------------------------------------------------------*/
-	["Peek",{
+	["Peek", compileFinal {
         if !(_self call ["IsEmpty"]) then {
 		    _self get "_queueArray" select 0;
         } else {nil};
@@ -134,7 +134,7 @@ Returns:
 	Returns:
 		<Anything> - removes and returns first element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
-	["Dequeue",{
+	["Dequeue", compileFinal {
         if !(_self call ["IsEmpty"]) then {
 		    _self get "_queueArray" deleteat 0;
         } else {nil};
@@ -154,7 +154,7 @@ Returns:
 	Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
-	["Enqueue",{
+	["Enqueue", compileFinal {
 		_self get "_queueArray" pushback _this;
 	}]
 ]

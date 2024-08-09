@@ -69,14 +69,14 @@ Flags:
 		private _p3 = _bPosB getpos [_nextWidth,_headB + _dirOffset];
 		private _p4 = _ePosB getpos [_nextWidth,_headB + _dirOffset];
 		
-		_m = createmarker ["db"+ str _fromPoint,_fromPoint]; 
-		_m setmarkertype "mil_circle"; 
-		_m setmarkercolor "ColorOrange"; 
-		_m setmarkersize [0.25,0.25]; 
-		_m = createmarker ["db"+ str str _posE,_posE]; 
-		_m setmarkertype "mil_circle"; 
-		_m setmarkercolor "ColorBlack"; 
-		_m setmarkersize [0.25,0.25]; 
+		// _m = createmarker ["db"+ str _fromPoint,_fromPoint]; 
+		// _m setmarkertype "mil_circle"; 
+		// _m setmarkercolor "ColorOrange"; 
+		// _m setmarkersize [0.25,0.25]; 
+		// _m = createmarker ["db"+ str str _posE,_posE]; 
+		// _m setmarkertype "mil_circle"; 
+		// _m setmarkercolor "ColorBlack"; 
+		// _m setmarkersize [0.25,0.25]; 
 
 
 		private _intersect = [_p1,_p2,_p3,_p4] call XPS_fnc_lineIntersect2D;
@@ -94,10 +94,10 @@ Flags:
 						_points pushback _nPos;
 					//};
 				};
-				_m = createmarker ["db"+ str _intersect,_intersect]; 
-				_m setmarkertype "mil_circle"; 
-				_m setmarkercolor "ColorYellow"; 
-				_m setmarkersize [0.25,0.25]; 
+				// _m = createmarker ["db"+ str _intersect,_intersect]; 
+				// _m setmarkertype "mil_circle"; 
+				// _m setmarkercolor "ColorYellow"; 
+				// _m setmarkersize [0.25,0.25]; 
 			};
 		};
 		_points;
@@ -140,7 +140,7 @@ Flags:
 		private _ct = _node get "ConnectedTo";
 		private _roadArray = [];
 		{
-			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in keys _ct) then {
+			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in _ct) then {
 				_roadArray pushbackunique _x;
 			};
 		} foreach roadsconnectedto _object;
@@ -159,21 +159,21 @@ Flags:
 		{
 			_x resize 2;
 			private _r = roadAt _x;
-			if !(_r isEqualto objNull || (str _r) isEqualTo (str _object) || (str _r) in keys _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
+			if !(_r isEqualto objNull || (str _r) isEqualTo (str _object) || (str _r) in _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
 				_roadArray pushbackunique _r;
 			};
 		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 
-		_m = createmarker [str _bPosC,_bPosC]; 
-		_m setmarkershape "rectangle"; 
-		_m setmarkercolor "ColorBlue"; 
-		_m setmarkersize [_width,0.1]; 
-		_m setmarkerdir (_pos getdir _bPosC); 
-		_m = createmarker [str _ePosC,_ePosC]; 
-		_m setmarkershape "rectangle"; 
-		_m setmarkercolor "ColorBlack"; 
-		_m setmarkersize [_width,0.1]; 
-		_m setmarkerdir (_pos getdir _ePosC);  
+		// _m = createmarker [str _bPosC,_bPosC]; 
+		// _m setmarkershape "rectangle"; 
+		// _m setmarkercolor "ColorBlue"; 
+		// _m setmarkersize [_width,0.1]; 
+		// _m setmarkerdir (_pos getdir _bPosC); 
+		// _m = createmarker [str _ePosC,_ePosC]; 
+		// _m setmarkershape "rectangle"; 
+		// _m setmarkercolor "ColorBlack"; 
+		// _m setmarkersize [_width,0.1]; 
+		// _m setmarkerdir (_pos getdir _ePosC);  
 
 		{
 			_ct set [str _x,_x];
@@ -229,19 +229,19 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["Roads",createhashmap],
 	/*----------------------------------------------------------------------------
-	Method: GetEstimatedDistance
+	Method: GetEstimate
     
     	--- Prototype --- 
-    	call ["GetEstimatedDistance",[_currentPos,_endPos]]
+    	call ["GetEstimate",[_currentPos,_endPos]]
     	---
 
-		<main.XPS_ifc_IAstarGraph.GetEstimatedDistance>
+		<main.XPS_ifc_IAstarGraph.GetEstimate>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_endPos - <Array> - goal position
 	-----------------------------------------------------------------------------*/
-	["GetEstimatedDistance",compileFinal {
+	["GetEstimate",compileFinal {
 		params ["_current","_end"];
 		(_current get "RoadObject") distance2D (_end get "RoadObject");
 	}],
@@ -275,19 +275,19 @@ Flags:
 		_result;
 	}],
 	/*----------------------------------------------------------------------------
-	Method: GetMoveCost
+	Method: GetCost
     
     	--- Prototype --- 
-    	call ["GetMoveCost",[_currentPos,_nextPos]]
+    	call ["GetCost",[_currentPos,_nextPos]]
     	---
 
-		<main.XPS_ifc_IAstarGraph.GetMoveCost>
+		<main.XPS_ifc_IAstarGraph.GetCost>
     
     Optionals: 
 		_currentPos - <Array> - current position of working graph 
 		_nextPos - <Array> - connected road location
 	-----------------------------------------------------------------------------*/
-	["GetMoveCost",compileFinal {
+	["GetCost",compileFinal {
 		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]]]) exitwith {nil};
 		
 		(_current get "PosASL") distance (_next get "PosASL");
@@ -324,7 +324,7 @@ Flags:
 	Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["Init",{}],
+	["Init", {}],
 	/*----------------------------------------------------------------------------
 	Method: ToggleGraphMarkers
     
@@ -413,6 +413,7 @@ Flags:
 			};		
 		};
 	}],
+
 	//TODO : Move this to Formation AI because it can only work in that situation
 	["CalculateDrivePath", compileFinal {
 		params [["_start",nil,[[]],[2,3]],["_end",nil,[[]],[2,3]],["_path",[],[[]]],["_side","",[""]]];
