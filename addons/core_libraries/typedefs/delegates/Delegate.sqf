@@ -13,7 +13,8 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which stores a pointer to another function/method and calls it when invoked
+	<HashmapObject> which stores a pointer to another function/method and calls it when invoked.
+	This object can only hold a single pointer (Single-Casting)
 
 Parameters: 
 	_signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
@@ -69,7 +70,7 @@ Returns:
         call ["Attach",_pointer]
         ---
 
-        <XPS_ifc_IMultiCastDelegate>
+        <XPS_ifc_IDelegate>
 
 		Attachs a pointer to another function/method
     

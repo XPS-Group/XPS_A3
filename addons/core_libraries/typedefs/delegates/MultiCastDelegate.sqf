@@ -13,7 +13,8 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which stores pointers to another function/method and calls them when invoked
+	<HashmapObject> which stores pointers to another function/method and calls them when invoked.
+	All subscribers are notified for every event (Multi-Casting).
 
 Parameters: 
 	_signature - (optional - Default: Anything) - a definition of parameters expected when calling "Invoke" method: in the same format as the IsEqualTypeParams command - i.e. ["",[],objNull,0]
