@@ -44,7 +44,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["#create",{
 		if !(isnil "_this") then {
-			if !(CHECK_IFC1(_this,"XPS_ifc_IDelegate")) exitwith {
+			if !(CHECK_IFC1(_this,XPS_ifc_IDelegate)) exitwith {
 				throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Type Parameter was Invalid type",_this]];
 			};
 			_self set ["_delegateType",_this];
