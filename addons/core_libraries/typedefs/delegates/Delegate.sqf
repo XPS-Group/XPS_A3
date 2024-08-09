@@ -111,6 +111,25 @@ Returns:
 		};
 	}],
     /*----------------------------------------------------------------------------
+    Method: Detach
+    
+        --- Prototype --- 
+        call ["Detach"]
+        ---
+
+        <XPS_ifc_IDelegate>
+
+		Detachs the current function/method pointer from the internal pointer 
+
+	Returns:
+		Deleted element or nothing if not found
+    ----------------------------------------------------------------------------*/
+	["Detach", compileFinal {
+		private _pointer = _self get "_pointer";
+		_self set ["_pointer",nil];
+		_pointer;
+	}],
+    /*----------------------------------------------------------------------------
     Method: Invoke
     
         --- Prototype --- 

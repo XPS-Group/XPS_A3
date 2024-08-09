@@ -10,14 +10,14 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Method: Add
+	Method: Attach
 		<code>
 
-	Method: Remove
+	Method: Detach
 		<code>
 
 ---------------------------------------------------------------------------- */
 [
-	["Add","CODE"],
-	["Remove","CODE"]
+	["Attach","CODE"],
+	["Detach","CODE"]
 ]

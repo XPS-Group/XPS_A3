@@ -3,7 +3,7 @@
 Interface: core. XPS_ifc_IEventRouter
 <Interface>
 	--- prototype
-	XPS_ifc_IEventRouter
+	XPS_ifc_IEventRouter : XPS_ifc_EventHandler
 	---
 
 Authors:
@@ -13,7 +13,13 @@ Authors:
 	Method: Attach
 		<code>
 
+	Method: Detach
+		<code>
+
+	Method: RouteEvent
+		<code>
 ---------------------------------------------------------------------------- */
 [
-	["Attach","CODE"]
+	["@",XPS_ifc_IEventHandler],
+	["RouteEvent","CODE"]
 ]
