@@ -44,12 +44,12 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["#create",{
 		
-        params [["_routeEvent",{false},[{}]],["_delegateType",XPS_typ_Delegate,[createhashmap]]];
+        params [["_routeEvent",nil,[{}]],["_delegateType",XPS_typ_Delegate,[createhashmap]]];
 		if !(CHECK_IFC1(_delegateType,XPS_ifc_IDelegate)) exitwith {
 			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Type Parameter was Invalid type",_this]];
 		};
-		
-        _self set ["routeEvent",compileFinal _routeEvent];
+
+        if !(isNil _routeEvent) then {_self set ["routeEvent",compileFinal _routeEvent]};
 		_self set ["_delegateType",_this];
 		_self set ["_delegates",createhashmap];
 	}],
