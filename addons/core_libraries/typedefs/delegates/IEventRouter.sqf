@@ -3,7 +3,7 @@
 Interface: core. XPS_ifc_IEventRouter
 <Interface>
 	--- prototype
-	XPS_ifc_IEventRouter : XPS_ifc_EventHandler
+	XPS_ifc_IEventRouter : XPS_ifc_IEventHandler
 	---
 
 Authors:

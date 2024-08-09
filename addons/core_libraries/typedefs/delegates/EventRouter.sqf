@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_EventRouter
 	<TypeDefinition>
         --- prototype
-        XPS_typ_EventRouter : XPS_ifc_IEventRouter
+        XPS_typ_EventRouter : XPS_ifc_IEventRouter, XPS_ifc_IEventHandler
         ---
         --- prototype
         createhashmapobject [XPS_typ_EventRouter]
@@ -162,7 +162,7 @@ Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
 	["Detach", compileFinal {
-		params ["_key","_pointer"]
+		params ["_key","_pointer"];
 		private _dlgt = _self get "_delegates" getOrDefault [_key,createhashmap];
 		private _result = _dlgt call ["Detach",_pointer];
 		if (isNil "_pointer") then {_result = _self get "_delegates" deleteat _key};

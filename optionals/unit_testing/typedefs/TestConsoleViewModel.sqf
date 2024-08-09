@@ -38,7 +38,7 @@ Returns:
 
 		private _service = createhashmapobject [XPS_UT_typ_TestService];
 		_Self set ["_testService",_service];
-		_service get "CollectionChanged" call ["Add",[_self,"onTestServiceCollectionChanged"]];
+		_service get "CollectionChanged" call ["Attach",[_self,"onTestServiceCollectionChanged"]];
 		
 		_self set ["StateChanged",_service get "StateChanged"];
 	}],
@@ -150,7 +150,7 @@ Returns:
 
 	-----------------------------------------------------------------------------*/
 	["Close", compileFinal {
-		_self get "_testService" get "CollectionChanged" call ["Remove",[_self,"onTestServiceCollectionChanged"]];
+		_self get "_testService" get "CollectionChanged" call ["Detach",[_self,"onTestServiceCollectionChanged"]];
 		_self set ["StateChanged",nil];
 		_self set ["_testCollection",nil];
 		_self set ["_testService",nil];
