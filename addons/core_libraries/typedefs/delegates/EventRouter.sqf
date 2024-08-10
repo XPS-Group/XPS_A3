@@ -80,7 +80,7 @@ Returns:
 		_args - <Array> - the arguments sent by the event 
 
 	Returns:
-		_key - <HashmapKey> - the key which dictates where to route to. See <XPS_typ_RoutingDelegate> for more info 
+		_keyList - <Array> of <HashmapKey> - the keys which dictate where to route to.
     ----------------------------------------------------------------------------*/
 	["filter",{}],
     /*----------------------------------------------------------------------------
