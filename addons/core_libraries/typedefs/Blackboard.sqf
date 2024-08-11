@@ -34,14 +34,14 @@ Returns:
     	---
     
     Optionals: 
-		_object* - <Object> - (Optional - Default : objNull) See: <AttachToObject>
+		_object* - <Object> or <Group> - (Optional - Default : objNull) See: <AttachToObject>
     	_varName* - <String> - (Optional - Default : "XPS_Blackboard") See: <AttachToObject>
 
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
+		params [["_object",objNull,[objNull,grpnull]],["_varName","XPS_Blackboard",[""]]];
 		if !(isNull _object) then {_self call ["AttachToObject",[_object,_varName]]};
 	}],
 	
@@ -88,7 +88,7 @@ Returns:
 		<XPS_ifc_IBlackboard>
     
     Optionals: 
-		_object* - <Object> - (Optional - Default : objNull) - Object to attach this blackboard to. 
+		_object* - <Object> or <Group> - (Optional - Default : objNull) - Object to attach this blackboard to. 
 	Subsequent calls to this method will remove it from an object if already attached.
 	To remove it completely from an object without attaching to another, call without any argument
     	_varName* - <String> - (Optional - Default : "XPS_Blackboard") - Variable Name 
@@ -98,7 +98,7 @@ Returns:
 		--- 
 	-----------------------------------------------------------------------------*/
 	["AttachToObject",compileFinal {
-		params [["_object",objNull,[objNull]],["_varName","XPS_Blackboard",[""]]];
+		params [["_object",objNull,[objNull,grpnull]],["_varName","XPS_Blackboard",[""]]];
 		private _prevObject = _self get "attachedTo";
 		private _prevObjectVar = _self get "attachedTo_VariableName";
 		if !(isNull _prevObject) then {_prevObject setVariable [_prevObjectVar,nil]; };
