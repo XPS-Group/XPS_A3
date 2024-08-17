@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_EventRouter
 	<TypeDefinition>
         --- prototype
-        XPS_typ_EventRouter : XPS_ifc_IEventRouter, XPS_ifc_IEventHandler
+        XPS_typ_EventRouter : XPS_typ_EventHandler, XPS_ifc_IEventRouter, XPS_ifc_IEventHandler
         ---
         --- prototype
         createhashmapobject [XPS_typ_EventRouter]
@@ -17,7 +17,7 @@ Description:
 	through the <RouteEvent> method any incoming events. <filter> method provides a way to
 	control if one or more mapped <XPS_typ_Delegates> should receive the event.
 
-	The signature of the Invoke method is set as [sender: <HashmapObject> , args: <Array>]
+	The signature of the Invoke method is set as []
 
 Returns:
 	<HashmapObject>
@@ -25,8 +25,11 @@ Returns:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_typ_EventRouter"],
-
-
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_typ_EventHandler>
+	-----------------------------------------------------------------------------*/
+	["#base",XPS_typ_EvenetHandler],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -47,17 +50,21 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["#create",{
 		
-        params [["_hndlrType",XPS_typ_EventHandler,[createhashmap]],["_dlgtType",XPS_typ_Delegate,[createhashmap]],["_filter",nil,[{}]]];
-		if !(CHECK_IFC1(_handlerType,XPS_ifc_IEventHandler)) exitwith {
+        params ["_anyDelegate",["_hndlrType",XPS_typ_EventHandler,[createhashmap]],["_dlgtType",XPS_typ_Delegate,[createhashmap]],["_filter",nil,[{}]]];
+
+		_self call ["XPS_typ_EventHandler.#create",_anyDelegate];
+		_anyDelegate call ["Attach",[_self,"RouteEvent"]];
+
+		if !(CHECK_IFC1(_hndlrType,XPS_ifc_IEventHandler)) exitwith {
 			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","EventHandler Type Parameter was Invalid type",_this]];
 		};
-		if !(CHECK_IFC1(_handlerType,XPS_ifc_IDelegate)) exitwith {
+		if !(CHECK_IFC1(_dlgtType,XPS_ifc_IDelegate)) exitwith {
 			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Type Parameter was Invalid type",_this]];
 		};
 
-        if !(isNil _filter) then {_self set ["filter",compileFinal _filter]};
-		_self set ["_handlerType",_this];
-		_self set ["_delegateType",_this];
+        if !(isNil "_filter") then {_self set ["filter",compileFinal _filter]};
+		_self set ["_handlerType",_hndlrType];
+		_self set ["_delegateType",_dlgtType];
 		_self set ["handlers",createhashmap];
 	}],
 	/*----------------------------------------------------------------------------
@@ -70,6 +77,7 @@ Returns:
 	Implements: @interfaces
 		<XPS_ifc_IEventRouter>
 	----------------------------------------------------------------------------*/
+	["@interfaces",["XPS_ifc_IEventRouter"]],
 	["_delegateType",nil],
 	["_handlerType",nil],
 	["delegates", createhashmap],
@@ -106,9 +114,10 @@ Returns:
 		_args - <Array> - the arguments sent by the event 
     ----------------------------------------------------------------------------*/
 	["RouteEvent",{
-		private _keylist = _self call ["filter",_this];
+		params ["_event","_prevKey"];
+		private _keylist = _self call ["filter",_event];
 		{
-			_self get "delegates" get _x call ["Invoke",_this];
+			_self get "delegates" get _x call ["Invoke",[_event,_x]];
 		} foreach _keyList;
 	}],
     /*----------------------------------------------------------------------------
@@ -144,7 +153,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Attach",{
 		params ["_pointer","_key"];
-		private _dlgt = createhashmapobject [_self get "_delegateType"];
+		private _dlgt = createhashmapobject [_self get "_delegateType",[]];
 		private _hndlr = createhashmapobject [_self get "_handlerType",_dlgt];
 		_hndlr call ["Attach",_pointer];
 		_self get "delegates" set [_key, _dlgt];
