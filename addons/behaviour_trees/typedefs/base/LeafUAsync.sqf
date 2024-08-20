@@ -121,7 +121,8 @@ Returns:
 
 	Description:
 		The code that executes during a Tick of this node and then
-		returns a status.
+		returns a status when either the timeout is reached, the condition
+		is met, or when <Halt> is executed.
 
 	Must be Overridden - This type contains no functionality
 
@@ -187,7 +188,7 @@ Returns:
     	---
 
 	Description:
-		Halts any asynchronous call by invoking a failure
+		Halts any asynchronous call by invoking a failure and setting <starttime> to 0
 
 	Returns: 
 		Nothing
@@ -242,13 +243,13 @@ Returns:
 				_self call ["preTick",_this];
 				_self call ["processTick",_this];
 			};
+			// always check timeout first before condition
+			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))): {
+				_self call ["postTick",XPS_BT_Status_Failure];
+			};
 
 			case (_self call ["condition",_this]): {
 				_self call ["postTick",_self call ["result",_this]];
-			};
-
-			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))): {
-				_self call ["postTick",XPS_BT_Status_Failure];
 			};
 		};
 	}]
