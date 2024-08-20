@@ -51,7 +51,7 @@ Returns:
 	Must be Overridden - This type contains no functionality
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <core.XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Boolean> - condition was ssatified
@@ -70,7 +70,7 @@ Returns:
 	Must be Overridden - This type contains no functionality
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <core.XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>
@@ -100,7 +100,7 @@ Returns:
 		propogates down the tree if possible.
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <core.XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
@@ -126,7 +126,7 @@ Returns:
 	Must be Overridden - This type contains no functionality
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <core.XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
@@ -229,7 +229,7 @@ Returns:
 		Status should be <XPS_BT_Status_Running> until condition or timeout are satisfied.
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <core.XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution

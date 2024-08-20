@@ -62,7 +62,7 @@ Returns:
 		Ticks all children at once. Any failures results in "FAILURE"
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <core.XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>, or nil
