@@ -65,6 +65,7 @@ Returns:
         if !(isNil "_filter") then {_self set ["filter",compileFinal _filter]};
 		_self set ["_handlerType",_hndlrType];
 		_self set ["_delegateType",_dlgtType];
+		_self set ["delegates", createhashmap],
 		_self set ["handlers",createhashmap];
 	}],
 	/*----------------------------------------------------------------------------
@@ -80,8 +81,8 @@ Returns:
 	["@interfaces",["XPS_ifc_IEventRouter"]],
 	["_delegateType",nil],
 	["_handlerType",nil],
-	["delegates", createhashmap],
-	["handlers", createhashmap],
+	["delegates",nil],
+	["handlers",nil],
     /*----------------------------------------------------------------------------
     Protected: filter
     
@@ -154,7 +155,7 @@ Returns:
 	["Attach",{
 		params ["_pointer","_key"];
 		private _dlgt = createhashmapobject [_self get "_delegateType",[]];
-		private _hndlr = createhashmapobject [_self get "_handlerType",_dlgt];
+		private _hndlr = createhashmapobject [_self get "_handlerType",[_dlgt]];
 		_hndlr call ["Attach",_pointer];
 		_self get "delegates" set [_key, _dlgt];
 		_self get "handlers" set [_key, _hndlr];
