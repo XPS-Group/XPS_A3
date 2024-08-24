@@ -1,12 +1,12 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: action_planning. XPS_AP_typ_Belief
+TypeDef: action_planning. XPS_AP_typ_Sensor
 	<TypeDefinition>
 	---prototype
-	XPS_AP_typ_Belief : XPS_AP_ifc_Belief
+	XPS_AP_typ_Sensor : XPS_AP_ifc_Sensor
 	---
 	---prototype
-	createhashmapobject [XPS_AP_typ_Belief, [_var1*, _var2*]]
+	createhashmapobject [XPS_AP_typ_Sensor, [_var1*, _var2*]]
 	---
 
 Authors: 
@@ -25,7 +25,7 @@ Returns:
 
 --------------------------------------------------------------------------------*/
 [
-	["#type","XPS_AP_typ_Belief"],
+	["#type","XPS_AP_typ_Sensor"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
@@ -41,38 +41,41 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_name",nil,[""]]/*,["_condition",nil,[{}]],["_apply",nil,[{}]]*/];
-		if !(isNil "_name") then {_self set ["Name",_name]};
+        params [["_router",nil,[createhashmap]]];
+        if !(isNil "_router") then {
+            if !(CHECK_IFC1(_router,XPS_ifc_IEventRouter)) exitwith {
+                throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Event Router Type Parameter was Invalid type",_this]];
+            };
 
-		// if !(isNil "_condition") then {_self set ["condition",_condition]};
-		// if !(isNil "_apply") then {_self set ["apply",_apply]};
-	}],
+            _self set ["SensorUpdated",_router];
+        } else {
+            _self set ["SensorUpdated",createhashmapobject [XPS_typ_EventRouter]];
+		};
+
+        _self call ["Init"];
+    }],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_ADDON_typ_Belief"
+    	"XPS_AP_typ_Sensor"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{(_self get "#type" select 0) + " : " + (_self get "Name")}],
+	["#str",{_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-    	<XPS_ADDON_ifc_IBelief>
+    	<XPS_AP_ifc_ISensor>
 	-----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_AP_ifc_IBelief"]],
-	["#flags",["sealed","noCopy","unscheduled"]],
-
-	["Name","(unnamed)"],
-
-    ["Evaluate",{
-		params ["_context","_key",["_defaultValue",false,[true]]];
-		_context getOrDefault [_key, _defaultValue];
+	["@interfaces",["XPS_AP_ifc_ISensor"]],
+	
+	["formatEvent",{}],
+	["Init",{}],
+	["Register",{
+		//params ["_pointer","_key"];
+		_self get "SensorUpdated" call ["Attach",_this];
 	}],
-	["Apply",{
-		params ["_context","_key","_value"];
-		_context set [_key,_value];
-	}],
-	["Update",{
-		//params ["_context","_key","_value"];
-		_self call ["Apply",_this];
-	}]
+    ["UpdateSensor",{
+        _self get "SensorUpdated" call ["RouteEvent", [_self call ["formatEvent",_this]]];
+    }],
+    ["SensorUpdated",nil]
 ]
+

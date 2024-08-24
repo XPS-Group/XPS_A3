@@ -1,31 +1,31 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: action_planning. XPS_AP_ifc_IBelief
+Interface: action_planning. XPS_AP_ifc_ISensor
 <Interface>
 	---prototype
-	XPS_AP_ifc_IBelief
+	XPS_AP_ifc_ISensor
 	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Property: Name
-		<string>
-
-	Method: Evaluate
+	Method: Init
 		<code>
 
-	Method: Apply
+	Method: Register
 		<code>
 
-	Method: Update
+	Method: UpdateSensor
 		<code>
+
+	Property: SensorUpdated
+		<core.XPS_ifc_IEventHandler>
 
 ---------------------------------------------------------------------------- */
 [
-	["Name","STRING"],
-    ["Evaluate","CODE"],
-	["Apply","CODE"],
-	["Update","CODE"]
+	["Init","CODE"],
+	["Register","CODE"],
+    ["UpdateSensor","CODE"],
+    ["SensorUpdated","XPS_ifc_IEventHandler"]
 ]
