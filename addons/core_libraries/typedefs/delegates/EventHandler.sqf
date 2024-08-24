@@ -46,14 +46,14 @@ Throws:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not implement <XPS_ifc_IDelegate>
     ----------------------------------------------------------------------------*/
 	["#create",{
-		params [["_mcDelegate",nil,[createhashmap]]];
-		if (isNil "_mcDelegate") exitwith {
+		params [["_anyDelegate",nil,[createhashmap]]];
+		if (isNil "_anyDelegate") exitwith {
 			throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
 		};
-		if (!(CHECK_IFC1(_mcDelegate,XPS_ifc_IDelegate))) exitwith {
+		if (!(CHECK_IFC1(_anyDelegate,XPS_ifc_IDelegate))) exitwith {
 			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];
 		};
-		_self set ["_delegate",_mcDelegate];
+		_self set ["_delegate",_anyDelegate];
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str

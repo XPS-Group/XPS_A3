@@ -51,7 +51,7 @@ Returns:
 	Must be Overridden - This type contains no functionality
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Boolean> - condition was ssatified
@@ -70,7 +70,7 @@ Returns:
 	Must be Overridden - This type contains no functionality
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>
@@ -100,7 +100,7 @@ Returns:
 		propogates down the tree if possible.
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
@@ -121,12 +121,13 @@ Returns:
 
 	Description:
 		The code that executes during a Tick of this node and then
-		returns a status.
+		returns a status when either the timeout is reached, the condition
+		is met, or when <Halt> is executed.
 
 	Must be Overridden - This type contains no functionality
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
@@ -187,7 +188,7 @@ Returns:
     	---
 
 	Description:
-		Halts any asynchronous call by invoking a failure
+		Halts any asynchronous call by invoking a failure and setting <starttime> to 0
 
 	Returns: 
 		Nothing
@@ -229,7 +230,7 @@ Returns:
 		Status should be <XPS_BT_Status_Running> until condition or timeout are satisfied.
 
 	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard> interface
+		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
@@ -242,13 +243,13 @@ Returns:
 				_self call ["preTick",_this];
 				_self call ["processTick",_this];
 			};
+			// always check timeout first before condition
+			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))): {
+				_self call ["postTick",XPS_BT_Status_Failure];
+			};
 
 			case (_self call ["condition",_this]): {
 				_self call ["postTick",_self call ["result",_this]];
-			};
-
-			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))): {
-				_self call ["postTick",XPS_BT_Status_Failure];
 			};
 		};
 	}]

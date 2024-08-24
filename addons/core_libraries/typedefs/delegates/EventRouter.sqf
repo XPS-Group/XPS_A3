@@ -3,7 +3,7 @@
 TypeDef: core. XPS_typ_EventRouter
 	<TypeDefinition>
         --- prototype
-        XPS_typ_EventRouter : XPS_ifc_IEventRouter, XPS_ifc_IEventHandler
+        XPS_typ_EventRouter : XPS_typ_EventHandler, XPS_ifc_IEventRouter, XPS_ifc_IEventHandler
         ---
         --- prototype
         createhashmapobject [XPS_typ_EventRouter]
@@ -17,7 +17,7 @@ Description:
 	through the <RouteEvent> method any incoming events. <filter> method provides a way to
 	control if one or more mapped <XPS_typ_Delegates> should receive the event.
 
-	The signature of the Invoke method is set as [sender: <HashmapObject> , args: <Array>]
+	The signature of the Invoke method is set as []
 
 Returns:
 	<HashmapObject>
@@ -25,34 +25,48 @@ Returns:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_typ_EventRouter"],
-
-
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_typ_EventHandler>
+	-----------------------------------------------------------------------------*/
+	["#base",XPS_typ_EvenetHandler],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
         --- prototype
-        call ["#create",_delegateType]
+        call ["#create",[_handlerType, _delegateType, _filter]]
         ---
     
 	Parameters: 
+		_handlerType - (optional - Default: <XPS_typ_EventHandler>) - a type definition implementing the <XPS_ifc_IEventhandler> interface.
 		_delegateType - (optional - Default: <XPS_typ_Delegate>) - a type definition implementing the <XPS_ifc_IDelegate> interface.
+		_filter - (optional - Default: no filter) - code which filters the <handlers> to one or more keys. See: <handlers>
 	
     Return:
         <True>
 
 	Throws:
-		<XPS_typ_InvalidArgumentException> - when parameter does not implement the XPS_ifc_IDelegate interface.
+		<XPS_typ_InvalidArgumentException> - when parameter does not implement the proper interface.
     ----------------------------------------------------------------------------*/
 	["#create",{
 		
-        params [["_filter",nil,[{}]],["_delegateType",XPS_typ_Delegate,[createhashmap]]];
-		if !(CHECK_IFC1(_delegateType,XPS_ifc_IDelegate)) exitwith {
+        params ["_anyDelegate",["_hndlrType",XPS_typ_EventHandler,[createhashmap]],["_dlgtType",XPS_typ_MultiCastDelegate,[createhashmap]],["_filter",nil,[{}]]];
+
+		_self call ["XPS_typ_EventHandler.#create",_anyDelegate];
+		_anyDelegate call ["Attach",[_self,"RouteEvent"]];
+
+		if !(CHECK_IFC1(_hndlrType,XPS_ifc_IEventHandler)) exitwith {
+			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","EventHandler Type Parameter was Invalid type",_this]];
+		};
+		if !(CHECK_IFC1(_dlgtType,XPS_ifc_IDelegate)) exitwith {
 			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Type Parameter was Invalid type",_this]];
 		};
 
-        if !(isNil _filter) then {_self set ["filter",compileFinal _filter]};
-		_self set ["_delegateType",_this];
-		_self set ["_delegates",createhashmap];
+        if !(isNil "_filter") then {_self set ["filter",compileFinal _filter]};
+		_self set ["_handlerType",_hndlrType];
+		_self set ["_delegateType",_dlgtType];
+		_self set ["delegates", createhashmap];
+		_self set ["handlers",createhashmap];
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -64,8 +78,11 @@ Returns:
 	Implements: @interfaces
 		<XPS_ifc_IEventRouter>
 	----------------------------------------------------------------------------*/
-	["_delegates", createhashmap],
+	["@interfaces",["XPS_ifc_IEventRouter"]],
 	["_delegateType",nil],
+	["_handlerType",nil],
+	["delegates",nil],
+	["handlers",nil],
     /*----------------------------------------------------------------------------
     Protected: filter
     
@@ -80,9 +97,11 @@ Returns:
 		_args - <Array> - the arguments sent by the event 
 
 	Returns:
-		_key - <HashmapKey> - the key which dictates where to route to. See <XPS_typ_RoutingDelegate> for more info 
+		_keyList - <Array> of <HashmapKey> - the keys which dictate where to route to.
     ----------------------------------------------------------------------------*/
-	["filter",{}],
+	["filter",{
+		keys (_self get "handlers");
+	}],
     /*----------------------------------------------------------------------------
     Method: RouteEvent
     
@@ -96,9 +115,10 @@ Returns:
 		_args - <Array> - the arguments sent by the event 
     ----------------------------------------------------------------------------*/
 	["RouteEvent",{
-		private _keylist = _self call ["filter",_this];
+		params ["_event","_prevKey"];
+		private _keylist = _self call ["filter",_event];
 		{
-			_self get "_delegates" get _x call ["Invoke",_this];
+			_self get "delegates" get _x call ["Invoke",[_event,_x]];
 		} foreach _keyList;
 	}],
     /*----------------------------------------------------------------------------
@@ -134,9 +154,9 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Attach",{
 		params ["_pointer","_key"];
-		private _dlgt = createhashmapobject [_self get "_delegateType"];
-		_dlgt call ["Attach",_pointer];
-		_self get "_delegates" set [_key, _dlgt];
+		private _dlgt = _self get "delegates" getOrDefault [_key , createhashmapobject [_self get "_delegateType",[]], true];
+		private _hndlr = _self get "handlers" getOrDefault [_key , createhashmapobject [_self get "_handlerType",[_dlgt]], true];
+		_hndlr call ["Attach",_pointer];
 	}],
     /*----------------------------------------------------------------------------
     Method: Detach
@@ -147,7 +167,7 @@ Returns:
 
         <XPS_ifc_IEventRouter>
 
-		Detachs a function/method pointer from the internal pointer collection or the entire 
+		Detachs a function/method pointer from the internal pointer collection or deletes the entire 
 		delegate if no pointer provided.
     
     Parameters: 
@@ -156,16 +176,21 @@ Returns:
 		if removing one pointer from an underlying delegate that can hold multiple delegates. If not 
 		provided, entire delegate is removed
 
-		Must be exactly the same as what was added.
+		_pointer must be exactly the same as what was added.
 
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
 	["Detach", compileFinal {
 		params ["_key","_pointer"];
-		private _dlgt = _self get "_delegates" getOrDefault [_key,createhashmap];
-		private _result = _dlgt call ["Detach",_pointer];
-		if (isNil "_pointer") then {_result = _self get "_delegates" deleteat _key};
+		private _hndlr = _self get "handlers" getOrDefault [_key,createhashmap];
+		private _result = _hndlr call ["Detach",_pointer];
+		if (isNil "_pointer") then {
+			_self get "delegates" deleteat _key;
+			_result = _self get "handlers" deleteat _key
+		};
 		_result;
 	}]
 ]
+
+//TODO Add exceptions
