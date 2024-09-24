@@ -56,7 +56,7 @@ Returns:
 	Returns: 
 		<Boolean> - condition was ssatified
 	-----------------------------------------------------------------------------*/
-	["condition",{}],
+	["condition",{true}],
 	/*----------------------------------------------------------------------------
 	Protected: result
     
@@ -75,7 +75,7 @@ Returns:
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>
 	-----------------------------------------------------------------------------*/
-	["result",{}],
+	["result",{XPS_BT_Status_Failure}],
 	/*----------------------------------------------------------------------------
 	Protected: timeout
     
@@ -87,7 +87,7 @@ Returns:
 		<Number> - the maximum time in seconds (using diag_tickTime) before a processTick will 
 		automatically call it a failure
 	-----------------------------------------------------------------------------*/
-	["timeout",nil],
+	["timeout",0],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
