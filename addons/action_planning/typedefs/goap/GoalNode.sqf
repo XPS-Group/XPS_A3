@@ -21,7 +21,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_AP_typ_GoalNode"}],
+	["#str", compileFinal {"XPS_AP_typ_GoalNode"}],
 	["#type","XPS_AP_typ_GoalNode"],
 	["@interfaces",["XPS_ifc_IAstarNode"]],	
 	["#flags",["sealed","unscheduled"]],

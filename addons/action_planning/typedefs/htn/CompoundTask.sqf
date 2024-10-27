@@ -68,5 +68,5 @@ Returns:
 		<Boolean> - True if satisfied, otherwise False
 
 	-----------------------------------------------------------------------------*/
-    ["Precondition",{}]
+    ["Precondition", {}]
 ]
