@@ -24,10 +24,10 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",{"XPS_PF_typ_RoadGraph"}],
+	["#str", compileFinal {"XPS_PF_typ_RoadGraph"}],
 	["#type","XPS_PF_typ_RoadGraph"],
 	["@interfaces",["XPS_PF_ifc_IRoadGraph","XPS_ifc_IAstarGraph"]],
-	["_getConnectedToPath",compilefinal {
+	["_getConnectedToPath",compileFinal {
 		if !(params [["_fromPoint",nil,[[]],[3]],["_direction",nil,[0]],["_toObject",nil,[createhashmap]],["_toWidth",nil,[0]],["_nextObject",nil,[createhashmap]],["_nextWidth",nil,[0]],["_dirOffset",nil,[0]]]) exitwith {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
 		if (_fromPoint isEqualTo [0,0,0]) then {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
 

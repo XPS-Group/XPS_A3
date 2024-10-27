@@ -34,7 +34,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		params [["_provider",nil,[createhashmap]]];
 		if (!(isNil "_provider") && { CHECK_IFC1(_provider,XPS_ifc_IServiceProvider) }) then {
 			_self set ["_provider",_provider];
@@ -52,7 +52,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#clone",{
+	["#clone", compileFinal {
 		_self  set ["_provider",+(_this get "_provider")];
     }],
 	/*----------------------------------------------------------------------------
@@ -65,8 +65,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#delete",{
-    }],
+	["#delete", {}],
 	/*----------------------------------------------------------------------------
 	Flags: #flags
 		sealed
@@ -79,7 +78,7 @@ Returns:
     	"XPS_typ_ServiceContainer"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_ifc_IServiceContainer>
@@ -105,7 +104,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied is not a string
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was not found
 	-----------------------------------------------------------------------------*/
-    ["Resolve",{
+    ["Resolve", compileFinal {
 		_self get "_provider" call ["GetService",_this];
     }],
 	/*----------------------------------------------------------------------------
@@ -128,7 +127,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when lifeTime parameter supplied is not a valid enum
 		<XPS_typ_InvalidArgumentException> - when type parameter supplied is not a string
 	-----------------------------------------------------------------------------*/
-    ["Add",{
+    ["Add", compileFinal {
 		_self get "_provider" call ["RegisterService",_this];
     }],
 	/*----------------------------------------------------------------------------
@@ -141,7 +140,7 @@ Returns:
 		<XPS_typ_ServiceContainer> - A copy of this object which inherits the singleton instances by ref and a blank scope instance map
 
 	-----------------------------------------------------------------------------*/
-    ["GetScope",{
+    ["GetScope", compileFinal {
 		//createhashmapobject [_self get "#type" select 0,+(_self get "_provider")];
 		+_self;
     }]

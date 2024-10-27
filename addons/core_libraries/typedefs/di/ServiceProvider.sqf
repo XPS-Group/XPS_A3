@@ -49,7 +49,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
         _self set ["_services",createhashmap];
         _self set ["_instances",
             createhashmapfromarray [[str XPS_LifeTime_Scoped,createhashmap],[str XPS_LifeTime_Singleton,createhashmap]]
@@ -65,7 +65,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#clone",{
+	["#clone", compileFinal {
 		// Remove deep copied scoped instances from new copy
         {
             _self get "_instances" get (str XPS_LifeTime_Scoped) deleteat _x;
@@ -84,7 +84,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#delete",{
+	["#delete", compileFinal {
         _self set ["_services",nil];
         _self set ["_instances",nil];
     }],
@@ -100,7 +100,7 @@ Returns:
     	"XPS_typ_ServiceProvider"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_ifc_IServiceProvider>
@@ -127,7 +127,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied is not a string
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was not found
 	-----------------------------------------------------------------------------*/
-    ["GetService",{
+    ["GetService", compileFinal {
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
 		
         if !(params [["_key","",[""]],"_args"]) then {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"GetService","Key was not a valid string.",_this]]; };
@@ -174,7 +174,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when lifeTime parameter supplied is not a valid enum
 		<XPS_typ_InvalidArgumentException> - when type parameter supplied is not a string
 	-----------------------------------------------------------------------------*/
-    ["RegisterService",{
+    ["RegisterService", compileFinal {
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
 		
         if !(params [["_key","",[""]],["_type",createhashmap,["",createhashmap]],"_lifeTime"]) then {

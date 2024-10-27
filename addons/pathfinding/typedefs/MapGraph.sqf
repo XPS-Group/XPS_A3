@@ -25,7 +25,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_MapGraph"}],
+	["#str", compileFinal {"XPS_PF_typ_MapGraph"}],
 	["#type","XPS_PF_typ_MapGraph"],
 	["@interfaces",["XPS_PF_ifc_IMapGraph","XPS_ifc_IAstarGraph"]],
 	/*----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ Optionals:
 		_methodName - <String> - name of the method to test or Empty <string> ("") if the initialization of the class
 
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		params [["_className","",[""]],["_methodName","",[""]]];
 		_self set ["ClassName", _className];
 		_self set ["MethodName", _methodName];
@@ -51,7 +51,7 @@ Optionals:
     	"XPS_UT_typ_UnitTest"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Protected: ClassName
     

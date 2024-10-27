@@ -27,7 +27,7 @@ Description:
 		"XPS_typ_Enum"
 		---
 	-----------------------------------------------------------------------------*/
-	["#str",compilefinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements:
 		<XPS_ifc_IEnumeration>

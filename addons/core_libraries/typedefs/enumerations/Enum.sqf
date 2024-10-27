@@ -23,7 +23,7 @@ Description:
 		"XPS_typ_Enum"
 		---
 	-----------------------------------------------------------------------------*/
-	["#str",compilefinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	["_isEnumerationType", compileFinal {"#type" in _this && {"XPS_typ_Enumeration" in (_this get "#type")}}],
 	/*----------------------------------------------------------------------------
 	Method: GetEnum

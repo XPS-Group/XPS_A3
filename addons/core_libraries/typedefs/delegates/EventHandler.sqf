@@ -45,7 +45,7 @@ Throws:
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not implement <XPS_ifc_IDelegate>
     ----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		params [["_anyDelegate",nil,[createhashmap]]];
 		if (isNil "_anyDelegate") exitwith {
 			throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
@@ -61,7 +61,7 @@ Throws:
 		"XPS_typ_EventHandler"
 		---
 	----------------------------------------------------------------------------*/
-	["#str",compilefinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IEventHandler>
@@ -84,7 +84,7 @@ Throws:
 
 		Example Using Code:
 		--- code 
-        call ["Attach",{ hint "Hello";}]
+        call ["Attach", compileFinal { hint "Hello";}]
 		---
 
 		Example Using <HashmapObject> Method:

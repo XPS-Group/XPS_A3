@@ -20,7 +20,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_RoadGraphDoctrine"}],
+	["#str", compileFinal {"XPS_PF_typ_RoadGraphDoctrine"}],
 	["#type","XPS_PF_typ_RoadGraphDoctrine"],
 	["@interfaces",["XPS_PF_ifc_IRoadGraphDoctrine"]],
 	/*----------------------------------------------------------------------------

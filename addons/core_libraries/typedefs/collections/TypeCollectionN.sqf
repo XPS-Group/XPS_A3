@@ -38,7 +38,7 @@ Returns:
     Return:
         <True>
     ----------------------------------------------------------------------------*/
-    ["#create",{
+    ["#create", compileFinal {
         _self call ["XPS_typ_TypeCollection.#create",_this];
         _self set ["_onCollectionChangedEvent",createhashmapobject [XPS_typ_Event]];
         _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];

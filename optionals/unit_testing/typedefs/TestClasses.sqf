@@ -42,7 +42,7 @@ Description:
 		"XPS_UT_type_TestClasses"
 		---
 	----------------------------------------------------------------------------*/
-	["#str", {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<core. XPS_ifc_ICollection>

@@ -98,7 +98,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["Check A and B are same type",{
+	["Check A and B are same type", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _b = XPS_SampleTest_Values get "B";
 
@@ -115,7 +115,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["Check B and C are same type",{
+	["Check B and C are same type", compileFinal {
 		private _c = XPS_SampleTest_Values get "C";
 		private _b = XPS_SampleTest_Values get "B";
 
@@ -132,7 +132,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["Check A and C are same type",{
+	["Check A and C are same type", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _c = XPS_SampleTest_Values get "C";
 
@@ -149,7 +149,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["Check A and B are not the same",{
+	["Check A and B are not the same", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _b = XPS_SampleTest_Values get "B";
 
@@ -166,7 +166,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["Check A and B are not equal to each other",{
+	["Check A and B are not equal to each other", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _b = XPS_SampleTest_Values get "B";
 
@@ -184,7 +184,7 @@ Description:
 		// THIS TEST FAILS - because we set A to 10 : (10 + 2 = 12) in our testing order prior to this test
 		---
 	----------------------------------------------------------------------------*/
-	["Check A plus B equals 12",{
+	["Check A plus B equals 12", compileFinal {
 		private _sum = (XPS_SampleTest_Values get "A") + (XPS_SampleTest_Values get "B");
 
 		XPS_UT_Assert call ["AreEqual",[_sum,12]];
@@ -200,7 +200,7 @@ Description:
 		}
 		---
 	----------------------------------------------------------------------------*/
-	["Check We can set A to 10",{
+	["Check We can set A to 10", compileFinal {
 		XPS_SampleTest_Values set ["A",10];
 		private _a = XPS_SampleTest_Values get "A";
 
