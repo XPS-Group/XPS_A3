@@ -66,7 +66,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_MapGraphSearch"}],
+	["#str", compileFinal {"XPS_PF_typ_MapGraphSearch"}],
 	["#type","XPS_PF_typ_MapGraphSearch"],
 	["#base",XPS_typ_AstarSearch],
 	["_currentIsWaterTravel",false],

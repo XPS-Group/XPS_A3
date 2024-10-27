@@ -48,7 +48,7 @@ Returns:
 	Throws:
 		<XPS_typ_InvalidArgumentException> - when parameter does not implement the proper interface.
     ----------------------------------------------------------------------------*/
-	["#create",{
+	["#create",compileFinal {
 		
         params ["_anyDelegate",["_hndlrType",XPS_typ_EventHandler,[createhashmap]],["_dlgtType",XPS_typ_MultiCastDelegate,[createhashmap]],["_filter",nil,[{}]]];
 
@@ -99,7 +99,7 @@ Returns:
 	Returns:
 		_keyList - <Array> of <HashmapKey> - the keys which dictate where to route to.
     ----------------------------------------------------------------------------*/
-	["filter",{
+	["filter", compileFinal {
 		keys (_self get "handlers");
 	}],
     /*----------------------------------------------------------------------------
@@ -114,7 +114,7 @@ Returns:
 	Parameters:
 		_args - <Array> - the arguments sent by the event 
     ----------------------------------------------------------------------------*/
-	["RouteEvent",{
+	["RouteEvent", compileFinal {
 		params ["_event","_prevKey"];
 		private _keylist = _self call ["filter",_event];
 		{
@@ -152,7 +152,7 @@ Returns:
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
-	["Attach",{
+	["Attach", compileFinal {
 		params ["_pointer","_key"];
 		private _dlgt = _self get "delegates" getOrDefault [_key , createhashmapobject [_self get "_delegateType",[]], true];
 		private _hndlr = _self get "handlers" getOrDefault [_key , createhashmapobject [_self get "_handlerType",[_dlgt]], true];

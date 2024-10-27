@@ -42,7 +42,7 @@ Returns:
     Return:
         <True>
     ----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		if !(isnil "_this") then {
 			_self set ["_signature",_this];
 		} else {
@@ -55,7 +55,7 @@ Returns:
 		"XPS_typ_Delegate"
 		---
 	----------------------------------------------------------------------------*/
-	["#str",compilefinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IDelegate>
@@ -79,7 +79,7 @@ Returns:
 		
 		Example Using Code:
 		--- code 
-        call ["Attach",{ hint "Hello";}]
+        call ["Attach", compileFinal { hint "Hello";}]
 		---
 
 		Example Using <HashmapObject> Method:
@@ -209,7 +209,7 @@ Example: Override class to change signature
 	a set of parameters following the new signature:
 	---code 
 	Example = createhashmapobject [_def];
-	Example get "delegate" call ["Attach",{
+	Example get "delegate" call ["Attach", compileFinal {
 		params ["_object","_methodname","_args"]; 
 		hint format["%1 called %2 and returned %3",_object get "#type" select 0, _methodName,_args];
 	}];

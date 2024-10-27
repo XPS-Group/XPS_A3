@@ -24,7 +24,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_RoadNode"}],
+	["#str", compileFinal {"XPS_PF_typ_RoadNode"}],
 	["#type","XPS_PF_typ_RoadNode"],
 	["@interfaces",["XPS_PF_ifc_IRoadNode","XPS_ifc_IAstarNode"]],	
 	/*----------------------------------------------------------------------------

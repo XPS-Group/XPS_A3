@@ -41,7 +41,7 @@ Returns:
     	"XPS_BT_typ_Composite"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",compileFinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_BT_ifc_INode>
@@ -232,7 +232,7 @@ Returns:
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {	
+	["Tick",compileFinal {	
 		_self call ["preTick",_this];
 		_self call ["postTick",
 			_self call ["processTick",_this]

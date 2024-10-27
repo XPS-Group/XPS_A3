@@ -38,7 +38,7 @@ Returns:
 	Returns:
 		<True>
     ----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		_self call ["XPS_typ_MultiCastDelegate.#create",[createhashmap,[]]];
 	}]
 	/*----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		params [["_source","",[]],["_target","",[]],["_message",nil,[""]],["_data",createhashmap,[]]];
 		_source = [str _source,_source] select (_source isEqualType "");
 		_target = [str _target,_target] select (_target isEqualType "");
@@ -65,7 +65,7 @@ Returns:
 		         Data: (data)
 		---
 	----------------------------------------------------------------------------*/
-	["#str", {_self call ["GetText"]}],
+	["#str", compileFinal {_self call ["GetText"]}],
 	/*----------------------------------------------------------------------------
 	Property: Data
     

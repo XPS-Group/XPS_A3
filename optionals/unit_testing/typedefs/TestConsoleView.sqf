@@ -38,7 +38,7 @@ Returns:
 	Parameters: 
 		_display - <Display> - The display handle this view is assigned to
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		params ["_display"];
 		_self set ["_displayHandle",_display];
 		private _viewModel = createhashmapobject [XPS_UT_typ_TestConsoleViewModel];
@@ -52,7 +52,7 @@ Returns:
     	"XPS_UT_typ_TestConsoleView"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	["_viewModel",nil],
 	["_displayName","XPS_UT_TestConsole_display"],
 	["_displayHandle",displayNull],

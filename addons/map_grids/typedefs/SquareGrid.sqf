@@ -24,7 +24,7 @@ Description:
     	"XPS_MG_typ_SquareGrid"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_MG_ifc_IGrid>

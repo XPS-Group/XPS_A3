@@ -178,7 +178,7 @@ Returns:
         <Anything> - The item if found otherwise nil
 
     -------------------------------------------------------------------------*/ 
-    ["GetItem",{
+    ["GetItem", compileFinal {
         if (isNil "_this") exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetItem",nil,createhashmapfromarray [["_this",_this]]]];};
         _self get "_items" get _this;
     }],
@@ -195,7 +195,7 @@ Returns:
         <Array> - A copy of the item store in an array
 
     -------------------------------------------------------------------------*/ 
-    ["GetItems",{
+    ["GetItems", compileFinal {
         values (_self get "_items");
     }],
     /*----------------------------------------------------------------------------
@@ -292,7 +292,7 @@ Returns:
     Parameters: 
         _value - <Anything> - Value to check to see if it is allowed to be added
 	----------------------------------------------------------------------------*/
-    ["IsAllowed",{
+    ["IsAllowed", compileFinal {
         _self get "_restrictor" call ["IsAllowed",_this];
     }]
 ]

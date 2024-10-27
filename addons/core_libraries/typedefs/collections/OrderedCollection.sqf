@@ -30,7 +30,7 @@ Returns:
     Return:
         <True>
     ----------------------------------------------------------------------------*/
-    ["#create",{
+    ["#create", compileFinal {
         _self set ["_listArray",[]];
     }],
 	/*----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ Returns:
 		"XPS_typ_OrderedCollection"
 		---
 	----------------------------------------------------------------------------*/
-	["#str", {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
@@ -199,7 +199,7 @@ Returns:
         <Array> - A deep copy of the item store in an array
 
     -------------------------------------------------------------------------*/ 
-    ["GetItems",{
+    ["GetItems", compileFinal {
         private _array = _self get "_listArray";
         +_array;
     }],

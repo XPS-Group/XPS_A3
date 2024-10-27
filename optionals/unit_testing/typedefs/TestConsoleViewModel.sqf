@@ -30,7 +30,7 @@ Returns:
 	Additionally creates a Test Service and attaches the <onTestServiceCollectionChanged>
 	methods to the appropriate Test Service Events
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		_self set ["_testCollection",createhashmapobject [XPS_typ_OrderedCollection]];
 		
 		_self set ["_onUpdateUnitTest",createhashmapobject [XPS_typ_Event]];
@@ -48,7 +48,7 @@ Returns:
     	"XPS_UT_typ_TestConsoleViewModel"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	["_testCollection",nil],
 	["_testService",nil],
 	["_onUpdateUnitTest",nil],

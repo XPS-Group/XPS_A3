@@ -23,7 +23,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [	
-	["#str",compileFinal {"XPS_PF_typ_MapNode"}],
+	["#str", compileFinal {"XPS_PF_typ_MapNode"}],
 	["#type","XPS_PF_typ_MapNode"],
 	["@interfaces",["XPS_ifc_IAstarNode"]],
 	/*----------------------------------------------------------------------------

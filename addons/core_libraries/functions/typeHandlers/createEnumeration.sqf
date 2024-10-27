@@ -42,8 +42,8 @@ private _fnc_createEnumConstant = {
 		["#type", _var]
 	];
 
-	private _hashObject = compilefinal createhashmapobject [[
-		["#str", compilefinal format["%1",str _name]],
+	private _hashObject = compileFinal createhashmapobject [[
+		["#str", compileFinal format["%1",str _name]],
 		["#base",_baseDef],
 		["#type", format["%1_%2",_var,_name]],
 		["#flags",["sealed","nocopy"]],
@@ -52,13 +52,13 @@ private _fnc_createEnumConstant = {
 	private _gVar = format["%1_%2",_var,_name];
 	if (isNil _gVar || {(call compile _gVar) isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];};
 	_def set [_name , compileFinal _gVar ];
-	_def set [_val , compilefinal _gVar ];
+	_def set [_val , compileFinal _gVar ];
 };
 
 private _baseDef = if (_typeDef isEqualType []) then {createhashmapfromarray _typeDef} else {+_typeDef};
 
 private _newDef = createhashmap;
-	_newDef set ["#str",compilefinal format ["%1",str _varName]];
+	_newDef set ["#str", compileFinal format ["%1",str _varName]];
 	_newDef set ["#type",_baseDef getOrDefault ["#type","unknown type"]];
 	_newDef set ["#base",_baseDef getOrDefault ["#base",XPS_typ_Enumeration]];
 	_newDef set ["#flags",["sealed","nocopy"]];
@@ -104,7 +104,7 @@ switch (true) do {
 	};
 };
 
-call compile format["%1 = compilefinal createhashmapobject [_newDef]",_varName];
+call compile format["%1 = compileFinal createhashmapobject [_newDef]",_varName];
 
 true;
 /*------------------------------------------------------------------------------

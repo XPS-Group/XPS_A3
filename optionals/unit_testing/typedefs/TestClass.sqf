@@ -24,7 +24,7 @@ Description:
 		"XPS_UT_typ_TestClass"
 		---
 	----------------------------------------------------------------------------*/
-	["#str",compilefinal {_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_UT_ifc_ITestClass>

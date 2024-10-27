@@ -44,37 +44,37 @@ Description:
 		XPS_SampleTest_Values = nil;
 	}],
 	// Test Methods ------------------------------------
-	["Check A and B are same type",{
+	["Check A and B are same type", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _b = XPS_SampleTest_Values get "B";
 
 		XPS_UT_Assert call ["IsEqualType",[_a,_b]];
 	}],
-	["Check B and C are same type",{
+	["Check B and C are same type", compileFinal {
 		private _c = XPS_SampleTest_Values get "C";
 		private _b = XPS_SampleTest_Values get "B";
 
 		XPS_UT_Assert call ["IsEqualType",[_c,_b]];
 	}],
-	["Check A and C are same type",{
+	["Check A and C are same type", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _c = XPS_SampleTest_Values get "C";
 
 		XPS_UT_Assert call ["IsEqualType",[_a,_c]];
 	}],
-	["Check A and B are not the same",{
+	["Check A and B are not the same", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _b = XPS_SampleTest_Values get "B";
 
 		XPS_UT_Assert call ["AreNotSame",[_a,_b]];
 	}],
-	["Check A and B are not equal to each other",{
+	["Check A and B are not equal to each other", compileFinal {
 		private _a = XPS_SampleTest_Values get "A";
 		private _b = XPS_SampleTest_Values get "B";
 
 		XPS_UT_Assert call ["AreNotEqual",[_a,_b]];
 	}],
-	["Check We can append [10] to A",{
+	["Check We can append [10] to A", compileFinal {
 		XPS_SampleTest_Values get "A" append [10];
 		private _a = XPS_SampleTest_Values get "A";
 

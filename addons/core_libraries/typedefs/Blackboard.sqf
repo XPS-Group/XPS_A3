@@ -58,7 +58,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#delete",{
+	["#delete", compileFinal {
 		if !(isNull (_self get "attachedTo")) then {
 			_self get "attachedTo" setVariable [_self get "attachedTo_VariableName",nil];
 			_self set ["attachedTo",objNull];
@@ -70,7 +70,7 @@ Returns:
 		"XPS_typ_Blackboard"
 		---
 	-----------------------------------------------------------------------------*/
-	["#str",compilefinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements:
 		<XPS_ifc_IBlackboard>

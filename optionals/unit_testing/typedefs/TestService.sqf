@@ -34,7 +34,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		// diag_log "Creating TestService";
 		_self set ["_testClassCollection",createhashmapobject [XPS_typ_OrderedCollection]];
 
@@ -45,16 +45,13 @@ Returns:
 		_self set ["_onStateChanged",createhashmapobject [XPS_typ_Event]];
 		_self set ["StateChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onStateChanged"]]];
 	}],
-	["#delete",{
-		// diag_log "Deleting TestService";
-	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
     	"XPS_UT_typ_TestService"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 
 	["_testClassCollection",nil],
 	["_unitTestCollection",nil],
