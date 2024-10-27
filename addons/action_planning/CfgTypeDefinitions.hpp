@@ -1,8 +1,6 @@
 
 class XPS_CFG_TD_BASECLASSNAME {
 	class ADDON {
-<<<<<<< Updated upstream
-=======
 		class Interfaces {
 			XPS_CFG_IFC(IAction);
 			XPS_CFG_IFC(IBelief);
@@ -27,6 +25,5 @@ class XPS_CFG_TD_BASECLASSNAME {
 			// XPS_CFG_TYP_SUB(htn,Method);
 			// XPS_CFG_TYP_SUB(htn,PrimitiveTask);
 		};
->>>>>>> Stashed changes
 	};
 };
