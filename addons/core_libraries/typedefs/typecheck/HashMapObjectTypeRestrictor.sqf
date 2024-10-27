@@ -36,7 +36,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		if (isNil "_this" || {_this isEqualTo []}) exitwith {_self set ["_allowed",[]];};
 		if (_this isEqualTypeAll "") then {
 			_self set ["_allowed",_this];
@@ -50,7 +50,7 @@ Returns:
     	"XPS_typ_HashmapObjectTypeRestrictor"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_ifc_ITypeRestrictor>

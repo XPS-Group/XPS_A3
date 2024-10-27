@@ -51,7 +51,7 @@ Example: File and calling code example
 ---------------------------------------------------------------------------- */
 if !(params [["_varname",nil,[""]],["_filepath",nil,[""]]]) exitwith {false;};
 
-private _statement = "%1 = compilefinal (call compileScript [""%2"",false]);";
+private _statement = "%1 = compileFinal (call compileScript [""%2"",false]);";
 private _code =  format[_statement, _varname, _filepath];
 
 call compile _code;

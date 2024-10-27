@@ -36,7 +36,7 @@ Returns:
 	Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		if (isNil "_this") then {_self set ["_allowed",[]];};
 		if (_this isEqualType []) then {
 			_self set ["_allowed",_this];
@@ -50,7 +50,7 @@ Returns:
     	"XPS_typ_NativeTypeRestrictor"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",{_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_ifc_ITypeRestrictor>

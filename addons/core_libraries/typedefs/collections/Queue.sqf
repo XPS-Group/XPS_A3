@@ -36,7 +36,7 @@ Returns:
 		"XPS_typ_Queue"
 		---
 	----------------------------------------------------------------------------*/
-	["#str", {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IQueue>

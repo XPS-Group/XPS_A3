@@ -43,7 +43,7 @@ Returns:
 	Returns:
 		<True>
     ----------------------------------------------------------------------------*/
-	["#create",{
+	["#create", compileFinal {
 		if !(isnil "_this") then {
 			_self set ["_signature",_this];
 		} else {
@@ -56,7 +56,7 @@ Returns:
 		"XPS_typ_MultiCastDelegate"
 		---
 	----------------------------------------------------------------------------*/
-	["#str",compilefinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IDelegate>
@@ -80,7 +80,7 @@ Returns:
 
 		Example Using Code:
 		--- code 
-        call ["Attach",{ hint "Hello";}]
+        call ["Attach", compileFinal { hint "Hello";}]
 		---
 		Example Using <HashmapObject> Method:
 		--- code 

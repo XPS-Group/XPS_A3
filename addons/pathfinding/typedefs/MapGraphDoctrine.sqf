@@ -20,7 +20,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_MapGraphDoctrine"}],
+	["#str", compileFinal {"XPS_PF_typ_MapGraphDoctrine"}],
 	["#type","XPS_PF_typ_MapGraphDoctrine"],
 	["@interfaces",["XPS_PF_ifc_IMapGraphDoctrine"]],
 	/*----------------------------------------------------------------------------

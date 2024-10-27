@@ -20,7 +20,7 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str",compileFinal {"XPS_PF_typ_TerrainLayerBuilder"}],
+	["#str", compileFinal {"XPS_PF_typ_TerrainLayerBuilder"}],
 	["#type","XPS_PF_typ_TerrainLayerBuilder"],
 	["@interfaces",["XPS_PF_ifc_ILayerBuilder"]],
 	["LayerName","Terrain"],

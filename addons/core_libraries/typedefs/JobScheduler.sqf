@@ -33,7 +33,7 @@ Returns:
     Constructor: #create
 		<XPS_typ_TypeCollection.#create>
     -------------------------------------------------------------------------*/ 
-	["#create",{
+	["#create", compileFinal {
 		_self call ["XPS_typ_TypeCollection.#create",_this];
 	}],
     /*----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ Returns:
     
 		calls <XPS_typ_JobScheduler.dequeue> method
 	-----------------------------------------------------------------------------*/
-	["finalizeCurrent",compilefinal {
+	["finalizeCurrent",compileFinal {
 		_self call ["dequeue"];
 	}],
 	/*----------------------------------------------------------------------------

@@ -30,7 +30,7 @@ Returns:
     	"XPS_BT_typ_LeafUAsync"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",compileFinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_BT_ifc_INode>
@@ -193,7 +193,7 @@ Returns:
 	Returns: 
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["Halt",compileFInal {		
+	["Halt",compileFinal {		
 		_self call ["postTick", XPS_BT_Status_Failure];
 	}],
 	/*----------------------------------------------------------------------------
@@ -235,7 +235,7 @@ Returns:
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {	
+	["Tick",compileFinal {	
 		
 		switch (true) do {
 

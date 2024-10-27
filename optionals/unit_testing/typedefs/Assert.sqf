@@ -21,7 +21,7 @@ Description:
 		"XPS_UT_typ_Assert"
 		---
 	----------------------------------------------------------------------------*/
-	["#str", {_self get "#type" select 0}],
+	["#str", compileFinal {_self get "#type" select 0}],
 	/*-----------------------------------------------------------------------------
 	Method: AreEqual 
     
@@ -604,7 +604,7 @@ Description:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["ThrowsException", compileFinal {
-		params [["_code",{},[{}]],["_exceptionType","",[""]],["_message",nil,[""]]];
+		params [["_code", {},[{}]],["_exceptionType","",[""]],["_message",nil,[""]]];
 		try {
 			call _code;
 			_self call ["Fail",["ThrowsException",_this#2, createhashmap]]

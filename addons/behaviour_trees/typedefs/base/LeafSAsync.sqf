@@ -29,7 +29,7 @@ Returns:
     	"XPS_BT_typ_LeafSAsync"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str",compileFinal {_self get "#type" select  0}],
+	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_BT_ifc_INode>
@@ -171,7 +171,7 @@ Returns:
 	Returns: 
 		Nothing
 	-----------------------------------------------------------------------------*/
-	["Halt",compileFInal {		
+	["Halt",compileFinal {		
 		_handle = _self get "handle";
 		if !(isNil "_handle") then {
 			terminate _handle;
@@ -218,7 +218,7 @@ Returns:
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
-	["Tick",compileFInal {		
+	["Tick",compileFinal {		
 		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
 			_self call ["preTick",_this];	
 				_handle = [_self,_this] spawn {
