@@ -85,9 +85,7 @@ Returns:
 		_object* - <Object> - (Optional - Default : objNull) 
 		_var1* - <String> - (Optional - Default : "") 
 	-----------------------------------------------------------------------------*/
-	["Action", compileFinal   {
-
-	}],
+	["Action", {}],
     ["CanPerform", compileFinal {false}],
     ["IsComplete", compileFinal {_self get "_complete"}],
 	["Execute", {	
