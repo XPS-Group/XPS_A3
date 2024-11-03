@@ -117,7 +117,9 @@ Returns:
     
     Optionals: 
 		_key - <String> - the key of the type. Typically name of an interface 
-        _args* - <Array>, <Anything> - (Optional) an argument or array of arguments to pass to #create method
+        _args* - <Array>, <Anything> - (Optional) an argument or array of arguments to pass to #create 
+		method if provider gives new instance. If nothing provided, any new instance may use default 
+		arguments (if any) when type was registered.
  		
 	Returns:
 		<Hashmapobject> - an instance of the registered type to the key
@@ -134,7 +136,8 @@ Returns:
         
         if (_key in (_self get "_services")) then {
             private _item = _self get "_services" get _key;
-            _item params ["_type","_lifeTime"];
+            _item params ["_type","_lifeTime","_defaultArgs"];
+			if (isNil "_args") then {_args = [_defaultArgs,[]] select (isNil "_defaultArgs")};
             switch (_lifeTime) do {
                 
                 case XPS_LifeTime_Transient : {
@@ -158,13 +161,14 @@ Returns:
 	Method: RegisterService
     
     	--- Prototype --- 
-    	call ["RegisterService",[_key, _type, _lifeTime*]]
+    	call ["RegisterService",[_key, _type, _lifeTime*, _defaultArgs*]]
     	---
     
     Optionals: 
         _key - <String> - the desired key to register to - typically an interface or type 
 		_type - <String> or <Hashmap> - a string representation of the type's global variable or a hashmap type definition
         _lifeTime* - <XPS_enum_LifeTime> - (Optional - Default : Transient) the desired scope of any instances
+        _defaultArgs* - <Anything> - (Optional - Default : nil) the default arguments used for new instances
 
 	Returns:
 		<Boolean> - <True> if added successfully, otherwise <False>
@@ -177,7 +181,7 @@ Returns:
     ["RegisterService", compileFinal {
 		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterService","Parameter supplied was Nil"]]};
 		
-        if !(params [["_key","",[""]],["_type",createhashmap,["",createhashmap]],"_lifeTime"]) then {
+        if !(params [["_key","",[""]],["_type",createhashmap,["",createhashmap]],"_lifeTime","_defaultArgs"]) then {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Parameters supplied were invalid.",_this]];
         };
         
@@ -193,6 +197,6 @@ Returns:
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Type Parameter was invalid.",_this]];
         };
 
-        _self get "_services" set [_key,[_type,_lifeTime]];
+        _self get "_services" set [_key,[_type,_lifeTime,_defaultArgs]];
     }]
 ]
