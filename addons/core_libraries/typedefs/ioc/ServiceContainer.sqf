@@ -38,7 +38,7 @@ Returns:
         <XPS_typ_InvalidArgumentException> - if parameter does not implement the <XPS_ifc_ITypeRestrictor> interface
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-		params [["_provider",XPS_typ_ServiceProvider,[createhashmap]]];		
+		params [["_provider",createhashmapobject [XPS_typ_ServiceProvider],[createhashmap]]];		
 		if !(CHECK_IFC1(_provider,XPS_ifc_IServiceProvider)) exitwith {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","_provider parameter was an invalid type",_this]];
 		};

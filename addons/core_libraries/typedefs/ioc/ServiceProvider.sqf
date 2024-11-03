@@ -175,7 +175,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when type parameter supplied is not a string
 	-----------------------------------------------------------------------------*/
     ["RegisterService", compileFinal {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
+		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterService","Parameter supplied was Nil"]]};
 		
         if !(params [["_key","",[""]],["_type",createhashmap,["",createhashmap]],"_lifeTime"]) then {
             throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Parameters supplied were invalid.",_this]];
