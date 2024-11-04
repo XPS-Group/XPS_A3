@@ -172,7 +172,7 @@ class XPS_UT_TestConsole_display {
 
 	idd = 5000;
 	movingenable = "true";
-	onLoad = "private _view = createhashmapobject [XPS_UT_typ_TestConsoleView,[_this#0]]; _this#0 setVariable [""xps_view"",_view]; _view call [""XPS_UT_TestConsole_display_load"",_this]";
+	onLoad = "private _view = createHashmapObject [XPS_UT_typ_TestConsoleView,[_this#0]]; _this#0 setVariable [""xps_view"",_view]; _view call [""XPS_UT_TestConsole_display_load"",_this]";
 	onUnload = "_this#0 getVariable ""xps_view"" call [""XPS_UT_TestConsole_display_unLoad""]; _this#0 setvariable [""xps_view"",nil];";
 	class Controls 
 	{

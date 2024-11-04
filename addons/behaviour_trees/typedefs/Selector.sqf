@@ -71,7 +71,7 @@ Returns:
 		private _children = _self get "children";
 		private _currentIndex = _self get "currentIndex";
 
-		if (_children isEqualTo []) exitwith {XPS_BT_Status_Failure};
+		if (_children isEqualTo []) exitWith {XPS_BT_Status_Failure};
 
 		private _child = _children#_currentIndex;
 		private _status = _child call ["Tick",_this];

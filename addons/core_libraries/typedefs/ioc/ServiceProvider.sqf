@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_ServiceProvider
 	XPS_typ_ServiceProvider : XPS_ifc_IServiceProvider
 	---
 	---prototype
-	createhashmapobject [XPS_typ_ServiceProvider]
+	createHashmapObject [XPS_typ_ServiceProvider]
 	---
 
 Authors: 
@@ -52,7 +52,7 @@ Returns:
 	["#create", compileFinal {
         _self set ["_services",createhashmap];
         _self set ["_instances",
-            createhashmapfromarray [[str XPS_LifeTime_Scoped,createhashmap],[str XPS_LifeTime_Singleton,createhashmap]]
+            createHashMapFromArray [[str XPS_LifeTime_Scoped,createhashmap],[str XPS_LifeTime_Singleton,createhashmap]]
         ];
     }],
 	/*----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ Returns:
 		// Remove deep copied scoped instances from new copy
         {
             _self get "_instances" get (str XPS_LifeTime_Scoped) deleteat _x;
-        } foreach keys (_self get "_instances" get (str XPS_LifeTime_Scoped));
+        } forEach keys (_self get "_instances" get (str XPS_LifeTime_Scoped));
 		
 		// make singleton instances ref the parent : Note - new singletons in copy will also go to parent as a result
 		_self get "_instances" set [str XPS_LifeTime_Singleton,_this get "_instances" get (str XPS_LifeTime_Singleton)];
@@ -130,9 +130,9 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was not found
 	-----------------------------------------------------------------------------*/
     ["GetService", compileFinal {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"Add","Parameter supplied was Nil"]]};
 		
-        if !(params [["_key","",[""]],"_args"]) then {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"GetService","Key was not a valid string.",_this]]; };
+        if !(params [["_key","",[""]],"_args"]) then {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"GetService","Key was not a valid string.",_this]]; };
         
         if (_key in (_self get "_services")) then {
             private _item = _self get "_services" get _key;
@@ -141,20 +141,20 @@ Returns:
             switch (_lifeTime) do {
                 
                 case XPS_LifeTime_Transient : {
-                    createhashmapobject [_type, _args];
+                    createHashmapObject [_type, _args];
                 };
                 
                 case XPS_LifeTime_Singleton;
                 case XPS_LifeTime_Scoped : {
                     if (isNil {_self get "_instances" get (str _lifeTime) get _key}) then  {
-                        _self get "_instances" get (str _lifeTime) set [_key, createhashmapobject [_type, _args]];
+                        _self get "_instances" get (str _lifeTime) set [_key, createHashmapObject [_type, _args]];
                     };
                     
                     _self get "_instances" get (str _lifeTime) get _key;
                 };
             };
         } else {
-            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"GetService","Key was not found.",_this]]; 
+            throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"GetService","Key was not found.",_this]]; 
         };
     }],
 	/*----------------------------------------------------------------------------
@@ -179,22 +179,22 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when type parameter supplied is not a string
 	-----------------------------------------------------------------------------*/
     ["RegisterService", compileFinal {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterService","Parameter supplied was Nil"]]};
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"RegisterService","Parameter supplied was Nil"]]};
 		
         if !(params [["_key","",[""]],["_type",createhashmap,["",createhashmap]],"_lifeTime","_defaultArgs"]) then {
-            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Parameters supplied were invalid.",_this]];
+            throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Parameters supplied were invalid.",_this]];
         };
         
         _lifeTime = _lifeTime param [0, XPS_LifeTime_Transient,[createhashmap]];
 		private _enum = (_lifeTime getOrDefault ["#type",[""]])#0 ;
         if !((_lifeTime getOrDefault ["#type",[""]])#0 in ["XPS_LifeTime_Transient","XPS_LifeTime_Scoped","XPS_LifeTime_Singleton"]) then {
-            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","LifeTime Parameter was invalid.",_this]];
+            throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","LifeTime Parameter was invalid.",_this]];
         };
 
         if (_type isEqualtype "") then {_type = call compile _type;};
         
         if (_type isEqualTo createhashmap) then {
-            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Type Parameter was invalid.",_this]];
+            throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Type Parameter was invalid.",_this]];
         };
 
         _self get "_services" set [_key,[_type,_lifeTime,_defaultArgs]];

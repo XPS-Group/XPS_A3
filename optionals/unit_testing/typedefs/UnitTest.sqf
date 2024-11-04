@@ -6,7 +6,7 @@ TypeDef: unit_testing. XPS_UT_typ_UnitTest
 	XPS_UT_typ_UnitTest : XPS_UT_ifc_IUnitTest
 	---
 	---prototype
-	createhashmapobject [XPS_UT_typ_UnitTest,[_class, _methodName]]
+	createHashmapObject [XPS_UT_typ_UnitTest,[_class, _methodName]]
 	---
 
 Authors: 

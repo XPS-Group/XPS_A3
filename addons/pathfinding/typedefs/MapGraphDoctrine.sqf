@@ -39,11 +39,11 @@ Flags:
 		_result - <HashmapObject>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		if !(params [["_modifiers",[0,0,0,0],[[]],[4]],["_capabilities",[true,true,true,true,true],[[]],[5]],["_limits",[0,0,0],[[]],[3]]]) exitwith {nil;};
+		if !(params [["_modifiers",[0,0,0,0],[[]],[4]],["_capabilities",[true,true,true,true,true],[[]],[5]],["_limits",[0,0,0],[[]],[3]]]) exitWith {nil;};
 
-		_self set ["Weights",["RoadWeight","WaterWeight","HeightWeight","DensityWeight"] createhashmapfromarray _modifiers];
-		_self set ["Capabilities",["CanUseLand","CanUseTrails","CanUseRoads","CanUseWater","CanUseAir"] createhashmapfromarray _capabilities];
-		_self set ["Limits",["MaxSlope","MaxDensity","MaxWaterDistance"] createhashmapfromarray _limits];
+		_self set ["Weights",["RoadWeight","WaterWeight","HeightWeight","DensityWeight"] createHashMapFromArray _modifiers];
+		_self set ["Capabilities",["CanUseLand","CanUseTrails","CanUseRoads","CanUseWater","CanUseAir"] createHashMapFromArray _capabilities];
+		_self set ["Limits",["MaxSlope","MaxDensity","MaxWaterDistance"] createHashMapFromArray _limits];
 	}],
 	/*----------------------------------------------------------------------------
 	Property: Weights

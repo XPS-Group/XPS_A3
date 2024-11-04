@@ -5,7 +5,7 @@ TypeDef: unit_testing. XPS_UT_typ_TestConsoleViewModel
 	XPS_UT_typ_TestConsoleViewModel
 	---
 	---prototype
-	createhashmapobject [XPS_UT_typ_TestConsoleViewModel, []]
+	createHashmapObject [XPS_UT_typ_TestConsoleViewModel, []]
 	---
 
 Authors: 
@@ -31,12 +31,12 @@ Returns:
 	methods to the appropriate Test Service Events
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-		_self set ["_testCollection",createhashmapobject [XPS_typ_OrderedCollection]];
+		_self set ["_testCollection",createHashmapObject [XPS_typ_OrderedCollection]];
 		
-		_self set ["_onUpdateUnitTest",createhashmapobject [XPS_typ_Event]];
-		_self set ["UpdateUnitTest",createhashmapobject [XPS_typ_EventHandler,[_self get "_onUpdateUnitTest"]]];
+		_self set ["_onUpdateUnitTest",createHashmapObject [XPS_typ_Event]];
+		_self set ["UpdateUnitTest",createHashmapObject [XPS_typ_EventHandler,[_self get "_onUpdateUnitTest"]]];
 
-		private _service = createhashmapobject [XPS_UT_typ_TestService];
+		private _service = createHashmapObject [XPS_UT_typ_TestService];
 		_Self set ["_testService",_service];
 		_service get "CollectionChanged" call ["Attach",[_self,"onTestServiceCollectionChanged"]];
 		
@@ -107,7 +107,7 @@ Returns:
 		_index - <Number> - the index of the item to "select"
 	-----------------------------------------------------------------------------*/
 	["AddToSelected", compileFinal {
-		if (_this < 0) exitwith {};
+		if (_this < 0) exitWith {};
 		private _classID = _self get "_testCollection" call ["GetItem",_this];
 		_self get "_testService" call ["AddToSelected",_classID];
 	}],
@@ -124,7 +124,7 @@ Returns:
 		_index - <Number> - the index of the item to "unselect"
 	-----------------------------------------------------------------------------*/
 	["RemoveFromSelected", compileFinal {
-		if (_this < 0) exitwith {};
+		if (_this < 0) exitWith {};
 		private _classID = _self get "_testCollection" call ["GetItem",_this];
 		_self get "_testService" call ["RemoveFromSelected",_classID];
 	}],
@@ -222,7 +222,7 @@ Returns:
 
 	-----------------------------------------------------------------------------*/
 	["GetDetails", compileFinal {
-		if (_this < 0) exitwith {};
+		if (_this < 0) exitWith {};
 		_self get "_testService" call ["GetDetails",_self get "_testCollection" call ["GetItem",_this]];
 	}],
 	/*----------------------------------------------------------------------------

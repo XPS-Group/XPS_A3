@@ -36,7 +36,7 @@ Flags:
 		_sectorSize - <Number> - the length/width of the sector
 	-----------------------------------------------------------------------------*/
 	["setDensityModifier",compileFinal {
-		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]]]) exitwith {false;};
+		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]]]) exitWith {false;};
 
 		private _densitySizeAdjust = (_sectorSize * _sectorSize) / 2500; // Normalize for 50 x 50 area
 		private _searchArray = ["tree","rock","house","building","fence","wall"];
@@ -57,11 +57,11 @@ Flags:
 		_sector - <Hashmap> - the sector to define
 	-----------------------------------------------------------------------------*/
 	["setHeightModifier",compileFinal {
-		if !(params [["_sector",nil,[createhashmap]]]) exitwith {false;};
+		if !(params [["_sector",nil,[createhashmap]]]) exitWith {false;};
 
 		private _posRef = _sector get "PosRef";
 		private _subPositions = [];
-		{_subPositions pushback [_posRef#0+(_x#0),_posRef#1+(_x#1)]} foreach (_sector get "SubPositionOffsets");
+		{_subPositions pushBack [_posRef#0+(_x#0),_posRef#1+(_x#1)]} forEach (_sector get "SubPositionOffsets");
 		private _numWaterAreas = 0;
 		private _heightTotal = 0;
 		private _isAllWater = call {!(_sector get (_self get "LayerName") get "HasBridge")};
@@ -71,7 +71,7 @@ Flags:
 			private _height = getTerrainHeightASL _x;
 			_heightTotal = _heightTotal + _height;
 			if (_height < 0.3) then {_hasWater = true;_numWaterAreas = _numWaterAreas + 1;} else {_hasLand = true;_isAllWater = false;};
-		} foreach _subPositions;
+		} forEach _subPositions;
 
 		private _layer = _sector get (_self get "LayerName");
 		_layer set ["IsAllWater",_isAllWater];
@@ -94,7 +94,7 @@ Flags:
 		_sectorRadius - <Number> - the radius of the sector 
 	-----------------------------------------------------------------------------*/
 	["setRoadModifier",compileFinal {
-		if !(params [["_sector",nil,[createhashmap]],["_radius",nil,[0]]]) exitwith {false;};
+		if !(params [["_sector",nil,[createhashmap]],["_radius",nil,[0]]]) exitWith {false;};
 
 		private _hasBridge = false;
 		private _hasRoads = false;
@@ -125,7 +125,7 @@ Flags:
 					_modifierList set [3, true];
 				};
 			};
-		} foreach nearestTerrainObjects [_sector get "PosCenter", ["MAIN ROAD","ROAD","TRACK","TRAIL"], _radius * 1.175, false, true];
+		} forEach nearestTerrainObjects [_sector get "PosCenter", ["MAIN ROAD","ROAD","TRACK","TRAIL"], _radius * 1.175, false, true];
 
 		_sector get (_self get "LayerName") set ["HasBridge",_hasBridge]; 
 		_sector get (_self get "LayerName") set ["HasRoads",_hasRoads];
@@ -135,7 +135,7 @@ Flags:
 			{
 				if (_x) exitWith {};
 				_modifier = _modifier - 0.1;
-			} foreach _modifierList; 
+			} forEach _modifierList; 
 		};
 
 
@@ -158,7 +158,7 @@ Flags:
 		_sectorRadius - <Number> - the radius of the sector 
 	-----------------------------------------------------------------------------*/
 	["AddLayerData",compileFinal {
-		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]],["_sectorRadius",nil,[0]]]) exitwith {nil;};
+		if !(params [["_sector",nil,[createhashmap]],["_sectorSize",nil,[0]],["_sectorRadius",nil,[0]]]) exitWith {nil;};
 
 		_sector set [_self get "LayerName",createhashmap];
 

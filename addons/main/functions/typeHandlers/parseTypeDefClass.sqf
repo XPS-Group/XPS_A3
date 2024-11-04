@@ -25,7 +25,7 @@ Authors:
 		<Boolean> - <True> is successful, otherwise false
 
 ---------------------------------------------------------------------------- */
-if !(params [["_class",nil,[configFile]],"_tag"]) exitwith {false;};
+if !(params [["_class",nil,[configFile]],"_tag"]) exitWith {false;};
 disableSerialization;
 _tag = [_tag] param [0,configName _class,[""]];
 if (isText (_class >> "tag")) then {
@@ -36,9 +36,9 @@ if (isText (_class >> "tag")) then {
 private _fnc_loadFile = {
 	private _statement = "";
 	switch (_type) do {
-		case "ifc" : {_statement = "private _ifc = (call compileScript [""%1"",false]) call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createhashmapfromarray _ifc;};"};
+		case "ifc" : {_statement = "private _ifc = (call compileScript [""%1"",false]) call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createHashMapFromArray _ifc;};"};
 		case "enum";
-		case "typ" : {_statement = "private _td = [call compileScript [""%1"",false],%2,%3,%4] call XPS_fnc_buildTypeDefinition; if (_td isEqualType []) then {%5 createhashmapfromarray _td;};"}; 
+		case "typ" : {_statement = "private _td = [call compileScript [""%1"",false],%2,%3,%4] call XPS_fnc_buildTypeDefinition; if (_td isEqualType []) then {%5 createHashMapFromArray _td;};"}; 
 	};
 	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd];
 	call compile _code;
@@ -92,6 +92,6 @@ if (isText _file && isText _type) then {
 
 {
 		if (isClass _x) then {[_x,_tag] call XPS_fnc_parseTypeDefClass;};
-} foreach configProperties [_class];
+} forEach configProperties [_class];
 
 true;

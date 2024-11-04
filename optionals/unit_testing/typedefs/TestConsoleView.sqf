@@ -5,7 +5,7 @@ TypeDef: unit_testing. XPS_UT_typ_TestConsoleView
 	XPS_UT_typ_TestConsoleView
 	---
 	---prototype
-	createhashmapobject [XPS_UT_typ_TestConsoleView, [_display]]
+	createHashmapObject [XPS_UT_typ_TestConsoleView, [_display]]
 	---
 
 Authors: 
@@ -41,7 +41,7 @@ Returns:
 	["#create", compileFinal {
 		params ["_display"];
 		_self set ["_displayHandle",_display];
-		private _viewModel = createhashmapobject [XPS_UT_typ_TestConsoleViewModel];
+		private _viewModel = createHashmapObject [XPS_UT_typ_TestConsoleViewModel];
 		_self set ["_viewModel",_viewModel];
 		_viewModel get "UpdateUnitTest" call ["Attach",[_self,"onUpdateUnitTest"]];
 		_viewModel get "StateChanged" call ["Attach",[_self,"onTestServiceStateChanged"]];
@@ -243,11 +243,11 @@ Returns:
 		params ["_control", "_lbCurSel"];
 		private _display = _self get "_displayHandle";
 		private _listbox = _display displayCtrl 1501;
-		if (_lbCurSel < 0) exitwith {lnbClear _listbox;};
+		if (_lbCurSel < 0) exitWith {lnbClear _listbox;};
 		private _details = _self get "_viewModel" call ["GetDetails",_lbCurSel];
 
 		lnbClear _listbox;
-		{_listBox lnbAddRow [_x#0,_x#1];} foreach _details;
+		{_listBox lnbAddRow [_x#0,_x#1];} forEach _details;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: XPS_UT_TestConsole_display_unLoad

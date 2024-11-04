@@ -41,7 +41,7 @@ for "_i" from 0 to _inc do {
         _waterTravel = true;
         _waterDistance = _waterDistance + _inc;
     };
-	if (_waterTravel && (_waterDistance > _distanceThreshold)) exitwith {true;};
+	if (_waterTravel && (_waterDistance > _distanceThreshold)) exitWith {true;};
 };
 
 false;

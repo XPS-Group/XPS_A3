@@ -19,15 +19,15 @@ XPS_DebugMode = uinamespace getvariable "XPS_DebugMode";
 
 {
 	if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};
-} foreach configProperties [configFile >> QXPS_CFG_TD_BASECLASSNAME];
+} forEach configProperties [configFile >> QXPS_CFG_TD_BASECLASSNAME];
 
 {
 	if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};
-} foreach configProperties [missionConfigFile >> QXPS_CFG_TD_BASECLASSNAME];
+} forEach configProperties [missionConfigFile >> QXPS_CFG_TD_BASECLASSNAME];
 
 {
 	if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};
-} foreach configProperties [campaignConfigFile >> QXPS_CFG_TD_BASECLASSNAME];
+} forEach configProperties [campaignConfigFile >> QXPS_CFG_TD_BASECLASSNAME];
 
 
 ADDON = true;

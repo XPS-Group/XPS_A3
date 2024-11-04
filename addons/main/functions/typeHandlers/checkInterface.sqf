@@ -3,7 +3,7 @@
 Function: main. typeHandlers. XPS_fnc_checkInterface
 	
 	---prototype
-	_result = [_type, _interfaces] call XPS_fnc_checkInterface
+	_result = [_type, _interfaces, _allowNils*] call XPS_fnc_checkInterface
 	---
 
 	---prototype
@@ -23,7 +23,8 @@ Parameter: _type
 	<HashMap> or <HashmapObject> - the map/object to check
 
 Parameter: _interfaces 
-	<Array> - an <array> of <Strings> in the format ["Interface1","Interface2"...] string should be a global variable of type <Interface>
+	<String>, <Hashmap>, or <Array> - an <array> of any combination of <Strings> or <Hashmaps> in the format ["Interface1","Interface2"...] string should be a global variable 
+	of type <Interface>. Hashmaps should be in key/value format that is acceptable for an <Interface>.
 
 Optional: _allowNils* 
 	<Boolean> - (optional - Default: false) - used to allow keys with nil values. Nil values might be required if a <TypeDefinition> 
@@ -35,35 +36,32 @@ Returns: _result
 Example: Check a hashmap if it supports interface
     --- Code
 		MyHashmap = createhashmapfromArray [["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-		MyInterface = [["PropertyA","STRING"],["Method","CODE"],["PropertyB","SCALAR"]];
-        private _result = [MyHashmap,["MyInterface"]] call XPS_fnc_checkInterface; 
-		// _result is 'true'
+		MyInterfaceA = [["PropertyA","STRING"],["Method","CODE"]];
+		MyInterfaceB = [["PropertyB","SCALAR"]];
+        
+		private _result = [MyHashmap, ["MyInterfaceA", MyInterfaceB] ] call XPS_fnc_checkInterface; //array of multiple string or hashmap
+		private _result = [MyHashmap, "MyInterfaceA" ] call XPS_fnc_checkInterface; //single string
+		private _result = [MyHashmap, MyInterfaceB ] call XPS_fnc_checkInterface; //single hashmap 
+		// _result is 'true' for the all the above
     ---
 
 ---------------------------------------------------------------------------- */
 
-params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[],""]],["_allowNils",false,[true]]];
+params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[],"",createhashmap]],["_allowNils",false,[true]]];
 
-if (_hashmap isEqualTo createhashmap) exitwith {
-	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
+if (_hashmap isEqualTo createhashmap || {_interfaces isEqualTo []}) exitWith {
+	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces: %2",_this select 0,_this select 1]);
 	false;
 };
 
-if (_interfaces isEqualType "") then {_interfaces = [_interfaces]};
-if !(_interfaces isEqualTypeAll "") exitwith {
-	diag_log text (format ["XPS_fnc_checkInterface: Interface parameter must be an array of all strings.  Param:%1",_this select 1]);
-	false;
-};
+if !(_interfaces isEqualType []) then {_interfaces = [_interfaces]};
 
 private _result = true;
 
 for "_a" from 0 to (count _interfaces -1) do {
 	private _interface = [];
-	//Loose Check - get interface ref direct from type def
-	if ((_interfaces#_a) in (_hashmap getOrDefault ["@interfaces",createhashmap])) then {
-		_interface = _hashmap get "@interfaces" get (_interfaces#_a);
-	} else { 
-	// Strict Check - interface not in declared list - build it from string var
+	// build it from string var
+	if ((_interfaces#_a) isEqualType "") then {
 		_interface = call compile (_interfaces#_a);
 		if !(_interface isEqualType createhashmap) then {
 			// Not a valid hashmap - exit without checking and fail
@@ -73,8 +71,13 @@ for "_a" from 0 to (count _interfaces -1) do {
 		};
 	};
 
-	if (isNil {_interface}) exitwith {
+	if (isNil {_interface}) exitWith {
 		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interface provided:%1",_interfaces#_a]);
+		_result = false;
+	};
+
+	if !(_interface isEqualType createhashmap) exitWith {
+		diag_log text (format ["XPS_fnc_checkInterface: Interface was invalid or not a hashmap.  Interface provided:%1",_interfaces#_a]);
 		_result = false;
 	};
 	
@@ -118,6 +121,6 @@ for "_a" from 0 to (count _interfaces -1) do {
 				_result = false;
 			};
 		};
-	} foreach _interface;
+	} forEach _interface;
 };
 _result;

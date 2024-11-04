@@ -5,7 +5,7 @@ TypeDef: |folder|. |ADDON|_typ_|TYP_NAME|
 	|ADDON|_typ_|TYP_NAME| : |ADDON|_ifc_|TYP_NAME|, |ADDON|_typ_|TYP_NAME|
 	---
 	---prototype
-	createhashmapobject [|ADDON|_typ_|TYP_NAME|, [_var1*, _var2*]]
+	createHashmapObject [|ADDON|_typ_|TYP_NAME|, [_var1*, _var2*]]
 	---
 
 Authors: 

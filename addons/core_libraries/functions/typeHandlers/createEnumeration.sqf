@@ -33,7 +33,7 @@ Description:
 		<Boolean> - <True> if successful, otherwise false
 
 ------------------------------------------------------------------------------*/
-if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[],createhashmap]] ]) exitwith {false};
+if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[],createhashmap]] ]) exitWith {false};
 
 private _fnc_createEnumConstant = {
 	params ["_var","_name","_val","_def"];
@@ -42,7 +42,7 @@ private _fnc_createEnumConstant = {
 		["#type", _var]
 	];
 
-	private _hashObject = compileFinal createhashmapobject [[
+	private _hashObject = compileFinal createHashmapObject [[
 		["#str", compileFinal format["%1",str _name]],
 		["#base",_baseDef],
 		["#type", format["%1_%2",_var,_name]],
@@ -55,7 +55,7 @@ private _fnc_createEnumConstant = {
 	_def set [_val , compileFinal _gVar ];
 };
 
-private _baseDef = if (_typeDef isEqualType []) then {createhashmapfromarray _typeDef} else {+_typeDef};
+private _baseDef = if (_typeDef isEqualType []) then {createHashMapFromArray _typeDef} else {+_typeDef};
 
 private _newDef = createhashmap;
 	_newDef set ["#str", compileFinal format ["%1",str _varName]];
@@ -78,16 +78,16 @@ switch (true) do {
 			private _key = _x;
 			private _nameOk = _newDef get "Names" pushBackUnique _key;
 			if (_nameOK isEqualTo -1) then {continue};
-			_newDef get "Values" pushback _value;
+			_newDef get "Values" pushBack _value;
 			
 			[_varName,_key,_value,_newDef] call _fnc_createEnumConstant;
 			
 			_value = _value + 1;
-		} foreach _keyArray;
+		} forEach _keyArray;
 	};
 	case (_keyArray isEqualTypeAll []) : {
 		{	
-			if !(_x params [ ["_key","",[""]], ["_value","",[0,""]]]) exitwith {false};
+			if !(_x params [ ["_key","",[""]], ["_value","",[0,""]]]) exitWith {false};
 			
 			if ((_enumType == "SCALAR" && {_value isEqualType 0}) ||
 			(_enumType in ["STRING","TEXT"] && {_value isEqualType ""}) ) then {
@@ -95,16 +95,16 @@ switch (true) do {
 				if (_nameOK isEqualTo -1) then {continue};
 				
 				if (_enumType == "TEXT") then { _value = text _value}; 
-				private _valOk = _newDef get "Values" pushbackUnique _value;
+				private _valOk = _newDef get "Values" pushBackUnique _value;
 				if (_valOk isEqualTo -1) then {_newDef get "Names" deleteat _nameOK; continue};
 				
 				[_varName,_key,_value,_newDef] call _fnc_createEnumConstant;
 			};
-		} foreach _keyArray;
+		} forEach _keyArray;
 	};
 };
 
-call compile format["%1 = compileFinal createhashmapobject [_newDef]",_varName];
+call compile format["%1 = compileFinal createHashmapObject [_newDef]",_varName];
 
 true;
 /*------------------------------------------------------------------------------

@@ -149,7 +149,7 @@ Flags:
 		_self set ["Index",_index];
 		_self set ["RoadObject",_object];
 		_self set ["ConnectedTo",createhashmap];
-		//_self set ["ConnectedToPath",createhashmapfromarray [["RHDrive",createhashmap],["RHWalk",createhashmap],["LHDrive",createhashmap],["LHWalk",createhashmap]]];
+		//_self set ["ConnectedToPath",createHashMapFromArray [["RHDrive",createhashmap],["RHWalk",createhashmap],["LHDrive",createhashmap],["LHWalk",createhashmap]]];
 		private _roadInfo = getRoadInfo _object;
 		_self set ["Type",_roadInfo#0]; 
 		_self set ["Width",_roadInfo#1]; 

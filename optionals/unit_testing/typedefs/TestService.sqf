@@ -5,7 +5,7 @@ TypeDef: unit_testing. XPS_UT_typ_TestService
 	XPS_UT_typ_TestService : XPS_ADDON_ifc_IName, XPS_typ_Name
 	---
 	---prototype
-	createhashmapobject [XPS_UT_typ_TestService]
+	createHashmapObject [XPS_UT_typ_TestService]
 	---
 
 Authors: 
@@ -36,14 +36,14 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
 		// diag_log "Creating TestService";
-		_self set ["_testClassCollection",createhashmapobject [XPS_typ_OrderedCollection]];
+		_self set ["_testClassCollection",createHashmapObject [XPS_typ_OrderedCollection]];
 
-		_self set ["_unitTestCollection",createhashmapobject [XPS_typ_TypeCollectionN,
-				createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_UT_typ_UnitTest"]]]];
+		_self set ["_unitTestCollection",createHashmapObject [XPS_typ_TypeCollectionN,
+				createHashmapObject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_UT_typ_UnitTest"]]]];
 		_self set ["CollectionChanged",(_self get "_unitTestCollection") get "CollectionChanged"];
 
-		_self set ["_onStateChanged",createhashmapobject [XPS_typ_Event]];
-		_self set ["StateChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onStateChanged"]]];
+		_self set ["_onStateChanged",createHashmapObject [XPS_typ_Event]];
+		_self set ["StateChanged",createHashmapObject [XPS_typ_EventHandler,[_self get "_onStateChanged"]]];
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -94,7 +94,7 @@ Returns:
 		private _result = false;
 		try {
 			_result = _class call [_method];
-			if (isNil "_result" || {!_result}) exitwith {
+			if (isNil "_result" || {!_result}) exitWith {
 				_self call ["updateTest",[[_className,_method],["Result","Failed"]]];
 			};
 			_self call ["updateTest",[[_className,_method],["Result","Passed"]]];
@@ -104,16 +104,16 @@ Returns:
 				count ((_exception getOrDefault ["#type",[]]) arrayIntersect ["XPS_typ_Exception"]) > 0}
 			) then {
 				private _details = _self get "_unitTestCollection" call ["GetItem",[_className,_method]] get "Details";
-				_details pushback ["Exception",_exception get "#type" select 0];
-				_details pushback ["Source",_exception get "Source"];
-				_details pushback ["Target",_exception get "Target"];
-				_details pushback ["Message",_exception get "Message"];
-				_details pushback ["Data",str (_exception get "Data")];
+				_details pushBack ["Exception",_exception get "#type" select 0];
+				_details pushBack ["Source",_exception get "Source"];
+				_details pushBack ["Target",_exception get "Target"];
+				_details pushBack ["Message",_exception get "Message"];
+				_details pushBack ["Data",str (_exception get "Data")];
 			} else {
 				throw _exception
 			}
 		};
-		_self get "_unitTestCollection" call ["GetItem",[_className,_method]] get "Details" pushback ["Execution Time",str (diag_tickTime - _startTime)];
+		_self get "_unitTestCollection" call ["GetItem",[_className,_method]] get "Details" pushBack ["Execution Time",str (diag_tickTime - _startTime)];
 	}],
 	
 	/*----------------------------------------------------------------------------
@@ -167,11 +167,11 @@ Returns:
 			private _class = _x;
 			private _className = _x get "Description";
 			_classes call ["AddItem",_class];
-			_unitTests call ["AddItem",[[_className,""],createhashmapobject [XPS_UT_typ_UnitTest,[_className,""]]]];
+			_unitTests call ["AddItem",[[_className,""],createHashmapObject [XPS_UT_typ_UnitTest,[_className,""]]]];
 			{
-				_unitTests call ["AddItem",[[_className,_x],createhashmapobject [XPS_UT_typ_UnitTest,[_className,_x]]]];
-			} foreach (_class get "TestOrder");
-		} foreach _tests;
+				_unitTests call ["AddItem",[[_className,_x],createHashmapObject [XPS_UT_typ_UnitTest,[_className,_x]]]];
+			} forEach (_class get "TestOrder");
+		} forEach _tests;
 		_self get "_onStateChanged" call ["Invoke",[_self,["Reset"]]];
 	}],
 	
@@ -230,10 +230,10 @@ Returns:
 				//Run Class Tests
 				{
 					_service call ["runTest",[_class,_x]];
-				} foreach _orderedList;
+				} forEach _orderedList;
 				// Finalize Class
 				_service call ["finalizeTest",[_class]];
-			} foreach (_service get "_testClassCollection" call ["GetItems"]);
+			} forEach (_service get "_testClassCollection" call ["GetItems"]);
 		};		
 		_self get "_onStateChanged" call ["Invoke",[_self,["Finished"]]];
 	}],
@@ -263,11 +263,11 @@ Returns:
 						if (_service get "_unitTestCollection" call ["GetItem",[_className,_x]] getOrDefault ["IsSelected",false]) then {
 							_service call ["runTest",[_class,_x]];
 						};
-					} foreach _orderedList;
+					} forEach _orderedList;
 					// Finalize Class
 					_service call ["finalizeTest",[_class]];
 				};
-			} foreach (_service get "_testClassCollection" call ["GetItems"]);
+			} forEach (_service get "_testClassCollection" call ["GetItems"]);
 		};		
 		_self get "_onStateChanged" call ["Invoke",[_self,["Finished"]]];
 	}],
@@ -303,7 +303,7 @@ Returns:
 		{
 			_unitTests call ["UpdateItem",[[_x get "ClassName",_x get "MethodName"],["Result","Not Run"]]];
 			_x get "Details" resize 0;
-		} foreach (_unitTests call ["GetItems"]);
+		} forEach (_unitTests call ["GetItems"]);
 		_self get "_onStateChanged" call ["Invoke",[_self,["Reset"]]];
 	}],
 	

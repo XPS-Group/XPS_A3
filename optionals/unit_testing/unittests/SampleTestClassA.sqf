@@ -57,7 +57,7 @@ Description:
 		---code 
 		{
 			//Initialize some testing values
-			XPS_SampleTest_Values = createhashmapfromarray [
+			XPS_SampleTest_Values = createHashMapFromArray [
 				["A",1],
 				["B",2],
 				["C",3]
@@ -67,7 +67,7 @@ Description:
 	----------------------------------------------------------------------------*/
 	["InitTest", compileFinal {
 		//Initialize some testing values
-		XPS_SampleTest_Values = createhashmapfromarray [
+		XPS_SampleTest_Values = createHashMapFromArray [
 			["A",1],
 			["B",2],
 			["C",3]

@@ -42,7 +42,7 @@ private _center = [0,0,0];
 for "_y" from -_radius to _radius do {
 	for "_x" from -_radius to _radius do {
 		_cellKey = _center vectorAdd [_x,_y]; 
-		_cells pushback _cellkey;
+		_cells pushBack _cellkey;
 	};
 };
 

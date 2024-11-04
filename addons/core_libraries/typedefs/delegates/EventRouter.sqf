@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_EventRouter
         XPS_typ_EventRouter : XPS_typ_EventHandler, XPS_ifc_IEventRouter, XPS_ifc_IEventHandler
         ---
         --- prototype
-        createhashmapobject [XPS_typ_EventRouter]
+        createHashmapObject [XPS_typ_EventRouter]
         ---
 
 Authors: 
@@ -55,11 +55,11 @@ Returns:
 		_self call ["XPS_typ_EventHandler.#create",_anyDelegate];
 		_anyDelegate call ["Attach",[_self,"RouteEvent"]];
 
-		if !(CHECK_IFC1(_hndlrType,XPS_ifc_IEventHandler)) exitwith {
-			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","EventHandler Type Parameter was Invalid type",_this]];
+		if !(CHECK_IFC1(_hndlrType,XPS_ifc_IEventHandler)) exitWith {
+			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","EventHandler Type Parameter was Invalid type",_this]];
 		};
-		if !(CHECK_IFC1(_dlgtType,XPS_ifc_IDelegate)) exitwith {
-			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Type Parameter was Invalid type",_this]];
+		if !(CHECK_IFC1(_dlgtType,XPS_ifc_IDelegate)) exitWith {
+			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Type Parameter was Invalid type",_this]];
 		};
 
         if !(isNil "_filter") then {_self set ["filter",compileFinal _filter]};
@@ -119,7 +119,7 @@ Returns:
 		private _keylist = _self call ["filter",_event];
 		{
 			_self get "delegates" get _x call ["Invoke",[_event,_x]];
-		} foreach _keyList;
+		} forEach _keyList;
 	}],
     /*----------------------------------------------------------------------------
     Method: Attach
@@ -154,8 +154,8 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Attach", compileFinal {
 		params ["_pointer","_key"];
-		private _dlgt = _self get "delegates" getOrDefault [_key , createhashmapobject [_self get "_delegateType",[]], true];
-		private _hndlr = _self get "handlers" getOrDefault [_key , createhashmapobject [_self get "_handlerType",[_dlgt]], true];
+		private _dlgt = _self get "delegates" getOrDefault [_key , createHashmapObject [_self get "_delegateType",[]], true];
+		private _hndlr = _self get "handlers" getOrDefault [_key , createHashmapObject [_self get "_handlerType",[_dlgt]], true];
 		_hndlr call ["Attach",_pointer];
 	}],
     /*----------------------------------------------------------------------------

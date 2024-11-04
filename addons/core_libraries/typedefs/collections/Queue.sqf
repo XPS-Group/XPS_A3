@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_Queue
         XPS_typ_Queue : XPS_ifc_IQueue
         ---
         --- prototype
-        createhashmapobject [XPS_typ_Queue]
+        createHashmapObject [XPS_typ_Queue]
         ---
 
 Authors: 
@@ -155,6 +155,6 @@ Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
 	["Enqueue", compileFinal {
-		_self get "_queueArray" pushback _this;
+		_self get "_queueArray" pushBack _this;
 	}]
 ]

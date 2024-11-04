@@ -82,7 +82,7 @@ private _fnc_HandleChildren = compileFinal {
 			private _typeDef = _children#_i#0;
 			private _grandChildren = [];
 			if (count (_children#_i) > 1 && {_children#_i#1 isEqualtype []}) then {_grandchildren = _children#_i#1};
-			private _childNode = createhashmapobject [_typeDef];
+			private _childNode = createHashmapObject [_typeDef];
 			_parentNode call ["AddChildNode",_childNode];
 			if (count _grandchildren > 0) then {
 				[_childNode, _grandChildren] call _fnc_HandleChildren;
@@ -92,7 +92,7 @@ private _fnc_HandleChildren = compileFinal {
 };
 
 if (_definition isEqualType [] && {count _definition > 0}) then {
-	private _rootNode = createhashmapobject [_definition#0];
+	private _rootNode = createHashmapObject [_definition#0];
 	private _children = [];
 	if (count _definition > 1 && {_definition#1 isEqualtype []}) then {
 		_children = _definition#1;

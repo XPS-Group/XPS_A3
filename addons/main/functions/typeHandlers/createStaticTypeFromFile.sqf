@@ -39,7 +39,7 @@ Example: File and calling code example
 			["Method",  compileFinal { hint "Hello World!"}]
 		] ,false,true,true] call XPS_fnc_buildTypeDefinition;
 
-		createhashmapobject [_def];
+		createHashmapObject [_def];
     ---
 
 	To create the Static object from above file:
@@ -49,7 +49,7 @@ Example: File and calling code example
     ---
 
 ---------------------------------------------------------------------------- */
-if !(params [["_varname",nil,[""]],["_filepath",nil,[""]]]) exitwith {false;};
+if !(params [["_varname",nil,[""]],["_filepath",nil,[""]]]) exitWith {false;};
 
 private _statement = "%1 = compileFinal (call compileScript [""%2"",false]);";
 private _code =  format[_statement, _varname, _filepath];

@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_TypeCollectionN
         XPS_typ_TypeCollectionN : XPS_ifc_ICollection, XPS_ifc_ITypeRestrictor, XPS_ifc_ICollectionNotifier, XPS_typ_TypeCollection
         ---
         --- prototype
-        createhashmapobject [XPS_typ_TypeCollection,[_typeRestrictor]]
+        createHashmapObject [XPS_typ_TypeCollection,[_typeRestrictor]]
         ---
 
 Authors: 
@@ -40,8 +40,8 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         _self call ["XPS_typ_TypeCollection.#create",_this];
-        _self set ["_onCollectionChangedEvent",createhashmapobject [XPS_typ_Event]];
-        _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];
+        _self set ["_onCollectionChangedEvent",createHashmapObject [XPS_typ_Event]];
+        _self set ["CollectionChanged",createHashmapObject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];
     }],
 	/*----------------------------------------------------------------------------
 	Str: #str

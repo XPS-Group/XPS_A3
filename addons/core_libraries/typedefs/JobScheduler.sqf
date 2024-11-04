@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_JobScheduler
 	XPS_typ_JobScheduler : XPS_ifc_ICollection, XPS_ifc_ITypeRestrictor, XPS_ifc_IJobScheduler, XPS_typ_TypeCollection
 	---
 	---code
-	createhashmapobject [XPS_typ_JobScheduler,[_allowedTypes*]];
+	createHashmapObject [XPS_typ_JobScheduler,[_allowedTypes*]];
 	---
 
 Authors: 
@@ -49,7 +49,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
 	["_handle",nil],
-	["_queueObject", nil, [["CTOR","createhashmapobject [XPS_typ_Queue]"]]],
+	["_queueObject", nil, [["CTOR","createHashmapObject [XPS_typ_Queue]"]]],
 	/*----------------------------------------------------------------------------
 	Property: CurrentItem
     
@@ -180,9 +180,9 @@ Returns:
 
     -------------------------------------------------------------------------*/ 
 	["AddItem", compileFinal {
-        if !(_this isEqualType createhashmap) exitwith {false;};
+        if !(_this isEqualType createhashmap) exitWith {false;};
         private _uid = [] call XPS_fnc_createUniqueID;
-        if (_self call ["XPS_typ_TypeCollection.AddItem",[_uid,_item]]) exitwith {
+        if (_self call ["XPS_typ_TypeCollection.AddItem",[_uid,_item]]) exitWith {
 			_self get "_queueObject" call ["Enqueue",_uid];
 			true;
 		};
