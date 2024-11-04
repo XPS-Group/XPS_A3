@@ -85,11 +85,11 @@ Description:
 		<XPS_typ_ArgumentOutOfRangeException> - when parameter supplied was not defined in the underlying enumeration
 	-----------------------------------------------------------------------------*/
 	["GetEnum",  compileFinal {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
-		if !(_this isEqualTypeAny [0,"",text ""]) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];};
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
+		if !(_this isEqualTypeAny [0,"",text ""]) then {throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];};
 		if (_self call ["IsDefined",_this]) then {
 			_self call [_this];
-		} else {throw createhashmapobject[XPS_typ_ArgumentOutOfRangeException,[_self,"GetEnum","Argument supplied was not found.",_this]];};
+		} else {throw createHashmapObject[XPS_typ_ArgumentOutOfRangeException,[_self,"GetEnum","Argument supplied was not found.",_this]];};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: IsDefined
@@ -109,8 +109,8 @@ Description:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 	-----------------------------------------------------------------------------*/
 	["IsDefined",  compileFinal {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
-		if !(_this isEqualTypeAny [0,"",text ""]) then {throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];};
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"GetEnum","Parameter supplied was Nil"]]};
+		if !(_this isEqualTypeAny [0,"",text ""]) then {throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"GetEnum","Argument supplied was not a number, string, or structured text.",_this]];};
 		
 		_this in _self;
 	}]

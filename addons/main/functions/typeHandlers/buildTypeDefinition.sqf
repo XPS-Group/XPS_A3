@@ -54,42 +54,42 @@ Return: _typeDefinition
 ---------------------------------------------------------------------------- */
 params [["_type",[],[[]]],["_allowNils",true,[true]],["_preprocess",true,[true]],["_noStack",false,[true]]];
 
-if (_type isEqualTo []) exitwith {false};
+if (_type isEqualTo []) exitWith {false};
 
 private _errors = false;
 
 private _fnc_recurseBases = {
 	params ["_hashmap"];
 	if ("#base" in _hashmap) then {
-		private _base = createhashmapfromarray (_hashmap get "#base");
+		private _base = createHashMapFromArray (_hashmap get "#base");
 		[_base] call _fnc_recurseBases;
 		_hashmap merge _base;
 	};
 };
 
 if (_preprocess) then {
-	if !(_type call XPS_fnc_preprocessTypeDefinition) exitwith {
+	if !(_type call XPS_fnc_preprocessTypeDefinition) exitWith {
 		_errors = true;
 	};
 };
 
-if (_errors) exitwith {
+if (_errors) exitWith {
 	diag_log text ("XPS_fnc_buildTypeDefinition: Skipping a bad preprocessed Array - Any Preprocess Errors above may provide more info");
 	false;
 };
 
-private _hashmap = createhashmapfromarray _type;
+private _hashmap = createHashMapFromArray _type;
 private _preCompiled = _hashmap; // In case it doesn't have a parent, we need this for later
 
 // Check for parent type
 if ("#base" in _hashmap) then {
 	private _pType = _hashmap get "#base";
-	if (isNil {_pType} || !(_pType isEqualTypeAny [[],createhashmap])) exitwith {
+	if (isNil {_pType} || !(_pType isEqualTypeAny [[],createhashmap])) exitWith {
 		diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 does not have a valid #base type definition. #base:%2",_hashmap get "#type",_hashmap get "#base"]);
 		_errors = true;
 	};
 
-	_preCompiled = if (_pType isEqualType []) then {createhashmapfromarray _pType} else {+_pType};
+	_preCompiled = if (_pType isEqualType []) then {createHashMapFromArray _pType} else {+_pType};
 
 	private _pTypeName = _preCompiled get "#type";
 	private _keys = keys _hashmap;
@@ -114,7 +114,7 @@ if ("#base" in _hashmap) then {
 					switch (typeName _valuesToMerge) do {
 						case "ARRAY" : {
 								private _dCopy = +_y;
-								{_dCopy pushbackUnique _x} foreach _valuesToMerge; // does not allow duplicates
+								{_dCopy pushBackUnique _x} forEach _valuesToMerge; // does not allow duplicates
 								_hashmap set [_x,_dCopy]; 
 							};
 						case "HASHMAP" : {
@@ -129,7 +129,7 @@ if ("#base" in _hashmap) then {
 				};
 			};
 		};
-	} foreach _preCompiled;
+	} forEach _preCompiled;
 
 	[_preCompiled] call _fnc_recurseBases;
 
@@ -139,7 +139,7 @@ if ("#base" in _hashmap) then {
 				if !(_x in _keys) then {_hashmap set [_x, _precompiled get _x]};
 				_preCompiled deleteat _x;
 			};
-		} foreach ["#create","#clone","#delete"];
+		} forEach ["#create","#clone","#delete"];
 		_hashmap set ["#base",_preCompiled toArray false];
 	};
 	
@@ -148,7 +148,7 @@ if ("#base" in _hashmap) then {
 	
 };
 
-if (_errors) exitwith {
+if (_errors) exitWith {
 	diag_log text (format ["XPS_fnc_buildTypeDefinition: skipped due to errors:  %1",_hashmap get "#type"]);
 	false;
 };
@@ -170,7 +170,7 @@ Example: No Inheritance
 		MyTypeDefA = [["#str", compileFinal {_self get "#type" select  0}],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
-		private _myObjA = createhashmapobject [TypeA];
+		private _myObjA = createHashmapObject [TypeA];
 		_myObj call ["Method"] //hints 'Hi'
     ---
 
@@ -186,7 +186,7 @@ Example: Implements Interface
 		MyTypeDefA = [["#str", compileFinal {_self get "#type" select  0}],["@interfaces",["MyInterface"]],["PropertyA","Hello"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
         TAG_TypeA = ["MyTypeDefA"] call XPS_fnc_buildTypeDefinition; 
 
-		private _myObjA = createhashmapobject [TypeA];
+		private _myObjA = createHashmapObject [TypeA];
 		_myObj call ["Method"] //hints 'Hi'
     ---
 
@@ -201,10 +201,10 @@ Example: Implements Interface with Inheritance
         TAG_TypeB = ["MyTypeDefB"] call XPS_fnc_buildTypeDefinition; 
 
 		// Both TypeA and TypeB will implement interface from inheritance but PropertyA and Method are overridden in TypeB 
-		private _myObjA = createhashmapobject [TypeA];
+		private _myObjA = createHashmapObject [TypeA];
 		_myObj call ["Method"] //hints 'Hi'
 
-		private _myObjB = createhashmapobject [TypeB];
+		private _myObjB = createHashmapObject [TypeB];
 		_myObj call ["Method"] //hints 'Bye'
     ---
 

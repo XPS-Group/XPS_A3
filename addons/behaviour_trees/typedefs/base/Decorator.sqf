@@ -103,7 +103,7 @@ Returns:
 	["processTick",compileFinal {
 		private _status = _self get "Status";
 		private _child = _self get "child";
-		if (isNil "_child") exitwith {XPS_BT_Status_Failure};
+		if (isNil "_child") exitWith {XPS_BT_Status_Failure};
 		if (isNil {_child get "Status"}) then {
 			_status = _child call ["Tick",_this];
 		} else {
@@ -176,8 +176,8 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]]];
-		if (isNil "_childNode") exitwith {false};
-		if !(CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitwith {false};
+		if (isNil "_childNode") exitWith {false};
+		if !(CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitWith {false};
 		_self set ["child",_childNode];
 		true;
 	}],

@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_Stack
         XPS_typ_Stack : XPS_ifc_IStack
         ---
         --- prototype
-        createhashmapobject [XPS_typ_Stack]
+        createHashmapObject [XPS_typ_Stack]
         ---
 
 Authors: 
@@ -157,6 +157,6 @@ Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
 	["Push", compileFinal {
-		_self get "_stackArray" pushback _this;
+		_self get "_stackArray" pushBack _this;
 	}]
 ]

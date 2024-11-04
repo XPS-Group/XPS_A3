@@ -126,7 +126,7 @@ Authors:
 	Crashdome
 ------------------------------------------------------------------------------*/
 
-if !(params [ ["_varname",nil,[""]], ["_typedef",nil,["",[],createhashmap]], "_args"]) exitwith {false;};
+if !(params [ ["_varname",nil,[""]], ["_typedef",nil,["",[],createhashmap]], "_args"]) exitWith {false;};
 _args = [_args] param [0,[],[[]]];
 
 
@@ -152,21 +152,21 @@ if (isNil _varName) then {
 
 	// Second: Create hashmap if array
 	if (_typeDef isEqualType []) then {
-		_typeDef = createhashmapfromarray _typeDef;
+		_typeDef = createHashMapFromArray _typeDef;
 	};
 
 	//Throw error if not hashmap by now
-	if !(_typeDef isEqualType createhashmap) exitwith {diag_log text format["XPS_fnc_createSingleton: TypeDef for %1 was not valid.",_varName]; false};
+	if !(_typeDef isEqualType createhashmap) exitWith {diag_log text format["XPS_fnc_createSingleton: TypeDef for %1 was not valid.",_varName]; false};
 
 	_typeDef = +_typeDef;
 	//add noCopy
 	if ("#flags" in _typeDef ) then {
-		_typeDef get "#flags" pushbackUnique "noCopy";
+		_typeDef get "#flags" pushBackUnique "noCopy";
 	} else {
 		_typeDef set ["#flags",["noCopy"]];
 	};
 
-	call compile format["%1 = createhashmapobject [%2,%3];",_instanceVar,_typeDef,_args];
+	call compile format["%1 = createHashmapObject [%2,%3];",_instanceVar,_typeDef,_args];
 
 	private _staticDefPath = "x\xps\addons\main\staticSingletonDef.sqf";
 

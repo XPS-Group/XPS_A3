@@ -40,7 +40,7 @@ Description:
 	However, you can define any Attribute as long as it is in an array. The preprocessor will
 	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
 	run your own custom preprocesser (or extend this one) before instantiating a type with 
-	<createHashmapObject: https://community.bistudio.com/wiki/createHashMapObject> command.
+	<createHashmapObject: https://community.bistudio.com/wiki/createHashmapObject> command.
 
 More Info - <XPS Wiki - Preprocessor and Type Builder:https://www.notion.so/xps-group/Preprocessor-and-Type-Builder-2ca223d0e3ba40949b6655930d0fbf47>
 
@@ -55,7 +55,7 @@ Returns: _result
 	<Boolean> - True if successful otherwise False
 
 ---------------------------------------------------------------------------- */
-if !(_this isEqualType []) exitwith {false};
+if !(_this isEqualType []) exitWith {false};
 
 private _typeDef = _this;
 
@@ -98,8 +98,8 @@ try
 					{
 						private _ifc = call compile _x;
 						if (isNil "_ifc") then  {throw format ["Cannot create interface: %1.",_x]};
-						_interfaces merge [createhashmapfromarray [[_x,_ifc]],true];
-					} foreach _value;
+						_interfaces merge [createHashMapFromArray [[_x,_ifc]],true];
+					} forEach _value;
 					_value = compileFinal _interfaces;
 					_keyPair set [1,_value];
 				} else {throw format ["Interface list for Key @interfaces is not an array of strings."]};
@@ -157,26 +157,26 @@ try
 				case "VALIDATE_ANY" : {
 					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeAny _attParams) then {
-						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: %2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_ALL" : {
 					if !(_value isEqualTypeALL _attParams) then {
-						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: %2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_PARAMS" : {
 					if !(_attParams isEqualType []) then {throw format ["Vaildate Attribute for Key %2 contains %1. Expected array.",typename _attParams,_key]};
 					if !(_value isEqualTypeParams _attParams) then {
-						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: %2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
 				case "VALIDATE_TYPE" : {
 					if !(_value isEqualType _attParams) then {
-						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: $2 failed validation",_key,_value];
+						diag_log text format ["XPS_fnc_preprocessTypeDefinition: Key %1 Value: %2 failed validation",_key,_value];
 						_result = false;
 					};
 				};
@@ -189,7 +189,7 @@ try
 		// Finally record if a private key for later obfuscation
 		if (_key isEqualType "" && {_key find "_" isEqualTo 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
-			_privateKeys pushback [_key,_uid];
+			_privateKeys pushBack [_key,_uid];
 			_keyPair set [0,_uid]
 		};
 	};
@@ -200,8 +200,8 @@ try
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
 	// Add create / delete methods if they dont exist prior to changing private keys
-	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushback ["#create",compile (_ctor + _ctor_l)]};
-	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushback ["#delete",compile (_dtor + _dtor_l)]};
+	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushBack ["#create",compile (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushBack ["#delete",compile (_dtor + _dtor_l)]};
 
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
@@ -226,7 +226,7 @@ try
 				private _replace = _x#1;
 				_value = [_find,_replace,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
-			} foreach _privateKeys;
+			} forEach _privateKeys;
 		};
 	};
 

@@ -31,8 +31,8 @@ Example: Check two of same type
     --- Code
     private _def = [["#type","Tag_typ_MyType"],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
 		
-		_type1 = createhashmapobject [_def];
-		_type2 = createhashmapobject [_def];
+		_type1 = createHashmapObject [_def];
+		_type2 = createHashmapObject [_def];
 
         private _result = [_type1, _type2, false] call XPS_fnc_isEqualHashmapObjectType; 
 		// _result is 'true'
@@ -47,8 +47,8 @@ Example: Check two child types
     private _def1 = [["#type","Tag_typ_MyType1"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
     private _def1 = [["#type","Tag_typ_MyType2"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
 		
-		_type1 = createhashmapobject [_def1];
-		_type2 = createhashmapobject [_def2];
+		_type1 = createHashmapObject [_def1];
+		_type2 = createHashmapObject [_def2];
         
 		private _result = [_type1, _type2, false] call XPS_fnc_isEqualHashmapObjectType; 
 		// _result is 'true'

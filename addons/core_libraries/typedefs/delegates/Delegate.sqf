@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_Delegate
         XPS_typ_Delegate : XPS_ifc_IDelegate
         ---
         --- prototype
-        createhashmapobject [XPS_typ_Delegate,_signature]
+        createHashmapObject [XPS_typ_Delegate,_signature]
         ---
 
 Authors: 
@@ -95,7 +95,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
 	["Attach", compileFinal {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
 		//Deep copy the array
 		//if (_this isEqualType []) then {_this = +_this};
 		
@@ -107,7 +107,7 @@ Returns:
 				_self set ["_pointer",_this];
 				true;
 		} else {
-			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
+			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
 		};
 	}],
     /*----------------------------------------------------------------------------
@@ -152,8 +152,8 @@ Returns:
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
 	["Invoke", compileFinal {
-		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
-			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
+		if !(_this isEqualTypeParams (_self get "_signature")) exitWith {
+			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};
 		private _pointer = _self get "_pointer";
 
@@ -166,7 +166,7 @@ Returns:
 				_this call _pointer;
 			 };
 			 default {
-				throw createhashmapobject[XPS_typ_InvalidOperationException,[_self,"Invoke","Attached code or method pointer no longer exists",_this]];
+				throw createHashmapObject[XPS_typ_InvalidOperationException,[_self,"Invoke","Attached code or method pointer no longer exists",_this]];
 			 };
 		};
 	}]
@@ -194,7 +194,7 @@ Example: Override class to change signature
 	--- code 
 	_def = [
 		["#type", "Example"],
-		["delegate", createhashmapobject [Tag_typ_New_Delegate]],
+		["delegate", createHashmapObject [Tag_typ_New_Delegate]],
 		["MyMethod",  compileFinal { 
 			//do some stuff
 			private _someArgs = ["I successfully did some stuff"];
@@ -208,7 +208,7 @@ Example: Override class to change signature
 	So whenever the Example's MyMethod is called, it will send to the delegate's attached method (if any) 
 	a set of parameters following the new signature:
 	---code 
-	Example = createhashmapobject [_def];
+	Example = createHashmapObject [_def];
 	Example get "delegate" call ["Attach", compileFinal {
 		params ["_object","_methodname","_args"]; 
 		hint format["%1 called %2 and returned %3",_object get "#type" select 0, _methodName,_args];

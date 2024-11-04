@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_InvalidArgumentException
 		XPS_typ_InvalidArgumentException :  XPS_ifc_IException, XPS_typ_Exception
     	---
         --- prototype
-        createhashmapobject [XPS_typ_InvalidArgumentException, [_source*, _target*, _message*, _data*]]
+        createHashmapObject [XPS_typ_InvalidArgumentException, [_source*, _target*, _message*, _data*]]
         ---
 
 Authors: 

@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_ArgumentNilException
 		XPS_typ_ArgumentNilException :  XPS_ifc_IException, XPS_typ_Exception
     	---
         --- prototype
-        createhashmapobject [XPS_typ_ArgumentNilException, [_source*, _target*, _message*, _data*]]
+        createHashmapObject [XPS_typ_ArgumentNilException, [_source*, _target*, _message*, _data*]]
         ---
 
 

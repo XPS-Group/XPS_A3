@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_EventHandler
         XPS_typ_EventHandler : XPS_ifc_IEventHandler
         ---
         --- code
-        createhashmapobject [XPS_typ_EventHandler,[_delegate]]
+        createHashmapObject [XPS_typ_EventHandler,[_delegate]]
         ---
 
 Authors: 
@@ -47,11 +47,11 @@ Throws:
     ----------------------------------------------------------------------------*/
 	["#create", compileFinal {
 		params [["_anyDelegate",nil,[createhashmap]]];
-		if (isNil "_anyDelegate") exitwith {
-			throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
+		if (isNil "_anyDelegate") exitWith {
+			throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
 		};
-		if (!(CHECK_IFC1(_anyDelegate,XPS_ifc_IDelegate))) exitwith {
-			throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];
+		if (!(CHECK_IFC1(_anyDelegate,XPS_ifc_IDelegate))) exitWith {
+			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];
 		};
 		_self set ["_delegate",_anyDelegate];
 	}],

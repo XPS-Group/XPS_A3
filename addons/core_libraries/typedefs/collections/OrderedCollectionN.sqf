@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_OrderedCollectionN
         XPS_typ_OrderedCollectionN : XPS_ifc_ICollection, XPS_ifc_ICollectionNotifier, XPS_typ_OrderedCollection
         ---
         --- prototype
-        createhashmapobject [XPS_typ_OrderedCollectionN]
+        createHashmapObject [XPS_typ_OrderedCollectionN]
         ---
 
 Authors: 
@@ -38,8 +38,8 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         _self call ["XPS_typ_OrderedCollection.#create"];
-        _self set ["_onCollectionChangedEvent",createhashmapobject [XPS_typ_Event]];
-        _self set ["CollectionChanged",createhashmapobject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];
+        _self set ["_onCollectionChangedEvent",createHashmapObject [XPS_typ_Event]];
+        _self set ["CollectionChanged",createHashmapObject [XPS_typ_EventHandler,[_self get "_onCollectionChangedEvent"]]];
     }],
 	/*----------------------------------------------------------------------------
 	Str: #str

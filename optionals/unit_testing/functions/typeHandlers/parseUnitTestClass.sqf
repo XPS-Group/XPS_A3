@@ -35,7 +35,7 @@ private _result = if (isNil "_result") then {[]} else {_result};
 
 private _fnc_loadFile = {
 	params ["_file"];
-	private _statement = "createhashmapobject [ [ call compileScript [""%1"",false] ,false ,true ,true ,true ] call XPS_fnc_buildTypeDefinition ];";
+	private _statement = "createHashmapObject [ [ call compileScript [""%1"",false] ,false ,true ,true ,true ] call XPS_fnc_buildTypeDefinition ];";
 	private _code =  format[_statement,_file];
 	call compile _code;
 };
@@ -54,11 +54,11 @@ if (isText _file) then {
 	} else {
 		missionNamespace setvariable [_varName,_testClass];
 	};
-	_result pushback [_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName];
+	_result pushBack [_varName+"_"+([4] call XPS_fnc_createUniqueID),missionNamespace getVariable _varName];
 };
 
 {
 	if (isClass _x) then {[_result,_x,_tag] call XPS_fnc_parseUnitTestClass;};
-} foreach configProperties [_class];
+} forEach configProperties [_class];
 
 _result;

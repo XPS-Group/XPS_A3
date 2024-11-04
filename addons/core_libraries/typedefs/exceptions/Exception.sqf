@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_Exception
 		XPS_typ_Exception :  XPS_ifc_IException
     	---
         --- prototype
-        createhashmapobject [XPS_typ_Exception, [_source*, _target*, _message*, _data*]]
+        createHashmapObject [XPS_typ_Exception, [_source*, _target*, _message*, _data*]]
         ---
 
 Authors: 
@@ -52,7 +52,7 @@ Returns:
 		_self set ["Source",_source];
 		_self set ["Target",_target];
 		if !(isNil "_message") then {_self set ["Message",_message]};
-		if !(_data isEqualTypeAny [createhashmap,[]]) then {_data = createhashmapfromarray [["params (_this)",_data]]};
+		if !(_data isEqualTypeAny [createhashmap,[]]) then {_data = createHashMapFromArray [["params (_this)",_data]]};
 		_self set ["Data",_data];
 	}],
 	/*----------------------------------------------------------------------------

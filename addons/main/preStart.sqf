@@ -30,7 +30,7 @@ with uiNamespace do{
 	private _start = diag_ticktime;
 	{
 		if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};
-	} foreach configProperties [configFile >> QXPS_CFG_TD_BASECLASSNAME];
+	} forEach configProperties [configFile >> QXPS_CFG_TD_BASECLASSNAME];
 	diag_log text format ["[XPS preStart End: %1 secs]",diag_tickTime - _start];
 };
 

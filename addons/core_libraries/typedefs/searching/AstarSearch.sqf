@@ -49,7 +49,7 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],["_reversePath",true,[true]]]) exitwith {nil;};
+		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],["_reversePath",true,[true]]]) exitWith {nil;};
 		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
 		_self set ["_workingGraph",_graph];
 		_self set ["_workingStartKey",_startKey];
@@ -149,7 +149,7 @@ Returns:
 		if (isNil {_cameFrom get (_current get "Index")}) then {_current = _self get "lastNode";};
 
 		while {!(isNil "_current") && !(_current isEqualTo _start)} do {
-			_path pushback _current;
+			_path pushBack _current;
 			_current = _cameFrom get (_current get "Index");
 		};
 
@@ -198,7 +198,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["frontierPullLowest",compileFinal {
 		private _frontier = _self get "frontier";
-		if (count _frontier > 0) exitwith {
+		if (count _frontier > 0) exitWith {
 			(_frontier deleteat 0) # 1;
 		};
 		nil;
@@ -340,7 +340,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
 		//Bail if already finished
-		if (_self get "Status" in ["SUCCESS","FAILURE"]) exitwith {};
+		if (_self get "Status" in ["SUCCESS","FAILURE"]) exitWith {};
 		
 		// Set status Running if not already
 		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
@@ -351,7 +351,7 @@ Returns:
 		_self set ["currentNode",_currentNode];
 		
 		// Check if path is found or failed to be found
-		if (isNil "_currentNode" || (_endNode get "Index") isEqualTo (_currentNode get "Index")) exitwith {
+		if (isNil "_currentNode" || (_endNode get "Index") isEqualTo (_currentNode get "Index")) exitWith {
 			_self call ["getPath"];
 		};
 		private _prevNode = _self get "cameFrom" get (_currentNode get "Index");
@@ -374,7 +374,7 @@ Returns:
 				_self get "cameFrom" set [_x get "Index", _currentNode];
 			};
 
-		} foreach _neighbors;
+		} forEach _neighbors;
 
 		_self set ["lastNode",_currentNode];
 	}]

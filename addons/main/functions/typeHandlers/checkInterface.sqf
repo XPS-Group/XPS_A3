@@ -49,8 +49,8 @@ Example: Check a hashmap if it supports interface
 
 params [["_hashmap",createhashmap,[createhashmap]],["_interfaces",[],[[],"",createhashmap]],["_allowNils",false,[true]]];
 
-if (_hashmap isEqualTo createhashmap || {_interfaces isEqualTo []}) exitwith {
-	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces:%1",_this select 0,_this select 1]);
+if (_hashmap isEqualTo createhashmap || {_interfaces isEqualTo []}) exitWith {
+	diag_log text (format ["XPS_fnc_checkInterface: parameters not valid.  -- Hashmap: %1 -- Interfaces: %2",_this select 0,_this select 1]);
 	false;
 };
 
@@ -71,12 +71,12 @@ for "_a" from 0 to (count _interfaces -1) do {
 		};
 	};
 
-	if (isNil {_interface}) exitwith {
+	if (isNil {_interface}) exitWith {
 		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interface provided:%1",_interfaces#_a]);
 		_result = false;
 	};
 
-	if !(_interface isEqualType createhashmap) exitwith {
+	if !(_interface isEqualType createhashmap) exitWith {
 		diag_log text (format ["XPS_fnc_checkInterface: Interface was invalid or not a hashmap.  Interface provided:%1",_interfaces#_a]);
 		_result = false;
 	};
@@ -121,6 +121,6 @@ for "_a" from 0 to (count _interfaces -1) do {
 				_result = false;
 			};
 		};
-	} foreach _interface;
+	} forEach _interface;
 };
 _result;

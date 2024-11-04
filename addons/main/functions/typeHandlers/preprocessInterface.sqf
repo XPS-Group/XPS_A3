@@ -28,7 +28,7 @@ Return: _interface
 	<Interface> - ref to array or <Boolean> : <False> if error
 
 ---------------------------------------------------------------------------- */
-if !(_this isEqualType []) exitwith {false};
+if !(_this isEqualType []) exitWith {false};
 
 private _interface = _this;
 
