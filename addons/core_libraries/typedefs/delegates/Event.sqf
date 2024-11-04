@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_Event
         XPS_typ_Event : XPS_ifc_IDelegate, XPS_typ_MultiCastDelegate
         ---
         --- prototype
-        createhashmapobject [XPS_typ_Event]
+        createHashmapObject [XPS_typ_Event]
         ---
 
 Authors: 

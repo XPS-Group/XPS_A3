@@ -6,7 +6,7 @@ TypeDef: unit_testing.  XPS_UT_typ_AssertInconclusiveException
 		XPS_UT_typ_AssertInconclusiveException : core.XPS_ifc_IException, core.XPS_typ_Exception
 		---
         --- prototype
-        createhashmapobject [XPS_UT_typ_AssertInconclusiveException, _source*, _target*, _message*, _data*]
+        createHashmapObject [XPS_UT_typ_AssertInconclusiveException, _source*, _target*, _message*, _data*]
         ---
 
 Authors: 

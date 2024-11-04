@@ -50,7 +50,7 @@ Description:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
 	["GetPositionByIndex", compileFinal {
-		if !(params [["_cellKey",[0,0],[[]],[2]],["_size",0,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetPositionByIndex",nil,createhashmapfromarray [["_this",_this]]]];};
+		if !(params [["_cellKey",[0,0],[[]],[2]],["_size",0,[0]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"GetPositionByIndex",nil,createHashMapFromArray [["_this",_this]]]];};
 
 		private _x = _size * (_cellKey#0);
 		private _y = _size * (_cellKey#1);
@@ -77,7 +77,7 @@ Description:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
 	["GetIndexByPosition", compileFinal {
-		if !(params [["_position",[100,100],[[],objnull],[2,3]],["_size",nil,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetIndexByPosition",nil,createhashmapfromarray [["_this",_this]]]];};
+		if !(params [["_position",[100,100],[[],objnull],[2,3]],["_size",nil,[0]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"GetIndexByPosition",nil,createHashMapFromArray [["_this",_this]]]];};
 
 		private _pos = [];
 		if (_position isEqualType []) then {
@@ -114,7 +114,7 @@ Description:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
 	["GetNearbyIndexes", compileFinal {
-		if !(params [["_center",[0,0],[[]],[2]], ["_radius",0,[0]], "_includecenter"]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GetNearbyIndexes",nil,createhashmapfromarray [["_this",_this]]]];};
+		if !(params [["_center",[0,0],[[]],[2]], ["_radius",0,[0]], "_includecenter"]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"GetNearbyIndexes",nil,createHashMapFromArray [["_this",_this]]]];};
 		if (isNil "_includeCenter" || {!(_includeCenter isEqualType true)}) then {_includeCenter = false};
 
 		private _cells = [];
@@ -126,8 +126,8 @@ Description:
 				if (_distance <= _maxDistance) then  { // clip 
 					private _cellKey = _center vectorAdd [_x,_y]; 
 					if (_cellKey isEqualTo _center) then {
-						if (_includeCenter) then {_cells pushback _cellKey;}; // else dont include
-					} else {_cells pushback _cellKey;};
+						if (_includeCenter) then {_cells pushBack _cellKey;}; // else dont include
+					} else {_cells pushBack _cellKey;};
 				};
 			};
 		};
@@ -159,7 +159,7 @@ Description:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
 	["GenerateGrid", compileFinal {
-		if !(params [["_sizeSqr",0,[0]],["_sizeWorld",worldsize,[0]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"GenerateGrid",nil,createhashmapfromarray [["_this",_this]]]];};
+		if !(params [["_sizeSqr",0,[0]],["_sizeWorld",worldsize,[0]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"GenerateGrid",nil,createHashMapFromArray [["_this",_this]]]];};
 
 		private _indexArray = [];
 		private _posArray = [];
@@ -173,8 +173,8 @@ Description:
 		while {_y < _sizeWorld} do {
 			while {_x < _sizeWorld} do {
 
-				_indexArray pushback [_xkey, _ykey];
-				 _posArray pushback [_x, _y];
+				_indexArray pushBack [_xkey, _ykey];
+				 _posArray pushBack [_x, _y];
 
 				_x = _x + _increase;
 				_xkey = _xkey + 1;

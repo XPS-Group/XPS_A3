@@ -39,7 +39,7 @@ private _a2=(_p4#1)-(_p3#1);
 private _b2=(_p3#0)-(_p4#0);
 private _c2=_a2*(_p3#0)+_b2*(_p3#1);
 private _d=(_a1*_b2)-(_a2*_b1);
-if (abs _d isEqualTo 0) exitwith {[]};
+if (abs _d isEqualTo 0) exitWith {[]};
 private _x1 = (_b2*_c1-_b1*_c2)/_d;
 private _y1 = (_a1*_c2-_a2*_c1)/_d;
 [_x1,_y1,((_p1#2) + (_p1#2) + (_p1#2) + (_p1#2))/4];

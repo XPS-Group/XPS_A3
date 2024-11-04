@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_MultiCastDelegate
         XPS_typ_MultiCastDelegate : XPS_ifc_IDelegate
         ---
         --- prototype
-        createhashmapobject [XPS_typ_MultiCastDelegate,_signature]
+        createHashmapObject [XPS_typ_MultiCastDelegate,_signature]
         ---
 
 Authors: 
@@ -96,7 +96,7 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
 	["Attach", compileFinal {
-		if (isNil "_this") then {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
@@ -104,15 +104,15 @@ Returns:
 				{(_this#0) get (_this#1) isEqualType {}}}}			//if methodname is type code - we're good
 			) then {
 				//pushBackUnique doesn't support unique Hashmap Objects (compares by string)
-				// if ((_self get "_pointers" pushbackUnique _this) > -1) then {true} else {
-				// 	throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Attach","Functon/Method supplied was already added.",_this]];
+				// if ((_self get "_pointers" pushBackUnique _this) > -1) then {true} else {
+				// 	throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Attach","Functon/Method supplied was already added.",_this]];
 				// };
 				//Just accept it and add a RPT log if it's getting overloaded 
-				if ((_self get "_pointers" pushback _this) < 10000) then {true} else {
+				if ((_self get "_pointers" pushBack _this) < 10000) then {true} else {
 					diag_log text format ["MC Delegate %1 has too many subscribers. consider using an intermediary. Last added: %2",_self,_this];
 				};
 		} else {
-			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
+			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
 		};
 	}],
     /*----------------------------------------------------------------------------
@@ -160,8 +160,8 @@ Returns:
 		<XPS_typ_InvalidOperationException> - when an attached code or method pointer no longer exists
     ----------------------------------------------------------------------------*/
 	["Invoke", compileFinal {
-		if !(_this isEqualTypeParams (_self get "_signature")) exitwith {
-			throw createhashmapobject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
+		if !(_this isEqualTypeParams (_self get "_signature")) exitWith {
+			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Invoke","Signature does not match supplied parameters.",_this]];
 		};
 		{
 			switch (true) do {
@@ -173,9 +173,9 @@ Returns:
 					_object call [_method,_this];
 				};
 				default {
-					throw createhashmapobject[XPS_typ_InvalidOperationException,[_self,"Invoke","Attached code or method pointer no longer exists",_this]];
+					throw createHashmapObject[XPS_typ_InvalidOperationException,[_self,"Invoke","Attached code or method pointer no longer exists",_this]];
 				};
 			};
-		} foreach (_self get "_pointers");
+		} forEach (_self get "_pointers");
 	}]
 ]

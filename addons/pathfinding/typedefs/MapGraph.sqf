@@ -63,7 +63,7 @@ Flags:
 		private _subPositions = [];
 		for "_spY" from 1 to 3 do {
 			for "_spX" from 1 to 3 do {
-				_subPositions pushback [(_subPosSize*_spX),(_subPosSize*_spY)]
+				_subPositions pushBack [(_subPosSize*_spX),(_subPosSize*_spY)]
 			};
 		};
 
@@ -74,8 +74,8 @@ Flags:
 				private _sector = _sectors get [_xAxis,_yAxis];
 
 				if (isNil "_sector") then {
-					//_sector = createhashmapobject [XPS_PF_typ_MapNode,[_xAxis,_yAxis]];
-					_sector = createhashmapfromarray [["Index",[_xAxis,_yAxis]]];
+					//_sector = createHashmapObject [XPS_PF_typ_MapNode,[_xAxis,_yAxis]];
+					_sector = createHashMapFromArray [["Index",[_xAxis,_yAxis]]];
 					private _index = _sector get "Index";
 					private _posRef = [_sectorSize * _xAxis,_sectorSize * _yAxis];
 					_sector set ["PosRef", _posRef];
@@ -130,7 +130,7 @@ Flags:
 		<Array> - Index of sector containing position
 	-----------------------------------------------------------------------------*/
 	["posToIndex",compileFinal {
-        if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil;};
+        if !(params [["_pos",nil,[[]],[2,3]]]) exitWith {nil;};
 
         private _sectorSize = _self get "SectorSize";
 
@@ -163,7 +163,7 @@ Flags:
 		<Number> - Index of subposition in sector containing position (0 to 8)
 	-----------------------------------------------------------------------------*/
 	["posToSubIndex",compileFinal {
-        if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil;};
+        if !(params [["_pos",nil,[[]],[2,3]]]) exitWith {nil;};
 
 		private _sector = _self get "Sectors" get (_self call ["posToIndex",_pos]);
 		private _posRef = _sector get "PosRef";
@@ -263,8 +263,8 @@ Flags:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["AddLayer",compileFinal {
-		if !(params [["_layerBuilder",nil,[createhashmap]]]) exitwith {false};
-		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitwith {false};
+		if !(params [["_layerBuilder",nil,[createhashmap]]]) exitWith {false};
+		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitWith {false};
 		private _layer = _self call ["buildLayer",[_layerBuilder]];
 	}],
 	["CheckWaterTravel", compileFinal {
@@ -333,10 +333,10 @@ Flags:
 			if !(_isPrev) then {
 				private _neighbor = _self get "Sectors" get [_a,_b];
 				if !(isNil "_neighbor") then {
-					_neighbors pushback _neighbor;
+					_neighbors pushBack _neighbor;
 				};
 			};
-        } foreach [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
+        } forEach [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
 
 		_neighbors;
 	}],
@@ -373,7 +373,7 @@ Flags:
 		_pos - <Array> - current position to search
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
-		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
+		if !(params [["_pos",nil,[[]],[2,3]]]) exitWith {nil};
 		
 		private _index = _self call ["posToIndex",[_pos]];
 

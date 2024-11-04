@@ -41,7 +41,7 @@ Description:
 	["AreEqual", compileFinal {
 		params ["_arg1","_arg2",["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTo _arg2)}) then {
-			_self call ["Fail",["AreEqual",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["AreEqual",_this#2,createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -64,7 +64,7 @@ Description:
 	["AreNotEqual", compileFinal {
 		params ["_arg1","_arg2",["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTo _arg2}) then {
-			_self call ["Fail",["AreNotEqual",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["AreNotEqual",_this#2,createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -87,7 +87,7 @@ Description:
 	["AreSame", compileFinal {
 		params [["_arg1",objNull,[]],["_arg2",objNull,[]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualRef _arg2)}) then {
-			_self call ["Fail",["AreSame",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["AreSame",_this#2,createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -110,7 +110,7 @@ Description:
 	["AreNotSame", compileFinal {
 		params [["_arg1",objNull,[]],["_arg2",objNull,[]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualRef _arg2}) then {
-			_self call ["Fail",["AreNotSame",_this#2,createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["AreNotSame",_this#2,createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -130,7 +130,7 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["Fail", compileFinal {
 		params [["_target","Fail",[""]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
-		private _e =  compileFinal createhashmapobject [XPS_UT_typ_AssertFailedException,[_self get "#type" select 0,_target,_this#1,_data]];
+		private _e =  compileFinal createHashmapObject [XPS_UT_typ_AssertFailedException,[_self get "#type" select 0,_target,_this#1,_data]];
 		throw _e;
 	}],
 	/*-----------------------------------------------------------------------------
@@ -149,7 +149,7 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["Inconclusive", compileFinal {
 		params [["_target","Inconclusive",[""]],["_message",nil,[""]],["_data",createhashmap,[createhashmap]]];
-		private _e =  compileFinal createhashmapobject [XPS_UT_typ_AssertInconclusiveException,[_self get "#type" select 0,_target,_this#1]];
+		private _e =  compileFinal createHashmapObject [XPS_UT_typ_AssertInconclusiveException,[_self get "#type" select 0,_target,_this#1]];
 		throw _e;
 	}],
 	/*-----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ Description:
 	["IsEqualType", compileFinal {
 		params ["_arg1","_arg2",["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualType _arg2)}) then {
-			_self call ["Fail",["IsEqualType",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsEqualType",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -194,7 +194,7 @@ Description:
 	["IsNotEqualType", compileFinal {
 		params ["_arg1","_arg2",["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualType _arg2}) then {
-			_self call ["Fail",["IsNotEqualType",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsNotEqualType",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -217,7 +217,7 @@ Description:
 	["IsEqualTypeAll", compileFinal {
 		params ["_arg1","_arg2",["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeAll _arg2)}) then {
-			_self call ["Fail",["IsEqualTypeAll",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsEqualTypeAll",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -240,7 +240,7 @@ Description:
 	["IsNotEqualTypeAll", compileFinal {
 		params ["_arg1","_arg2",["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeAll _arg2}) then {
-			_self call ["Fail",["IsNotEqualTypeAll",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsNotEqualTypeAll",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -263,7 +263,7 @@ Description:
 	["IsEqualTypeAny", compileFinal {
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeAny _arg2)}) then {
-			_self call ["Fail",["IsEqualTypeAny",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsEqualTypeAny",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -286,7 +286,7 @@ Description:
 	["IsNotEqualTypeAny", compileFinal {
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeAny _arg2}) then {
-			_self call ["Fail",["IsNotEqualTypeAny",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsNotEqualTypeAny",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -309,7 +309,7 @@ Description:
 	["IsEqualTypeArray", compileFinal {
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeArray _arg2)}) then {
-			_self call ["Fail",["IsEqualTypeArray",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsEqualTypeArray",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -332,7 +332,7 @@ Description:
 	["IsNotEqualTypeArray", compileFinal {
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeArray _arg2}) then {
-			_self call ["Fail",["IsNotEqualTypeArray",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsNotEqualTypeArray",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -355,7 +355,7 @@ Description:
 	["IsEqualTypeParams", compileFinal {
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTypeParams _arg2)}) then {
-			_self call ["Fail",["IsEqualTypeParams",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsEqualTypeParams",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -378,7 +378,7 @@ Description:
 	["IsNotEqualTypeParams", compileFinal {
 		params ["_arg1",["_arg2",[],[[]]],["_message",nil,[""]]];
 		if (isNil "_arg1" || isNil "_arg2" || {_arg1 isEqualTypeParams _arg2}) then {
-			_self call ["Fail",["IsNotEqualTypeParams",_this#2, createhashmapfromarray [["_arg1",_this#0],["_arg2",_this#1]]]];
+			_self call ["Fail",["IsNotEqualTypeParams",_this#2, createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;
 	}],
@@ -400,7 +400,7 @@ Description:
 	["IsFalse", compileFinal {
 		params [["_bool",false,[true]],["_message",nil,[""]]];
 		if (_bool) then {
-			_self call ["Fail",["IsFalse",_this#1, createhashmapfromarray [["_bool",_bool]]]]
+			_self call ["Fail",["IsFalse",_this#1, createHashMapFromArray [["_bool",_bool]]]]
 		};
 		true;
 	}],
@@ -422,7 +422,7 @@ Description:
 	["IsTrue", compileFinal {
 		params [["_bool",false,[true]],["_message",nil,[""]]];
 		if !(_bool) then {
-			_self call ["Fail",["IsTrue",_this#1, createhashmapfromarray [["_bool",_bool]]]]
+			_self call ["Fail",["IsTrue",_this#1, createHashMapFromArray [["_bool",_bool]]]]
 		};
 		true;
 	}],
@@ -444,9 +444,9 @@ Description:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsInstanceOfType", compileFinal {
-		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
+		params [["_hashmapobject",createHashMapFromArray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
 		if !(_type in (_hashmapobject get "#type")) then {
-			_self call ["Fail",["IsInstanceOfType",_this#2, createhashmapfromarray [["_hashmapobject",_hashmapobject],["_type",_type]]]];
+			_self call ["Fail",["IsInstanceOfType",_this#2, createHashMapFromArray [["_hashmapobject",_hashmapobject],["_type",_type]]]];
 		};
 		true;
 	}],
@@ -468,9 +468,9 @@ Description:
 		_message* - <String> - (Optional - Default : nil) - The message to place in the Exception if failed
 	-----------------------------------------------------------------------------*/
 	["IsNotInstanceOfType", compileFinal {
-		params [["_hashmapobject",createhashmapfromarray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
+		params [["_hashmapobject",createHashMapFromArray [["#type",[]]],[createhashmap]],["_type","",[""]],["_message",nil,[""]]];
 		if (_type in (_hashmapobject get "#type")) then {
-			_self call ["Fail",["IsNotInstanceOfType",_this#2, createhashmapfromarray [["_hashmapobject",_hashmapobject],["_type",_type]]]];
+			_self call ["Fail",["IsNotInstanceOfType",_this#2, createHashMapFromArray [["_hashmapobject",_hashmapobject],["_type",_type]]]];
 		};
 		true;
 	}],
@@ -492,7 +492,7 @@ Description:
 	["IsNil", compileFinal {
 		params ["_arg",["_message",nil,[""]]];
 		if !(isNil {_arg}) then {
-			_self call ["Fail",["IsNil",_this#1, createhashmapfromarray [["_arg",_arg]]]]
+			_self call ["Fail",["IsNil",_this#1, createHashMapFromArray [["_arg",_arg]]]]
 		};
 		true;
 	}],
@@ -514,7 +514,7 @@ Description:
 	["IsNotNil", compileFinal {
 		params ["_arg",["_message",nil,[""]]];
 		if (isNil {_arg}) then {
-			_self call ["Fail",["IsNotNil",_this#1, createhashmapfromarray [["_arg",_arg]]]]
+			_self call ["Fail",["IsNotNil",_this#1, createHashMapFromArray [["_arg",_arg]]]]
 		};
 		true;
 	}],
@@ -548,7 +548,7 @@ Description:
 	["IsNull", compileFinal {
 		params [["_arg",configFile,[objNull]],["_message",nil,[""]]];
 		if !(isNull _arg) then {
-			_self call ["Fail",["IsNull",_this#1, createhashmapfromarray [["_arg",_arg]]]]
+			_self call ["Fail",["IsNull",_this#1, createHashMapFromArray [["_arg",_arg]]]]
 		};
 		true;
 	}],
@@ -582,7 +582,7 @@ Description:
 	["IsNotNull", compileFinal {
 		params [["_arg",objNull,[objNull]],["_message",nil,[""]]];
 		if (isNull _arg) then {
-			_self call ["Fail",["IsNotNull",_this#1, createhashmapfromarray [["_arg",_arg]]]]
+			_self call ["Fail",["IsNotNull",_this#1, createHashMapFromArray [["_arg",_arg]]]]
 		};
 		true;
 	}],
@@ -614,7 +614,7 @@ Description:
 					_self call ["Fail",["ThrowsException",_this#2, _exception]];
 				};
 			} else {
-				_self call ["Fail",["ThrowsException",_this#2, createhashmapfromarray [["_exception",_exception]]]];
+				_self call ["Fail",["ThrowsException",_this#2, createHashMapFromArray [["_exception",_exception]]]];
 			};
 		};
 		true;
@@ -639,7 +639,7 @@ Description:
 	["WithinRange", compileFinal {
 		params [["_num"],0,[0],["_min"],0,[0],["_max",0,[0]],["_message",nil,[""]]];
 		if (_num > _max || _num < _min) then {
-			_self call ["Fail",["WithinRange",_this#3, createhashmapfromarray [["Num",_num],["Min",_min],["Max",_max]]]]
+			_self call ["Fail",["WithinRange",_this#3, createHashMapFromArray [["Num",_num],["Min",_min],["Max",_max]]]]
 		};
 		true;
 	}],
@@ -663,7 +663,7 @@ Description:
 	["OutOfRange", compileFinal {
 		params [["_num"],0,[0],["_min"],0,[0],["_max",0,[0]],["_message",nil,[""]]];
 		if (_num <= _max && _num >= _min) then {
-			_self call ["Fail",["OutOfRange",_this#3, createhashmapfromarray [["Num",_num],["Min",_min],["Max",_max]]]]
+			_self call ["Fail",["OutOfRange",_this#3, createHashMapFromArray [["Num",_num],["Min",_min],["Max",_max]]]]
 		};
 		true;
 	}]

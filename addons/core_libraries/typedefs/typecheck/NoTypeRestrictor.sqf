@@ -5,7 +5,7 @@ TypeDef: core. XPS_typ_NoTypeRestrictor
 	XPS_typ_NoTypeRestrictor : XPS_ifc_ITypeRestrictor
 	---
 	---prototype
-	createhashmapobject [XPS_typ_NoTypeRestrictor]
+	createHashmapObject [XPS_typ_NoTypeRestrictor]
 	---
 
 Authors: 

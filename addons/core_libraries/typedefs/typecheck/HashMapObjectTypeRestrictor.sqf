@@ -5,7 +5,7 @@ TypeDef: core. XPS_typ_HashmapObjectTypeRestrictor
 	XPS_typ_HashmapObjectTypeRestrictor : XPS_ifc_ITypeRestrictor
 	---
 	---prototype
-	createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor, _allowedTypes]
+	createHashmapObject [XPS_typ_HashmapObjectTypeRestrictor, _allowedTypes]
 	---
 
 Authors: 
@@ -37,7 +37,7 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-		if (isNil "_this" || {_this isEqualTo []}) exitwith {_self set ["_allowed",[]];};
+		if (isNil "_this" || {_this isEqualTo []}) exitWith {_self set ["_allowed",[]];};
 		if (_this isEqualTypeAll "") then {
 			_self set ["_allowed",_this];
 		} else {
@@ -79,10 +79,10 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
 	-----------------------------------------------------------------------------*/
 	["RegisterType", compileFinal {
-        if !(params [["_type",nil,[""]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,createhashmapfromarray [["_this",_this]]]];};
+        if !(params [["_type",nil,[""]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"RegisterType",nil,createHashMapFromArray [["_this",_this]]]];};
         private _list = _self get "_allowed";
-        if (_type in _list) exitwith {false;};
-        _list pushback _type;
+        if (_type in _list) exitWith {false;};
+        _list pushBack _type;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: IsAllowed

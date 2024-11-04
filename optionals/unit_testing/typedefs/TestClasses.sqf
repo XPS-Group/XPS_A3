@@ -26,8 +26,8 @@ Description:
 		<True>
 	----------------------------------------------------------------------------*/
 	["#create", {
-		_self set ["_collection",createhashmapobject [
-			XPS_typ_TypeCollection,[createhashmapobject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_UT_typ_TestClass"]]]]];
+		_self set ["_collection",createHashmapObject [
+			XPS_typ_TypeCollection,[createHashmapObject [XPS_typ_HashmapObjectTypeRestrictor,["XPS_UT_typ_TestClass"]]]]];
 		_self set ["classOrder",[]];
 	}],
 	/*----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Description:
     -------------------------------------------------------------------------*/ 
 	["AddClass", compileFinal {
 		params [["_key",nil,[""]],["_item",createhashmap,[createhashmap]]];
-        _self get "classOrder" pushback (_self get "_collection" call ["AddItem",[_key,_item]]);
+        _self get "classOrder" pushBack (_self get "_collection" call ["AddItem",[_key,_item]]);
     }],
     /* -----------------------------------------------------------------------
     Method: GetClasses
@@ -91,8 +91,8 @@ Description:
 		private _classOrder = _self get "classOrder";
 		{
 			private _class = _self get "_collection" call ["GetItem",_x];
-			_dataArray pushback _class;
-		} foreach _classOrder;
+			_dataArray pushBack _class;
+		} forEach _classOrder;
 		_dataArray;
 	}],
     /* -----------------------------------------------------------------------
@@ -117,11 +117,11 @@ Description:
 				if (isClass _prop) then {
 					private _result = [[],_prop] call XPS_fnc_parseUnitTestClass;
 					if !(isnil "_result" || {_result isEqualTo []}) then {
-						{_self call ["AddClass",_x]} foreach _result;
+						{_self call ["AddClass",_x]} forEach _result;
 					};
 				};
-			} foreach configProperties [_configFile >> QXPS_UT_CFG_BASECLASSNAME];
+			} forEach configProperties [_configFile >> QXPS_UT_CFG_BASECLASSNAME];
 
-		} foreach [configFile,missionConfigFile,campaignConfigFile];
+		} forEach [configFile,missionConfigFile,campaignConfigFile];
 	}]
 ];

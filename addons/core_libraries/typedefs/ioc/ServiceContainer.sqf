@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_ServiceContainer
 	XPS_typ_ServiceContainer : XPS_ifc_IServiceContainer
 	---
 	---prototype
-	createhashmapobject [XPS_typ_ServiceContainer]
+	createHashmapObject [XPS_typ_ServiceContainer]
 	---
 
 Authors: 
@@ -38,9 +38,9 @@ Returns:
         <XPS_typ_InvalidArgumentException> - if parameter does not implement the <XPS_ifc_ITypeRestrictor> interface
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-		params [["_provider",createhashmapobject [XPS_typ_ServiceProvider],[createhashmap]]];		
-		if !(CHECK_IFC1(_provider,XPS_ifc_IServiceProvider)) exitwith {
-            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","_provider parameter was an invalid type",_this]];
+		params [["_provider",createHashmapObject [XPS_typ_ServiceProvider],[createhashmap]]];		
+		if !(CHECK_IFC1(_provider,XPS_ifc_IServiceProvider)) exitWith {
+            throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","_provider parameter was an invalid type",_this]];
 		};
 		
 		_self set ["_provider",_provider];
@@ -144,7 +144,7 @@ Returns:
 
 	-----------------------------------------------------------------------------*/
     ["GetScope", compileFinal {
-		//createhashmapobject [_self get "#type" select 0,+(_self get "_provider")];
+		//createHashmapObject [_self get "#type" select 0,+(_self get "_provider")];
 		+_self;
     }]
 ]

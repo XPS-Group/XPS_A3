@@ -6,7 +6,7 @@ TypeDef: unit_testing.  XPS_UT_typ_AssertFailedException
 		XPS_UT_typ_AssertFailedException : core.XPS_ifc_IException, core.XPS_typ_Exception
 		---
         --- prototype
-        createhashmapobject [XPS_UT_typ_AssertFailedException, _source*, _target*, _message*, _data*]
+        createHashmapObject [XPS_UT_typ_AssertFailedException, _source*, _target*, _message*, _data*]
         ---
 
 Authors: 

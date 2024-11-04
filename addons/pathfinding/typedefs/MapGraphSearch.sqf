@@ -179,7 +179,7 @@ Flags:
 				private _densityWeight = _weights get "DensityWeight";
 
 		// Exempt Air Units with no bias
-		if (_capabilities get "CanUseAir" && ((values _weights) isEqualTo [0,0,0,0]) ) exitwith {_cost}; 
+		if (_capabilities get "CanUseAir" && ((values _weights) isEqualTo [0,0,0,0]) ) exitWith {_cost}; 
 
 		private _toTerrain = _toNode get "Terrain";
 			private _typeTo = _toTerrain get "Type";
@@ -205,7 +205,7 @@ Flags:
             };
 
             case "BRIDGE": {
-                if (_isWaterTravel) exitwith {_adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);};
+                if (_isWaterTravel) exitWith {_adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);};
                 if (_capabilities get "CanUseRoads") then { 
                     if (_roadWeight isNotEqualTo 0) then {
                         _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "RoadModifier") * _roadWeight);
@@ -221,7 +221,7 @@ Flags:
             };
 
             case "COAST": {
-                if (_isWaterTravel) exitwith {_adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);};
+                if (_isWaterTravel) exitWith {_adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "WaterModifier") * _waterWeight);};
                 if (((_capabilities get "CanUseRoads") && (_toTerrain get "HasRoads")) || ((_capabilities get "CanUseTrails") && (_toTerrain get "HasTrails"))) then { 
                     if (_roadWeight isNotEqualTo 0) then {
                             _adjustedCost = _adjustedCost + (_adjustedCost * (_toTerrain get "RoadModifier") * _roadWeight);
@@ -262,7 +262,7 @@ Flags:
 	["FilterNeighbors",compileFinal {
 		params [["_neighbors",nil,[[]]]];
 		
-		if (count _neighbors < 1) exitwith {[]};
+		if (count _neighbors < 1) exitWith {[]};
 
 		private _fromNode = _self get "currentNode";
 		private _i = 0;

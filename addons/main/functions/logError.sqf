@@ -29,8 +29,8 @@ Example: Typical
 
 ---------------------------------------------------------------------------- */
 
-if !(params [["_errorString","",[""]],"_args"]) exitwith {
-    diag_log text format ["XPS: Error in logging params (_errorString not a string): params: %1,%2",[_errorString,_args]];
+if !(params [["_errorString","",[""]],"_args"]) exitWith {
+    diag_log text format ["XPS: Error in logging params (_errorString not a string): params: %1,%2",_errorString,_args];
 };
 _args = [_args] param [0,[],[[]]];
 

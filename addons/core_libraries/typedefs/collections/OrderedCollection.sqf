@@ -6,7 +6,7 @@ TypeDef: core. XPS_typ_OrderedCollection
         XPS_typ_OrderedCollection : XPS_ifc_ICollection
         ---
         --- prototype
-        createhashmapobject [XPS_typ_OrderedCollection]
+        createHashmapObject [XPS_typ_OrderedCollection]
         ---
 
 Authors: 
@@ -111,8 +111,8 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
-        if (isNil "_this") exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createhashmapfromarray [["_this",_this]]]];};
-        (_self get "_listArray") pushback _this;
+        if (isNil "_this") exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createHashMapFromArray [["_this",_this]]]];};
+        (_self get "_listArray") pushBack _this;
     }],
     /*----------------------------------------------------------------------------
     Method: RemoveItem
@@ -133,7 +133,7 @@ Returns:
         <XPS_typ_InvalidArgumentException> - if parameter was nil or NaN
     ----------------------------------------------------------------------------*/
 	["RemoveItem",compileFinal {
-        if !(_this isEqualType 0) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RemoveItem",nil,createhashmapfromarray [["_this",_this]]]];};
+        if !(_this isEqualType 0) exitWith {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"RemoveItem",nil,createHashMapFromArray [["_this",_this]]]];};
         _self get "_listArray" deleteAt _this;
     }],
     /*----------------------------------------------------------------------------
@@ -155,7 +155,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["FindItem", compileFinal {
-        if (isNil "_this") exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createhashmapfromarray [["_this",_this]]]];};
+        if (isNil "_this") exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createHashMapFromArray [["_this",_this]]]];};
         _self get "_listArray" find _this;
 	}],
     /*----------------------------------------------------------------------------
@@ -179,8 +179,8 @@ Returns:
         <XPS_typ_ArgumentOutOfRangeException> - if index does not exist
     ----------------------------------------------------------------------------*/
 	["GetItem", compileFinal {
-        if !(_this isEqualType 0) exitwith {throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"RemoveItem",nil,createhashmapfromarray [["_this",_this]]]];};
-		if (_this >= _self call ["Count"]) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,createhashmapfromarray [["_this",_this]]]]};
+        if !(_this isEqualType 0) exitWith {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"RemoveItem",nil,createHashMapFromArray [["_this",_this]]]];};
+		if (_this >= _self call ["Count"]) then { throw createHashmapObject [XPS_typ_ArgumentOutOfRangeException,[_self,"GetItem",nil,createHashMapFromArray [["_this",_this]]]]};
 
         if !(_self call ["IsEmpty"]) then {
 		    _self get "_listArray" select _this;
@@ -225,7 +225,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["SetItem", compileFinal {
-        if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,createhashmapfromarray [["_this",_this]]]];};
+        if !(params [["_index",nil,[0]],["_item",nil,[]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"SetItem",nil,createHashMapFromArray [["_this",_this]]]];};
 		(_self get "_listArray") set [_index,_item];
         true;
 	}],
@@ -255,14 +255,14 @@ Returns:
         <XPS_typ_InvalidArgumentException> - if index does not contain  <hashmap> or <hashmapobject>
     ----------------------------------------------------------------------------*/
 	["UpdateItem", compileFinal {
-        if !(params [["_index",nil,[0]],["_propertyArray",nil,[[]],[2]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]];};
-		if (_index >= _self call ["Count"]) then { throw createhashmapobject [XPS_typ_ArgumentOutOfRangeException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]]};
+        if !(params [["_index",nil,[0]],["_propertyArray",nil,[[]],[2]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,createHashMapFromArray [["_this",_this]]]];};
+		if (_index >= _self call ["Count"]) then { throw createHashmapObject [XPS_typ_ArgumentOutOfRangeException,[_self,"UpdateItem",nil,createHashMapFromArray [["_this",_this]]]]};
         private _item = _self call ["GetItem",_index];
         if (_item isEqualType createhashmap) then {
             _propertyArray params ["_key","_value"];
             _item set [_key,_value];
         } else {
-            throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]]
+            throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,createHashMapFromArray [["_this",_this]]]]
         };
         true;
 	}],
@@ -288,7 +288,7 @@ Returns:
         <XPS_typ_ArgumentNilException> - if parameter was nil
     ----------------------------------------------------------------------------*/
 	["InsertItem", compileFinal {
-        if !(params [["_index",nil,[0]],["_itemArray",nil,[[]]]]) exitwith {throw createhashmapobject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,createhashmapfromarray [["_this",_this]]]];};
+        if !(params [["_index",nil,[0]],["_itemArray",nil,[[]]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"UpdateItem",nil,createHashMapFromArray [["_this",_this]]]];};
 		
         _self get "_listArray" insert [_index,_propertyArray,false];
 

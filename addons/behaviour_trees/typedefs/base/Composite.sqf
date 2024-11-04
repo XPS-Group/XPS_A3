@@ -180,8 +180,8 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
-		if (isNil "_childNode") exitwith {false};
-		if !( CHECK_IFC1(_childNode,XPS_BT_ifc_INode) ) exitwith {false};
+		if (isNil "_childNode") exitWith {false};
+		if !( CHECK_IFC1(_childNode,XPS_BT_ifc_INode) ) exitWith {false};
 
 		private _children = _self get "children";
 		private _count = count (_children);
@@ -212,7 +212,7 @@ Returns:
 			if !(isNil "_x") then {
 				_x call ["Init"];
 			};
-		} foreach _children;
+		} forEach _children;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Tick

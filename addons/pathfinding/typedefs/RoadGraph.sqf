@@ -28,7 +28,7 @@ Flags:
 	["#type","XPS_PF_typ_RoadGraph"],
 	["@interfaces",["XPS_PF_ifc_IRoadGraph","XPS_ifc_IAstarGraph"]],
 	["_getConnectedToPath",compileFinal {
-		if !(params [["_fromPoint",nil,[[]],[3]],["_direction",nil,[0]],["_toObject",nil,[createhashmap]],["_toWidth",nil,[0]],["_nextObject",nil,[createhashmap]],["_nextWidth",nil,[0]],["_dirOffset",nil,[0]]]) exitwith {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
+		if !(params [["_fromPoint",nil,[[]],[3]],["_direction",nil,[0]],["_toObject",nil,[createhashmap]],["_toWidth",nil,[0]],["_nextObject",nil,[createhashmap]],["_nextWidth",nil,[0]],["_dirOffset",nil,[0]]]) exitWith {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
 		if (_fromPoint isEqualTo [0,0,0]) then {diag_log ["_getConnectedToPath:",_fromPoint,_toObject,_toWidth,_nextObject,_dirOffset]};
 
 		private _posA = _toObject get "PosASL";
@@ -63,7 +63,7 @@ Flags:
 		private _posE = _posE getpos [_nextWidth,_headB + _dirOffset]; _posE set [2,_posB#2];
 
 		private _points = [];
-		if ((_posS distance2d _posE)*1.15 < (_fromPoint distance2d _posE)) then {_points pushback _posS;_fromPoint = _posS;};
+		if ((_posS distance2d _posE)*1.15 < (_fromPoint distance2d _posE)) then {_points pushBack _posS;_fromPoint = _posS;};
 		private _p1 = _frompoint;
 		private _p2 = _frompoint getpos [5,_direction];
 		private _p3 = _bPosB getpos [_nextWidth,_headB + _dirOffset];
@@ -85,13 +85,13 @@ Flags:
 			if ((_intersect distance2d _posE < _fromPoint distance2d _posE) && (_intersect distance2d _fromPoint < _fromPoint distance2d _posE)) then {
 				private _iB = _intersect getpos [(_intersect distance _frompoint)/2,_intersect getdir _frompoint]; 
 				private _iE = _intersect getpos [(_intersect distance _posE)/2,_intersect getdir _posE]; 
-				_intPoints pushback _iB;
-				_intPoints pushback _intersect;
-				_intPoints pushback _iE;
+				_intPoints pushBack _iB;
+				_intPoints pushBack _intersect;
+				_intPoints pushBack _iE;
 				for "_p" from 0.1 to 0.5 step 0.1 do {
 					private _nPos = _p bezierInterpolation _intPoints;
 					//if !(roadAt _nPos isEqualTo (_toObject get "RoadObject")) then {
-						_points pushback _nPos;
+						_points pushBack _nPos;
 					//};
 				};
 				// _m = createmarker ["db"+ str _intersect,_intersect]; 
@@ -118,7 +118,7 @@ Flags:
 	["addRoadToGraph",compileFinal {
 		params [["_object",objNull,[objNull]],["_typeDef",XPS_PF_typ_RoadNode,[[]]]];
 		if !(_object isEqualto objNull) then {
-			private _hmo = createhashmapobject [_typeDef,[str _object,_object]];
+			private _hmo = createHashmapObject [_typeDef,[str _object,_object]];
 			_self get "Roads" set [str _object,_hmo];
 		};
 	}],
@@ -141,9 +141,9 @@ Flags:
 		private _roadArray = [];
 		{
 			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in _ct) then {
-				_roadArray pushbackunique _x;
+				_roadArray pushBackunique _x;
 			};
-		} foreach roadsconnectedto _object;
+		} forEach roadsconnectedto _object;
 
 		private _pos = _node get "PosASL";
 		private _bPos = _node get "BeginPos";
@@ -160,9 +160,9 @@ Flags:
 			_x resize 2;
 			private _r = roadAt _x;
 			if !(_r isEqualto objNull || (str _r) isEqualTo (str _object) || (str _r) in _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
-				_roadArray pushbackunique _r;
+				_roadArray pushBackunique _r;
 			};
-		} foreach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
+		} forEach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 
 		// _m = createmarker [str _bPosC,_bPosC]; 
 		// _m setmarkershape "rectangle"; 
@@ -180,7 +180,7 @@ Flags:
 			private _rct = _self get "Roads" get (str _x);
 			_rct get "ConnectedTo" set [str _object,_object];
 
-		} foreach _roadArray;
+		} forEach _roadArray;
 		
 	}],
 	/*----------------------------------------------------------------------------
@@ -195,15 +195,15 @@ Flags:
 	["buildGraph",compileFinal {
 		private _roads = nearestterrainobjects [[worldsize/2,worldsize/2],["MAIN ROAD","ROAD","TRACK","TRAIL"],worldSize,false,false];
 		_self set ["Roads",createhashmap];
-		{_self call ["addRoadToGraph",[_x]];} foreach _roads;
-		{_self call ["getAllConnected",[_x]];} foreach values (_self get "Roads");
+		{_self call ["addRoadToGraph",[_x]];} forEach _roads;
+		{_self call ["getAllConnected",[_x]];} forEach values (_self get "Roads");
 		
 	}],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
     	--- Prototype --- 
-    	_result = createhashmapobject [XPS_PF_typ_RoadGraph,[_roadGraphDoctrine*]];
+    	_result = createHashmapObject [XPS_PF_typ_RoadGraph,[_roadGraphDoctrine*]];
     	---
 
 	Parameters:
@@ -259,7 +259,7 @@ Flags:
 		_endPos - <Array> - goal position
 	-----------------------------------------------------------------------------*/
 	["GetNeighbors",compileFinal {
-		if !(params [["_current",nil,[createhashmap]],"_prev"]) exitwith {nil};
+		if !(params [["_current",nil,[createhashmap]],"_prev"]) exitWith {nil};
 		
 		private _result = [];
 		private _neighbors = [];
@@ -269,9 +269,9 @@ Flags:
 		
 		{
 			if !(_x isEqualTo _prevRoadObject || _x isEqualTo (_current get "RoadObject")) then {
-				_result pushback (_self get "Roads" get str _x);
+				_result pushBack (_self get "Roads" get str _x);
 			};
-		} foreach _neighbors;
+		} forEach _neighbors;
 		_result;
 	}],
 	/*----------------------------------------------------------------------------
@@ -288,7 +288,7 @@ Flags:
 		_nextPos - <Array> - connected road location
 	-----------------------------------------------------------------------------*/
 	["GetCost",compileFinal {
-		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]]]) exitwith {nil};
+		if !(params [["_current",nil,[createhashmap]],["_next",nil,[createhashmap]]]) exitWith {nil};
 		
 		(_current get "PosASL") distance (_next get "PosASL");
 	}],
@@ -305,9 +305,9 @@ Flags:
 		_pos - <Array> - current position to look for nearest road object (within 50m)
 	-----------------------------------------------------------------------------*/
 	["GetNodeAt",compileFinal {
-		if !(params [["_pos",nil,[[]],[2,3]]]) exitwith {nil};
+		if !(params [["_pos",nil,[[]],[2,3]]]) exitWith {nil};
 		private _roads = nearestTerrainObjects [_pos,["MAIN ROAD","ROAD","TRACK","TRAIL"],50,true];
-		if (count _roads > 0) exitwith {
+		if (count _roads > 0) exitWith {
 			_self get "Roads" get (str (_roads#0));
 		};
 		nil;
@@ -366,11 +366,11 @@ Flags:
 					_m setmarkertype "hd_dot"; 
 					_m setmarkercolor _color; 
 					_m setmarkersize [0.4,0.4];  
-					_markers pushback (_hm get "Index");
-				} foreach values (_self get "Roads");
+					_markers pushBack (_hm get "Index");
+				} forEach values (_self get "Roads");
 			};
 			default {
-				{deleteMarker _x} foreach _markers;
+				{deleteMarker _x} forEach _markers;
 				_markers resize 0;
 			};
 		};
@@ -432,7 +432,7 @@ Flags:
 			_m setmarkersize [0.5,0.5];
 			_m setmarkerdir (_mP getdir (getmarkerpos _m));
 			_mP = getmarkerpos _m;
-		} foreach _path;
+		} forEach _path;
 
 		//CALCULATE PATH
 		private _fromPoint = +_start;
@@ -461,7 +461,7 @@ Flags:
 			_direction = (_result select -2) getdir _fromPoint;
 			_i = _i + 1;
 		};
-		_result pushback _end;
+		_result pushBack _end;
 		_result;
 	}]
 ]

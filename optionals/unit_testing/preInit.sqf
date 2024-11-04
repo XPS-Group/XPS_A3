@@ -42,7 +42,7 @@ Description:
 Returns: 
 	<Static> - of <XPS_UT_typ_Assert>
 ---------------------------------------------------------------------------*/
-XPS_UT_Assert = compileFinal createhashmapobject [XPS_UT_typ_Assert];
+XPS_UT_Assert = compileFinal createHashmapObject [XPS_UT_typ_Assert];
 
 XPS_UT_TestClasses call ["GetInstance"] call ["LoadClasses"];
 

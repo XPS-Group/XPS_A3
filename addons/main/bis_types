@@ -75,7 +75,7 @@ BI Wiki : <HashMapKey: https://community.bistudio.com/wiki/HashMapKey>
 Type: HashMapObject
 External: 
 A <Hashmap> with special object-oriented features and behavior see:
-BI Wiki : <HashMapObject: https://community.bistudio.com/wiki/createHashMapObject>
+BI Wiki : <HashMapObject: https://community.bistudio.com/wiki/createHashmapObject>
 
 Type: Location
 An extended type of marker.
