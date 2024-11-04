@@ -16,9 +16,10 @@ Description:
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
 	_String - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
-	a unique identifier every time the type definition is rebuilt. See <XPS_fnc_preprocessTypeDefinition> for more info
+	a unique identifier every time the type definition is rebuilt. This does not apply if debug mode is enabled. 
+	See <XPS_fnc_preprocessTypeDefinition> for more info. 
 
-	@String - any key named as such with an @ symbol and also has an <array> value type, will be appended (unique only). For example, "@MyArray" key in parent
+	@String - any string key named as such with an @ symbol and also has an <array> value type, will be appended (unique only). For example, "@MyArray" key in parent
 	with a value of [1,2,3] and a child type which inherits but has a value of [2,3,4,5,6] will become [1,2,3,4,5,6]. The most common usage 
 	will be the special "@interfaces" key which is used in checking Method/Property compliance. 
 
@@ -96,7 +97,7 @@ if ("#base" in _hashmap) then {
 		if (isNil "_y") then {continue};
 		
 		// Create base methods as "ParentType.Method"
-		if (!(isNil {_pTypeName}) && {_x in _keys && _x isEqualType "" && _y isEqualType {}}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
+		if (!(isNil {_pTypeName}) && {_x in _keys && {_x isEqualType "" && {_y isEqualType {}}}}) then {_hashmap set [format["%1.%2",_pTypeName,_x],_y];};
 
 		// Append keys using @ 
 		if (_x isEqualType "" && {_y isEqualTypeAny [[],createhashmap]}) then {
