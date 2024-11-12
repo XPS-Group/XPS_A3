@@ -21,8 +21,8 @@ Flags:
 
 --------------------------------------------------------------------------------*/
 [
-	["#str", compileFinal {"XPS_AP_typ_GoalNode"}],
-	["#type","XPS_AP_typ_GoalNode"],
+	["#str", compileFinal {"XPS_AP_typ_GoapNode"}],
+	["#type","XPS_AP_typ_GoapNode"],
 	["@interfaces",["XPS_ifc_IAstarNode"]],	
 	["#flags",["sealed","unscheduled"]],
 	/*----------------------------------------------------------------------------
@@ -38,7 +38,6 @@ Flags:
 		<String> - the key used to store this in a <XPS_AP_typ_GoapGraph>
 	-----------------------------------------------------------------------------*/
 	["Index",nil],
-	["Goal",nil],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     
