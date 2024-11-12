@@ -126,7 +126,7 @@ Returns:
         call ["Dequeue"]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IQueue>
     
     Parameters: 
 		none
@@ -146,15 +146,35 @@ Returns:
         call ["Enqueue",_value]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IQueue>
     
     Parameters: 
 		_value - the value to push to top of the queue
 		
 	Returns:
-		Nothing
+		True
     ----------------------------------------------------------------------------*/
 	["Enqueue", compileFinal {
 		_self get "_queueArray" pushBack _this;
+        true;
+	}],
+    /*----------------------------------------------------------------------------
+    Method: EnqueueUnique
+    
+        --- Prototype --- 
+        call ["EnqueueUnique",_value]
+        ---
+
+        <XPS_ifc_IQueue>
+    
+    Parameters: 
+		_value - the value to push to top of the queue
+		
+	Returns:
+		True if value was added, False if already exists
+    ----------------------------------------------------------------------------*/
+	["EnqueueUnique", compileFinal {
+		if (_self get "_queueArray" pushBackUnique _this isEqualTo -1) exitwith {false};
+        true;
 	}]
 ]

@@ -25,6 +25,9 @@ Authors:
 	
 	Method: Push
 		<Code>
+	
+	Method: PushUnique
+		<Code>
 
 	Method: Peek
 		<Code>
@@ -34,5 +37,6 @@ Authors:
 	["@",XPS_ifc_IList],
 	["Pop","CODE"],
 	["Push","CODE"],
+	["PushUnique","CODE"],
 	["Peek","CODE"]
 ]
