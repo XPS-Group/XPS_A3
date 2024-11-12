@@ -87,7 +87,7 @@ Returns:
 		<Number> - the maximum time in seconds (using diag_tickTime) before a processTick will 
 		automatically call it a failure
 	-----------------------------------------------------------------------------*/
-	["timeout",nil],
+	["timeout",0],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
