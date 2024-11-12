@@ -32,11 +32,10 @@ An Arma 3 Framework Mod
 
   AI Features  
   - Add Behaviour Trees to AI (AI Entities or 'behind-the-scenes' Scripted AI)
-  - WIP - Use Action Planning / Utility AI for short or long term planning
-  - WIP - Replace the Danger/Formation FSM behaviors
+  - WIP - Use Action Planning for short or long term planning
 
 # History
-This project started as the eXtensible Planning System - a mod to introduce Behaviour Trees, Utility AI, and Goal-Oriented Action Planning. I was using Hashmaps to create a simple OO-design pattern prior to the introduction of Hashmap Objects.
+This project started as the eXtensible Planning System - a mod to introduce Behaviour Trees, Goal-Oriented Action Planning, Hierarchical Task Networks, and more. I was using Hashmaps to create a simple OO-design pattern prior to the introduction of Hashmap Objects.
 
 Since the announcement to introduce a new hashmap command 'createHashmapObject' for v2.14, this project has been rewritten to include additional features to the framework:
   - A Preprocessor and Type Builder to add additional features to hashmap objects.
