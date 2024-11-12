@@ -65,6 +65,6 @@ Flags:
 	["_goals",createhashmap],
     ["_beliefs",createhashmap],
     ["_graphs",createhashmap],
-    ["_plan",[]],
+    ["_plan",[]]
     
 ]
