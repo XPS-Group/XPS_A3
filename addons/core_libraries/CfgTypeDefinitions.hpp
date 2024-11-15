@@ -19,6 +19,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_IFC_SUB(searching,IAstarGraph);
 			XPS_CFG_IFC_SUB(searching,IAstarSearch);
 			XPS_CFG_IFC_SUB(typecheck,ITypeRestrictor);
+			XPS_CFG_IFC_SUB(timers,IDelay);
 			XPS_CFG_IFC(IBlackboard);
 			XPS_CFG_IFC(IJobScheduler);
 		};
@@ -55,6 +56,10 @@ class XPS_CFG_TD_BASECLASSNAME {
 		};
 		class Searching {
 			XPS_CFG_TYP_SUB(searching,AstarSearch);
+		};
+		class Timers {
+			XPS_CFG_TYP_SUB(timers,FrameDelay);
+			XPS_CFG_TYP_SUB(timers,TimeDelay);
 		};
 		class TypeChecking {
 			XPS_CFG_TYP_SUB(typecheck,NoTypeRestrictor);
