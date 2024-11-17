@@ -173,8 +173,10 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["Halt",compileFinal {		
 		_handle = _self get "handle";
-		terminate _handle;
-		_self set ["handle",nil];
+		if !(isNil "_handle") then {
+			terminate _handle;
+			_self set ["handle",nil];
+		};
 		_self call ["postTick", XPS_BT_Status_Failure];
 	}],
 	/*----------------------------------------------------------------------------
@@ -193,6 +195,7 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
+		_self call ["Halt"];
 		_self set ["Status",nil];
 	}],
 	/*----------------------------------------------------------------------------

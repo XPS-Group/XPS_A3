@@ -1,12 +1,12 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_Queue
+TypeDef: core. XPS_typ_CachedHashmap
 	<TypeDefinition>
         --- prototype
-        XPS_typ_Queue : XPS_ifc_IQueue
+        XPS_typ_CachedHashmap : XPS_ifc_IList
         ---
         --- prototype
-        createHashmapObject [XPS_typ_Queue]
+        createHashmapObject [XPS_typ_CachedHashmap]
         ---
 
 Authors: 
@@ -19,7 +19,7 @@ Returns:
 	<HashmapObject>
 ---------------------------------------------------------------------------- */
 [
-	["#type", "XPS_typ_Queue"],
+	["#type", "XPS_typ_CachedHashmap"],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -30,20 +30,45 @@ Returns:
     Return:
         <True>
     ----------------------------------------------------------------------------*/
+    ["#create", compileFinal {
+        _self set ["_itemMap",createhashmap];
+        true;
+    }],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_Queue"
+		"XPS_typ_CachedHashmap"
 		---
 	----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-		<XPS_ifc_IQueue>
 		<XPS_ifc_IList>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_IQueue"]],
-	["_queueArray",[],[["CTOR"]]],
+    ["@interfaces", ["XPS_ifc_IList"]],
+	["_itemMap",nil],
+    /*----------------------------------------------------------------------------
+    Protected: getNewItem
+    
+        --- Prototype --- 
+        call ["getNewItem",[_key]]
+        ---
+
+        <XPS_ifc_IList>
+
+        Retrieves an item from original source. 
+        
+        Must be Overridden. 
+    
+    Parameters: 
+		_key - <Anything> - the key which identifies what to retrieve from source
+		
+	Returns:
+		<Anything> - the item to be cached
+    ----------------------------------------------------------------------------*/
+	["getNewItem", compileFinal {
+		true;
+	}],
     /*----------------------------------------------------------------------------
     Method: Clear
     
@@ -60,7 +85,7 @@ Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
 	["Clear", compileFinal {
-		_self get "_queueArray" resize 0;
+		_self set ["_itemMap",createhashmap];
 	}],
     /*----------------------------------------------------------------------------
     Method: Count
@@ -78,7 +103,7 @@ Returns:
 		<Number> - the number of elements in the stack
     ----------------------------------------------------------------------------*/
 	["Count", compileFinal {
-		count (_self get "_queueArray");
+		count keys (_self get "_itemMap");
 	}],
     /*----------------------------------------------------------------------------
     Method: IsEmpty
@@ -96,85 +121,34 @@ Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty", compileFinal {
-		count (_self get "_queueArray") isEqualTo 0;
+		count (_self get "_itemMap") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
-    Method: Peek
+    Method: GetItem
     
         --- Prototype --- 
-        call ["Peek"]
+        call ["GetItem",[_key, _forceNew*]]
         ---
-
-        <XPS_ifc_IList>
     
     Parameters: 
-		none
-		
-	Returns:
-		<Anything> - first element in the queue or nil if empty - does not remove 
-		from queue
-    ----------------------------------------------------------------------------*/
-	["Peek", compileFinal {
-        if !(_self call ["IsEmpty"]) then {
-		    _self get "_queueArray" select 0;
-        } else {nil};
-	}],
-    /*----------------------------------------------------------------------------
-    Method: Dequeue
-    
-        --- Prototype --- 
-        call ["Dequeue"]
-        ---
+		_key - <Anything> - the key which identifies what to retrieve from cache or source if not cached
+		_forceNew* - <Bool> - (Optional - Default : False) - passing true forces cache update on item.
 
-        <XPS_ifc_IQueue>
-    
-    Parameters: 
-		none
-		
 	Returns:
 		<Anything> - removes and returns first element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
-	["Dequeue", compileFinal {
-        if !(_self call ["IsEmpty"]) then {
-		    _self get "_queueArray" deleteat 0;
-        } else {nil};
-	}],
-    /*----------------------------------------------------------------------------
-    Method: Enqueue
-    
-        --- Prototype --- 
-        call ["Enqueue",_value]
-        ---
-
-        <XPS_ifc_IQueue>
-    
-    Parameters: 
-		_value - the value to push to top of the queue
-		
-	Returns:
-		True
-    ----------------------------------------------------------------------------*/
-	["Enqueue", compileFinal {
-		_self get "_queueArray" pushBack _this;
-        true;
-	}],
-    /*----------------------------------------------------------------------------
-    Method: EnqueueUnique
-    
-        --- Prototype --- 
-        call ["EnqueueUnique",_value]
-        ---
-
-        <XPS_ifc_IQueue>
-    
-    Parameters: 
-		_value - the value to push to top of the queue
-		
-	Returns:
-		True if value was added, False if already exists
-    ----------------------------------------------------------------------------*/
-	["EnqueueUnique", compileFinal {
-		if (_self get "_queueArray" pushBackUnique _this isEqualTo -1) exitwith {false};
-        true;
+	["GetItem", compileFinal {
+        params ["_key",["_forceNew",false,[true]]];
+        if (!_forceNew && {_key in keys (_self get "_itemMap")}) then {
+            _self get "_itemMap" get _key;
+        } else {
+		    private _newItem = _self call ["getItemNew",[_key]];
+            if !(isNil "_newItem") then {
+                _self get "_itemMap" set [_key, _newItem]
+            } else {
+                _self get "_itemMap" deleteat _key
+            };
+            _newItem;
+        };
 	}]
 ]

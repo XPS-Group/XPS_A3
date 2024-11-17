@@ -154,9 +154,29 @@ Returns:
 		_value - the value to push to top of the stack
 		
 	Returns:
-		Nothing
+		True
     ----------------------------------------------------------------------------*/
 	["Push", compileFinal {
 		_self get "_stackArray" pushBack _this;
+        true;
+	}],
+    /*----------------------------------------------------------------------------
+    Method: Push
+    
+        --- Prototype --- 
+        call ["Push",_value]
+        ---
+
+        <XPS_ifc_IStack>
+    
+    Parameters: 
+		_value - the value to push to top of the stack
+		
+	Returns:
+		True if value was added, False if already exists
+    ----------------------------------------------------------------------------*/
+	["PushUnique", compileFinal {
+		if (_self get "_queueArray" pushBackUnique _this isEqualTo -1) exitwith {false};
+        true;
 	}]
 ]
