@@ -65,8 +65,6 @@ Returns:
         ---
 
         <XPS_ifc_ITypeRestrictor>
-
-    Does nothing for this class. Simply Satisfies Interface
     
     Parameters: 
         _value - <String> - a <HashmapObject> Type ("#type") to add to allowed list
