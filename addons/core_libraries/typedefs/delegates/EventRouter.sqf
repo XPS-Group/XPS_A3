@@ -115,10 +115,10 @@ Returns:
 		_args - <Array> - the arguments sent by the event 
     ----------------------------------------------------------------------------*/
 	["RouteEvent", compileFinal {
-		params ["_event","_prevKey"];
-		private _keylist = _self call ["filter",_event];
+		params ["_args"];
+		private _keylist = _self call ["filter",_args];
 		{
-			_self get "delegates" get _x call ["Invoke",[_event,_x]];
+			_self get "delegates" get _x call ["Invoke",[_args,_x]];
 		} forEach _keyList;
 	}],
     /*----------------------------------------------------------------------------
