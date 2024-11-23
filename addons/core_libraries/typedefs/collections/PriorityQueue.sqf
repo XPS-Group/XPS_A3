@@ -13,7 +13,7 @@ Authors:
 	Crashdome
    
 Description:
-	A collection sorted by priority. 
+	A collection sorted by priority with lowest number being first. 
 
 Returns:
 	<HashmapObject>
