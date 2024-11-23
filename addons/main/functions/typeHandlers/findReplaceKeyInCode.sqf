@@ -24,26 +24,26 @@ Parameter: _replace
 
 Parameter: _code 
 
-	<Code> - any code block
+	<String> - string version of any code block
 
 Return: _result
 
-	<Code> - the code with replaced <strings>
+	<String> - the code string with replaced <strings>
 
 Example:
 	
 	--- code
-	private _code = {_self call "_privateKey"}; 
+	private _code = "{_self call "_privateKey"}"; 
 	private _find = "_privateKey";
 	private _replace = "ABCD";
 	_result = [_find,_replace,_code] call XPS_fnc_findReplaceKeyInCode
-	// _result is: {_self call "ABCD"}
+	// _result is: "{_self call "ABCD"}"
 	---
 
 ---------------------------------------------------------------------------- */
-params [["_find","",[""]],["_replace","",[""]],["_code",{},[{}]]];
+params [["_find","",[""]],["_replace","",[""]],["_code","",[""]]];
 
 private _findRegex = """""+" insert [1,_find];
 private _replaceRegex = """""" insert [1,_replace];
-private _newCodeStr = (str _code) regexreplace [_findRegex,_replaceRegex];
-call compile _newCodeStr; //Have to 'call' otherwise double brackets: {{ code }}
+private _newCodeStr = _code regexreplace [_findRegex,_replaceRegex];
+_newCodeStr; 

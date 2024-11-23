@@ -13,7 +13,7 @@ Authors:
 	Crashdome
    
 Description:
-	A First In First Out (FIFO) collection. 
+	A collection where items are cached until a request forces an update. 
 
 Returns:
 	<HashmapObject>
@@ -41,6 +41,12 @@ Returns:
 		---
 	----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Flags: #flags
+		sealed
+		unscheduled
+	----------------------------------------------------------------------------*/
+	["#flags",["sealed","unscheduled"]],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IList>
