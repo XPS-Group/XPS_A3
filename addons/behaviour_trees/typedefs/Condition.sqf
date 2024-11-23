@@ -13,8 +13,7 @@ Authors:
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has an <ProcessTick> method which is 
-	called when Ticked
+	A node for a Behaviour Tree that checks a condition and returns <XPS_BT_Status_Success> if true.
 
 Returns:
 	<HashmapObject> of a Leaf Node

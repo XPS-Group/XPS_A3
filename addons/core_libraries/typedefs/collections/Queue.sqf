@@ -81,7 +81,7 @@ Returns:
 		none
 		
 	Returns:
-		<Number> - the number of elements in the stack
+		<Number> - the number of elements in the queue
     ----------------------------------------------------------------------------*/
 	["Count", compileFinal {
 		count (_self get "_queueArray");
