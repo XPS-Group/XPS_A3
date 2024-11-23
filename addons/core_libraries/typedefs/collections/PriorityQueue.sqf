@@ -1,188 +1,137 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_Stack
+TypeDef: core. XPS_typ_PriorityQueue
 	<TypeDefinition>
         --- prototype
-        XPS_typ_Stack : XPS_ifc_IStack
+        XPS_typ_PriorityQueue : XPS_ifc_IQueue, XPS_typ_Queue
         ---
         --- prototype
-        createHashmapObject [XPS_typ_Stack]
+        createHashmapObject [XPS_typ_PriorityQueue]
         ---
 
 Authors: 
 	Crashdome
    
 Description:
-	A Last In First Out (LIFO) collection. 
-    A.k.a a First In Last Out (FILO) collection.
+	A collection sorted by priority. 
 
 Returns:
 	<HashmapObject>
 ---------------------------------------------------------------------------- */
 [
-	["#type", "XPS_typ_Stack"],
+	["#type", "XPS_typ_PriorityQueue"],
+	/*----------------------------------------------------------------------------
+	Parent: #base
+    	<XPS_typ_Queue>
+	-----------------------------------------------------------------------------*/
+    ["#base",XPS_typ_Queue],
     /*----------------------------------------------------------------------------
     Constructor: #create
-    
-        --- prototype
-        call ["#create"]
-        ---
-    
-    Return:
-        <True>
+
+        <XPS_ifc_IQueue>
+        <XPS_typ_Queue.#create>
     ----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_Stack"
+		"XPS_typ_PriorityQueue"
 		---
 	----------------------------------------------------------------------------*/
-	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Flags: #flags
 		sealed
 		unscheduled
 	----------------------------------------------------------------------------*/
-	["#flags",["sealed","unscheduled"]],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-		<XPS_ifc_IStack>
+		<XPS_ifc_IQueue>
 		<XPS_ifc_IList>
 	----------------------------------------------------------------------------*/
-    ["@interfaces", ["XPS_ifc_IStack"]],
-	["_stackArray",[],[["CTOR"]]],
     /*----------------------------------------------------------------------------
     Method: Clear
-    
-        --- Prototype --- 
-        call ["Clear"]
-        ---
 
-        <XPS_ifc_IList>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		Nothing
+        <XPS_ifc_IQueue>
+
+        <XPS_typ_Queue.Clear>
     ----------------------------------------------------------------------------*/
-	["Clear", compileFinal {
-		_self get "_stackArray" resize 0;
-	}],
     /*----------------------------------------------------------------------------
     Method: Count
-    
-        --- Prototype --- 
-        call ["Count"]
-        ---
 
-        <XPS_ifc_IList>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		<Number> - the number of elements in the stack
+        <XPS_ifc_IQueue>
+
+        <XPS_typ_Queue.Count>
     ----------------------------------------------------------------------------*/
-	["Count", compileFinal {
-		count (_self get "_stackArray");
-	}],
     /*----------------------------------------------------------------------------
     Method: IsEmpty
-    
-        --- Prototype --- 
-        call ["IsEmpty"]
-        ---
 
-        <XPS_ifc_IList>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		<Boolean> - <True> if stack is empty, otherwise <False>.
+        <XPS_ifc_IQueue>
+
+        <XPS_typ_Queue.IsEmpty>
     ----------------------------------------------------------------------------*/
-	["IsEmpty", compileFinal {
-		count (_self get "_stackArray") isEqualTo 0;
-	}],
     /*----------------------------------------------------------------------------
     Method: Peek
-    
-        --- Prototype --- 
-        call ["Peek"]
-        ---
 
-        <XPS_ifc_IList>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		<Anything> - last element in the stack or nil if empty - does not remove 
-		from stack
+        <XPS_ifc_IQueue>
+
+        <XPS_typ_Queue.Peek>
     ----------------------------------------------------------------------------*/
-	["Peek", compileFinal {
-        if !(_self call ["IsEmpty"]) then {
-		    _self get "_stackArray" select -1;
-        } else {nil};
-	}],
     /*----------------------------------------------------------------------------
-    Method: Pop
-    
-        --- Prototype --- 
-        call ["Pop"]
-        ---
+    Method: Dequeue
 
-        <XPS_ifc_IStack>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		<Anything> - removes and returns last element in the stack or nil if empty
+        <XPS_ifc_IQueue>
+
+        <XPS_typ_Queue.Dequeue>
     ----------------------------------------------------------------------------*/
-	["Pop", compileFinal {
-        if !(_self call ["IsEmpty"]) then {
-		    private _stack = _self get "_stackArray";
-            _stack deleteat (count _stack - 1);
-        } else {nil};
-	}],
     /*----------------------------------------------------------------------------
-    Method: Push
+    Method: Enqueue
     
         --- Prototype --- 
-        call ["Push",_value]
+        call ["Enqueue",[_priorityValue,_item]]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IQueue>
     
     Parameters: 
-		_value - the value to push to top of the stack
+		_priorityValue - the value which represents the position in the queue
+		_item - the item to place in the queue
 		
 	Returns:
 		True
     ----------------------------------------------------------------------------*/
-	["Push", compileFinal {
-		_self get "_stackArray" pushBack _this;
+	["Enqueue", compileFinal {
+		params [["_priority",0,[0]],"_item"];
+
+		private _queue = _self get "_queueArray";
+		private _queueSize = count _queue;
+		private _i = 0;
+
+		while {_i <= _queueSize - 1 && { _priority > ((_queue select _i) select 0) }} do {
+			_i = _i + 1;
+		};
+
+		_queue insert [_i, [[_priority, _item]] ];
         true;
 	}],
     /*----------------------------------------------------------------------------
-    Method: Push
+    Method: EnqueueUnique
     
         --- Prototype --- 
-        call ["Push",_value]
+        call ["EnqueueUnique",[_priorityValue,_item]]
         ---
 
-        <XPS_ifc_IStack>
+        <XPS_ifc_IQueue>
     
     Parameters: 
-		_value - the value to push to top of the stack
+		_priorityValue - the value which represents the position in the queue
+		_item - the item to place in the queue. 
 		
 	Returns:
 		True if value was added, False if already exists
     ----------------------------------------------------------------------------*/
-	["PushUnique", compileFinal {
-		if (_self get "_queueArray" pushBackUnique _this isEqualTo -1) exitwith {false};
-        true;
+	["EnqueueUnique", compileFinal {
+		params [["_priority",0,[0]],"_item"];
+        private _itemList = _self get "_queueArray" apply {_x#1};
+		if (_item in _itemList) exitwith {false};
+        _self call ["Enqueue",_this];
 	}]
 ]
