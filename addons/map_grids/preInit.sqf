@@ -26,7 +26,7 @@ Description:
 Returns: 
 	<Static> - of <XPS_MG_typ_HexGrid>
 ---------------------------------------------------------------------------*/
-XPS_MG_HexGrid = compileFinal createHashmapObject [XPS_MG_typ_HexGrid];
+if (isNil "XPS_MG_HexGrid") then {XPS_MG_HexGrid = compileFinal createHashmapObject [XPS_MG_typ_HexGrid];};
 
 /* -------------------------------------------------------------------------
 Variable: map_grids. XPS_MG_SquareGrid
@@ -40,7 +40,7 @@ Description:
 Returns: 
 	<Static> - of <XPS_MG_typ_SquareGrid>
 ---------------------------------------------------------------------------*/
-XPS_MG_SquareGrid = compileFinal createHashmapObject [XPS_MG_typ_SquareGrid];
+if (isNil "XPS_MG_SquareGrid") then {XPS_MG_SquareGrid = compileFinal createHashmapObject [XPS_MG_typ_SquareGrid];};
 
 diag_log text "[XPS MG preInit End]";
 

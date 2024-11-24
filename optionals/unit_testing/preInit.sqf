@@ -26,7 +26,7 @@ Description:
 Returns: 
 	<Singleton> - of <XPS_UT_typ_TestClasses>
 ---------------------------------------------------------------------------*/
-["XPS_UT_TestClasses",XPS_UT_typ_TestClasses,["XPS_UT_typ_TestClass"]] call XPS_fnc_createSingleton;
+if (isNil "XPS_UT_TestClasses") then {["XPS_UT_TestClasses",XPS_UT_typ_TestClasses,["XPS_UT_typ_TestClass"]] call XPS_fnc_createSingleton;};
 
 // Static Class Instantiations --------------------------------------------
 /* -------------------------------------------------------------------------
@@ -42,7 +42,7 @@ Description:
 Returns: 
 	<Static> - of <XPS_UT_typ_Assert>
 ---------------------------------------------------------------------------*/
-XPS_UT_Assert = compileFinal createHashmapObject [XPS_UT_typ_Assert];
+if (isNil "XPS_UT_Assert") then {XPS_UT_Assert = compileFinal createHashmapObject [XPS_UT_typ_Assert];};
 
 XPS_UT_TestClasses call ["GetInstance"] call ["LoadClasses"];
 

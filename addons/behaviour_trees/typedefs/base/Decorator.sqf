@@ -177,7 +177,7 @@ Returns:
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]]];
 		if (isNil "_childNode") exitWith {false};
-		if !(CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitWith {false};
+		if !(XPS_CHECK_IFC1(_childNode,XPS_BT_ifc_INode)) exitWith {false};
 		_self set ["child",_childNode];
 		true;
 	}],

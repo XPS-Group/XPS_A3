@@ -50,7 +50,7 @@ Throws:
 		if (isNil "_anyDelegate") exitWith {
 			throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
 		};
-		if (!(CHECK_IFC1(_anyDelegate,XPS_ifc_IDelegate))) exitWith {
+		if (!(XPS_CHECK_IFC1(_anyDelegate,XPS_ifc_IDelegate))) exitWith {
 			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];
 		};
 		_self set ["_delegate",_anyDelegate];

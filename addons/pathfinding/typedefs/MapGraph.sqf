@@ -264,7 +264,7 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["AddLayer",compileFinal {
 		if !(params [["_layerBuilder",nil,[createhashmap]]]) exitWith {false};
-		if !( CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitWith {false};
+		if !( XPS_CHECK_IFC1(_layerBuilder,XPS_PF_ifc_ILayerBuilder)) exitWith {false};
 		private _layer = _self call ["buildLayer",[_layerBuilder]];
 	}],
 	["CheckWaterTravel", compileFinal {

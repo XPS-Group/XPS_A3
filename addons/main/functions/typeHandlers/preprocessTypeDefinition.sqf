@@ -105,18 +105,18 @@ try
 			if (_key == "Deserialize") then {_hasDesrlz = true};
 
 			// Convert Interface list of strings to hashmap with ref to interface
-			if (_key == "@interfaces") then {
-				if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
-					private _interfaces = createhashmap;
-					{
-						private _ifc = call compile _x;
-						if (isNil "_ifc") then  {throw format ["Cannot create interface: %1.",_x]};
-						_interfaces merge [createHashMapFromArray [[_x,_ifc]],true];
-					} forEach _value;
-					_value = compileFinal _interfaces;
-					_keyPair set [1,_value];
-				} else {throw format ["Interface list for Key @interfaces is not an array of strings."]};
-			};
+			// if (_key == "@interfaces") then {
+			// 	if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
+			// 		private _interfaces = createhashmap;
+			// 		{
+			// 			private _ifc = currentNamespace getvariable _x;
+			// 			if (isNil "_ifc") then  {throw format ["Cannot create interface: %1.",_x]};
+			// 			_interfaces merge [createHashMapFromArray [[_x,_ifc]],true];
+			// 		} forEach _value;
+			// 		_value = compileFinal _interfaces;
+			// 		_keyPair set [1,_value];
+			// 	} else {throw format ["Interface list for Key @interfaces is not an array of strings."]};
+			// };
 
 		private _attributes = [];
 		if (count _keyPair > 2) then {

@@ -3,7 +3,7 @@
 Function: main. typeHandlers. XPS_fnc_createStaticTypeFromFile
 	
 	---prototype
-	_result = [_varname, _filepath] call XPS_fnc_createStaticTypeFromFile
+	_result = [_varname, _XPS_FILEPATH] call XPS_fnc_createStaticTypeFromFile
 	---
 
 Description:
@@ -22,7 +22,7 @@ Authors:
 	Parameter: _varname
 		<string> - the variable in which the <HashmapObject> will be stored
 
-	Optional: _filepath
+	Optional: _XPS_FILEPATH
 		<string> - the path to the file  
 
 	Return: _result
@@ -49,11 +49,7 @@ Example: File and calling code example
     ---
 
 ---------------------------------------------------------------------------- */
-if !(params [["_varname",nil,[""]],["_filepath",nil,[""]]]) exitWith {false;};
+if !(params [["_varname",nil,[""]],["_XPS_FILEPATH",nil,[""]]]) exitWith {false;};
 
-private _statement = "%1 = compileFinal (call compileScript [""%2"",false]);";
-private _code =  format[_statement, _varname, _filepath];
+currentNamespace setVariable [_varname, compileFinal (call compileScript [_XPS_FILEPATH,false])];
 
-call compile _code;
-
-true;

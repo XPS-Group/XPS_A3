@@ -60,7 +60,7 @@ Returns:
 	Returns: 
 		<Boolean> - <True> or <False>
 	-----------------------------------------------------------------------------*/
-	["Condition",nil]
+	["Condition",nil],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
 		<XPS_BT_typ_Decorator. NodeType>
