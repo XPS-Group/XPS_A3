@@ -176,7 +176,7 @@ Returns:
 		_index* - (optional - Default : -1) - the index in which to place the child node
 
 	Returns: 
-		<Boolean> - <True> if successful otherwise <False>
+		<Hashmapobject> or <Bool> - this composite node OR false if unsuccessfully added
 	-----------------------------------------------------------------------------*/
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]],["_index",-1,[0]]];
@@ -187,7 +187,7 @@ Returns:
 		private _count = count (_children);
 		if (_index < 0 ||_index >= _count) then {_index = -1};
 		_children insert [_index,[_childNode]];
-		true;
+		_self;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init

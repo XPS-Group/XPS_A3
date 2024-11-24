@@ -104,20 +104,6 @@ try
 			if (_key == "Serialize") then {_hasSrlz = true};
 			if (_key == "Deserialize") then {_hasDesrlz = true};
 
-			// Convert Interface list of strings to hashmap with ref to interface
-			// if (_key == "@interfaces") then {
-			// 	if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
-			// 		private _interfaces = createhashmap;
-			// 		{
-			// 			private _ifc = currentNamespace getvariable _x;
-			// 			if (isNil "_ifc") then  {throw format ["Cannot create interface: %1.",_x]};
-			// 			_interfaces merge [createHashMapFromArray [[_x,_ifc]],true];
-			// 		} forEach _value;
-			// 		_value = compileFinal _interfaces;
-			// 		_keyPair set [1,_value];
-			// 	} else {throw format ["Interface list for Key @interfaces is not an array of strings."]};
-			// };
-
 		private _attributes = [];
 		if (count _keyPair > 2) then {
 			_attributes = _keyPair#2;
@@ -194,7 +180,7 @@ try
 					};
 				};
 				case "NESTED_TYPE" : {
-					if (isNil "_attParams") then {_attParams = [true, true, false]} else {
+					if (isNil "_attParams") then {_attParams = [true, true, true]} else {
 						if !(_attParams isEqualTypeAll true) then {throw  format ["Inner Type Attribute for Key %2 was %1. Expected Array of Booleans.",_attParams,_key]}
 					};
 
@@ -281,7 +267,11 @@ try
 
 	//Build any nested types with current _privateKeys list
 	{
-		_typdef#_x set [1,createhashmapfromarray (_y call XPS_fnc_buildTypeDefinition)];
+		private _t = _y call XPS_fnc_buildTypeDefinition;
+		private _h =  createhashmapfromarray (_t);
+		private _a = _typedef#_x;
+		_a set [1,_h];
+		_a;
 	} foreach _nested;
 
 	_result;

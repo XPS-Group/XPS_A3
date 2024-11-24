@@ -41,19 +41,28 @@ Returns:
         _self call ["New",_this];
 	}],
 	/*----------------------------------------------------------------------------
-	Flags: #flags
-		unscheduled
-	----------------------------------------------------------------------------*/
-	["#flags",["unscheduled"]],
-	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
 		"XPS_typ_Builder"
 		---
 	----------------------------------------------------------------------------*/
     ["#str",{_self get "#type" select 0}],
-    ["_object",nil],
-    ["_type",nil],
+	/*----------------------------------------------------------------------------
+	Flags: #flags
+		unscheduled
+	----------------------------------------------------------------------------*/
+	["#flags",["unscheduled"]],
+    /*----------------------------------------------------------------------------
+    Protected: typeDef
+    
+        --- prototype
+        get "typeDef"
+        ---
+	
+    Returns:
+        <Hashmap> - the current working typedefinition
+    ----------------------------------------------------------------------------*/
+    ["typeDef",nil],
     /*----------------------------------------------------------------------------
     Method: New
     
@@ -70,8 +79,11 @@ Returns:
     ["New", compileFinal {
         params [["_type",nil,[[],createhashmap]]];
         if !(isNil "_type") then {
-            private _t = [+_type,createhashmapfromarray _type] select {_type isEqualType []};
-            _self set ["_type",_t];
+            if (_type isEqualType []) then {
+                _self set ["typeDef",createhashmapfromarray _type];
+            } else {
+                _self set ["typeDef",+_type];
+            }
         };
         _self;
     }],
@@ -90,8 +102,8 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["Build", compileFinal {
         params [["_args",[],[]]];
-        private _t = _self get "_type";
-        _self set ["_type",nil];
+        private _t = _self get "typeDef";
+        _self set ["typeDef",nil];
         if (isNil "_t") then {nil} else {
             createhashmapobject [_t,_args];
         };

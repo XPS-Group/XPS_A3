@@ -21,6 +21,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_TYP(ActionSAsync);
 			XPS_CFG_TYP(ActionUAsync);
 			XPS_CFG_TYP(Condition);
+			XPS_CFG_TYP(Elector);
 			XPS_CFG_TYP(Inverter);
 			XPS_CFG_TYP(Parallel);
 			XPS_CFG_TYP(Selector);

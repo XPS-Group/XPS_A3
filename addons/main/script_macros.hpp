@@ -8,8 +8,8 @@
 //Type Definitions and Interfaces
 #define VARNAME(var1,var2,var3) var1##_##var2##_##var3
 
-#define XPS_XPS_FILEPATH(var1,var2,var3) \ROOT\var1\addons\var2\var3
-#define XPS_FILEPATH_C(var1) XPS_XPS_FILEPATH(PREFIX,COMPONENT,var1)
+#define XPS_FILEPATH(var1,var2,var3) \ROOT\var1\addons\var2\var3
+#define XPS_FILEPATH_C(var1) XPS_FILEPATH(PREFIX,COMPONENT,var1)
 #define XPS_FILEPATH_C_STR(var1) XPS_STR(XPS_FILEPATH_C(var1))
 
 #define COMPONENT_DIR XPS_STR(##@##ADDON)
