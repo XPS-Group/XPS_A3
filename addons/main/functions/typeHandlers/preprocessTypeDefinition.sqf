@@ -267,11 +267,7 @@ try
 
 	//Build any nested types with current _privateKeys list
 	{
-		private _t = _y call XPS_fnc_buildTypeDefinition;
-		private _h =  createhashmapfromarray (_t);
-		private _a = _typedef#_x;
-		_a set [1,_h];
-		_a;
+		_typedef#_x set [1,createhashmapfromarray (_y call XPS_fnc_buildTypeDefinition)];
 	} foreach _nested;
 
 	_result;
