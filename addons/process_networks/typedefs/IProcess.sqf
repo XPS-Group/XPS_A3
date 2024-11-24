@@ -1,37 +1,22 @@
 #include "script_component.hpp" 
 /* ----------------------------------------------------------------------------
-Interface: process_network. XPS_PN_ifc_IChannel
+Interface: process_network. XPS_PN_ifc_IProcess
 	<Interface>
 	---prototype
-	XPS_PN_ifc_IChannel
+	XPS_PN_ifc_IProcess
 	---
 
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	Property: Id
-		<String>
-
-	Method: IsEmpty
+	Method: Process
 		<Code>
 
-	Method: Count
-		<Code>
-
-	Method: Read
-		<Code>
-
-	Method: Write
-		<Code>
-
-	Method: WriteUnique
+	Method: WriteToChannel
 		<Code>
 ---------------------------------------------------------------------------- */
 [
-    ["Id","STRING"],
-	["IsEmpty","CODE"],
-	["Count","CODE"],
-	["Read","CODE"],
-	["Write","CODE"],
-	["WriteUnique","CODE"]
+	["Id", "STRING"]
+	// ["Process","CODE"],
+	// ["OutputChannel","STRING"]
 ]

@@ -67,6 +67,16 @@ Returns:
 		_ref = [str _ref,_ref] select {_ref isEqualType ""};
         _self get "_tokenData" set [_ref,[_ref,_this] select {isNil "_data"}]; 
 	}],
+	/*----------------------------------------------------------------------------
+	Property: Id
+    
+    	--- Prototype --- 
+    	get "Id"
+    	---  
+
+	Returns:
+		<String> - identifier of this channel object 
+	-----------------------------------------------------------------------------*/
     ["Id", nil],
     /*----------------------------------------------------------------------------
     Method: Count
