@@ -191,7 +191,7 @@ Returns:
             throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","LifeTime Parameter was invalid.",_this]];
         };
 
-        if (_type isEqualtype "") then {_type = call compile _type;};
+        if (_type isEqualtype "") then {_type = currentNamespace getvariable _type;};
         
         if (_type isEqualTo createhashmap) then {
             throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"RegisterService","Type Parameter was invalid.",_this]];

@@ -34,14 +34,23 @@ if (isText (_class >> "tag")) then {
 };
 
 private _fnc_loadFile = {
-	private _statement = "";
+	private _array = 0;
 	switch (_type) do {
-		case "ifc" : {_statement = "private _ifc = (call compileScript [""%1"",false]) call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createHashMapFromArray _ifc;};"};
+		case "ifc" : {
+			_array = (call compileScript [_file,false]) call XPS_fnc_preprocessInterface;
+		};
 		case "enum";
-		case "typ" : {_statement = "private _td = [call compileScript [""%1"",false],%2,%3,%4] call XPS_fnc_buildTypeDefinition; if (_td isEqualType []) then {%5 createHashMapFromArray _td;};"}; 
+		case "typ" : {
+			_array = [call compileScript [_file,false],_allowNils,_preprocess,_noStack] call XPS_fnc_buildTypeDefinition;
+		}; 
 	};
-	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd];
-	call compile _code;
+	if (_array isEqualType []) then {
+		if (_isFinal) then {
+			compileFinal createHashMapFromArray _array
+		} else {
+			createHashMapFromArray _array
+		};
+	};
 };
 
 //diag_log text format ["[XPS TD parser] : parsing TAG: %1 - CLASS: %2",_tag, configName _class];
@@ -67,8 +76,6 @@ if (isText _file && isText _type) then {
 	
 	// If recompiling, we can ignore preCaching
 	if (_recompile) then {_precache = false;};
-	
-	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal);
 
 	// Only run during preStart if preCached -OR- during preInit
 	if ((_preStart && _preCache) || {!_preStart}) then {
@@ -76,15 +83,18 @@ if (isText _file && isText _type) then {
 		//use UINamespace only if preCached or compiled and cached on first mission load
 		if (_preCache || {!_reCompile}) then {
 			if (isNil {_typeDefinition} || {_recompile && {!_isFinal}}) then {
-				// diag_log text "[XPS TD parser]  : init namespace variables";
+				//diag_log text "[XPS TD parser]  : init namespace variables";
 				uiNamespace setvariable [_varName, call _fnc_loadFile];
 				missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 			} else {
-				// diag_log text "[XPS TD parser]  : using cached";
-				missionNamespace setvariable [_varName,_typeDefinition];
+				//diag_log text "[XPS TD parser]  : using cached";
+				if (isNil {missionNamespace getVariable _varName}) then {
+					missionNamespace setvariable [_varName,_typeDefinition];
+				};
 			};
 		} else {
 			//We are recompiling each mission
+			//diag_log text "[XPS TD parser]  : loading always";
 			missionNamespace setvariable [_varName, call _fnc_loadFile];
 		};
 	};

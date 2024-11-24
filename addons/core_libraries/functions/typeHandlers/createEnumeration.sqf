@@ -50,7 +50,7 @@ private _fnc_createEnumConstant = {
 		["Value",_val]
 	]];
 	private _gVar = format["%1_%2",_var,_name];
-	if (isNil _gVar || {(call compile _gVar) isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];};
+	if (isNil _gVar || {(currentNamespace getvariable _gVar) isNotEqualTo _hashObject}) then {currentNamespace setvariable [_gvar,_hashObject];};
 	_def set [_name , compileFinal _gVar ];
 	_def set [_val , compileFinal _gVar ];
 };
@@ -104,7 +104,7 @@ switch (true) do {
 	};
 };
 
-call compile format["%1 = compileFinal createHashmapObject [_newDef]",_varName];
+currentNamespace setVariable [_varName,compileFinal createHashmapObject [_newDef]];
 
 true;
 /*------------------------------------------------------------------------------

@@ -43,7 +43,7 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         params [["_typeRestrictor",createHashmapObject [XPS_typ_NoTypeRestrictor],[createhashmap]]];
-        if !(CHECK_IFC1(_typeRestrictor,XPS_ifc_ITypeRestrictor)) then {
+        if !(XPS_CHECK_IFC1(_typeRestrictor,XPS_ifc_ITypeRestrictor)) then {
             throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","_typeRestrictor parameter was an invalid type",_this]]
         };
         _self set ["_restrictor",_typeRestrictor];

@@ -43,7 +43,7 @@ Returns:
 	["#create", compileFinal {
         params [["_router",nil,[createhashmap]]];
         if !(isNil "_router") then {
-            if !(CHECK_IFC1(_router,XPS_ifc_IEventRouter)) exitwith {
+            if !(XPS_CHECK_IFC1(_router,XPS_ifc_IEventRouter)) exitwith {
                 throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Event Router Type Parameter was Invalid type",_this]];
             };
 

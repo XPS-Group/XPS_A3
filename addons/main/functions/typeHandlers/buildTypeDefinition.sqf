@@ -156,7 +156,7 @@ if (_errors) exitWith {
 // Check Interfaces are implemented
 private _interfaces = _preCompiled getOrDefault ["@interfaces",nil];
 
-if (isNil {_interfaces} || {[_preCompiled, keys _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
+if (isNil {_interfaces} || {[_preCompiled, /*keys*/ _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
 	// Passes all checks and is Ok to push out definition
 	_hashmap toArray false;
 } else {

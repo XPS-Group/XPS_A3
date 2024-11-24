@@ -55,10 +55,10 @@ Returns:
 		_self call ["XPS_typ_EventHandler.#create",_anyDelegate];
 		_anyDelegate call ["Attach",[_self,"RouteEvent"]];
 
-		if !(CHECK_IFC1(_hndlrType,XPS_ifc_IEventHandler)) exitWith {
+		if !(XPS_CHECK_IFC1(_hndlrType,XPS_ifc_IEventHandler)) exitWith {
 			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","EventHandler Type Parameter was Invalid type",_this]];
 		};
-		if !(CHECK_IFC1(_dlgtType,XPS_ifc_IDelegate)) exitWith {
+		if !(XPS_CHECK_IFC1(_dlgtType,XPS_ifc_IDelegate)) exitWith {
 			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Type Parameter was Invalid type",_this]];
 		};
 
