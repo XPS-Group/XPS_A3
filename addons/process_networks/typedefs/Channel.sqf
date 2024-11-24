@@ -60,7 +60,7 @@ Returns:
 		_data - <Anything> - the data to be stored within the key, along with the key. Final stored value will be [_ref, _data]    
 
 	Returns:
-		<Bool> - if value was successfully set 
+		<Boolean> - if value was successfully set 
 	-----------------------------------------------------------------------------*/
 	["updateTokenData", compileFinal {
         params ["_ref",["_data",nil,[]]];
@@ -145,7 +145,7 @@ Returns:
 		_data - <Anything> - the data to be stored within the key, along with the key. Final stored value will be [_ref, _data]    
 
 	Returns:
-		<Bool> - if value was successfully set 
+		<Boolean> - if value was successfully set 
     ----------------------------------------------------------------------------*/
 	["Write",compileFinal {
         params ["_ref",["_data",nil,[]]];
@@ -166,7 +166,7 @@ Returns:
 		_data - <Anything> - the data to be stored within the key, along with the key. Final stored value will be [_ref, _data]    
 
 	Returns:
-		<Bool> - if value was successfully added, False if already exists - item will always update data if already existing
+		<Boolean> - if value was successfully added, False if already exists - item will always update data if already existing
     ----------------------------------------------------------------------------*/
 	["WriteUnique",compileFinal {
         params ["_ref",["_data",nil,[]]];

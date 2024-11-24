@@ -18,7 +18,7 @@ Description:
 	XPS_BT_Status_Running	Running		RUNNING
 	---
 
-	See <core.XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
+	See <XPS_fnc_createEnumeration:core. typeHandlers. XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [

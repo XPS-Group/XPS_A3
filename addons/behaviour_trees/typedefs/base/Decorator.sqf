@@ -172,7 +172,7 @@ Returns:
 		childNode - <HashmapObject> that implements the <XPS_BT_ifc_INode> interface
 
 	Returns: 
-		<Hashmapobject> or <Bool> - this composite node OR false if unsuccessfully added
+		<Hashmapobject> or <Boolean> - this composite node OR false if unsuccessfully added
 	-----------------------------------------------------------------------------*/
 	["AddChildNode",compileFinal {
 		params [["_childNode",nil,[createhashmap]]];
