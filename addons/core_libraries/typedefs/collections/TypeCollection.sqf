@@ -59,9 +59,8 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Flags: #flags
 		sealed
-		unscheduled
 	----------------------------------------------------------------------------*/
-	["#flags",["sealed","unscheduled"]],
+	["#flags",["sealed"]],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
@@ -138,7 +137,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         if !(params [["_key",nil,["",[],0,true,{},missionNamespace,sideEmpty]],["_item",nil,[]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createHashMapFromArray [["_this",_this]]]];};
-        if ((_key isEqualTo "") || (_key in (_self get "_items"))) exitWith {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
+        if ((_key isEqualTo "") || (_key in (keys (_self get "_items")))) exitWith {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
         if (_self get "_restrictor" call ["IsAllowed",_item]) then {
             _self get "_items" set [_key,_item];
         } else {

@@ -30,7 +30,6 @@ Flags:
 	-----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select 0}],
 	["@interfaces",["XPS_ifc_IAstarNode"]],	
-	["#flags",["unscheduled"]],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
     

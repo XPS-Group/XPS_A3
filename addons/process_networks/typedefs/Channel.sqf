@@ -28,12 +28,12 @@ Returns:
 
         _self set ["Id", _id];
         _self set ["_tokens",createhashmapobject [XPS_typ_Queue]];
+        _self set ["_tokenData",createhashmap];
 	}],
 	/*----------------------------------------------------------------------------
 	Flags: #flags
 		unscheduled
 	----------------------------------------------------------------------------*/
-	["#flags",["unscheduled"]],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
@@ -46,7 +46,7 @@ Returns:
 		<XPS_PN_ifc_IChannel>
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_PN_ifc_IChannel"]],
-	["_tokenData",createhashmap,["CTOR"]],
+	["_tokenData",nil],
     ["_tokens",nil],
 	/*----------------------------------------------------------------------------
 	Protected: updateTokenData

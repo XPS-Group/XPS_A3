@@ -24,7 +24,6 @@ Flags:
 	["#str", compileFinal {"XPS_AP_typ_GoapNode"}],
 	["#type","XPS_AP_typ_GoapNode"],
 	["@interfaces",["XPS_ifc_IAstarNode"]],	
-	["#flags",["unscheduled"]],
 	/*----------------------------------------------------------------------------
 	Property: Index
     

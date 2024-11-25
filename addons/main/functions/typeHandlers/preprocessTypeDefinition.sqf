@@ -248,19 +248,10 @@ try
 		};
 
 		if (_value isEqualType {}) then {
-			private _final = isFinal _Value;
-			private _code = str _value;
-			//Replace Private Keys
-			{
-				private _find = _x#0;
-				private _replace = _x#1;
-				_code = [_find, _replace, _code] call xps_fnc_findReplaceKeyInCode;
-			} forEach _privateKeys;
-			
-			if (_final) then {
-				_keyPair set [1,compileFinal call compile _code]
-			} else {
-				_keyPair set [1,call compile _code]
+			//Replace Private Keys in any code block
+			if (count _privateKeys > 0) then {
+				_value = [_privateKeys,_value] call xps_fnc_findReplaceKeyInCode;
+				_keyPair set [1,_value];
 			};
 		};
 	};

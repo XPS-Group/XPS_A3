@@ -22,7 +22,6 @@ Description:
 		---
 	----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select 0}],
-	["#flags",["unscheduled"]],
 	/*-----------------------------------------------------------------------------
 	Method: AreEqual 
     
@@ -606,18 +605,21 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["ThrowsException", compileFinal {
 		params [["_code", {},[{}]],["_exceptionType","",[""]],["_message",nil,[""]]];
-		try {
+		private _running = true;
+		_this try {
 			call _code;
-			_self call ["Fail",["ThrowsException",_this#2, createhashmap]]
 		} catch {
-			if (_exception isequaltype createhashmap) then {
-				if !(_exceptionType in (_exception getordefault ["#type",[]])) then {
-					_self call ["Fail",["ThrowsException",_this#2, _exception]];
-				};
-			} else {
+			if !(_exception isequaltype createhashmap) exitwith {
 				_self call ["Fail",["ThrowsException",_this#2, createHashMapFromArray [["_exception",_exception]]]];
 			};
+			private _eType = _exception getordefault ["#type",[]];
+			private _test = _exceptionType in _eType;
+			if !(_exceptionType in _eType) exitwith {
+				_self call ["Fail",["ThrowsException",_this#2, _exception]];
+			};
+			_running = false;
 		};
+		if (_running) exitwith {_self call ["Fail",["ThrowsException",_this#2, createhashmap]]};
 		true;
 	}],
 	/*-----------------------------------------------------------------------------
