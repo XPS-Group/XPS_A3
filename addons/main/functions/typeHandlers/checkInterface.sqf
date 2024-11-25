@@ -110,7 +110,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 					};
 				};
 				// Check Interfaces last
-				if (_typeIfcs isEqualtype createhashmap) then {
+				if (_typeIfcs isEqualtype []/*createhashmap*/) then {
 					if (toLower _checkType in ((/*keys*/ _typeIfcs) apply {toLower _x})) then {
 						continue;
 					};

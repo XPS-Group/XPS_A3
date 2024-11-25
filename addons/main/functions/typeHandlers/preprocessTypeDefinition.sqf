@@ -61,7 +61,7 @@ private _typeDef = _this;
 
 if (count _this == 1 && {_this#0 isEqualTypeAll []}) then {_typeDef = _this#0};
 
-_privateKeys = [_privateKeys,[]] select (isNil "_privateKeys");
+_privateKeys = if (isNil "_privateKeys") then {[]} else {_privateKeys};
 
 private _result = true;
 private _ctor = ""; 
