@@ -98,18 +98,11 @@ Returns:
 	Returns:
 		True
     ----------------------------------------------------------------------------*/
-	["Enqueue", compileFinal {
+	["Enqueue", {
 		params [["_priority",0,[0]],"_item"];
-
-		private _queue = _self get "_queueArray";
-		private _queueSize = count _queue;
-		private _i = 0;
-
-		while {_i <= _queueSize - 1 && { _priority > ((_queue select _i) select 0) }} do {
-			_i = _i + 1;
-		};
-
-		_queue insert [_i, [[_priority, _item]] ];
+        private _queue = _self get "_buffer";
+		_queue pushback [_priority, _item];
+		_queue sort true;
         true;
 	}],
     /*----------------------------------------------------------------------------
@@ -130,7 +123,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["EnqueueUnique", compileFinal {
 		params [["_priority",0,[0]],"_item"];
-        private _itemList = _self get "_queueArray" apply {_x#1};
+        private _itemList = _self get "_buffer" apply {_x#1};
 		if (_item in _itemList) exitwith {false};
         _self call ["Enqueue",_this];
 	}]
