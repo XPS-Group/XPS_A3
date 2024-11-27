@@ -16,7 +16,7 @@ Authors:
 		<Code>
 ---------------------------------------------------------------------------- */
 [
-	["Id", "STRING"]
+	["Name", "STRING"]
 	// ["Process","CODE"],
 	// ["OutputChannel","STRING"]
 ]

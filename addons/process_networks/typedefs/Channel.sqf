@@ -21,12 +21,25 @@ Returns:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_PN_typ_Channel"],
+    /*----------------------------------------------------------------------------
+    Constructor: #create
+    
+        --- prototype
+        call ["#create",_name]
+        ---
+	
+	Paramters:
+		_name - <String> - a unique name for this object
+    
+    Return:
+        <True>
+    ----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-        params [["_id",nil,[""]]];
+        params [["_name",nil,[""]]];
 
-        if (isNil "_id") then {_id = call XPS_fnc_createUniqueID};
+        if (isNil "_name") then {_name = call XPS_fnc_createUniqueID};
 
-        _self set ["Id", _id];
+        _self set ["Name", _name];
         _self set ["_tokens",createhashmapobject [XPS_typ_Queue]];
         _self set ["_tokenData",createhashmap];
 	}],
@@ -67,16 +80,16 @@ Returns:
         _self get "_tokenData" set [_ref,[_ref,_this] select {isNil "_data"}]; 
 	}],
 	/*----------------------------------------------------------------------------
-	Property: Id
+	Property: Name
     
     	--- Prototype --- 
-    	get "Id"
+    	get "Name"
     	---  
 
 	Returns:
 		<String> - identifier of this channel object 
 	-----------------------------------------------------------------------------*/
-    ["Id", nil],
+    ["Name", nil],
     /*----------------------------------------------------------------------------
     Method: Count
     

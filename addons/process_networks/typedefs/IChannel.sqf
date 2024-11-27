@@ -9,7 +9,7 @@ Interface: process_network. XPS_PN_ifc_IChannel
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	Property: Id
+	Property: Name
 		<String>
 
 	Method: IsEmpty
@@ -28,7 +28,7 @@ Authors:
 		<Code>
 ---------------------------------------------------------------------------- */
 [
-    ["Id","STRING"],
+    ["Name","STRING"],
 	["IsEmpty","CODE"],
 	["Count","CODE"],
 	["Read","CODE"],
