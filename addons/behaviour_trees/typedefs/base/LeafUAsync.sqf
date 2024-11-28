@@ -64,9 +64,7 @@ Returns:
     	---
 
 	Description:
-		The code that executes during a Tick of this node when the condition has been met.
-
-	Must be Overridden - This type contains no functionality
+		The code that executes during a Tick of this node when the condition has been met. Default is to simply return <Success:XPS_BT_Status_Success>
 
 	Parameters:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
@@ -74,7 +72,7 @@ Returns:
 	Returns: 
 		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>
 	-----------------------------------------------------------------------------*/
-	["result",{XPS_BT_Status_Failure}],
+	["result",{XPS_BT_Status_Success}],
 	/*----------------------------------------------------------------------------
 	Protected: timeout
     
