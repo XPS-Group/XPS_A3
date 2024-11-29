@@ -29,7 +29,7 @@ Returns:
 	Parent: #base
     	<XPS_typ_EventHandler>
 	-----------------------------------------------------------------------------*/
-	["#base",XPS_typ_EvenetHandler],
+	["#base",XPS_typ_EventHandler],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
