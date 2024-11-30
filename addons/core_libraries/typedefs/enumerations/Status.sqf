@@ -3,7 +3,7 @@
 TypeDef: behaviour_trees. XPS_enum_Status
 	<TypeDefinition>
 		---prototype
-		XPS_enum_Status : core.XPS_ifc_IEnumeration, core.XPS_typ_Enumeration
+		XPS_enum_Status : XPS_ifc_IEnumeration, XPS_typ_Enumeration
 		---
 
 Authors: 

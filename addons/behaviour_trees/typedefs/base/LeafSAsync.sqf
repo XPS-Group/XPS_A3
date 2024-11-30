@@ -46,7 +46,7 @@ Returns:
 		The callback which sets the status on the node after <processTick> has finished
 
 	Parameters:
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		_status - <Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 
 	Returns: 
 		Nothing
@@ -83,11 +83,11 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
 		if (isNil {_self get "Status"}) then {
-			private _status = XPS_BT_Status_Running;
+			private _status = XPS_Status_Running;
 			_self set ["Status",_status];
 		};
 	}],
@@ -108,7 +108,7 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick", {}],
 	/*----------------------------------------------------------------------------
@@ -123,10 +123,10 @@ Returns:
 		sets the <Status> property before going back up the tree.
 
 	Parameters:
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		_status - <Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
 		_self set ["Status",_this];
@@ -155,7 +155,7 @@ Returns:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["Status",nil],
 	/*----------------------------------------------------------------------------
@@ -177,7 +177,7 @@ Returns:
 			terminate _handle;
 			_self set ["handle",nil];
 		};
-		_self call ["postTick", XPS_BT_Status_Failure];
+		_self call ["postTick", XPS_Status_Failure];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -209,14 +209,14 @@ Returns:
 
 	Description:
 		The code that begins the entire Tick cycle process. Calls proccessTick
-		asynchronously in a *Scheduled* environment. Status should be <XPS_BT_Status_Running> 
+		asynchronously in a *Scheduled* environment. Status should be <XPS_Status_Running> 
 		in most cases until processTick has finished.
 
 	Parameters:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFinal {		
 		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	

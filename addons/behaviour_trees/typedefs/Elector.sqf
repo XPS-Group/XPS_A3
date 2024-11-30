@@ -87,13 +87,13 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		if (_self call ["Condition",_this]) then {
 			_self call ["XPS_BT_typ_Decorator.processTick",_this];
 		} else {
-			XPS_BT_Status_Failure;
+			XPS_Status_Failure;
 		};
 	}]
 	/*----------------------------------------------------------------------------
