@@ -47,7 +47,7 @@ class XPS_CFG_TD_BASECLASSNAME {
 		};
 		class Enumerations {
 			XPS_CFG_TYP_SUB(enumerations,Enumeration);
-			XPS_CFG_ENUM(Status);
+			XPS_CFG_ENUM_SUB(enumerations,Status);
 		};
 		class Collections {
 			XPS_CFG_TYP_SUB(collections,CachedHashmap);
