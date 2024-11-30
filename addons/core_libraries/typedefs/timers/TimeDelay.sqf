@@ -147,6 +147,17 @@ Returns:
 		<Number> - Number of Frames before <Elapsed> is invoked
 	-----------------------------------------------------------------------------*/
     ["Delay",nil],
+	/*----------------------------------------------------------------------------
+	Property: Paused
+    
+    	--- Prototype --- 
+    	get "Paused"
+    	---
+    
+    Returns: 
+		<Boolean> - whether the timer should pause execution
+	-----------------------------------------------------------------------------*/
+    ["Paused",false],
     /*----------------------------------------------------------------------------
     Method: Start
     
@@ -163,11 +174,13 @@ Returns:
 		<Number> - the "EachFrame" missionEventHandler ID
     ----------------------------------------------------------------------------*/
     ["Start",compileFinal {
+		_self set ["Paused",false];
 		private _hndl = _self get "_handle";
 		_self set ["_lastTickTime",diag_TickTime];
-		if (isNil "_handle") then {
+		if (isNil "_hndl") then {
             _hndl = addMissionEventHandler ["EachFrame",{
                 _thisArgs params ["_obj","_numMillisecs"];
+				if (_obj get "Paused") exitwith {};
                 private _count = _obj get "_counter";
 
 				private _msDiff = (diag_TickTime - (_obj get "_lastTickTime"))*1000;

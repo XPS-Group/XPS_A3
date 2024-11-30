@@ -15,6 +15,9 @@ Authors:
 	Property: Delay
 		<Number>
 
+	Property: Paused
+		<Boolean>
+
 	Method: Start
 		<Code>
 
@@ -30,6 +33,7 @@ Authors:
 [
 	["AutoReset","BOOL"],
     ["Delay","SCALAR"],
+    ["Paused","BOOL"],
     ["Start","CODE"],
     ["Stop","CODE"],
     ["Reset","CODE"],
