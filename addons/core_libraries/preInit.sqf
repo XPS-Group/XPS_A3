@@ -70,7 +70,7 @@ Keys:
 ["XPS_LifeTime",XPS_enum_LifeTime] call XPS_fnc_createEnumeration;
 
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_BT_Status
+Variable: core. XPS_Status
 
 Description:
 	A Helper class for an <Enumeration> set
@@ -83,7 +83,7 @@ Returns:
 	<HashmapObject> - of type <XPS_enum_Status>
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_Status_Success 
+Variable: core. XPS_Status_Success 
 	<Enumeration> 
 
 Keys: 
@@ -91,7 +91,7 @@ Keys:
 	Value - "SUCCESS"
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_Status_Failure
+Variable: core. XPS_Status_Failure
 	<Enumeration> 
 
 Keys: 
@@ -99,14 +99,14 @@ Keys:
 	Value - "FAILURE"
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_Status_Running 
+Variable: core. XPS_Status_Running 
 	<Enumeration> 
 
 Keys: 
 	#str - "Running"
 	Value - "RUNNING"
 ---------------------------------------------------------------------------*/
-["XPS_BT_Status",XPS_enum_Status] call XPS_fnc_createEnumeration;
+["XPS_Status",XPS_enum_Status] call XPS_fnc_createEnumeration;
 
 diag_log text "[XPS Core preInit End]";
 
