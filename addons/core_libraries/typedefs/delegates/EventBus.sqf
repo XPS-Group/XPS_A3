@@ -93,7 +93,7 @@ Returns:
 		_args - <Array> - the arguments sent by the event 
 
 	Returns:
-		_keyList - <Array> of <HashmapKey> - the keys which dictate where to route to.
+		_keyList - <Array> of <HashmapKey> - the keys which dictate where to publish to.
     ----------------------------------------------------------------------------*/
 	["filter", compileFinal {
 		keys (_self get "handlers");

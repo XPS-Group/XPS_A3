@@ -41,13 +41,13 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-        params [["_router",nil,[createhashmap]]];
-        if !(isNil "_router") then {
-            if !(XPS_CHECK_IFC1(_router,XPS_ifc_IEventBus)) exitwith {
-                throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Event Router Type Parameter was Invalid type",_this]];
+        params [["_bus",nil,[createhashmap]]];
+        if !(isNil "_bus") then {
+            if !(XPS_CHECK_IFC1(_bus,XPS_ifc_IEventBus)) exitwith {
+                throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Event bus Type Parameter was Invalid type",_this]];
             };
 
-            _self set ["SensorUpdated",_router];
+            _self set ["SensorUpdated",_bus];
         } else {
             _self set ["SensorUpdated",createhashmapobject [XPS_typ_EventBus]];
 		};
