@@ -5,10 +5,6 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_IFC_SUB(base,INode);
 		};
 
-		class Enumerations {
-			XPS_CFG_ENUM(Status);
-		}; 
-
 		class BaseNodes {
 			XPS_CFG_TYP_SUB(base,Composite);
 			XPS_CFG_TYP_SUB(base,Decorator);
