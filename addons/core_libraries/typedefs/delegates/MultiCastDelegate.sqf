@@ -66,7 +66,7 @@ Returns:
 	["_pointers",[]],
 	["_signature",[]], 
     /*----------------------------------------------------------------------------
-    Method: Attach
+    Method: Subscribe
     
         --- Prototype --- 
         call ["Subscribe",_pointer]
@@ -117,7 +117,7 @@ Returns:
 		};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Detach
+    Method: Unsubscribe
     
         --- Prototype --- 
         call ["Unsubscribe",_pointer]
