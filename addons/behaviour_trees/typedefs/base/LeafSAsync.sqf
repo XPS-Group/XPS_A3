@@ -229,6 +229,10 @@ Returns:
 				_self set ["handle",_handle];
 			_self call ["postTick",_self get "Status"];
 		};
+		if (scriptDone (_self get "handle")) then {
+			_self set ["handle",nil];
+			_self call ["postTick",XPS_Status_Failure];
+		}
 		_self get "Status";
 	}]
 ]

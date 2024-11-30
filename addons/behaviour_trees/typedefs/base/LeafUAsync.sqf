@@ -240,11 +240,7 @@ Returns:
 				_self call ["preTick",_this];
 				_self call ["processTick",_this];
 			};
-			// always check timeout first before condition
-			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))): {
-				_self call ["postTick",XPS_Status_Failure];
-			};
-
+			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime")));
 			case (_self call ["condition",_this]): {
 				_self call ["postTick",_self call ["result",_this]];
 			};
