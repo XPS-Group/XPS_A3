@@ -118,7 +118,7 @@ Returns:
 		} forEach _keyList;
 	}],
     /*----------------------------------------------------------------------------
-    Method: Attach
+    Method: Subscribe
     
         --- Prototype --- 
         call ["Subscribe",[_pointer,_key]]
@@ -155,7 +155,7 @@ Returns:
 		_hndlr call ["Subscribe",_pointer];
 	}],
     /*----------------------------------------------------------------------------
-    Method: Detach
+    Method: Unsubscribe
     
         --- Prototype --- 
         call ["Unsubscribe",_key, _pointer*]

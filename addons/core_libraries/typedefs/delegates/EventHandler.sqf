@@ -13,10 +13,10 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which wraps an <XPS_ifc_IDelegate> to provide Attach/Detach functionality without exposing the Invoke function.
+	<HashmapObject> which wraps an <XPS_ifc_IDelegate> to provide Subscribe/Unsubscribe functionality without exposing the Invoke function.
 
 Parameters: 
-	_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Attach/Detach functions around.
+	_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Subscribe/Unsubscribe functions around.
 
 Returns:
 	<HashmapObject>
@@ -36,7 +36,7 @@ Throws:
         ---
     
 	Parameters: 
-		_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Attach/Detach functions around.
+		_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Subscribe/Unsubscribe functions around.
 		
 	Returns:
 		<True>
@@ -69,7 +69,7 @@ Throws:
 	["@interfaces",["XPS_ifc_IEventHandler"]],
 	["_delegate",nil],
     /*----------------------------------------------------------------------------
-    Method: Attach
+    Method: Subscribe
     
         --- Prototype --- 
         call ["Subscribe",_pointer]
@@ -104,7 +104,7 @@ Throws:
 		_self get "_delegate" call ["Subscribe",_this];
 	}],
     /*----------------------------------------------------------------------------
-    Method: Detach
+    Method: Unsubscribe
     
         --- Prototype --- 
         call ["Unsubscribe",_pointer]

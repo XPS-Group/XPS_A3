@@ -64,7 +64,7 @@ Returns:
 	["_pointer",nil],
 	["_signature",[]], // default signature: Anything
     /*----------------------------------------------------------------------------
-    Method: Attach
+    Method: Subscribe
     
         --- Prototype --- 
         call ["Subscribe",_pointer]
@@ -111,7 +111,7 @@ Returns:
 		};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Detach
+    Method: Unsubscribe
     
         --- Prototype --- 
         call ["Unsubscribe"]
