@@ -17,7 +17,7 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["Attach","CODE"],
-	["Detach","CODE"],
+	["Subscribe","CODE"],
+	["Unsubscribe","CODE"],
 	["Invoke","CODE"]
 ]

@@ -1,9 +1,9 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-Interface: core. XPS_ifc_IEventRouter
+Interface: core. XPS_ifc_IEventBus
 <Interface>
 	--- prototype
-	XPS_ifc_IEventRouter : XPS_ifc_IEventHandler
+	XPS_ifc_IEventBus : XPS_ifc_IEventHandler
 	---
 
 Authors:
@@ -16,10 +16,10 @@ Authors:
 	Method: Detach
 		<code>
 
-	Method: RouteEvent
+	Method: Publish
 		<code>
 ---------------------------------------------------------------------------- */
 [
 	["@",XPS_ifc_IEventHandler],
-	["RouteEvent","CODE"]
+	["Publish","CODE"]
 ]

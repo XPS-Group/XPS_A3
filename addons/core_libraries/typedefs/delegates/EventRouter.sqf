@@ -1,12 +1,12 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_typ_EventRouter
+TypeDef: core. XPS_typ_EventBus
 	<TypeDefinition>
         --- prototype
-        XPS_typ_EventRouter : XPS_typ_EventHandler, XPS_ifc_IEventRouter, XPS_ifc_IEventHandler
+        XPS_typ_EventBus : XPS_ifc_IEventBus, XPS_ifc_IEventHandler
         ---
         --- prototype
-        createHashmapObject [XPS_typ_EventRouter]
+        createHashmapObject [XPS_typ_EventBus]
         ---
 
 Authors: 
@@ -14,7 +14,7 @@ Authors:
    
 Description:
 	<HashmapObject> which creates a map of <XPS_ifc_IDelegates> Listens and/or Invokes
-	through the <RouteEvent> method any incoming events. <filter> method provides a way to
+	through the <Publish> method any incoming events. <filter> method provides a way to
 	control if one or more mapped <XPS_typ_Delegates> should receive the event.
 
 	The signature of the Invoke method is set as []
@@ -24,12 +24,7 @@ Returns:
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_typ_EventRouter"],
-	/*----------------------------------------------------------------------------
-	Parent: #base
-    	<XPS_typ_EventHandler>
-	-----------------------------------------------------------------------------*/
-	["#base",XPS_typ_EventHandler],
+	["#type","XPS_typ_EventBus"],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -53,7 +48,7 @@ Returns:
         params ["_anyDelegate",["_hndlrType",XPS_typ_EventHandler,[createhashmap]],["_dlgtType",XPS_typ_MultiCastDelegate,[createhashmap]],["_filter",nil,[{}]]];
 
 		_self call ["XPS_typ_EventHandler.#create",_anyDelegate];
-		_anyDelegate call ["Attach",[_self,"RouteEvent"]];
+		_anyDelegate call ["Subscribe",[_self,"Publish"]];
 
 		if !(XPS_CHECK_IFC1(_hndlrType,XPS_ifc_IEventHandler)) exitWith {
 			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","EventHandler Type Parameter was Invalid type",_this]];
@@ -71,14 +66,15 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
-		"XPS_typ_EventRouter"
+		"XPS_typ_EventBus"
 		---
 	----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
-		<XPS_ifc_IEventRouter>
+		<XPS_ifc_IEventBus>
+		<XPS_ifc_IEventHandler>
 	----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_ifc_IEventRouter"]],
+	["@interfaces",["XPS_ifc_IEventBus","XPS_ifc_IEventHandler"]],
 	["_delegateType",nil],
 	["_handlerType",nil],
 	["delegates",nil],
@@ -103,18 +99,18 @@ Returns:
 		keys (_self get "handlers");
 	}],
     /*----------------------------------------------------------------------------
-    Method: RouteEvent
+    Method: Publish
     
     	--- Prototype --- 
-    	call ["RouteEvent",_args]
+    	call ["Publish",_args]
     	---
     
-	Sends received event data to filter for processing. Then pushes event args on to subscriber based on key
+	Sends received event data to filter for processing. Then pushes event args on to subscriber(s) based on key
 
 	Parameters:
 		_args - <Array> - the arguments sent by the event 
     ----------------------------------------------------------------------------*/
-	["RouteEvent", compileFinal {
+	["Publish", compileFinal {
 		params ["_args"];
 		private _keylist = _self call ["filter",_args];
 		{
@@ -125,10 +121,10 @@ Returns:
     Method: Attach
     
         --- Prototype --- 
-        call ["Attach",[_pointer,_key]]
+        call ["Subscribe",[_pointer,_key]]
         ---
 
-        <XPS_ifc_IEventRouter>
+        <XPS_ifc_IEventBus>
 
 		Attachs a pointer to another function/method with given key
     
@@ -137,12 +133,12 @@ Returns:
 		
 		Example Using Code:
 		--- code 
-        call ["Attach",[{ hint "Hello";},"key""]]
+        call ["Subscribe",[{ hint "Hello";},"key""]]
 		---
 
 		Example Using <HashmapObject> Method:
 		--- code 
-        call ["Attach",[[_hashmapobject, "MyMethodName"],"key"]]
+        call ["Subscribe",[[_hashmapobject, "MyMethodName"],"key"]]
 		---
 		
 	Returns:
@@ -152,20 +148,20 @@ Returns:
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
-	["Attach", compileFinal {
+	["Subscribe", compileFinal {
 		params ["_pointer","_key"];
 		private _dlgt = _self get "delegates" getOrDefault [_key , createHashmapObject [_self get "_delegateType",[]], true];
 		private _hndlr = _self get "handlers" getOrDefault [_key , createHashmapObject [_self get "_handlerType",[_dlgt]], true];
-		_hndlr call ["Attach",_pointer];
+		_hndlr call ["Subscribe",_pointer];
 	}],
     /*----------------------------------------------------------------------------
     Method: Detach
     
         --- Prototype --- 
-        call ["Detach",_key, _pointer*]
+        call ["Unsubscribe",_key, _pointer*]
         ---
 
-        <XPS_ifc_IEventRouter>
+        <XPS_ifc_IEventBus>
 
 		Detachs a function/method pointer from the internal pointer collection or deletes the entire 
 		delegate if no pointer provided.
@@ -181,10 +177,10 @@ Returns:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Detach", compileFinal {
+	["Unsubscribe", compileFinal {
 		params ["_key","_pointer"];
 		private _hndlr = _self get "handlers" getOrDefault [_key,createhashmap];
-		private _result = _hndlr call ["Detach",_pointer];
+		private _result = _hndlr call ["Unsubscribe",_pointer];
 		if (isNil "_pointer") then {
 			_self get "delegates" deleteat _key;
 			_result = _self get "handlers" deleteat _key

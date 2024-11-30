@@ -67,7 +67,7 @@ Returns:
     Method: Attach
     
         --- Prototype --- 
-        call ["Attach",_pointer]
+        call ["Subscribe",_pointer]
         ---
 
         <XPS_ifc_IDelegate>
@@ -79,12 +79,12 @@ Returns:
 		
 		Example Using Code:
 		--- code 
-        call ["Attach", compileFinal { hint "Hello";}]
+        call ["Subscribe", compileFinal { hint "Hello";}]
 		---
 
 		Example Using <HashmapObject> Method:
 		--- code 
-        call ["Attach",[_hashmapobject, "MyMethodName"]]
+        call ["Subscribe",[_hashmapobject, "MyMethodName"]]
 		---
 		
 	Returns:
@@ -94,8 +94,8 @@ Returns:
 		<XPS_typ_ArgumentNilException> - when parameter supplied is Nil value
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
     ----------------------------------------------------------------------------*/
-	["Attach", compileFinal {
-		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
+	["Subscribe", compileFinal {
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"Subscribe","Parameter supplied was Nil"]]};
 		//Deep copy the array
 		//if (_this isEqualType []) then {_this = +_this};
 		
@@ -107,14 +107,14 @@ Returns:
 				_self set ["_pointer",_this];
 				true;
 		} else {
-			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
+			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Subscribe","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
 		};
 	}],
     /*----------------------------------------------------------------------------
     Method: Detach
     
         --- Prototype --- 
-        call ["Detach"]
+        call ["Unsubscribe"]
         ---
 
         <XPS_ifc_IDelegate>
@@ -124,7 +124,7 @@ Returns:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Detach", compileFinal {
+	["Unsubscribe", compileFinal {
 		private _pointer = _self get "_pointer";
 		_self set ["_pointer",nil];
 		_pointer;
@@ -209,7 +209,7 @@ Example: Override class to change signature
 	a set of parameters following the new signature:
 	---code 
 	Example = createHashmapObject [_def];
-	Example get "delegate" call ["Attach", compileFinal {
+	Example get "delegate" call ["Subscribe", compileFinal {
 		params ["_object","_methodname","_args"]; 
 		hint format["%1 called %2 and returned %3",_object get "#type" select 0, _methodName,_args];
 	}];

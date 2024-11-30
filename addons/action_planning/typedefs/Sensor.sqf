@@ -43,13 +43,13 @@ Returns:
 	["#create", compileFinal {
         params [["_router",nil,[createhashmap]]];
         if !(isNil "_router") then {
-            if !(XPS_CHECK_IFC1(_router,XPS_ifc_IEventRouter)) exitwith {
+            if !(XPS_CHECK_IFC1(_router,XPS_ifc_IEventBus)) exitwith {
                 throw createhashmapobject [XPS_typ_InvalidArgumentException,[_self,"#create","Event Router Type Parameter was Invalid type",_this]];
             };
 
             _self set ["SensorUpdated",_router];
         } else {
-            _self set ["SensorUpdated",createhashmapobject [XPS_typ_EventRouter]];
+            _self set ["SensorUpdated",createhashmapobject [XPS_typ_EventBus]];
 		};
 
         _self call ["Init"];
@@ -71,10 +71,10 @@ Returns:
 	["Init", {}],
 	["Register", compileFinal {
 		//params ["_pointer","_key"];
-		_self get "SensorUpdated" call ["Attach",_this];
+		_self get "SensorUpdated" call ["Subscribe",_this];
 	}],
     ["UpdateSensor", compileFinal {
-        _self get "SensorUpdated" call ["RouteEvent", [_self call ["formatEvent",_this]]];
+        _self get "SensorUpdated" call ["Publish", [_self call ["formatEvent",_this]]];
     }],
     ["SensorUpdated",nil]
 ]
