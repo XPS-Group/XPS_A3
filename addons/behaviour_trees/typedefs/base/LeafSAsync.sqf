@@ -232,7 +232,7 @@ Returns:
 		if (scriptDone (_self get "handle")) then {
 			_self set ["handle",nil];
 			_self call ["postTick",XPS_Status_Failure];
-		}
+		};
 		_self get "Status";
 	}]
 ]
