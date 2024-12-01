@@ -9,14 +9,29 @@ Interface: process_network. XPS_PN_ifc_IProcess
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	Method: Process
+	Property: Name
+		<String>
+		
+	Property: Status
+		<Anything>
+
+	Method: AddInput
 		<Code>
 
-	Method: WriteToChannel
+	Method: AddOutput
+		<Code>
+
+	Method: CanExecute
+		<Code>
+
+	Method: Execute
 		<Code>
 ---------------------------------------------------------------------------- */
 [
-	["Name", "STRING"]
-	// ["Process","CODE"],
-	// ["OutputChannel","STRING"]
+	["Name", "STRING"],
+	["Status", "ANYTHING"],
+	["AddInput", "CODE"],
+	["AddOutput", "CODE"],
+	["CanExecute", "CODE"],
+	["Execute", "CODE"]
 ]

@@ -94,18 +94,21 @@ Returns:
 		a channel is empty or does not contain enough tokens, it will fail.
 
 	Returns:
-		<Array> or <Boolean> - an array of tokens or <False> if failed
+		<Array> - an array of tokens 
 	-----------------------------------------------------------------------------*/
 	["preProcess", compileFinal {
-		scopeName "tokens"
+		scopeName "tokens";
 		private _tokens = []; 
 		{
-			_x params ["_input","_numTokens"];
+			_x params ["_channel","_numTokens"];
+			// a negative number takes all tokens (if any)
+			if (_numTokens < 0) then {_numTokens = _channel call ["Count"]};
 			for "_n" from 1 to _numTokens do {
-				private _token = _input call ["Dequeue"];
+				private _token = _channel call ["Dequeue"];
 				if !(isNil "_token") then {_tokens = false; breakTo "tokens"};
 				_tokens pushback _token;
-			}
+			};
+			_self set ["Status",XPS_Status_Running];
 		} foreach (_self get "inputChannels");
 		_tokens;
 	}],
@@ -136,10 +139,25 @@ Returns:
     	get "Name"
     	---  
 
+		<XPS_PN_ifc_IProcess>
+
 	Returns:
 		<String> - identifier of this process object 
 	-----------------------------------------------------------------------------*/
     ["Name", nil],
+	/*----------------------------------------------------------------------------
+	Property: Status
+    
+    	--- Prototype --- 
+    	get "Status"
+    	---
+
+		<XPS_PN_ifc_IProcess>
+    
+    Returns: 
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
+	-----------------------------------------------------------------------------*/
+	["Status",nil],
 	/*----------------------------------------------------------------------------
 	Method: AddInput
     
@@ -147,11 +165,13 @@ Returns:
     	call ["AddInput", [_channel, _numTokens]]
     	---  
 
+		<XPS_PN_ifc_IProcess>
+
 	Description:
 		Adds a channel to <inputChannels>
 
 	Parameters: 
-		_channel - <XPS_PN_typ_Channel>
+		_channel - <XPS_PN_ifc_IChannel>
 		_numTokens - <Number> - the number of tokens the channel must have in order
 		for this process to execute.
 		
@@ -161,7 +181,7 @@ Returns:
 	["AddInput", compileFinal {
 		params [["_channel",nil,[createhashmap]],["_numTokens",1,[0]]];
 		if (isNil "_channel") exitWith {false};
-		if !( XPS_CHECK_IFC1(_input,XPS_PN_ifc_IChannel) ) exitWith {false};
+		if !( XPS_CHECK_IFC1(_channel,XPS_PN_ifc_IChannel) ) exitWith {false};
 
 		_self get "inputChannels" pushback [_channel,_numTokens];
 		_self;
@@ -173,11 +193,13 @@ Returns:
     	call ["AddOutput", [_channel, _numTokens]]
     	---  
 
+		<XPS_PN_ifc_IProcess>
+
 	Description:
 		Adds a channel to <inputChannels>
 
 	Parameters: 
-		_channel - <XPS_PN_typ_Channel>
+		_channel - <XPS_PN_ifc_IChannel>
 		_numTokens - <Number> - the number of tokens the channel will receive when
 		this process is executed
 		
@@ -187,7 +209,7 @@ Returns:
 	["AddOutput", compileFinal {
 		params [["_channel",nil,[createhashmap]],["_numTokens",1,[0]]];
 		if (isNil "_channel") exitWith {false};
-		if !( XPS_CHECK_IFC1(_output,XPS_PN_ifc_IChannel) ) exitWith {false};
+		if !( XPS_CHECK_IFC1(_channel,XPS_PN_ifc_IChannel) ) exitWith {false};
 
 		_self get "outputChannels" pushback [_channel,_numTokens];
 		_self;
@@ -199,6 +221,8 @@ Returns:
     	call ["CanExecute"]
     	---  
 
+		<XPS_PN_ifc_IProcess>
+
 	Description:
 		Checks if the <inputChannels> each have enough tokens for <Execute> not to fail.
 		
@@ -206,7 +230,10 @@ Returns:
 		<Boolean> 
 	-----------------------------------------------------------------------------*/
 	["CanExecute", compileFinal {
-		(_self get "inputChannels") select {(_x#0) call ["Count"] < (_x#1)} isEqualTo 0;
+		(_self get "inputChannels") select {
+			private _count = (_x#0) call ["Count"]; 
+			(_count isEqualTo 0 || {_count < (_x#1)})
+		} isEqualTo 0;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Execute
@@ -215,23 +242,25 @@ Returns:
     	call ["Execute"]
     	---  
 
+		<XPS_PN_ifc_IProcess>
+
 	Description:
 		Starts processing.
 		
 	Returns:
-		<Boolean> - True is succeeded, otherwise False
+		Nothing
 	-----------------------------------------------------------------------------*/
-	["Execute" compileFinal {
+	["Execute", compileFinal {
 		private _tokens = _self call ["preProcess"];
 		if (_tokens isEqualtype []) then {
 			private _output = _self call ["process",_tokens];
 			{
-				_x params ["_channel","_numTokens"]
+				_x params ["_channel","_numTokens"];
 				for "_n" from 1 to _numTokens do {
 					_channel call ["Enqueue",_output];
 				};
 			} foreach (_self get "_outputChannels");
-			true;
-		} else {false};
+			_self set ["Status",XPS_Status_Success];
+		} else {_self set ["Status",XPS_Status_Failure];};
 	}]
 ]

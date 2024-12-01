@@ -74,14 +74,14 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["callback",compileFinal {
-		_output = _this;
 		{
-			_x params ["_channel","_numTokens"]
+			_x params ["_channel","_numTokens"];
 			for "_n" from 1 to _numTokens do {
-				_channel call ["Enqueue",_output];
+				_channel call ["Enqueue",_this];
 			};
 		} foreach (_self get "_outputChannels");
 		_self set ["handle",nil];
+		_self set ["Status",XPS_Status_Success];
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: handle
@@ -111,6 +111,11 @@ Returns:
 		<XPS_PN_typ_Process>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
+	Property: Status
+
+		<XPS_PN_typ_Process>
+	-----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
 	Method: AddInput
 
 		<XPS_PN_typ_Process>
@@ -136,18 +141,17 @@ Returns:
 		Starts processing.
 		
 	Returns:
-		<Boolean> - True if running, otherwise False
+		Nothing
 	-----------------------------------------------------------------------------*/
-	["Execute" compileFinal {
+	["Execute", compileFinal {
 		private _tokens = _self call ["preProcess"];
 		if (_tokens isEqualtype []) then {
 				_handle = [_self,_tokens] spawn {
 					params ["_process","_tokens"];
 					private _output = _process call ["process",_tokens]; 
-					_process call ["callback",_output]
+					_process call ["callback",_output];
 				};
 				_self set ["handle",_handle];
-			true;
-		} else {false};
+		} else {_self set ["Status",XPS_Status_Failure];};
 	}]
 ]
