@@ -9,8 +9,9 @@ class XPS_CFG_TD_BASECLASSNAME {
 
 		class Base {
 			XPS_CFG_TYP(Channel);
+			XPS_CFG_TYP(KeyedChannel);
 			XPS_CFG_TYP(Process);
-			XPS_CFG_TYP(ProcessGrap);
+			XPS_CFG_TYP(ProcessGraph);
 		};
 	};
 };

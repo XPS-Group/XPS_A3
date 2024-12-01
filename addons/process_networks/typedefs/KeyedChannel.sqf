@@ -1,26 +1,33 @@
 #include "script_component.hpp" 
 /* ----------------------------------------------------------------------------
-TypeDef: process_network. XPS_PN_typ_Channel
+TypeDef: process_network. XPS_PN_typ_KeyedChannel
 	<TypeDefinition>
     	--- Prototype --- 
-		XPS_PN_typ_Channel : XPS_PN_ifc_IChannel
+		XPS_PN_typ_KeyedChannel : XPS_PN_ifc_IChannel
     	---
     	--- Code --- 
-    	createHashmapObject ["XPS_PN_typ_Channel"]
+    	createHashmapObject ["XPS_PN_typ_KeyedChannel"]
     	---
 
 Authors: 
 	Crashdome
 
 Description:
-	Represents a channel queue in a process network.
+	Represents a channel queue in a process network. Data is stored with a key so subsequent writes
+	to the same key simply update the data rather than create a new item.
 
 Returns:
 	<HashmapObject>
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_PN_typ_Channel"],
+	["#type","XPS_PN_typ_KeyedChannel"],
+    /*----------------------------------------------------------------------------
+    Parent: #base
+    
+		<XPS_PN_typ_Channel>
+    ----------------------------------------------------------------------------*/
+	["#base",XPS_PN_typ_Channel],
     /*----------------------------------------------------------------------------
     Constructor: #create
     
@@ -37,10 +44,8 @@ Returns:
 	["#create", compileFinal {
         params [["_name",nil,[""]]];
 
-        if (isNil "_name") then {_name = call XPS_fnc_createUniqueID};
-
-        _self set ["Name", _name];
-        _self set ["_tokens",createhashmapobject [XPS_typ_Queue]];
+        _self call ["XPS_PN_typChannel.#create",_name];
+        _self set ["_tokenData",createhashmap];
 	}],
 	/*----------------------------------------------------------------------------
 	Flags: #flags
@@ -48,60 +53,49 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
-		"XPS_PN_typ_Channel"
+		"XPS_PN_typ_KeyedChannel"
 		---
 	-----------------------------------------------------------------------------*/
-	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements:
 		<XPS_PN_ifc_IChannel>
 	-----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_PN_ifc_IChannel"]],
-    ["_tokens",nil],
+	["_tokenData",nil],
+	/*----------------------------------------------------------------------------
+	Protected: updateTokenData
+    
+    	--- Prototype --- 
+    	call ["updateTokenData",[_data, _ref*]]
+    	---
+    
+    Parameters: 
+		_data - <Anything> - the data to be stored within the key
+
+	Optionals:
+		_ref - <String> - (Optional : Default - a unique ID string) - the key to be added or updated    
+
+	Returns:
+		<Boolean> - if value was successfully set 
+	-----------------------------------------------------------------------------*/
+	["updateTokenData", compileFinal {
+        params [["_data",nil,[]],["_ref",call XPS_fnc_createUniqueID,[""]]];
+        _self get "_tokenData" set [_ref,_data]; 
+	}],
 	/*----------------------------------------------------------------------------
 	Property: Name
     
-    	--- Prototype --- 
-    	get "Name"
-    	---  
-
-	Returns:
-		<String> - identifier of this channel object 
+		<XPS_PN_typ_Channel.Name>
 	-----------------------------------------------------------------------------*/
-    ["Name", nil],
     /*----------------------------------------------------------------------------
     Method: Count
     
-        --- Prototype --- 
-        call ["Count"]
-        ---
-
-        <XPS_ifc_IChannel>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		<Number> - the number of elements in the queue
+		<XPS_PN_typ_Channel.Count>
     ----------------------------------------------------------------------------*/
-	["Count", compileFinal {_self get "_tokens" call ["Count"]}],
     /*----------------------------------------------------------------------------
     Method: IsEmpty
     
-        --- Prototype --- 
-        call ["IsEmpty"]
-        ---
-
-        <XPS_ifc_IChannel>
-    
-    Parameters: 
-		none
-		
-	Returns:
-		<Boolean> - <True> if queue is empty, otherwise <False>.
-    ----------------------------------------------------------------------------*/
-    ["IsEmpty",compileFinal {_self get "_tokens" call ["IsEmpty"]}],
-	
+		<XPS_PN_typ_Channel.Count>
+    ----------------------------------------------------------------------------*/	
     /*----------------------------------------------------------------------------
     Method: Read
     
@@ -118,42 +112,49 @@ Returns:
 		<Anything> - removes and returns first element in the queue or nil if empty
     ----------------------------------------------------------------------------*/
     ["Read", compileFinal {
-        _self get "_tokens" call ["Dequeue"];
+        private _ref = _self get "_tokens" call ["Dequeue"];
+        _self get "_tokenData" deleteat _ref;
     }],
     /*----------------------------------------------------------------------------
     Method: Write
     
         --- Prototype --- 
-        call ["Write",_data]
-        ---
-
-        <XPS_ifc_IChannel>
+        call ["Write",[_data, _ref*]]
+    	---
     
     Parameters: 
-		_data - <Anything> - the data to be stored   
+		_data - <Anything> - the data to be stored within the key
+
+	Optionals:
+		_ref - <String> - (Optional : Default - a unique ID string) - the key to be added or updated  
 
 	Returns:
-		<Boolean> - if value was successfully set 
+		<Boolean> - if value was successfully added/updated 
     ----------------------------------------------------------------------------*/
 	["Write",compileFinal {
-        _self get "_tokens" call ["Enqueue",_this];
+        params [["_data",nil,[]],["_ref",call XPS_fnc_createUniqueID,[""]]];
+        _self call ["XPS_PN_typ_Channel.Enqueue",_ref];
+        _self call ["updateTokenData",_this]; 
     }],
     /*----------------------------------------------------------------------------
     Method: WriteUnique
     
         --- Prototype --- 
-        call ["WriteUnique",_data]
-        ---
-
-        <XPS_ifc_IChannel>
+        call ["WriteUnique",[_data, _ref*]]
+    	---
     
     Parameters: 
-		_data - <Anything> - the data to be stored   
+		_data - <Anything> - the data to be stored within the key
+
+	Optionals:
+		_ref - <String> - (Optional : Default - a unique ID string) - the key to be added or updated     
 
 	Returns:
-		<Boolean> - if value was successfully added, False if already exists - item will always update data if already existing
+		<Boolean> - if value was successfully added/updated, False if already exists - item will always update data if already existing
     ----------------------------------------------------------------------------*/
 	["WriteUnique",compileFinal {
-        _self get "_tokens" call ["EnqueueUnique",_this]; 
+        params [["_data",nil,[]],["_ref",call XPS_fnc_createUniqueID,[""]]];
+        private _result = _self call ["XPS_PN_typ_Channel.EnqueueUnique",_ref]; // adds if new - updates data always
+        _self call ["updateTokenData",_this]; 
     }]
 ]
