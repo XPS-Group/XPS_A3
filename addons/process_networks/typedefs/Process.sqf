@@ -104,8 +104,8 @@ Returns:
 			// a negative number takes all tokens (if any)
 			if (_numTokens < 0) then {_numTokens = _channel call ["Count"]};
 			for "_n" from 1 to _numTokens do {
-				private _token = _channel call ["Dequeue"];
-				if !(isNil "_token") then {_tokens = false; breakTo "tokens"};
+				private _token = _channel call ["Read"];
+				if (isNil "_token") then {_tokens = false; breakTo "tokens"};
 				_tokens pushback _token;
 			};
 			_self set ["Status",XPS_Status_Running];
@@ -230,10 +230,10 @@ Returns:
 		<Boolean> 
 	-----------------------------------------------------------------------------*/
 	["CanExecute", compileFinal {
-		(_self get "inputChannels") select {
+		count ((_self get "inputChannels") select {
 			private _count = (_x#0) call ["Count"]; 
 			(_count isEqualTo 0 || {_count < (_x#1)})
-		} isEqualTo 0;
+		}) isEqualTo 0;
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Execute
@@ -257,9 +257,9 @@ Returns:
 			{
 				_x params ["_channel","_numTokens"];
 				for "_n" from 1 to _numTokens do {
-					_channel call ["Enqueue",_output];
+					_channel call ["Write",_output];
 				};
-			} foreach (_self get "_outputChannels");
+			} foreach (_self get "outputChannels");
 			_self set ["Status",XPS_Status_Success];
 		} else {_self set ["Status",XPS_Status_Failure];};
 	}]
