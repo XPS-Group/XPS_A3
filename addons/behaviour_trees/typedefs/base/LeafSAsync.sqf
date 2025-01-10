@@ -52,7 +52,7 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["callback",compileFinal {
-		_status = _this;
+		private _status = _this;
 		_self call ["postTick",_status];
 		_self set ["handle",nil];
 	}],

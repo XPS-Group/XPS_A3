@@ -78,7 +78,8 @@ Returns:
 		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		_self call ["Action",_this];
+		private _status = _self call ["Action",_this];
+		_status;
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
