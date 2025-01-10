@@ -116,7 +116,7 @@ Returns:
 		
 		if (_key isEqualTo "" || !{XPS_CHECK_IFC1(_process,XPS_PN_ifc_IProcess)}) exitWith {false};
 
-		_self get "channels" set [_key,_channel];
+		_self get "processes" pushback _process;
 		_self;
 	}],
 	/*----------------------------------------------------------------------------
