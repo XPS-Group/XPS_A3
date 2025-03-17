@@ -258,7 +258,7 @@ Returns:
         if ((_key isEqualTo "") || !(_key in (_self get "_items"))) exitWith {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"SetItem","Key does not exist in this collection",_this]];};
         private _item = _self call ["GetItem",_key];
         if (_item isEqualType createhashmap) then {
-            _propertyArray params ["_subkey","_value"];;
+            _propertyArray params ["_subkey","_value"];
             _item set [_subkey,_value];
         } else {
             throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"UpdateItem",nil,createHashMapFromArray [["_this",_this]]]]

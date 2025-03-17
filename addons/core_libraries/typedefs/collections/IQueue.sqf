@@ -25,6 +25,9 @@ Authors:
 	
 	Method: Enqueue
 		<Code>
+	
+	Method: EnqueueUnique
+		<Code>
 
 	Method: Peek
 		<Code>
@@ -34,5 +37,6 @@ Authors:
 	["@",XPS_ifc_IList],
 	["Dequeue","CODE"],
 	["Enqueue","CODE"],
+	["EnqueueUnique","CODE"],
 	["Peek","CODE"]
 ]
