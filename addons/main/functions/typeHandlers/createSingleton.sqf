@@ -147,7 +147,7 @@ if (isNil _varName) then {
 
 	// First: Check if String Code
 	if (_typeDef isEqualType "") then {
-		_typeDef = call compile _typeDef;
+		_typeDef = currentNamespace getvariable _typeDef;
 	};
 
 	// Second: Create hashmap if array
@@ -166,7 +166,7 @@ if (isNil _varName) then {
 		_typeDef set ["#flags",["noCopy"]];
 	};
 
-	call compile format["%1 = createHashmapObject [%2,%3];",_instanceVar,_typeDef,_args];
+	currentNamespace setvariable [_instanceVar,createHashmapObject [_typeDef,_args]];
 
 	private _staticDefPath = "x\xps\addons\main\staticSingletonDef.sqf";
 

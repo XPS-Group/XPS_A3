@@ -62,7 +62,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 	private _interface = [];
 	// build it from string var
 	if ((_interfaces#_a) isEqualType "") then {
-		_interface = call compile (_interfaces#_a);
+		_interface = currentNamespace getvariable  (_interfaces#_a);
 		if !(_interface isEqualType createhashmap) then {
 			// Not a valid hashmap - exit without checking and fail
 			diag_log text (format ["XPS_fnc_checkInterface: Interface was not a valid hashmap.  Interface provided:%1",_interfaces#_a]);
@@ -110,8 +110,8 @@ for "_a" from 0 to (count _interfaces -1) do {
 					};
 				};
 				// Check Interfaces last
-				if (_typeIfcs isEqualtype createhashmap) then {
-					if (toLower _checkType in ((keys _typeIfcs) apply {toLower _x})) then {
+				if (_typeIfcs isEqualtype []/*createhashmap*/) then {
+					if (toLower _checkType in ((/*keys*/ _typeIfcs) apply {toLower _x})) then {
 						continue;
 					};
 				};

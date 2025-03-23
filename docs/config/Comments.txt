@@ -63,6 +63,15 @@ Alter Comment Type: Class
       typedefinition, typedefinitions
 
 
+Alter Comment Type: Enumeration
+
+   Display Name: Type Definition
+   Plural Display Name: Type Definitions
+
+   Keywords:
+      nested, nesteds
+
+
 Alter Comment Type: Interface
 
    Display Name: Hashmap Interface

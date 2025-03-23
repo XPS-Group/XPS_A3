@@ -50,6 +50,10 @@ Returns:
 		---
 	----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
+	Flags: #flags
+		sealed
+	----------------------------------------------------------------------------*/
+	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
         <XPS_ifc_ICollectionNotifier>
@@ -75,7 +79,9 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         private _key = _self call ["XPS_typ_TypeCollection.AddItem",_this];
-        _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_this]]];
+        if !(isNil "_key") then {
+            _self get "_onCollectionChangedEvent" call ["Invoke",[_self,["AddItem",_this]]];
+        };
         _key;
     }],
     /*----------------------------------------------------------------------------

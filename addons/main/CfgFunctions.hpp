@@ -20,11 +20,11 @@ class CfgFunctions {
 		
 		class Init {
 			class preInit {
-				file = FILEPATH_C_Q(preInit.sqf);
+				file = XPS_FILEPATH_C_STR(preInit.sqf);
 				preInit = 1;
 			};
 			class preStart {
-				file = FILEPATH_C_Q(preStart.sqf);
+				file = XPS_FILEPATH_C_STR(preStart.sqf);
 				preStart = 1;
 			};
 		};

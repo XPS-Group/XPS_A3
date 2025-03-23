@@ -179,54 +179,54 @@ class XPS_UT_TestConsole_display {
 		class XPS_UT_TestConsole_frame: XPS_RscText
 		{
 			idc = 1200;
-			x = Q(-0.2 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(-1 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(40.4 * GUI_GRID_CENTER_W);
-			h = Q(26.2 * GUI_GRID_CENTER_H);
+			x = XPS_STR(-0.2 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(-1 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(40.4 * GUI_GRID_CENTER_W);
+			h = XPS_STR(26.2 * GUI_GRID_CENTER_H);
 			colorBackground[] = {0,0,0,1};
 		};
 		class XPS_UT_TestConsole_bkgrd: XPS_RscText
 		{
 			idc = 2200;
-			x = Q(0 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(0 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(40 * GUI_GRID_CENTER_W);
-			h = Q(25 * GUI_GRID_CENTER_H);
+			x = XPS_STR(0 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(0 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(40 * GUI_GRID_CENTER_W);
+			h = XPS_STR(25 * GUI_GRID_CENTER_H);
 		};
 		class XPS_UT_TestConsole_LB1bkgrd: XPS_RscText
 		{
 			idc = 2201;
-			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(35 * GUI_GRID_CENTER_W);
-			h = Q(18 * GUI_GRID_CENTER_H);
+			x = XPS_STR(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(35 * GUI_GRID_CENTER_W);
+			h = XPS_STR(18 * GUI_GRID_CENTER_H);
 			colorBackground[] = {0.05,0.05,0.05,1};
 		};
 		class XPS_UT_TestConsole_LB1bkgrd2: XPS_RscText
 		{
 			idc = 2201;
-			x = Q(2.45 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(26.25 * GUI_GRID_CENTER_W);
-			h = Q(18 * GUI_GRID_CENTER_H);
+			x = XPS_STR(2.45 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(26.25 * GUI_GRID_CENTER_W);
+			h = XPS_STR(18 * GUI_GRID_CENTER_H);
 			colorBackground[] = {0,0,0,1};
 		};
 		class XPS_UT_TestConsole_LB2bkgrd: XPS_RscText
 		{
 			idc = 2202;
-			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(35 * GUI_GRID_CENTER_W);
-			h = Q(5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(35 * GUI_GRID_CENTER_W);
+			h = XPS_STR(5 * GUI_GRID_CENTER_H);
 			colorBackground[] = {0,0,0,1};
 		};
 		class XPS_UT_TestConsole_LB2bkgrd2: XPS_RscText
 		{
 			idc = 2202;
-			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(10.7 * GUI_GRID_CENTER_W);
-			h = Q(5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(10.7 * GUI_GRID_CENTER_W);
+			h = XPS_STR(5 * GUI_GRID_CENTER_H);
 			colorBackground[] = {0.05,0.05,0.05,1};
 		};
 		class XPS_UT_TestConsole_unselect: RscButton
@@ -255,68 +255,68 @@ class XPS_UT_TestConsole_display {
 			columns[] = {0.02,0.05,0.3,0.8,0.95};
 			idcLeft = 1400;
 			idcRight = 1401;
-			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(35 * GUI_GRID_CENTER_W);
-			h = Q(18 * GUI_GRID_CENTER_H);
+			x = XPS_STR(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(0.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(35 * GUI_GRID_CENTER_W);
+			h = XPS_STR(18 * GUI_GRID_CENTER_H);
 			onLBSelChanged = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_tests_LBSelChanged"",_this];";
 		};
 		class XPS_UT_TestConsole_details: XPS_RscListNBox
 		{
 			idc = 1501;
 			columns[] = {0.01,0.3};
-			x = Q(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(35 * GUI_GRID_CENTER_W);
-			h = Q(5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(0.5 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(19 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(35 * GUI_GRID_CENTER_W);
+			h = XPS_STR(5 * GUI_GRID_CENTER_H);
 		};
 		class XPS_UT_TestConsole_runSelected: XPS_RscButton
 		{
 			idc = 1600;
-			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(3.33333 * GUI_GRID_CENTER_W);
-			h = Q(2.5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(3.33333 * GUI_GRID_CENTER_W);
+			h = XPS_STR(2.5 * GUI_GRID_CENTER_H);
 			text = "Selected";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runSelected_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_runAll: XPS_RscButton
 		{
 			idc = 1601;
-			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(2 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(3.33333 * GUI_GRID_CENTER_W);
-			h = Q(2.5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(2 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(3.33333 * GUI_GRID_CENTER_W);
+			h = XPS_STR(2.5 * GUI_GRID_CENTER_H);
 			text = "All";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_runAll_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_reset: XPS_RscButton
 		{
 			idc = 1602;
-			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(8 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(3.33333 * GUI_GRID_CENTER_W);
-			h = Q(2.5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(8 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(3.33333 * GUI_GRID_CENTER_W);
+			h = XPS_STR(2.5 * GUI_GRID_CENTER_H);
 			text = "Reset";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_reset_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_reload: XPS_RscButton
 		{
 			idc = 1603;
-			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(14 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(3.33333 * GUI_GRID_CENTER_W);
-			h = Q(2.5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(14 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(3.33333 * GUI_GRID_CENTER_W);
+			h = XPS_STR(2.5 * GUI_GRID_CENTER_H);
 			text = "Reload";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_reload_buttonClick"",_this];";
 		};
 		class XPS_UT_TestConsole_close: XPS_RscButton
 		{
 			idc = 1604;
-			x = Q(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
-			y = Q(21.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
-			w = Q(3.33333 * GUI_GRID_CENTER_W);
-			h = Q(2.5 * GUI_GRID_CENTER_H);
+			x = XPS_STR(36 * GUI_GRID_CENTER_W + GUI_GRID_CENTER_X);
+			y = XPS_STR(21.5 * GUI_GRID_CENTER_H + GUI_GRID_CENTER_Y);
+			w = XPS_STR(3.33333 * GUI_GRID_CENTER_W);
+			h = XPS_STR(2.5 * GUI_GRID_CENTER_H);
 			text = "Close";
 			onButtonClick = "(ctrlParent (_this#0) getVariable ""xps_view"") call [""XPS_UT_TestConsole_close_buttonClick"",_this];";
 		};

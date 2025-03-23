@@ -43,7 +43,7 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         params [["_typeRestrictor",createHashmapObject [XPS_typ_NoTypeRestrictor],[createhashmap]]];
-        if !(CHECK_IFC1(_typeRestrictor,XPS_ifc_ITypeRestrictor)) then {
+        if !(XPS_CHECK_IFC1(_typeRestrictor,XPS_ifc_ITypeRestrictor)) then {
             throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","_typeRestrictor parameter was an invalid type",_this]]
         };
         _self set ["_restrictor",_typeRestrictor];
@@ -56,6 +56,11 @@ Returns:
 		---
 	----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select  0}],
+	/*----------------------------------------------------------------------------
+	Flags: #flags
+		sealed
+	----------------------------------------------------------------------------*/
+	["#flags",["sealed"]],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_ICollection>
@@ -132,7 +137,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["AddItem", compileFinal {
         if !(params [["_key",nil,["",[],0,true,{},missionNamespace,sideEmpty]],["_item",nil,[]]]) exitWith {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"AddItem",nil,createHashMapFromArray [["_this",_this]]]];};
-        if ((_key isEqualTo "") || (_key in (_self get "_items"))) exitWith {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
+        if ((_key isEqualTo "") || (_key in (keys (_self get "_items")))) exitWith {throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"AddItem","Key already exists in this collection",_this]];};
         if (_self get "_restrictor" call ["IsAllowed",_item]) then {
             _self get "_items" set [_key,_item];
         } else {

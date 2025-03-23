@@ -10,14 +10,14 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Method: Attach
+	Method: Subscribe
 		<code>
 
-	Method: Detach
+	Method: Unsubscribe
 		<code>
 
 ---------------------------------------------------------------------------- */
 [
-	["Attach","CODE"],
-	["Detach","CODE"]
+	["Subscribe","CODE"],
+	["Unsubscribe","CODE"]
 ]

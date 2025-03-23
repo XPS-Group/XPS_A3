@@ -13,8 +13,7 @@ Authors:
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has an <ProcessTick> method which is 
-	called when Ticked
+	A node for a Behaviour Tree that checks a condition and returns <XPS_Status_Success> if true.
 
 Returns:
 	<HashmapObject> of a Leaf Node
@@ -64,10 +63,10 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		private _status = [XPS_BT_Status_Failure, XPS_BT_Status_Success] select (_self call ["Condition",_this]);
+		private _status = [XPS_Status_Failure, XPS_Status_Success] select (_self call ["Condition",_this]);
 		_status;
 	}],
 	/*----------------------------------------------------------------------------

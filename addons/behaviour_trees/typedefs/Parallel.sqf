@@ -65,11 +65,11 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _children = _self get "children";
-		private _finalStatus = XPS_BT_Status_Success;
+		private _finalStatus = XPS_Status_Success;
 
 		while {(_self get "currentIndex") < count _children} do {
 			private _currentIndex = _self get "currentIndex";
@@ -83,8 +83,8 @@ Returns:
 
 		for "_i" from 0 to (count _children)-1 do {
 			private _status = (_children#_index) get "Status";
-			if (_status isEqualTo XPS_BT_Status_Failure) then {_finalStatus = XPS_BT_Status_Failure};
-			if (_status isEqualTo XPS_BT_Status_Running && !(_finalStatus isEqualTo XPS_BT_Status_Failure)) then {_finalStatus = XPS_BT_Status_Running};
+			if (_status isEqualTo XPS_Status_Failure) then {_finalStatus = XPS_Status_Failure};
+			if (_status isEqualTo XPS_Status_Running && !(_finalStatus isEqualTo XPS_Status_Failure)) then {_finalStatus = XPS_Status_Running};
 		};
 		_finalStatus;
 	}]

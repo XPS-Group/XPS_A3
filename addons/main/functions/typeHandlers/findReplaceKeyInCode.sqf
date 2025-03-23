@@ -41,9 +41,12 @@ Example:
 	---
 
 ---------------------------------------------------------------------------- */
-params [["_find","",[""]],["_replace","",[""]],["_code",{},[{}]]];
-
-private _findRegex = """""+" insert [1,_find];
-private _replaceRegex = """""" insert [1,_replace];
-private _newCodeStr = (str _code) regexreplace [_findRegex,_replaceRegex];
+params [["_pair",[],[[]]],["_code",{},[{}]]];
+//params [["_find","",[""]],["_replace","",[""]],["_code",{},[{}]]];
+private _newCodeStr = (str _code);
+{
+	private _findRegex = """""+" insert [1,_x#0];
+	private _replaceRegex = """""" insert [1,_x#1];
+	_newCodeStr = _newCodeStr regexreplace [_findRegex,_replaceRegex];
+} foreach _pair;
 call compile _newCodeStr; //Have to 'call' otherwise double brackets: {{ code }}

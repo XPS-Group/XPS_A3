@@ -49,6 +49,7 @@ Returns:
 		} else {
 			_self set ["_signature",[]];
 		};
+		_self set ["_pointers",[]];
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -62,13 +63,13 @@ Returns:
 		<XPS_ifc_IDelegate>
 	----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_ifc_IDelegate"]],
-	["_pointers",[],[["CTOR"]]],
+	["_pointers",[]],
 	["_signature",[]], 
     /*----------------------------------------------------------------------------
-    Method: Attach
+    Method: Subscribe
     
         --- Prototype --- 
-        call ["Attach",_pointer]
+        call ["Subscribe",_pointer]
         ---
 
         <XPS_ifc_IDelegate>
@@ -80,11 +81,11 @@ Returns:
 
 		Example Using Code:
 		--- code 
-        call ["Attach", compileFinal { hint "Hello";}]
+        call ["Subscribe", compileFinal { hint "Hello";}]
 		---
 		Example Using <HashmapObject> Method:
 		--- code 
-        call ["Attach",[_hashmapobject, "MyMethodName"]]
+        call ["Subscribe",[_hashmapobject, "MyMethodName"]]
 		---
 		
 	Returns:
@@ -95,8 +96,8 @@ Returns:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
-	["Attach", compileFinal {
-		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"Attach","Parameter supplied was Nil"]]};
+	["Subscribe", compileFinal {
+		if (isNil "_this") then {throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"Subscribe","Parameter supplied was Nil"]]};
 		
 		if (_this isEqualType {} || {							//if just code we're good
 				_this isEqualTypeParams [createhashmap,""] && 	//if hmobject with methodname...
@@ -105,21 +106,21 @@ Returns:
 			) then {
 				//pushBackUnique doesn't support unique Hashmap Objects (compares by string)
 				// if ((_self get "_pointers" pushBackUnique _this) > -1) then {true} else {
-				// 	throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Attach","Functon/Method supplied was already added.",_this]];
+				// 	throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Subscribe","Functon/Method supplied was already added.",_this]];
 				// };
 				//Just accept it and add a RPT log if it's getting overloaded 
 				if ((_self get "_pointers" pushBack _this) < 10000) then {true} else {
 					diag_log text format ["MC Delegate %1 has too many subscribers. consider using an intermediary. Last added: %2",_self,_this];
 				};
 		} else {
-			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Attach","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
+			throw createHashmapObject[XPS_typ_InvalidArgumentException,[_self,"Subscribe","Argument supplied was not a code block or [hashmapobject,""methodName""] array.",_this]];
 		};
 	}],
     /*----------------------------------------------------------------------------
-    Method: Detach
+    Method: Unsubscribe
     
         --- Prototype --- 
-        call ["Detach",_pointer]
+        call ["Unsubscribe",_pointer]
         ---
 
         <XPS_ifc_IDelegate>
@@ -134,7 +135,7 @@ Returns:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Detach", compileFinal {
+	["Unsubscribe", compileFinal {
 		private _pointers = _self get "_pointers";
 		_pointers deleteat (_pointers find _this);
 	}],

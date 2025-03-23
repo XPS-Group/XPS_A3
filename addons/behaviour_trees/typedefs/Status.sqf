@@ -1,9 +1,9 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_BT_enum_Status
+TypeDef: core. XPS_enum_Status
 	<TypeDefinition>
 		---prototype
-		XPS_BT_enum_Status : core.XPS_ifc_IEnumeration, core.XPS_typ_Enumeration
+		XPS_enum_Status : XPS_ifc_IEnumeration, XPS_typ_Enumeration
 		---
 
 Authors: 
@@ -13,16 +13,16 @@ Description:
 	An Enumeration set for node statuses.
 
 	--- code
-	XPS_BT_Status_Success	Success		SUCCESS
-	XPS_BT_Status_Failure	Failure		FAILURE
-	XPS_BT_Status_Running	Running		RUNNING
+	XPS_Status_Success	Success		SUCCESS
+	XPS_Status_Failure	Failure		FAILURE
+	XPS_Status_Running	Running		RUNNING
 	---
 
-	See <core.XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
+	See <XPS_fnc_createEnumeration:core. typeHandlers. XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_BT_enum_Status"],
+	["#type","XPS_enum_Status"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
     	<core.XPS_typ_Enumeration>
@@ -46,14 +46,14 @@ Description:
 	["Enumerations", [["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
 	/*----------------------------------------------------------------------------
 	Property: Values
-		<core.XPS_typ_Enumeration.Values>
+		<XPS_typ_Enumeration.Values>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
-		<core.XPS_typ_Enumeration.GetEnum>
+		<XPS_typ_Enumeration.GetEnum>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: IsDefined
-		<core.XPS_typ_Enumeration.IsDefined>
+		<XPS_typ_Enumeration.IsDefined>
 	-----------------------------------------------------------------------------*/
 ]

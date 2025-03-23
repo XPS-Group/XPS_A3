@@ -49,8 +49,11 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],["_reversePath",true,[true]]]) exitWith {nil;};
-		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
+		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],"_reversePath"]) exitWith {nil;};
+		if !(XPS_CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
+		
+		[_reversePath, true] select {isNil "_reversePath"};
+		
 		_self set ["_workingGraph",_graph];
 		_self set ["_workingStartKey",_startKey];
 		_self set ["_workingEndKey",_endKey];

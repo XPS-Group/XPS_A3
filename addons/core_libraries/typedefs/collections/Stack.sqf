@@ -31,6 +31,9 @@ Returns:
     Return:
         <True>
     ----------------------------------------------------------------------------*/
+    ["#create", compileFinal {
+        _self set ["_stackArray",[]];
+    }],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
@@ -39,12 +42,17 @@ Returns:
 	----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
+	Flags: #flags
+		sealed
+	----------------------------------------------------------------------------*/
+	["#flags",["sealed"]],
+	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IStack>
 		<XPS_ifc_IList>
 	----------------------------------------------------------------------------*/
     ["@interfaces", ["XPS_ifc_IStack"]],
-	["_stackArray",[],[["CTOR"]]],
+	["_stackArray",[]],
     /*----------------------------------------------------------------------------
     Method: Clear
     
@@ -176,7 +184,7 @@ Returns:
 		True if value was added, False if already exists
     ----------------------------------------------------------------------------*/
 	["PushUnique", compileFinal {
-		if (_self get "_queueArray" pushBackUnique _this isEqualTo -1) exitwith {false};
+		if (_self get "_buffer" pushBackUnique _this isEqualTo -1) exitwith {false};
         true;
 	}]
 ]

@@ -13,7 +13,7 @@ Authors:
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has one child
+	Inverts the status of the child node.
 
 Returns:
 	<HashmapObject> of a Decorator node
@@ -72,14 +72,14 @@ Protected: child
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _status = _self call ["XPS_BT_typ_Decorator.processTick",_this];
         // Invert Status
         switch (_status) do {
-            case XPS_BT_Status_Success : {_status = XPS_BT_Status_Failure;};
-            case XPS_BT_Status_Failure : {_status = XPS_BT_Status_Success;};
+            case XPS_Status_Success : {_status = XPS_Status_Failure;};
+            case XPS_Status_Failure : {_status = XPS_Status_Success;};
         };
 		_status;
 	}]

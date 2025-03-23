@@ -59,7 +59,7 @@ Returns:
     	<XPS_ADDON_ifc_IBelief>
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_AP_ifc_IBelief"]],
-	["#flags",["sealed","noCopy","unscheduled"]],
+	["#flags",["sealed","noCopy"]],
 
 	["Name","(unnamed)"],
 
