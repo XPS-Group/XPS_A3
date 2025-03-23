@@ -65,8 +65,6 @@ Returns:
         ---
 
         <XPS_ifc_ITypeRestrictor>
-
-    Does nothing for this class. Simply Satisfies Interface
     
     Parameters: 
         _value - <Anything> - a Native Type to add to allowed list
