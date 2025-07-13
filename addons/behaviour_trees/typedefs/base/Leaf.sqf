@@ -13,7 +13,7 @@ Authors:
 	Crashdome
 
 Description:
-	A node for a Behaviour Tree that has an <ProcessTick> method which is 
+	A node for a Behaviour Tree that has an <processTick> method which is 
 	called when Ticked
 
 Returns:

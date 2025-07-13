@@ -6,7 +6,7 @@ TypeDef: action_planning. XPS_AP_typ_ActionUAsync
 	XPS_AP_typ_ActionUAsync : XPS_AP_ifc_Action
 	---
 	---prototype
-	createhashmapobject [XPS_AP_typ_ActionUAsync, [_var1*, _var2*]]
+	createhashmapobject [XPS_AP_typ_ActionUAsync, []]
 	---
 
 Authors: 
@@ -15,32 +15,12 @@ Authors:
 Description:
 	(Description)
 
-    
-Optionals: 
-	_var1* - <Object> - (Optional - Default : objNull) 
-	_var2* - <String> - (Optional - Default : "") 
-
 Returns:
 	<HashmapObject>
 
 --------------------------------------------------------------------------------*/
 [
 	["#type","XPS_AP_typ_ActionUAsync"],
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-    
-    	--- Prototype --- 
-    	call ["create",[_var1*,_var2*]]
-    	---
-    
-    Optionals: 
-		_var1* - <Object> - (Optional - Default : objNull) 
-    	_var2* - <String> - (Optional - Default : "") 
-
-	Returns:
-		<True>
-	-----------------------------------------------------------------------------*/
-	["#create", {}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
@@ -53,55 +33,36 @@ Returns:
     	<XPS_AP_ifc_IAction>
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_AP_ifc_IAction"]],
-	["_complete",false],
 	["_startTime",-1],
 	["condition", compileFinal {true}],
 	["timeout",0],
 	/*----------------------------------------------------------------------------
-	Protected: myProp
+	Method: Halt
     
     	--- Prototype --- 
-    	get "myProp"
+    	call ["Halt"]
     	---
-    
-    Returns: 
-		<Object> - description
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Property: MyProp
-    
-    	--- Prototype --- 
-    	get "MyProp"
-    	---
-    
-    Returns: 
-		<Object> - description
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Method: MyMethod
-    
-    	--- Prototype --- 
-    	call ["MyMethod",[_object*,_var1*]]
-    	---
-    
-    Optionals: 
-		_object* - <Object> - (Optional - Default : objNull) 
-		_var1* - <String> - (Optional - Default : "") 
-	-----------------------------------------------------------------------------*/
 
-	["Action", {}],
-    ["CanPerform", compileFinal {false}],
-    ["IsComplete", compileFinal {
-		if (diag_tickTime > ((_self get "timeout") + (_self get "_startTime")) || {_self call ["condition",_this]}): {
-			true;
-		} else {
-			false;
-		};
+	Description:
+		Halts any asynchronous call by invoking a failure and setting <starttime> to 0
+
+	Returns: 
+		Nothing
+	-----------------------------------------------------------------------------*/
+	["Halt",compileFinal {		
+		_self call ["postExecute", XPS_Status_Failure];
 	}],
 	["Execute", {	
-		if (_self call ["CanPerform"] && {_self get "_startTime" isEqualTo -1}) then {
-			_self set ["_startTime",diag_tickTime];
-			_self call ["Action",_this];
+		switch (true) do {
+
+			case (isNil {_self get "Status"}): {
+				_self call ["preExecute",_this];
+				_self call ["action",_this];
+			};
+			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime")));
+			case (_self call ["condition",_this]): {
+				_self call ["postExecute",_self call ["result",_this]];
+			};
 		};
 	}]    
 ]
