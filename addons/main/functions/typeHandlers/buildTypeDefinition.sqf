@@ -15,7 +15,7 @@ Description:
 
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
-	_String - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
+	_String - any string starting with an underscore is changed at runtime by replacing the key and references to that key in code blocks with
 	a unique identifier every time the type definition is rebuilt. This does not apply if debug mode is enabled. 
 	See <XPS_fnc_preprocessTypeDefinition> for more info. 
 
