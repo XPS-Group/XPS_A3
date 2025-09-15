@@ -4,7 +4,7 @@ class CfgMods {
     class ADDON {
         name = "XPS Unit Testing";
         dir = COMPONENT_DIR;
-        author = "Crashdome";
+        author = "XPS Group";
         description = "Extensible Project System - Unit Testing";
         overview = "Work In Progress";
     };
@@ -14,7 +14,7 @@ class CfgPatches {
 	class ADDON {
 			// Meta information for editor
 			name = "XPS : Unit Testing";
-			author = "Crashdome";
+			author = "XPS Group";
 			url = "";
 	
 			requiredVersion = REQUIRED_VERSION; 

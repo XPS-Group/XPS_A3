@@ -4,7 +4,7 @@ class CfgMods {
     class ADDON {
         name = "XPS Core Libraries";
         dir = COMPONENT_DIR;
-        author = "Crashdome";
+        author = "XPS Group";
         description = "Extensible Project System - Core Libraries";
         overview = "Work In Progress";
     };
@@ -14,7 +14,7 @@ class CfgPatches {
 	class ADDON {
 			// Meta information for editor
 			name = "XPS : Core Libraries";
-			author = "Crashdome";
+			author = "XPS Group";
 			url = "";
 	
 			requiredVersion = REQUIRED_VERSION; 

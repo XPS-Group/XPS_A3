@@ -4,7 +4,7 @@ class CfgPatches {
 	class ADDON {
 			// Meta information for editor
 			name = "XPS : Action Planning";
-			author = "Crashdome";
+			author = "XPS Group";
 			url = "";
 	
 			requiredVersion = REQUIRED_VERSION; 
