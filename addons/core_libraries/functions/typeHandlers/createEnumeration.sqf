@@ -45,17 +45,24 @@ private _fnc_createEnumConstant = {
 	];
 
 	private _hashObject = compileFinal createHashmapObject [[
-		["#str", compileFinal format["%1",str _name]],
+		["#str", compileFinal format["{%1}",_name]],
 		["#base",_baseDef],
 		["#type", format["%1_%2",_var,_name]],
-		["#flags",["sealed","nocopy"]],
+		["#flags",["sealed","noCopy"]],
 		["Value",_val]
 	]];
+	
 	private _gVar = format["%1_%2",_var,_name];
 	if (isNil _gVar || {(currentNamespace getvariable _gVar) isNotEqualTo _hashObject}) then {currentNamespace setvariable [_gvar,_hashObject];};
+	
 	_def set [_name , compileFinal _gVar ];
-	if (_val isEqualTypeAny ["",0]) then {
-		_def set [_val , compileFinal _gVar ];
+	switch (true) do {
+		case (_val isEqualTypeAny ["",0]) : {
+			_def set [_val , compileFinal _gVar ];
+		};
+		case (_val isEqualType createhashmap) : {
+			_def set [str _val , compileFinal _gVar ];
+		};
 	};
 };
 
@@ -65,7 +72,7 @@ private _newDef = createhashmap;
 	_newDef set ["#str", compileFinal format ["%1",str _varName]];
 	_newDef set ["#type",_baseDef getOrDefault ["#type","unknown type"]];
 	_newDef set ["#base",_baseDef getOrDefault ["#base",XPS_typ_Enumeration]];
-	_newDef set ["#flags",["sealed","nocopy"]];
+	_newDef set ["#flags",["sealed","noCopy"]];
 	_newDef set ["Names",[]];
 	_newDef set ["Values",[]];
 
