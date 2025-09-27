@@ -142,7 +142,7 @@ Returns:
 		<Array> - of nodes from start to goal
 	-----------------------------------------------------------------------------*/
 	["getPath",compileFinal {
-		private _status = "FAILURE";
+		private _status = XPS_Status_Failure;
 		private _start = _self get "StartNode";
 		private _end = _self get "EndNode";
 		private _current = _end;
@@ -156,7 +156,7 @@ Returns:
 			_current = _cameFrom get (_current get "Index");
 		};
 
-		if (_current isEqualTo _start) then {_status = "SUCCESS";};
+		if (_current isEqualTo _start) then {_status = XPS_Status_Success;};
 		if (_self get "_reverse") then {reverse _path};
 		_self set ["Path",_path];
 		_self set ["Status",_status];
@@ -343,7 +343,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
 		//Bail if already finished
-		if (_self get "Status" in ["SUCCESS","FAILURE"]) exitWith {};
+		if (_self get "Status" in [XPS_Status_Success,XPS_Status_Failure]) exitWith {};
 		
 		// Set status Running if not already
 		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
