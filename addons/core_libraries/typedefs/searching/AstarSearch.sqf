@@ -180,14 +180,8 @@ Returns:
 		params [["_priority",nil,[0]],"_item"];
 
 		private _frontier = _self get "frontier";
-		private _frontierSize = count _frontier;
-		private _i = 0;
-
-		while {_i <= _frontierSize - 1 && { _priority > ((_frontier select _i) select 0) }} do {
-			_i = _i + 1;
-		};
-
-		_frontier insert [_i, [[_priority, _item]] ];
+		_frontier pushback [_priority, _item];
+		_frontier sort true;
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: frontierPullLowest
@@ -327,7 +321,7 @@ Returns:
 		_self get "costSoFar" set [_self get "StartNode" get "Index",0];
 		_self set ["cameFrom",createhashmap];
 		_self set ["Path",[]];
-		_self set ["Status","INITIALIZED"];
+		_self set ["Status","Initialized"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: ProcessNextNode
@@ -342,11 +336,13 @@ Returns:
 	it on to the working graph.
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
-		//Bail if already finished
-		if (_self get "Status" in [XPS_Status_Success,XPS_Status_Failure]) exitWith {};
 		
 		// Set status Running if not already
-		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
+		private _status = _self get "Status";
+		if (_status isEqualTo "Initialized") then {_self set ["Status",XPS_Status_Running]};
+
+		//Bail if already finished
+		if (_status in [XPS_Status_Success,XPS_Status_Failure]) exitWith {};
 
 		private _graph = _self get "_workingGraph";
 		private _endNode = _self get "EndNode";

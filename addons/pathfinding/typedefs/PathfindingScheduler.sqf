@@ -96,7 +96,7 @@ Flags:
 		private _current = _self get "CurrentItem";
 		if !(isNil {_current}) then {
 			_current call ["ProcessNextNode"];
-			if (_current get "Status" in ["SUCCESS","FAILED"]) then {
+			if (_current get "Status" in [XPS_Status_Success,XPS_Status_Failed]) then {
 				_self call ["FinalizeCurrent"];
 			};
 		};
