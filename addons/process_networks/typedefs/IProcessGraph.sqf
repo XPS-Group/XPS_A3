@@ -9,9 +9,17 @@ Interface: process_network. XPS_PN_ifc_IProcessGraph
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	Method: 
+	AddChannel: 
+		<Code>
+	
+	AddProcess: 
+		<Code>
+		
+	ExecuteNext: 
 		<Code>
 ---------------------------------------------------------------------------- */
 [
-	["ProcessNext","CODE"]
+	["AddChannel","CODE"],
+	["AddProcess","CODE"],
+	["ExecuteNext","CODE"]
 ]
