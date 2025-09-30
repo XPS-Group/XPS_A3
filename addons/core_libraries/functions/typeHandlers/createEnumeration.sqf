@@ -43,9 +43,9 @@ private _fnc_createEnumConstant = {
 	private _baseDef = [
 		["#type", _var]
 	];
-
+	
 	private _hashObject = compileFinal createHashmapObject [[
-		["#str", compileFinal format["{%1}",_name]],
+		["#str", compileFinal format["%1",str _name]],
 		["#base",_baseDef],
 		["#type", format["%1_%2",_var,_name]],
 		["#flags",["sealed","noCopy"]],
