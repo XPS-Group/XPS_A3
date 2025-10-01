@@ -8,7 +8,8 @@ Function: main. typeHandlers. XPS_fnc_findReplaceKeyInCode
 
 Description:
     
-	Replaces a key such as a private key "_key" with a different key. The values must be in quotes in code block.
+	Internal Only - although use cases outside of XPS might be useful to some. Replaces
+	a key such as a private key "_key" with a different key. The values must be in quotes in code block.
 
 Authors: 
 	Crashdome
