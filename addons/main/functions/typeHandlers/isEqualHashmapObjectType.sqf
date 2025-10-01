@@ -45,7 +45,7 @@ Example: Check two child types
     --- Code
 	private _baseDef = [["#type","Tag_typ_MyBase"]];
     private _def1 = [["#type","Tag_typ_MyType1"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-    private _def1 = [["#type","Tag_typ_MyType2"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+    private _def2 = [["#type","Tag_typ_MyType2"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
 		
 		_type1 = createHashmapObject [_def1];
 		_type2 = createHashmapObject [_def2];
