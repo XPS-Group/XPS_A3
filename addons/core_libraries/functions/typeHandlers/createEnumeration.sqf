@@ -37,6 +37,8 @@ Description:
 ------------------------------------------------------------------------------*/
 if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[],createhashmap]] ]) exitWith {false};
 
+if (!(isNil _varName) && {isFinal _varName}) exitwith {false};
+
 private _fnc_createEnumConstant = {
 	params ["_var","_name","_val","_def"];
 

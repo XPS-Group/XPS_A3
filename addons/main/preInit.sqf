@@ -16,6 +16,9 @@ diag_log text "[XPS preInit]";
 private _start = diag_ticktime;
 
 XPS_DebugMode = uinamespace getvariable "XPS_DebugMode";
+if (isNil {XPS_Type_Defaults}) then {
+	XPS_Type_Defaults = uinamespace getVariable "XPS_type_defaults";
+};
 
 {
 	if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};

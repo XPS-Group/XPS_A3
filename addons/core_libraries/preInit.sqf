@@ -28,7 +28,7 @@ Description:
 Returns: 
 	<Static> - of <XPS_typ_Enum>
 ---------------------------------------------------------------------------*/
-XPS_Enum = compileFinal createHashmapObject [XPS_typ_Enum];
+if (isNil {XPS_Enum}) then {XPS_Enum = compileFinal createHashmapObject [XPS_typ_Enum]};
 
 /* -------------------------------------------------------------------------
 Variable: core. XPS_LifeTime

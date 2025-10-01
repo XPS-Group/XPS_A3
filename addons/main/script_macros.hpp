@@ -26,18 +26,6 @@
     #define XPS_DEBUG 1
 #endif
 
-#define XPS_CFG_FNC(fncName) class fncName {\
-    file = XPS_FILEPATH_C_STR(functions\fncName.sqf);\
-    headerType = 0;\
-    recompile = 0;\
-}
-
-#define XPS_CFG_FNC_SUB(sub,fncName) class fncName {\
-    file = XPS_FILEPATH_C_STR(functions\sub\fncName.sqf);\
-    headerType = 0;\
-    recompile = 0;\
-}
-
 #define XPS_CFG_FNC_NR(fncName) class fncName {\
     file = XPS_FILEPATH_C_STR(functions\fncName.sqf);\
     headerType = 0;\
@@ -48,6 +36,18 @@
     file = XPS_FILEPATH_C_STR(functions\sub\fncName.sqf);\
     headerType = 0;\
     recompile = 0;\
+}
+
+#define XPS_CFG_FNC_DBG(fncName) class fncName {\
+    file = XPS_FILEPATH_C_STR(functions\fncName.sqf);\
+    headerType = 0;\
+    recompile = __EVAL([0,1] select isFilePatchingEnabled;);\
+}
+
+#define XPS_CFG_FNC_SUB_DBG(sub,fncName) class fncName {\
+    file = XPS_FILEPATH_C_STR(functions\sub\fncName.sqf);\
+    headerType = 0;\
+    recompile = __EVAL([0,1] select isFilePatchingEnabled;);\
 }
 
 #define XPS_CFG_IFC(ifcName) class ifcName {\
