@@ -6,7 +6,7 @@ Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	_result = _type call XPS_fnc_preprocessTypeDefinition
 	---
 	---prototype
-	_result = [_type] call XPS_fnc_preprocessTypeDefinition
+	_result = [_type, _privateKeys*] call XPS_fnc_preprocessTypeDefinition
 	---
 
 Description:
@@ -51,17 +51,26 @@ Authors:
 Parameter: _type 
 	<Array> - an <array> of <arrays> in the format [[key1,value1],[key2,value2]...]  
 
+Optional: _privateKeys 
+	<Hashmap> - an <Hashmap> of string keys and string values for replacing in code blocks. Only really used when there is a nested type.  
+
 Returns: _result
 	<Boolean> - True if successful otherwise False
 
 ---------------------------------------------------------------------------- */
-if !(_this isEqualType []) exitWith {false};
+private ["_typeDef","_privateKeys"];
 
-private _typeDef = _this;
+//Check if just type is passed
+if (_this isEqualTypeAll []) then {_typeDef = _this} else {
+	params [["_td",[],[[]]],["_pk",createhashmap,[createhashmap]]];
+	_typeDef = _td;
+	_privateKeys = _pk;
+};
 
-if (count _this == 1 && {_this#0 isEqualTypeAll []}) then {_typeDef = _this#0};
-
-_privateKeys = if (isNil "_privateKeys") then {[]} else {_privateKeys};
+if !(_typeDef isEqualTypeAll []) exitwith {
+	diag_log format ["XPS_fnc_preprocessTypeDefinition: Type passed was not a valid type: %1",_typeDef];
+	false;
+};
 
 private _result = true;
 private _ctor = ""; 
@@ -204,7 +213,7 @@ try
 		// Finally record if a private key for later obfuscation
 		if (_key isEqualType "" && {_key find "_" isEqualTo 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
-			_privateKeys pushBack [_key,_uid];
+			_privateKeys set [_key,_uid];
 			_keyPair set [0,_uid]
 		};
 	};
@@ -249,7 +258,7 @@ try
 
 		if (_value isEqualType {}) then {
 			//Replace Private Keys in any code block
-			if (count _privateKeys > 0) then {
+			if (_privateKeys isNotEqualTo createhashmap) then {
 				_value = [_privateKeys,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
 			};
@@ -258,7 +267,8 @@ try
 
 	//Build any nested types with current _privateKeys list
 	{
-		_typedef#_x set [1,createhashmapfromarray (_y call XPS_fnc_buildTypeDefinition)];
+		private _preprocNested = [_y,_privateKeys] call XPS_fnc_preprocessTypeDefinition;
+		_typedef#_x set [1,createhashmapfromarray ([_y,_allowNils,false,_noStack] call XPS_fnc_buildTypeDefinition)];
 	} foreach _nested;
 
 	_result;

@@ -84,14 +84,14 @@ private _fnc_HandleChildren = compileFinal {
 			if (count (_children#_i) > 1 && {_children#_i#1 isEqualtype []}) then {_grandchildren = _children#_i#1};
 			private _childNode = createHashmapObject [_typeDef];
 			_parentNode call ["AddChildNode",_childNode];
-			if (count _grandchildren > 0) then {
+			if (_grandchildren isNotEqualTo []) then {
 				[_childNode, _grandChildren] call _fnc_HandleChildren;
 			};
 		};
 	};
 };
 
-if (_definition isEqualType [] && {count _definition > 0}) then {
+if (_definition isEqualType [] && {_definition isNotEqualTo []}) then {
 	private _rootNode = createHashmapObject [_definition#0];
 	private _children = [];
 	if (count _definition > 1 && {_definition#1 isEqualtype []}) then {

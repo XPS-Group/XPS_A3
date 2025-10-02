@@ -310,7 +310,7 @@ Flags:
 	["GetNodeAt",compileFinal {
 		if !(params [["_pos",nil,[[]],[2,3]]]) exitWith {nil};
 		private _roads = nearestTerrainObjects [_pos,["MAIN ROAD","ROAD","TRACK","TRAIL"],50,true];
-		if (count _roads > 0) exitWith {
+		if (_roads isNotEqualTo []) exitWith {
 			_self get "Roads" get (str (_roads#0));
 		};
 		nil;
@@ -366,8 +366,8 @@ Flags:
 
 					//Create the marker
 					_m = createmarker [_hm get "Index",_hm get "RoadObject"]; 
-					_m setmarkertype "hd_dot"; 
-					_m setmarkercolor _color; 
+					_m setmarkertypelocal "hd_dot"; 
+					_m setmarkercolorlocal _color; 
 					_m setmarkersize [0.4,0.4];  
 					_markers pushBack (_hm get "Index");
 				} forEach values (_self get "Roads");
@@ -430,9 +430,9 @@ Flags:
 		private _mP = _start;
 		{
 			_m = createmarker [str str str str str (_x get "PosASL"),_x get "PosASL"];
-			_m setmarkertype "mil_arrow";
-			_m setmarkercolor "ColorRed";
-			_m setmarkersize [0.5,0.5];
+			_m setmarkertypelocal "mil_arrow";
+			_m setmarkercolorlocal "ColorRed";
+			_m setmarkersizelocal [0.5,0.5];
 			_m setmarkerdir (_mP getdir (getmarkerpos _m));
 			_mP = getmarkerpos _m;
 		} forEach _path;

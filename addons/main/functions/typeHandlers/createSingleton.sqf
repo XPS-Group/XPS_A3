@@ -140,7 +140,7 @@ if (isNil _varName) then {
 		private _attempts = 0;
 		private _instanceVar = "_attempts"; // ensure _instanceVar is NOT nil on first attempt	
 		while {!(isNil _instanceVar) && _attempts < 100} do {
-			_instanceVar = "xps_sgltn_" + call XPS_fnc_getUniqueID; 
+			_instanceVar = "xps_sgltn_" + call XPS_fnc_createUniqueID; 
 			_attempts = _attempts + 1;
 		};
 	};
@@ -166,12 +166,14 @@ if (isNil _varName) then {
 		_typeDef set ["#flags",["noCopy"]];
 	};
 
+	//Create Singleton Instance
 	currentNamespace setvariable [_instanceVar,createHashmapObject [_typeDef,_args]];
-
-	private _staticDefPath = "x\xps\addons\main\staticSingletonDef.sqf";
-
-	[_varName,_staticDefPath] call XPS_fnc_createStaticTypeFromFile;
-
+	//Create Static helper class
+	currentNamespace setVariable [_varname, compileFinal (createHashmapObject [[
+			["#str", compileFinal {(_self get "#type") select 0}],
+			["#type","XPS_typ_StaticSingletonProvider"],
+			["GetInstance",compile format["%1",_instanceVar]]
+		]])];
 	true;
 
 } else {

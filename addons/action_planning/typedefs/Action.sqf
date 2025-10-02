@@ -138,7 +138,7 @@ Returns:
 	["Execute", {	
 		_self call ["preExecute",_this];
 		_self call ["postExecute",
-			_self call ["action",_this];
+			_self call ["action",_this]
 		];
 	}]
 ]

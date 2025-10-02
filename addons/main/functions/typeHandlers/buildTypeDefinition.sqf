@@ -61,7 +61,8 @@ private _errors = false;
 private _fnc_recurseBases = {
 	params ["_hashmap"];
 	if ("#base" in _hashmap) then {
-		private _base = createHashMapFromArray (_hashmap get "#base");
+		//if !(_hashmap get "#base" isEqualType []) exitwith {diag_log format ["Error during base recursion.  %1",_hashmap]};
+		private _base = /*createHashMapFromArray (*/_hashmap get "#base"/*)*/;
 		[_base] call _fnc_recurseBases;
 		_hashmap merge _base;
 	};

@@ -84,7 +84,7 @@ Returns:
 		for "_i" from 0 to (count _children)-1 do {
 			private _status = (_children#_index) get "Status";
 			if (_status isEqualTo XPS_Status_Failure) then {_finalStatus = XPS_Status_Failure};
-			if (_status isEqualTo XPS_Status_Running && !(_finalStatus isEqualTo XPS_Status_Failure)) then {_finalStatus = XPS_Status_Running};
+			if (_status isEqualTo XPS_Status_Running && (_finalStatus isNotEqualTo XPS_Status_Failure)) then {_finalStatus = XPS_Status_Running};
 		};
 		_finalStatus;
 	}]

@@ -66,5 +66,5 @@ private _types2 = (_type2 getOrDefault ["#type",[call XPS_fnc_createUniqueID]]) 
 if (_strict) then {
 	_types1 isEqualTo _types2;
 } else {
-	count (_types1 arrayIntersect _types2) > 0;
+	_types1 arrayIntersect _types2 isNotEqualTo [];
 };

@@ -73,7 +73,7 @@ if (isText _file && isText _type) then {
 		if (isNumber (_class >> _propName)) then {_properties set [_x, getNumber (_class >> _propName) isEqualTo 1]};
 	} foreach keys _properties;
 
-	values _properties params keys _properties;
+	values _properties params ["_preprocess","_allowNils","_recompile","_preCache","_noStack","_isFinal"];
 	
 	// Account if in 'debug mode' - force recompilation and no compileFinal
 	if (!(isnil "XPS_DebugMode") && {XPS_DebugMode}) then { _isFinal = false; _recompile = true;}; 

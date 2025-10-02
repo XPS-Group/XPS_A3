@@ -103,6 +103,6 @@ Returns:
 		params [["_value",createhashmap,[createhashmap]]];
         private _allowlist = _self get "_allowed";
         private _types =(_value getOrDefault ["#type",[]]) + (_value getorDefault ["@interfaces",[]]);
-        (count (_types arrayIntersect _allowlist) > 0);
+        (_types arrayIntersect _allowlist isNotEqualTo []);
 	}]
 ]

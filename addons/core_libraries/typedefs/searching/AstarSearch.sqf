@@ -151,7 +151,7 @@ Returns:
 
 		if (isNil {_cameFrom get (_current get "Index")}) then {_current = _self get "lastNode";};
 
-		while {!(isNil "_current") && !(_current isEqualTo _start)} do {
+		while {!(isNil "_current") && (_current isNotEqualTo _start)} do {
 			_path pushBack _current;
 			_current = _cameFrom get (_current get "Index");
 		};
@@ -195,7 +195,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["frontierPullLowest",compileFinal {
 		private _frontier = _self get "frontier";
-		if (count _frontier > 0) exitWith {
+		if (_frontier isNotEqualTo []) exitWith {
 			(_frontier deleteat 0) # 1;
 		};
 		nil;
