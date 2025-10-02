@@ -3,9 +3,6 @@
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
-	_result = _type call XPS_fnc_preprocessTypeDefinition
-	---
-	---prototype
 	_result = [_type, _privateKeys*] call XPS_fnc_preprocessTypeDefinition
 	---
 
@@ -58,14 +55,7 @@ Returns: _result
 	<Boolean> - True if successful otherwise False
 
 ---------------------------------------------------------------------------- */
-private ["_typeDef","_privateKeys"];
-
-//Check if just type is passed
-if (_this isEqualTypeAll []) then {_typeDef = _this} else {
-	params [["_td",[],[[]]],["_pk",createhashmap,[createhashmap]]];
-	_typeDef = _td;
-	_privateKeys = _pk;
-};
+params [["_typeDef",[],[[]]],["_privateKeys",createhashmap,[createhashmap]]];
 
 if !(_typeDef isEqualTypeAll []) exitwith {
 	diag_log format ["XPS_fnc_preprocessTypeDefinition: Type passed was not a valid type: %1",_typeDef];
@@ -108,10 +98,10 @@ try
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
 
-			if (_key == "#create") then {_hasCtor = true};
-			if (_key == "#delete") then {_hasDtor = true};
-			if (_key == "Serialize") then {_hasSrlz = true};
-			if (_key == "Deserialize") then {_hasDesrlz = true};
+			if (toLower _key isEqualTo "#create") then {_hasCtor = true};
+			if (toLower _key isEqualTo "#delete") then {_hasDtor = true};
+			if (toLower _key isEqualTo "serialize") then {_hasSrlz = true};
+			if (toLower _key isEqualTo "deserialize") then {_hasDesrlz = true};
 
 		private _attributes = [];
 		if (count _keyPair > 2) then {

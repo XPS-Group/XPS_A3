@@ -140,7 +140,7 @@ if (isNil _varName) then {
 		private _attempts = 0;
 		private _instanceVar = "_attempts"; // ensure _instanceVar is NOT nil on first attempt	
 		while {!(isNil _instanceVar) && _attempts < 100} do {
-			_instanceVar = "xps_sgltn_" + call XPS_fnc_createUniqueID; 
+			_instanceVar = "xps_sgltn_" + ([] call XPS_fnc_createUniqueID); 
 			_attempts = _attempts + 1;
 		};
 	};

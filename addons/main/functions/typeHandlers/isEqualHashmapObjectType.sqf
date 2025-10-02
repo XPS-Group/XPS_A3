@@ -60,8 +60,8 @@ Example: Check two child types
 
 params [["_type1",createhashmap,[createhashmap]],["_type2",createhashmap,[createhashmap]],["_strict",true,[true]]];
 
-private _types1 = (_type1 getOrDefault ["#type",[call XPS_fnc_createUniqueID]]) apply {toLower _x;};
-private _types2 = (_type2 getOrDefault ["#type",[call XPS_fnc_createUniqueID]]) apply {toLower _x;};
+private _types1 = (_type1 getOrDefault ["#type",[[] call XPS_fnc_createUniqueID]]) apply {toLower _x;};
+private _types2 = (_type2 getOrDefault ["#type",[[] call XPS_fnc_createUniqueID]]) apply {toLower _x;};
 
 if (_strict) then {
 	_types1 isEqualTo _types2;

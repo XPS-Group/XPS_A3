@@ -69,7 +69,7 @@ private _fnc_recurseBases = {
 };
 
 if (_preprocess) then {
-	if !(_type call XPS_fnc_preprocessTypeDefinition) exitWith {
+	if !([_type] call XPS_fnc_preprocessTypeDefinition) exitWith {
 		_errors = true;
 	};
 };

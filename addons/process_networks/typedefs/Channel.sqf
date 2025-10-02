@@ -37,7 +37,7 @@ Returns:
 	["#create", compileFinal {
         params [["_name",nil,[""]]];
 
-        if (isNil "_name") then {_name = call XPS_fnc_createUniqueID};
+        if (isNil "_name") then {_name = []call XPS_fnc_createUniqueID};
 
         _self set ["Name", _name];
         _self set ["_tokens",createhashmapobject [XPS_typ_Queue]];
