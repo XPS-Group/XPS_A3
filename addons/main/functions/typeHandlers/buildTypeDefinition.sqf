@@ -133,8 +133,6 @@ if ("#base" in _hashmap) then {
 		};
 	} forEach _pHashmap;
 
-	[_pHashmap] call _fnc_recurseBases;
-
 	if (_noStack) then {
 		{
 			if (_x in _pHashmap) then {
@@ -145,8 +143,9 @@ if ("#base" in _hashmap) then {
 		_hashmap set ["#base",+_pHashmap];
 	};
 	
-	// Merge for interface check
+	// Merge with parent and get Base Keys for interface check
 	_pHashmap merge [_hashmap,true];
+	[_pHashmap] call _fnc_recurseBases;
 	
 };
 
@@ -158,9 +157,9 @@ if (_errors) exitWith {
 // Check Interfaces are implemented
 private _interfaces = _pHashmap getOrDefault ["@interfaces",nil];
 
-if (isNil {_interfaces} || {[_pHashmap, /*keys*/ _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
-	// Passes all checks and is Ok to push out definition
-	_hashmap /*toArray false*/;
+if (isNil {_interfaces} || {[_pHashmap, _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
+	// Passes all checks and is Ok to push out built definition
+	_hashmap;
 } else {
 	diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	false;

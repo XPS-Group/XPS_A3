@@ -1,9 +1,13 @@
 #include "script_component.hpp"
+#pragma hemtt ignore_variables ["_privateKeys","_allowNils","_preprocess","_noStack"]
 /* ----------------------------------------------------------------------------
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
 	---prototype
-	_result = [_type, _privateKeys*] call XPS_fnc_preprocessTypeDefinition
+	_result = _type call XPS_fnc_preprocessTypeDefinition
+	---
+	---prototype
+	_result = [_type] call XPS_fnc_preprocessTypeDefinition
 	---
 
 Description:
@@ -33,6 +37,9 @@ Description:
 		["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
 		["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
 		["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
+		["NESTED_TYPE", value] - Creates a nested class definition - value must be an array of booleans: [allowNils, preprocess, noStack]
+		["IN_TYPE_ONLY"] - Injects a delete key (used for nested types) on creation of an object
+		["SERIALIZABLE"] - creates "Serialize" and "Deserialize" methods if they don't exist and adds this key to serialization code
 
 	However, you can define any Attribute as long as it is in an array. The preprocessor will
 	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
@@ -48,19 +55,17 @@ Authors:
 Parameter: _type 
 	<Array> - an <array> of <arrays> in the format [[key1,value1],[key2,value2]...]  
 
-Optional: _privateKeys 
-	<Hashmap> - an <Hashmap> of string keys and string values for replacing in code blocks. Only really used when there is a nested type.  
-
 Returns: _result
 	<Boolean> - True if successful otherwise False
 
 ---------------------------------------------------------------------------- */
-params [["_typeDef",[],[[]]],["_privateKeys",createhashmap,[createhashmap]]];
+if !(_this isEqualType []) exitWith {false};
 
-if !(_typeDef isEqualTypeAll []) exitwith {
-	diag_log format ["XPS_fnc_preprocessTypeDefinition: Type passed was not a valid type: %1",_typeDef];
-	false;
-};
+private _typeDef = _this;
+
+if (count _this == 1 && {_this#0 isEqualTypeAll []}) then {_typeDef = _this#0};
+
+_privateKeys = if (isNil "_privateKeys") then {createhashmap} else {_privateKeys};
 
 private _result = true;
 private _ctor = ""; 
@@ -255,10 +260,9 @@ try
 		};
 	};
 
-	//Build any nested types with current _privateKeys list
+	//Build any nested types with current _privateKeys list 
 	{
-		private _preprocNested = [_y,_privateKeys] call XPS_fnc_preprocessTypeDefinition;
-		_typedef#_x set [1,createhashmapfromarray ([_y,_allowNils,false,_noStack] call XPS_fnc_buildTypeDefinition)];
+		_typedef#_x set [1,createhashmapfromarray (_y call XPS_fnc_buildTypeDefinition)];
 	} foreach _nested;
 
 	_result;

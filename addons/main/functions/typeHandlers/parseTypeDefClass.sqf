@@ -1,4 +1,5 @@
 #include "script_component.hpp"
+#pragma hemtt ignore_variables ["_preprocess","_allowNils","_recompile","_preCache","_noStack","_isFinal"]
 /* ----------------------------------------------------------------------------
 Function: main. typeHandlers. XPS_fnc_parseTypeDefClass
 	

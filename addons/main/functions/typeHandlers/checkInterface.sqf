@@ -89,7 +89,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 		[_x,_y] params ["_key","_checkType"];
 		//Check key exists
 		if !(_key in _hashmap) then {
-			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing for Interface: %3",_hashmap get "#type",_key,_interface]);
+			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
 			_result = false;
 			continue;
 		};
