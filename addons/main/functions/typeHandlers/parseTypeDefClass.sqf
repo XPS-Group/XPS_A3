@@ -34,21 +34,21 @@ if (isText (_class >> "tag")) then {
 };
 
 private _fnc_loadFile = {
-	private _array = 0;
+	private _map = 0;
 	switch (_type) do {
 		case "ifc" : {
-			_array = (call compileScript [_file,false]) call XPS_fnc_preprocessInterface;
+			_map = createhashmapfromarray ((call compileScript [_file,false]) call XPS_fnc_preprocessInterface);
 		};
 		case "enum";
 		case "typ" : {
-			_array = [call compileScript [_file,false],_allowNils,_preprocess,_noStack] call XPS_fnc_buildTypeDefinition;
+			_map = [call compileScript [_file,false],_allowNils,_preprocess,_noStack] call XPS_fnc_buildTypeDefinition;
 		}; 
 	};
-	if (_array isEqualType []) then {
+	if (_map isEqualType createhashmap) then {
 		if (_isFinal) then {
-			compileFinal createHashMapFromArray _array
+			compileFinal _map
 		} else {
-			createHashMapFromArray _array
+			_map
 		};
 	};
 };
@@ -65,15 +65,15 @@ if (isText _file && isText _type) then {
 	private _typeDefinition = uiNamespace getVariable _varName;
 	private _preStart = uiNamespace getVariable XPS_PRESTART_VAR;
 	//Set defaults as local vars
-	private _properties = +XPS_type_Defaults;
+	private _properties = +XPS_TypeDef_Defaults;
 
 	//Get property values in config
 	{
-		private _propName = _x select [1]; //remove the underscore to get prop name
+		private _propName = _x select [1]; // remove underscore 
 		if (isNumber (_class >> _propName)) then {_properties set [_x, getNumber (_class >> _propName) isEqualTo 1]};
 	} foreach keys _properties;
 
-	values _properties params ["_preprocess","_allowNils","_recompile","_preCache","_noStack","_isFinal"];
+	values _properties params keys _properties;
 	
 	// Account if in 'debug mode' - force recompilation and no compileFinal
 	if (!(isnil "XPS_DebugMode") && {XPS_DebugMode}) then { _isFinal = false; _recompile = true;}; 

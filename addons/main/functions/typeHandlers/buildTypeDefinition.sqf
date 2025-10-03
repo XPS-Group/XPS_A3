@@ -61,8 +61,9 @@ private _errors = false;
 private _fnc_recurseBases = {
 	params ["_hashmap"];
 	if ("#base" in _hashmap) then {
-		//if !(_hashmap get "#base" isEqualType []) exitwith {diag_log format ["Error during base recursion.  %1",_hashmap]};
-		private _base = /*createHashMapFromArray (*/_hashmap get "#base"/*)*/;
+		private _base = _hashmap get "#base";
+		if !(_base isEqualTypeAny [[],createhashmap]) exitwith {diag_log format ["XPS_fnc_buildTypeDefinition: Error during #base recursion - #base:%1",_base];_errors = true;createhashmap};
+		if (_base isEqualType []) then {_base = createhashmapfromarray _base};
 		[_base] call _fnc_recurseBases;
 		_hashmap merge _base;
 	};
@@ -80,7 +81,7 @@ if (_errors) exitWith {
 };
 
 private _hashmap = createHashMapFromArray _type;
-private _preCompiled = _hashmap; // In case it doesn't have a parent, we need this for later
+private _pHashmap = _hashmap; // In case it doesn't have a parent, we need this for later
 
 // Check for parent type
 if ("#base" in _hashmap) then {
@@ -90,9 +91,9 @@ if ("#base" in _hashmap) then {
 		_errors = true;
 	};
 
-	_preCompiled = if (_pType isEqualType []) then {createHashMapFromArray _pType} else {+_pType};
+	_pHashmap = if (_pType isEqualType []) then {createHashMapFromArray _pType} else {+_pType};
 
-	private _pTypeName = _preCompiled get "#type";
+	private _pTypeName = _pHashmap get "#type";
 	private _keys = keys _hashmap;
 	{
 		if (isNil "_y") then {continue};
@@ -130,22 +131,22 @@ if ("#base" in _hashmap) then {
 				};
 			};
 		};
-	} forEach _preCompiled;
+	} forEach _pHashmap;
 
-	[_preCompiled] call _fnc_recurseBases;
+	[_pHashmap] call _fnc_recurseBases;
 
 	if (_noStack) then {
 		{
-			if (_x in _precompiled) then {
-				if !(_x in _keys) then {_hashmap set [_x, _precompiled get _x]};
-				_preCompiled deleteat _x;
+			if (_x in _pHashmap) then {
+				if !(_x in _keys) then {_hashmap set [_x, _pHashmap get _x]};
+				_pHashmap deleteat _x;
 			};
 		} forEach ["#create","#clone","#delete"];
-		_hashmap set ["#base",_preCompiled toArray false];
+		_hashmap set ["#base",+_pHashmap];
 	};
 	
 	// Merge for interface check
-	_preCompiled merge [_hashmap,true];
+	_pHashmap merge [_hashmap,true];
 	
 };
 
@@ -155,11 +156,11 @@ if (_errors) exitWith {
 };
 
 // Check Interfaces are implemented
-private _interfaces = _preCompiled getOrDefault ["@interfaces",nil];
+private _interfaces = _pHashmap getOrDefault ["@interfaces",nil];
 
-if (isNil {_interfaces} || {[_preCompiled, /*keys*/ _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
+if (isNil {_interfaces} || {[_pHashmap, /*keys*/ _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
 	// Passes all checks and is Ok to push out definition
-	_hashmap toArray false;
+	_hashmap /*toArray false*/;
 } else {
 	diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	false;
