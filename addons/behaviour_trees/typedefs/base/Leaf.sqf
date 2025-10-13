@@ -107,9 +107,9 @@ Returns:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "LEAF"
+		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Leaf
 	-----------------------------------------------------------------------------*/
-	["NodeType","LEAF"],
+	["NodeType",XPS_BT_NodeType_Leaf],
 	/*----------------------------------------------------------------------------
 	Property: Status
     

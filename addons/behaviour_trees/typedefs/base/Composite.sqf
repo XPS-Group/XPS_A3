@@ -143,9 +143,9 @@ Returns:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "COMPOSITE"
+		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Composite
 	-----------------------------------------------------------------------------*/
-	["NodeType","COMPOSITE"],
+	["NodeType",XPS_BT_NodeType_Composite],
 	/*----------------------------------------------------------------------------
 	Property: Status
     

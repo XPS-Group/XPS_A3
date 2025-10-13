@@ -24,7 +24,7 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["NodeType", "STRING"],
+	["NodeType", "XPS_BT_NodeType"],
 	["Status","ANYTHING"],
 	["Init","CODE"],
 	["Tick","CODE"]

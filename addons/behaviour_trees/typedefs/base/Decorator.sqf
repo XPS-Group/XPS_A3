@@ -137,13 +137,13 @@ Returns:
     	--- Prototype --- 
     	get "NodeType"
     	---
-		
-    	<XPS_BT_ifc_INode>
+
+		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "DECORATOR"
+		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Decorator
 	-----------------------------------------------------------------------------*/
-	["NodeType","DECORATOR"],
+	["NodeType",XPS_BT_NodeType_Decorator],
 	/*----------------------------------------------------------------------------
 	Property: Status
     
