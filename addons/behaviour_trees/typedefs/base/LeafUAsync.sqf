@@ -3,7 +3,7 @@
 TypeDef: behaviour_trees. XPS_BT_typ_LeafUAsync
 	<TypeDefinition>
 		---prototype
-		XPS_BT_typ_LeafUAsync : XPS_BT_ifc_INode
+		XPS_BT_typ_LeafUAsync : XPS_BT_ifc_INode, XPS_BT_typ_Node
 		---
     	--- Prototype --- 
     	createHashmapObject ["XPS_BT_typ_LeafUAsync"]
@@ -24,18 +24,17 @@ Returns:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_typ_LeafUAsync"],
+	["#base", XPS_BT_typ_Node],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
     	"XPS_BT_typ_LeafUAsync"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_BT_ifc_INode>
 	-----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_BT_ifc_INode"]],
 	["_startTime",0],
 	/*----------------------------------------------------------------------------
 	Protected: condition
@@ -87,28 +86,8 @@ Returns:
 	["timeout",0],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
-    
-    	--- Prototype --- 
-    	call ["preTick",_context]
-    	---
-
-	Description:
-		The code that executes before a Tick of this node. Usually 
-		propogates down the tree if possible.
-
-	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
-
-	Returns: 
-		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
+		<XPS_BT_typ_Node.preTick>
 	-----------------------------------------------------------------------------*/
-	["preTick",compileFinal {
-		if (isNil {_self get "Status"}) then {
-			private _status = XPS_Status_Running;
-			_self set ["Status",_status];
-			_self set ["_startTime",diag_tickTime];
-		};
-	}],
 	/*----------------------------------------------------------------------------
 	Protected: processTick
     
@@ -132,25 +111,8 @@ Returns:
 	["processTick", {}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-    
-    	--- Prototype --- 
-    	call ["postTick",_status]
-    	---
-
-	Description:
-		The code that executes after a Tick of this node and then
-		sets the <Status> property before going back up the tree.
-
-	Parameters:
-		_status - <Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
-
-	Returns: 
-		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
+		<XPS_BT_typ_Node.postTick>
 	-----------------------------------------------------------------------------*/
-	["postTick",compileFinal {
-		_self set ["Status",_this];
-		_this;
-	}],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -166,17 +128,8 @@ Returns:
 	["NodeType",XPS_BT_NodeType_Leaf],
 	/*----------------------------------------------------------------------------
 	Property: Status
-    
-    	--- Prototype --- 
-    	get "Status"
-    	---
-
-		<XPS_BT_ifc_INode>
-    
-    Returns: 
-		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
+		<XPS_BT_typ_Node.Status>
 	-----------------------------------------------------------------------------*/
-	["Status",nil],
 	/*----------------------------------------------------------------------------
 	Method: Halt
     
@@ -201,6 +154,7 @@ Returns:
     	---
 
 		<XPS_BT_ifc_INode>
+		<XPS_BT_typ_Node.Init>
 
 	Description:
 		Initialization code usually called to reset the node.
@@ -209,7 +163,7 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		_self set ["Status",nil];
+		_self call ["XPS_BT_typ_Node.Init",[]]
 		_self set ["_startTime",0];
 	}],
 	/*----------------------------------------------------------------------------
