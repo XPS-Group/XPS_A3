@@ -9,14 +9,15 @@ class XPS_CFG_TD_BASECLASSNAME {
 			XPS_CFG_ENUM_SUB(base,NodeType);
 		};
 
-		class BaseNodes {
+		class AbstractNodes {
+			XPS_CFG_TYP_SUB(base,Node);
 			XPS_CFG_TYP_SUB(base,Composite);
 			XPS_CFG_TYP_SUB(base,Decorator);
 			XPS_CFG_TYP_SUB(base,Leaf);
 			XPS_CFG_TYP_SUB(base,LeafSAsync);
 			XPS_CFG_TYP_SUB(base,LeafUAsync);
 		};
-		class VirtualNodes {
+		class Nodes {
 			XPS_CFG_TYP(Action);
 			XPS_CFG_TYP(ActionSAsync);
 			XPS_CFG_TYP(ActionUAsync);
