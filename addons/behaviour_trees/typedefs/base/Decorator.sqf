@@ -106,7 +106,7 @@ Returns:
     Returns: 
 		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Decorator
 	-----------------------------------------------------------------------------*/
-	["NodeType",XPS_BT_NodeType_Decorator],
+	["NodeType",nil,[["CTOR","XPS_BT_NodeType_Decorator"]]],
 	/*----------------------------------------------------------------------------
 	Property: Status
 		<XPS_BT_typ_Node.Status>
@@ -157,7 +157,7 @@ Returns:
 		if !(isNil "_child") then {
 			_child call ["Init"];
 		};
-	}],
+	}]
 	/*----------------------------------------------------------------------------
 	Method: Tick
 		<XPS_BT_typ_Node.Tick>

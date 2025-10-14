@@ -125,7 +125,7 @@ Returns:
     Returns: 
 		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Leaf
 	-----------------------------------------------------------------------------*/
-	["NodeType",XPS_BT_NodeType_Leaf],
+	["NodeType",nil,[["CTOR","XPS_BT_NodeType_Leaf"]]],
 	/*----------------------------------------------------------------------------
 	Property: Status
 		<XPS_BT_typ_Node.Status>
@@ -163,7 +163,7 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		_self call ["XPS_BT_typ_Node.Init",[]]
+		_self call ["XPS_BT_typ_Node.Init",[]];
 		_self set ["_startTime",0];
 	}],
 	/*----------------------------------------------------------------------------

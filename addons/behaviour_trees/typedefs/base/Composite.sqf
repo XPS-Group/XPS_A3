@@ -108,7 +108,7 @@ Returns:
     Returns: 
 		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Composite
 	-----------------------------------------------------------------------------*/
-	["NodeType",XPS_BT_NodeType_Composite],
+	["NodeType",nil,[["CTOR","XPS_BT_NodeType_Composite"]]],
 	/*----------------------------------------------------------------------------
 	Property: Status
 		<XPS_BT_typ_Node.Status>
@@ -167,7 +167,7 @@ Returns:
 				_x call ["Init"];
 			};
 		} forEach _children;
-	}],
+	}]
 	/*----------------------------------------------------------------------------
 	Method: Tick
 		<XPS_BT_typ_Node.Tick>

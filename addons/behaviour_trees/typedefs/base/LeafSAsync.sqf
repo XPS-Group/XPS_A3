@@ -111,7 +111,7 @@ Returns:
     Returns: 
 		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Leaf
 	-----------------------------------------------------------------------------*/
-	["NodeType",XPS_BT_NodeType_Leaf],
+	["NodeType",nil,[["CTOR","XPS_BT_NodeType_Leaf"]]],
 	/*----------------------------------------------------------------------------
 	Property: Status
 		<XPS_BT_typ_Node.Status>

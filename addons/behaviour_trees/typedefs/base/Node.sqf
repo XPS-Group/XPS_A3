@@ -118,6 +118,24 @@ Description:
 		_self set ["Status",nil];
 	}],
 	/*----------------------------------------------------------------------------
+	Method: Halt
+    
+    	--- Prototype --- 
+    	call ["Halt"]
+    	---
+
+	Description:
+		Halts a running node and sets <Status> to failure
+
+	Returns: 
+		Nothing
+	-----------------------------------------------------------------------------*/
+	["Halt",compileFinal {
+		if (_self get "Status" isEqualto XPS_Status_Running) then {
+			_self call ["postTick", XPS_Status_Failure];
+		};
+	}],
+	/*----------------------------------------------------------------------------
 	Method: Tick
     
     	--- Prototype --- 
