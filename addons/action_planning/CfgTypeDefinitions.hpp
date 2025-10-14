@@ -12,12 +12,12 @@ class XPS_CFG_TD_BASECLASSNAME {
 			// XPS_CFG_IFC_SUB(htn,IPrimitiveTask);
 		};
 		class GOAP {
-			XPS_CFG_TYP(Action);
-			XPS_CFG_TYP(ActionSAsync);
-			XPS_CFG_TYP(ActionUAsync);
-			XPS_CFG_TYP(Belief);
-			XPS_CFG_TYP(Goal);
-			XPS_CFG_TYP(Sensor);
+			// XPS_CFG_TYP(Action);
+			// XPS_CFG_TYP(ActionSAsync);
+			// XPS_CFG_TYP(ActionUAsync);
+			// XPS_CFG_TYP(Belief);
+			// XPS_CFG_TYP(Goal);
+			// XPS_CFG_TYP(Sensor);
 
 		};
 		class HTN {

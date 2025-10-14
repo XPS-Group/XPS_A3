@@ -62,10 +62,15 @@ private _fnc_recurseBases = {
 	params ["_hashmap"];
 	if ("#base" in _hashmap) then {
 		private _base = _hashmap get "#base";
-		if !(_base isEqualTypeAny [[],createhashmap]) exitwith {diag_log format ["XPS_fnc_buildTypeDefinition: Error during #base recursion - #base:%1",_base];_errors = true;createhashmap};
+		if !(_base isEqualTypeAny [[],createhashmap]) exitwith {diag_log format ["XPS_fnc_buildTypeDefinition: Error during #base recursion - #base:%1",_base];_errors = true;};
 		if (_base isEqualType []) then {_base = createhashmapfromarray _base};
-		[_base] call _fnc_recurseBases;
-		_hashmap merge _base;
+		if !(isNil "_base" || {_base isEqualTo createhashmap}) then {
+			[_base] call _fnc_recurseBases;
+			_hashmap merge _base;
+		} else {
+			diag_log format ["XPS_fnc_buildTypeDefinition: Empty Base - #base:%1",_base];
+			_errors = true;
+		};
 	};
 };
 
