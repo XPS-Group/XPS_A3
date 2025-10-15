@@ -18,6 +18,27 @@ Description:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_typ_Node"],
+    /*----------------------------------------------------------------------------
+    Constructor: #create
+    
+        --- prototype
+        call ["#create"]
+        ---
+
+    Returns:
+        <True>
+    ----------------------------------------------------------------------------*/
+	["#create", compileFinal {
+		_self set ["_status",XPS_Status_Created];
+		_self set ["_onStatusChangedEvent",createHashmapObject [XPS_typ_Event]];
+        _self set ["StatusChanged",createHashmapObject [XPS_typ_EventHandler,[_self get "_onStatusChangedEvent"]]];
+#ifdef XPS_DEBUG
+		_self set ["_onPreTickEvent",createHashmapObject [XPS_typ_Event]];
+        _self set ["PreTicked",createHashmapObject [XPS_typ_EventHandler,[_self get "_onPreTickEvent"]]];
+		_self set ["_onPostTickEvent",createHashmapObject [XPS_typ_Event]];
+        _self set ["PostTicked",createHashmapObject [XPS_typ_EventHandler,[_self get "_onPostTickEvent"]]];
+#endif
+	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
@@ -30,6 +51,12 @@ Description:
     	<XPS_BT_ifc_INode>
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_BT_ifc_INode"]],
+	["_status",nil],
+#ifdef XPS_DEBUG
+	["_onPreTickEvent",nil],
+	["_onPostTickEvent",nil],
+#endif
+	["_onStatusChangedEvent",nil],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
@@ -48,10 +75,12 @@ Description:
 		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["preTick",compileFinal {
-		if (isNil {_self get "Status"}) then {
-			private _status = XPS_Status_Running;
-			_self set ["Status",_status];
+		if (_self get "_status" isEqualTo XPS_Status_Initialized) then {
+			_self call ["setStatus",XPS_Status_Running];
 		};
+#ifdef XPS_DEBUG
+		_self get "_onPreTickEvent" call ["Invoke",[_self,["PreTicked",diag_tickTime]]];
+#endif
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
@@ -71,8 +100,34 @@ Description:
 		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["postTick",compileFinal {
-		_self set ["Status",_this];
+		_self call ["setStatus",_this];
+#ifdef XPS_DEBUG
+		_self get "_onPostTickEvent" call ["Invoke",[_self,["PostTicked",diag_tickTime]]];
+#endif
 		_this;
+	}],
+	/*----------------------------------------------------------------------------
+	Protected: setStatus
+    
+    	--- Prototype --- 
+    	call ["setStatus", _status]
+    	---
+
+		<XPS_BT_ifc_INode>
+
+	Parameters:
+		_status - <Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>, or nil
+    
+    Returns: 
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>, or nil
+	-----------------------------------------------------------------------------*/
+	["setStatus", compileFinal {
+		private _current = _self get "_status";
+		if (isNil "_current") exitwith {diag_log format ["NIL: %1, %2",_self , _self get "_status"]};
+		if (_this isNotEqualTo _current) then {
+			_self set ["_status",_this];
+			_self get "_onStatusChangedEvent" call ["Invoke",[_self,["StatusChanged",_this]]];
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
@@ -87,10 +142,10 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["NodeType",nil],
 	/*----------------------------------------------------------------------------
-	Property: Status
+	Method: Status
     
     	--- Prototype --- 
-    	get "Status"
+    	call ["Status"]
     	---
 
 		<XPS_BT_ifc_INode>
@@ -98,7 +153,9 @@ Description:
     Returns: 
 		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
-	["Status",nil],
+	["Status", compileFinal {
+		_self get "_status";
+	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
     
@@ -115,7 +172,9 @@ Description:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		_self set ["Status",nil];
+		if (_self get "_status" isNotEqualTo XPS_Status_Initialized) then {
+			_self call ["setStatus",XPS_Status_Initialized];
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Halt
@@ -131,8 +190,8 @@ Description:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Halt",compileFinal {
-		if (_self get "Status" isEqualto XPS_Status_Running) then {
-			_self call ["postTick", XPS_Status_Failure];
+		if (_self get "_status" isEqualto XPS_Status_Running) then {
+			_self call ["setStatus", XPS_Status_Failure];
 		};
 	}],
 	/*----------------------------------------------------------------------------
@@ -158,5 +217,53 @@ Description:
 		_self call ["postTick",
 			_self call ["processTick",_this]
 		];
-	}]
+	}],
+	
+#ifdef XPS_DEBUG
+    /*----------------------------------------------------------------------------
+    EventHandler: PreTicked
+
+	DEBUG ONLY
+    
+        --- Prototype --- 
+        get "PreTicked"
+        ---
+
+        Handles Subscriptions to the onPreTickEvent
+
+    Returns:
+        <XPS_typ_EventHandler>
+    ----------------------------------------------------------------------------*/
+    ["PreTicked",nil],
+    /*----------------------------------------------------------------------------
+    EventHandler: PostTicked
+
+	DEBUG ONLY
+    
+        --- Prototype --- 
+        get "PostTicked"
+        ---
+
+        Handles Subscriptions to the onPostTickEvent
+
+    Returns:
+        <XPS_typ_EventHandler>
+    ----------------------------------------------------------------------------*/
+    ["PostTicked",nil],
+#endif
+    /*----------------------------------------------------------------------------
+    EventHandler: StatusChanged
+    
+        --- Prototype --- 
+        get "StatusChanged"
+        ---
+
+		<XPS_BT_ifc_INode>
+
+        Handles Subscriptions to the onStatusChangedEvent
+
+    Returns:
+        <XPS_typ_EventHandler>
+    ----------------------------------------------------------------------------*/
+    ["StatusChanged",nil]
 ]

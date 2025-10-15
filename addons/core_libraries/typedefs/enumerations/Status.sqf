@@ -13,9 +13,11 @@ Description:
 	An Enumeration set for node statuses.
 
 	--- code
-	XPS_Status_Success	Success		SUCCESS
-	XPS_Status_Failure	Failure		FAILURE
-	XPS_Status_Running	Running		RUNNING
+	XPS_Status_Created		Created		CREATED
+	XPS_Status_Initialized	Initialized	INITIALIZED
+	XPS_Status_Success		Success		SUCCESS
+	XPS_Status_Failure		Failure		FAILURE
+	XPS_Status_Running		Running		RUNNING
 	---
 
 	See <XPS_fnc_createEnumeration:core. typeHandlers. XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
@@ -43,7 +45,7 @@ Description:
 		<String> - "<STRING>"
 	-----------------------------------------------------------------------------*/
 	["ValueType","STRING"],
-	["Enumerations", [["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
+	["Enumerations", [["Created","CREATED"],["Initialized","INITIALIZED"], ["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
 	/*----------------------------------------------------------------------------
 	Property: Values
 		<core.XPS_typ_Enumeration.Values>

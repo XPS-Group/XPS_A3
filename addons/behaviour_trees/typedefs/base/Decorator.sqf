@@ -33,6 +33,7 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
+		_self call ["XPS_BT_typ_Node.#create",[]];
 		_self set ["child",nil];
 	}],
 	/*----------------------------------------------------------------------------
@@ -80,15 +81,10 @@ Returns:
 		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		private _status = _self get "Status";
+		private _status = _self call ["Status",[]];
 		private _child = _self get "child";
 		if (isNil "_child") exitWith {XPS_Status_Failure};
-		if (isNil {_child get "Status"}) then {
-			_status = _child call ["Tick",_this];
-		} else {
-			_status = _child get "Status";
-		};		
-		_status;
+		_child call ["Tick",_this];		
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
@@ -152,11 +148,11 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		_self call ["XPS_BT_typ_Node.Init",[]];
 		private _child = _self get "child";
 		if !(isNil "_child") then {
 			_child call ["Init"];
 		};
+		_self call ["XPS_BT_typ_Node.Init",[]];
 	}]
 	/*----------------------------------------------------------------------------
 	Method: Tick

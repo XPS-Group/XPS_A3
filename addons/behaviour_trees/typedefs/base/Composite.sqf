@@ -33,6 +33,7 @@ Returns:
         <True>
     ----------------------------------------------------------------------------*/
 	["#create", compileFinal {
+		_self call ["XPS_BT_typ_Node.#create",[]];
 		_self set ["children",[]];
 		_self set ["currentIndex",0];
 	}],
@@ -159,7 +160,6 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		_self call ["XPS_BT_typ_Node.Init",nil];
 		_self set ["currentIndex",0];
 		private _children = _self get "children";
 		{
@@ -167,6 +167,7 @@ Returns:
 				_x call ["Init"];
 			};
 		} forEach _children;
+		_self call ["XPS_BT_typ_Node.Init",[]];
 	}]
 	/*----------------------------------------------------------------------------
 	Method: Tick

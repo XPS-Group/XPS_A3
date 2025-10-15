@@ -144,7 +144,7 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Halt",compileFinal {		
-		_self call ["postTick", XPS_Status_Failure];
+		_self call ["XPS_BT_typ_Node.Halt"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -190,11 +190,13 @@ Returns:
 		
 		switch (true) do {
 
-			case (isNil {_self get "Status"}): {
+			case (_self call ["Status",[]] isNotEqualTo XPS_Status_Running): {
 				_self call ["preTick",_this];
 				_self call ["processTick",_this];
 			};
-			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime")));
+			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))):{
+				_self call ["Halt"];
+			};
 			case (_self call ["condition",_this]): {
 				_self call ["postTick",_self call ["result",_this]];
 			};

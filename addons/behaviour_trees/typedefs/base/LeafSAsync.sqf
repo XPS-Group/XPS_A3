@@ -95,10 +95,6 @@ Returns:
 	Protected: postTick
 		<XPS_BT_typ_Node.postTick>
 	-----------------------------------------------------------------------------*/
-	["postTick",compileFinal {
-		_self set ["Status",_this];
-		_this;
-	}],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -135,7 +131,7 @@ Returns:
 			terminate _handle;
 			_self set ["handle",nil];
 		};
-		_self call ["postTick", XPS_Status_Failure];
+		_self call ["XPS_BT_typ_Node.Halt"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -154,8 +150,8 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		_self call ["Halt"];
 		_self call ["XPS_BT_typ_Node.Init",[]];
+		_self call ["Halt",[]];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Tick
@@ -178,7 +174,7 @@ Returns:
 		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFinal {		
-		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
+		if (isNil {_self get "handle"} && {_self call ["Status"] isEqualTo XPS_Status_Initialized}) then {	
 			_self call ["preTick",_this];	
 				_handle = [_self,_this] spawn {
 					params ["_node","_context"];
@@ -186,12 +182,11 @@ Returns:
 					_node call ["callback",_status]
 				};
 				_self set ["handle",_handle];
-			_self call ["postTick",_self get "Status"];
+			_self call ["postTick",_self call ["Status",[]]];
 		};
 		if (scriptDone (_self get "handle")) then {
-			_self set ["handle",nil];
-			_self call ["postTick",XPS_Status_Failure];
+			_self call ["Halt"];
 		};
-		_self get "Status";
+		_self call ["Status",[]];
 	}]
 ]

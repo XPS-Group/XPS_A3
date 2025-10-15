@@ -30,7 +30,6 @@ Returns:
 	Constructor: #create
 		<XPS_BT_typ_Composite. #create>
 	-----------------------------------------------------------------------------*/
-	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
@@ -82,7 +81,7 @@ Returns:
 		};
 
 		for "_i" from 0 to (count _children)-1 do {
-			private _status = (_children#_index) get "Status";
+			private _status = (_children#_index) call ["Status",[]];
 			if (_status isEqualTo XPS_Status_Failure) then {_finalStatus = XPS_Status_Failure};
 			if (_status isEqualTo XPS_Status_Running && (_finalStatus isNotEqualTo XPS_Status_Failure)) then {_finalStatus = XPS_Status_Running};
 		};
