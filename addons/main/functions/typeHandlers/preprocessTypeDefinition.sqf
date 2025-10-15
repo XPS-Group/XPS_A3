@@ -219,10 +219,10 @@ try
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
 	// Add create / delete / serialize / deserialize methods if they dont exist prior to changing private keys
-	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushBack ["#create",compileFinal  (_ctor + _ctor_l)]};
-	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushBack ["#delete",compileFinal  (_dtor + _dtor_l)]};
-	if (!_hasSrlz && {_srlz isNotEqualTo ""}) then {_typeDef pushBack ["Serialize",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_srlz+"compileFinal _thisDTO;")]};
-	if (!_hasDesrlz && {_desrlz isNotEqualTo ""}) then {_typeDef pushBack ["Deserialize",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_desrlz)]};
+	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushBack ["_#create_",compileFinal  (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushBack ["_#delete_",compileFinal  (_dtor + _dtor_l)]};
+	if (!_hasSrlz && {_srlz isNotEqualTo ""}) then {_typeDef pushBack ["_Serialize_",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_srlz+"compileFinal _thisDTO;")]};
+	if (!_hasDesrlz && {_desrlz isNotEqualTo ""}) then {_typeDef pushBack ["_Deserialize_",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_desrlz)]};
 
 	// First pass - Injection
 	for "_ix" from 0 to (count _typeDef)-1 do {
@@ -241,13 +241,15 @@ try
 			_keyPair set [1, compileFinal _value];
 		};
 		// Serialize injection but only if it existed prior to above code
-		if (_hasCtor && {_key == "Serialize" && {_ctor isNotEqualTo ""}}) then {
-			_value = call compile ((str _value) insert [count _strCode - 1,_srlz+"compileFinal _thisDTO;"]);
+		if (_hasSrlz && {_key == "Serialize" && {_srlz isNotEqualTo ""}}) then {
+			private _strCode = str _value;
+			_value = call compile (_strCode insert [count _strCode - 1,_srlz+"compileFinal _thisDTO;"]);
 			_keyPair set [1, compileFinal _value];
 		};
 		// Deserialize injection but only if it existed prior to above code
-		if (_hasCtor && {_key == "Deserialize" && {_ctor isNotEqualTo ""}}) then {
-			_value = call compile ((str _value) insert [count _strCode - 1,_desrlz]);
+		if (_hasDesrlz && {_key == "Deserialize" && {_desrlz isNotEqualTo ""}}) then {
+			private _strCode = str _value;
+			_value = call compile (_strCode insert [count _strCode - 1,_desrlz]);
 			_keyPair set [1,compileFinal _value];
 		};
 
