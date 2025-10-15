@@ -147,22 +147,23 @@ if ("#base" in _hashmap) then {
 		} forEach ["#create","#clone","#delete"];
 		_hashmap set ["#base",+_pHashmap];
 	};
-
+	
 	//merge create,delete,serialize, and deserialize methods IF preprocessor generated them - denoted by two underscores e.g _#create_
 	{
-		params ["_current","_toAppend"];
-		if (_toAppend in _hashmap) then {
-			if (_current in _hashmap) then {
-				private _strCode = str (_hashmap get _current);
-				_hashmap set [_current , compileFinal (call compile (_strCode insert [count _strCode - 1,_hashmap get _toAppend]))];
+		_x params ["_desiredKey","_appendKey"];
+		if (_appendKey in _hashmap) then {
+			if (_desiredKey in _hashmap) then {
+				private _strCode = str (_hashmap get _desiredKey) trim ["{}",0];
+				private _appCode = str (_hashmap get _appendKey) trim ["{}",0];
+				private _mergedCode = compileFinal (_strCode + _appCode);
+				_hashmap set [_desiredKey , _mergedcode];
 			} else {
-				_hashmap set [_current , compileFinal _hashmap get _toAppend];
+				_hashmap set [_desiredKey , _hashmap get _appendKey];
 			};
-			_hashmap deleteat _toAppend;
+			_hashmap deleteat _appendKey;
 		};
-
 	} foreach [["#create","_#create_"],["#delete","_#delete_"],["Serialize","_Serialize_"],["Deserialize","_Deserialize_"]];
-	
+
 	// Merge with parent and get Base Keys for interface check
 	_pHashmap merge [_hashmap,true];
 	[_pHashmap] call _fnc_recurseBases;
