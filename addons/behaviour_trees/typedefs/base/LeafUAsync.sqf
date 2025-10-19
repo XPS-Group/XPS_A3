@@ -190,7 +190,10 @@ Returns:
 		
 		switch (true) do {
 
-			case (_self call ["Status",[]] isNotEqualTo XPS_Status_Running): {
+			case (_self call ["Status",[]] isEqualTo XPS_Status_Running): {
+				_self call ["preTick",_this];
+			};
+			case (_self call ["Status",[]] isEqualTo XPS_Status_Initialized): {
 				_self call ["preTick",_this];
 				_self call ["processTick",_this];
 			};
@@ -201,5 +204,6 @@ Returns:
 				_self call ["postTick",_self call ["result",_this]];
 			};
 		};
+		_self call ["postTick",_self call ["Status",[]]];
 	}]
 ]

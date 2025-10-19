@@ -30,9 +30,10 @@ Description:
     ----------------------------------------------------------------------------*/
 	["#create", compileFinal {
 		_self set ["_status",XPS_Status_Created];
+#ifdef XPS_DEBUG
+		_self set ["id", [] call XPS_fnc_createUniqueID];
 		_self set ["_onStatusChangedEvent",createHashmapObject [XPS_typ_Event]];
         _self set ["StatusChanged",createHashmapObject [XPS_typ_EventHandler,[_self get "_onStatusChangedEvent"]]];
-#ifdef XPS_DEBUG
 		_self set ["_onPreTickEvent",createHashmapObject [XPS_typ_Event]];
         _self set ["PreTicked",createHashmapObject [XPS_typ_EventHandler,[_self get "_onPreTickEvent"]]];
 		_self set ["_onPostTickEvent",createHashmapObject [XPS_typ_Event]];
@@ -55,8 +56,9 @@ Description:
 #ifdef XPS_DEBUG
 	["_onPreTickEvent",nil],
 	["_onPostTickEvent",nil],
-#endif
 	["_onStatusChangedEvent",nil],
+	["id", nil],
+#endif
 	/*----------------------------------------------------------------------------
 	Protected: preTick
     
@@ -123,10 +125,11 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["setStatus", compileFinal {
 		private _current = _self get "_status";
-		if (isNil "_current") exitwith {diag_log format ["NIL: %1, %2",_self , _self get "_status"]};
 		if (_this isNotEqualTo _current) then {
 			_self set ["_status",_this];
+#ifdef XPS_DEBUG
 			_self get "_onStatusChangedEvent" call ["Invoke",[_self,["StatusChanged",_this]]];
+#endif
 		};
 	}],
 	/*----------------------------------------------------------------------------
@@ -192,6 +195,7 @@ Description:
 	["Halt",compileFinal {
 		if (_self get "_status" isEqualto XPS_Status_Running) then {
 			_self call ["setStatus", XPS_Status_Failure];
+			diag_log format["Halt Called: %1", _self]
 		};
 	}],
 	/*----------------------------------------------------------------------------
@@ -217,8 +221,7 @@ Description:
 		_self call ["postTick",
 			_self call ["processTick",_this]
 		];
-	}],
-	
+	}]
 #ifdef XPS_DEBUG
     /*----------------------------------------------------------------------------
     EventHandler: PreTicked
@@ -234,7 +237,7 @@ Description:
     Returns:
         <XPS_typ_EventHandler>
     ----------------------------------------------------------------------------*/
-    ["PreTicked",nil],
+    ,["PreTicked",nil],
     /*----------------------------------------------------------------------------
     EventHandler: PostTicked
 
@@ -250,7 +253,6 @@ Description:
         <XPS_typ_EventHandler>
     ----------------------------------------------------------------------------*/
     ["PostTicked",nil],
-#endif
     /*----------------------------------------------------------------------------
     EventHandler: StatusChanged
     
@@ -266,4 +268,5 @@ Description:
         <XPS_typ_EventHandler>
     ----------------------------------------------------------------------------*/
     ["StatusChanged",nil]
+#endif
 ]

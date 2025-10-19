@@ -52,7 +52,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["callback",compileFinal {
 		private _status = _this;
-		_self call ["postTick",_status];
+		_self call ["setStatus",_status];
 		_self set ["handle",nil];
 	}],
 	/*----------------------------------------------------------------------------
@@ -182,11 +182,12 @@ Returns:
 					_node call ["callback",_status]
 				};
 				_self set ["handle",_handle];
-			_self call ["postTick",_self call ["Status",[]]];
+		} else {
+			_self call ["preTick",_this];	
 		};
-		if (scriptDone (_self get "handle")) then {
+		if (!isNil {_self get "handle"} && {scriptDone (_self get "handle")}) then {
 			_self call ["Halt"];
 		};
-		_self call ["Status",[]];
+		_self call ["postTick",_self call ["Status",[]]];
 	}]
 ]
