@@ -110,6 +110,7 @@ Returns:
 		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Composite
 	-----------------------------------------------------------------------------*/
 	["NodeType",nil,[["CTOR","XPS_BT_NodeType_Composite"]]],
+	["NodeType",nil,[["CTOR","XPS_BT_NodeType_Composite"]]],
 	/*----------------------------------------------------------------------------
 	Property: Status
 		<XPS_BT_typ_Node.Status>
