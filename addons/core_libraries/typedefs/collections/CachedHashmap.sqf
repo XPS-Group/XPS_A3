@@ -32,7 +32,6 @@ Returns:
     ----------------------------------------------------------------------------*/
     ["#create", compileFinal {
         _self set ["_itemMap",createhashmap];
-        true;
     }],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -53,10 +52,10 @@ Returns:
     ["@interfaces", ["XPS_ifc_IList"]],
 	["_itemMap",nil],
     /*----------------------------------------------------------------------------
-    Protected: getNewItem
+    Protected: getItemSource
     
         --- Prototype --- 
-        call ["getNewItem",[_key]]
+        call ["getItemSource",[_key]]
         ---
 
         <XPS_ifc_IList>
@@ -71,8 +70,8 @@ Returns:
 	Returns:
 		<Anything> - the item to be cached
     ----------------------------------------------------------------------------*/
-	["getNewItem", compileFinal {
-		true;
+	["getItemSource", compileFinal {
+		nil;
 	}],
     /*----------------------------------------------------------------------------
     Method: Clear
@@ -140,14 +139,14 @@ Returns:
 		_forceNew* - <Boolean> - (Optional - Default : False) - passing true forces cache update on item.
 
 	Returns:
-		<Anything> - removes and returns first element in the queue or nil if empty
+		<Anything> - returns cached element, a fresh element if forced, or nil if empty
     ----------------------------------------------------------------------------*/
 	["GetItem", compileFinal {
         params ["_key",["_forceNew",false,[true]]];
         if (!_forceNew && {_key in keys (_self get "_itemMap")}) then {
             _self get "_itemMap" get _key;
         } else {
-		    private _newItem = _self call ["getItemNew",[_key]];
+		    private _newItem = _self call ["getItemSource",[_key]];
             if !(isNil "_newItem") then {
                 _self get "_itemMap" set [_key, _newItem]
             } else {
