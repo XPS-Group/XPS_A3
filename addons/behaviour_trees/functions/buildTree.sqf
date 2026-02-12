@@ -77,7 +77,7 @@ private _fnc_HandleChildren = compileFinal {
 	params ["_parentNode",["_children",[],[[]]]];
 	
 	private _nodeType = _parentNode getOrDefault ["NodeType",""];
-	if (_nodeType in ["COMPOSITE","DECORATOR"]) then {
+	if (_nodeType in [XPS_BT_NodeType_Composite,XPS_BT_NodeType_Decorator]) then {
 		for "_i" from 0 to (count _children)-1 do {
 			private _typeDef = _children#_i#0;
 			private _grandChildren = [];

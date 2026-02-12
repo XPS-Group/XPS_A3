@@ -30,7 +30,6 @@ Returns:
 	Constructor: #create
 		<XPS_BT_typ_Composite. #create>
 	-----------------------------------------------------------------------------*/
-	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 

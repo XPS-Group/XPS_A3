@@ -94,7 +94,7 @@ Returns:
 
 	Description:
 		The code that executes during a Tick of this node and then
-		returns a status. This is run asynchronously in a scheduled environment.
+		returns a status. This is run asynchronously in an unscheduled environment.
 		
 		Must be Overridden.
 
