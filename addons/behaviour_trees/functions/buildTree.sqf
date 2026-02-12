@@ -77,21 +77,21 @@ private _fnc_HandleChildren = compileFinal {
 	params ["_parentNode",["_children",[],[[]]]];
 	
 	private _nodeType = _parentNode getOrDefault ["NodeType",""];
-	if (_nodeType in ["COMPOSITE","DECORATOR"]) then {
+	if (_nodeType in [XPS_BT_NodeType_Composite,XPS_BT_NodeType_Decorator]) then {
 		for "_i" from 0 to (count _children)-1 do {
 			private _typeDef = _children#_i#0;
 			private _grandChildren = [];
 			if (count (_children#_i) > 1 && {_children#_i#1 isEqualtype []}) then {_grandchildren = _children#_i#1};
 			private _childNode = createHashmapObject [_typeDef];
 			_parentNode call ["AddChildNode",_childNode];
-			if (count _grandchildren > 0) then {
+			if (_grandchildren isNotEqualTo []) then {
 				[_childNode, _grandChildren] call _fnc_HandleChildren;
 			};
 		};
 	};
 };
 
-if (_definition isEqualType [] && {count _definition > 0}) then {
+if (_definition isEqualType [] && {_definition isNotEqualTo []}) then {
 	private _rootNode = createHashmapObject [_definition#0];
 	private _children = [];
 	if (count _definition > 1 && {_definition#1 isEqualtype []}) then {

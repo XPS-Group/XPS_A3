@@ -89,7 +89,7 @@ Returns:
 	["AddChannel", compileFinal {
 		params [["_channel",createhashmap,[createhashmap]],["_key","",[""]]];
 		
-		if (_key isEqualTo "" || !{XPS_CHECK_IFC1(_channel,XPS_PN_ifc_IChannel)}) exitWith {false};
+		if (_key isEqualTo "" || {!(XPS_CHECK_IFC1(_channel,XPS_PN_ifc_IChannel))}) exitWith {false};
 
 		_self get "channels" set [_key,_channel];
 		_self;
@@ -114,7 +114,7 @@ Returns:
 	["AddProcess", compileFinal {
 		params [["_process",createhashmap,[createhashmap]]];
 		
-		if (_key isEqualTo "" || !{XPS_CHECK_IFC1(_process,XPS_PN_ifc_IProcess)}) exitWith {false};
+		if (_key isEqualTo "" || {!(XPS_CHECK_IFC1(_process,XPS_PN_ifc_IProcess))}) exitWith {false};
 
 		_self get "processes" pushback _process;
 		_self;

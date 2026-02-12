@@ -78,7 +78,7 @@ Returns:
 		<Boolean> - if value was successfully set 
 	-----------------------------------------------------------------------------*/
 	["updateTokenData", compileFinal {
-        params [["_data",nil,[]],["_ref",call XPS_fnc_createUniqueID,[""]]];
+        params [["_data",nil,[]],["_ref",[] call XPS_fnc_createUniqueID,[""]]];
         _self get "_tokenData" set [_ref,_data]; 
 	}],
 	/*----------------------------------------------------------------------------
@@ -132,7 +132,7 @@ Returns:
 		<Boolean> - if value was successfully added/updated 
     ----------------------------------------------------------------------------*/
 	["Write",compileFinal {
-        params [["_data",nil,[]],["_ref",call XPS_fnc_createUniqueID,[""]]];
+        params [["_data",nil,[]],["_ref",[] call XPS_fnc_createUniqueID,[""]]];
         _self call ["XPS_PN_typ_Channel.Enqueue",_ref];
         _self call ["updateTokenData",_this]; 
     }],
@@ -153,7 +153,7 @@ Returns:
 		<Boolean> - if value was successfully added/updated, False if already exists - item will always update data if already existing
     ----------------------------------------------------------------------------*/
 	["WriteUnique",compileFinal {
-        params [["_data",nil,[]],["_ref",call XPS_fnc_createUniqueID,[""]]];
+        params [["_data",nil,[]],["_ref",[] call XPS_fnc_createUniqueID,[""]]];
         private _result = _self call ["XPS_PN_typ_Channel.EnqueueUnique",_ref]; // adds if new - updates data always
         _self call ["updateTokenData",_this]; 
     }]

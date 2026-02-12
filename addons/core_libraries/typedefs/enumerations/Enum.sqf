@@ -83,7 +83,7 @@ Description:
 		_enumHelper - <XPS_typ_Enumerations> - the helper class object which is derived from <XPS_typ_Enumerations>
     
     Returns: 
-		<String> - can be "SCALAR", "STRING" or "TEXT"
+		<String> - can be "SCALAR", "STRING", "TEXT", or "HASHMAP"
 
 	Throws: 
 		<XPS_typ_ArgumentNilException> - when argument supplied is Nil value

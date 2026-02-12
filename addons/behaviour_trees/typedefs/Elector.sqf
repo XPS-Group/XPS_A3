@@ -30,7 +30,6 @@ Returns:
 	Constructor: #create
 		<XPS_BT_typ_Decorator. #create>
 	-----------------------------------------------------------------------------*/
-	["#create", {_self call ["XPS_BT_typ_Decorator.#create"];}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 

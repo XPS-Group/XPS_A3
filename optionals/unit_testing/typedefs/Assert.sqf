@@ -40,7 +40,7 @@ Description:
 	-----------------------------------------------------------------------------*/
 	["AreEqual", compileFinal {
 		params ["_arg1","_arg2",["_message",nil,[""]]];
-		if (isNil "_arg1" || isNil "_arg2" || {!(_arg1 isEqualTo _arg2)}) then {
+		if (isNil "_arg1" || isNil "_arg2" || {(_arg1 isNotEqualTo _arg2)}) then {
 			_self call ["Fail",["AreEqual",_this#2,createHashMapFromArray [["_arg1",_this#0],["_arg2",_this#1]]]];
 		};
 		true;

@@ -1,50 +1,30 @@
 #include "script_component.hpp"
 /* -----------------------------------------------------------------------------
-TypeDef: action_planning. XPS_AP_typ_ActionSAsync
+TypeDef: action_planning. XPS_AP_typ_OperatorSAsync
 	<TypeDefinition>
 	---prototype
-	XPS_AP_typ_ActionSAsync : XPS_AP_ifc_Action
+	XPS_AP_typ_OperatorSAsync : XPS_AP_ifc_Operator
 	---
 	---prototype
-	createhashmapobject [XPS_AP_typ_ActionSAsync, [_var1*, _var2*]]
+	createhashmapobject [XPS_AP_typ_OperatorSAsync, []]
 	---
 
 Authors: 
 	CrashDome
 
 Description:
-	(Description)
-
-    
-Optionals: 
-	_var1* - <Object> - (Optional - Default : objNull) 
-	_var2* - <String> - (Optional - Default : "") 
+	An asynchronous version of <XPS_AP_typ_Action> where the result 
 
 Returns:
 	<HashmapObject>
 
 --------------------------------------------------------------------------------*/
 [
-	["#type","XPS_AP_typ_ActionSAsync"],
-	/*----------------------------------------------------------------------------
-	Constructor: #create
-    
-    	--- Prototype --- 
-    	call ["create",[_var1*,_var2*]]
-    	---
-    
-    Optionals: 
-		_var1* - <Object> - (Optional - Default : objNull) 
-    	_var2* - <String> - (Optional - Default : "") 
-
-	Returns:
-		<True>
-	-----------------------------------------------------------------------------*/
-	["#create", {}],
+	["#type","XPS_AP_typ_OperatorSAsync"],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
-    	"XPS_AP_typ_ActionSAsync"
+    	"XPS_AP_typ_OperatorSAsync"
     	---
 	-----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select 0}],
@@ -53,53 +33,26 @@ Returns:
     	<XPS_AP_ifc_IAction>
 	-----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_AP_ifc_IAction"]],
-	["_complete",false],
-	["_handle",nil],
-	/*----------------------------------------------------------------------------
-	Protected: myProp
-    
-    	--- Prototype --- 
-    	get "myProp"
-    	---
-    
-    Returns: 
-		<Object> - description
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Property: MyProp
-    
-    	--- Prototype --- 
-    	get "MyProp"
-    	---
-    
-    Returns: 
-		<Object> - description
-	-----------------------------------------------------------------------------*/
-	/*----------------------------------------------------------------------------
-	Method: MyMethod
-    
-    	--- Prototype --- 
-    	call ["MyMethod",[_object*,_var1*]]
-    	---
-    
-    Optionals: 
-		_object* - <Object> - (Optional - Default : objNull) 
-		_var1* - <String> - (Optional - Default : "") 
-	-----------------------------------------------------------------------------*/
+	["handle",nil],
 	["callback",compileFinal {
-		_self set ["_complete",_this];
-		_self set ["_handle",nil];
+		_self set ["handle",nil];
 	}],
-	["Action", {}],
-    ["CanPerform", compileFinal {false}],
-    ["IsComplete", compileFinal {_self get "_complete"}],
 	["Execute", {	
-		if (isNil {_self get "_handle"} && {!(_self get "_complete")}) then {
-			_handle = _self spawn {
-				_this call ["callback",_this call ["Action"]]
-			};
-			_self set ["_handle",_handle];
+		if (isNil {_self get "handle"} && isNil {_self get "Status"}) then {	
+			_self call ["preTick",_this];	
+				_handle = [_self,_this] spawn {
+					params ["_Operator","_context"];
+					private _status = _Operator call ["processTick",_context]; 
+					_Operator call ["callback",_status]
+				};
+				_self set ["handle",_handle];
+			_self call ["postExecute",_self get "Status"];
 		};
+		if (scriptDone (_self get "handle")) then {
+			_self set ["handle",nil];
+			_self call ["postExecute",XPS_Status_Failure];
+		};
+		_self get "Status";
 	}]
     
 ]

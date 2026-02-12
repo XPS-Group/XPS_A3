@@ -92,15 +92,17 @@ Returns:
         <XPS_ifc_ITypeRestrictor>
     
     Parameters: 
-        _value - <HashmapObject> - Value to check to see if it is allowed to be added
+        _value - <HashmapObject> - Value to check to see if it is allowed to be added. Check consists of both 
+		the "#type" and "@interfaces" properties of the <HashmapObject> against the registered types. As such,
+		base types and interfaces that match are allowed even if the exact type is not in the registered list.
 
 	Returns: 
-		<True> - always
+		<Bool> - <True> if match exists otherwise <False>
 	-----------------------------------------------------------------------------*/
 	["IsAllowed", compileFinal {
 		params [["_value",createhashmap,[createhashmap]]];
         private _allowlist = _self get "_allowed";
-        private _types = _value getOrDefault ["#type",[]];
-        (count (_types arrayIntersect _allowlist) > 0);
+        private _types =(_value getOrDefault ["#type",[]]) + (_value getorDefault ["@interfaces",[]]);
+        (_types arrayIntersect _allowlist isNotEqualTo []);
 	}]
 ]

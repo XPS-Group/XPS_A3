@@ -1,4 +1,5 @@
 #include "script_component.hpp"
+#pragma hemtt ignore_variables ["_privateKeys","_allowNils","_preprocess","_noStack"]
 /* ----------------------------------------------------------------------------
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
@@ -36,6 +37,9 @@ Description:
 		["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
 		["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
 		["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
+		["NESTED_TYPE", value] - Creates a nested class definition - value must be an array of booleans: [allowNils, preprocess, noStack]
+		["IN_TYPE_ONLY"] - Injects a delete key (used for nested types) on creation of an object
+		["SERIALIZABLE"] - creates "Serialize" and "Deserialize" methods if they don't exist and adds this key to serialization code
 
 	However, you can define any Attribute as long as it is in an array. The preprocessor will
 	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
@@ -61,7 +65,7 @@ private _typeDef = _this;
 
 if (count _this == 1 && {_this#0 isEqualTypeAll []}) then {_typeDef = _this#0};
 
-_privateKeys = if (isNil "_privateKeys") then {[]} else {_privateKeys};
+_privateKeys = if (isNil "_privateKeys") then {createhashmap} else {_privateKeys};
 
 private _result = true;
 private _ctor = ""; 
@@ -99,10 +103,10 @@ try
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
 
-			if (_key == "#create") then {_hasCtor = true};
-			if (_key == "#delete") then {_hasDtor = true};
-			if (_key == "Serialize") then {_hasSrlz = true};
-			if (_key == "Deserialize") then {_hasDesrlz = true};
+			if (toLower _key isEqualTo "#create") then {_hasCtor = true};
+			if (toLower _key isEqualTo "#delete") then {_hasDtor = true};
+			if (toLower _key isEqualTo "serialize") then {_hasSrlz = true};
+			if (toLower _key isEqualTo "deserialize") then {_hasDesrlz = true};
 
 		private _attributes = [];
 		if (count _keyPair > 2) then {
@@ -204,7 +208,7 @@ try
 		// Finally record if a private key for later obfuscation
 		if (_key isEqualType "" && {_key find "_" isEqualTo 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
-			_privateKeys pushBack [_key,_uid];
+			_privateKeys set [_key,_uid];
 			_keyPair set [0,_uid]
 		};
 	};
@@ -215,10 +219,10 @@ try
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
 	// Add create / delete / serialize / deserialize methods if they dont exist prior to changing private keys
-	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushBack ["#create",compileFinal  (_ctor + _ctor_l)]};
-	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushBack ["#delete",compileFinal  (_dtor + _dtor_l)]};
-	if (!_hasSrlz && {_srlz isNotEqualTo ""}) then {_typeDef pushBack ["Serialize",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_srlz+"compileFinal _thisDTO;")]};
-	if (!_hasDesrlz && {_desrlz isNotEqualTo ""}) then {_typeDef pushBack ["Deserialize",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_desrlz)]};
+	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushBack ["_#create_",compileFinal  (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushBack ["_#delete_",compileFinal  (_dtor + _dtor_l)]};
+	if (!_hasSrlz && {_srlz isNotEqualTo ""}) then {_typeDef pushBack ["_Serialize_",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_srlz+"compileFinal _thisDTO;")]};
+	if (!_hasDesrlz && {_desrlz isNotEqualTo ""}) then {_typeDef pushBack ["_Deserialize_",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_desrlz)]};
 
 	// First pass - Injection
 	for "_ix" from 0 to (count _typeDef)-1 do {
@@ -237,26 +241,28 @@ try
 			_keyPair set [1, compileFinal _value];
 		};
 		// Serialize injection but only if it existed prior to above code
-		if (_hasCtor && {_key == "Serialize" && {_ctor isNotEqualTo ""}}) then {
-			_value = call compile ((str _value) insert [count _strCode - 1,_srlz+"compileFinal _thisDTO;"]);
+		if (_hasSrlz && {_key == "Serialize" && {_srlz isNotEqualTo ""}}) then {
+			private _strCode = str _value;
+			_value = call compile (_strCode insert [count _strCode - 1,_srlz+"compileFinal _thisDTO;"]);
 			_keyPair set [1, compileFinal _value];
 		};
 		// Deserialize injection but only if it existed prior to above code
-		if (_hasCtor && {_key == "Deserialize" && {_ctor isNotEqualTo ""}}) then {
-			_value = call compile ((str _value) insert [count _strCode - 1,_desrlz]);
+		if (_hasDesrlz && {_key == "Deserialize" && {_desrlz isNotEqualTo ""}}) then {
+			private _strCode = str _value;
+			_value = call compile (_strCode insert [count _strCode - 1,_desrlz]);
 			_keyPair set [1,compileFinal _value];
 		};
 
 		if (_value isEqualType {}) then {
 			//Replace Private Keys in any code block
-			if (count _privateKeys > 0) then {
+			if (_privateKeys isNotEqualTo createhashmap) then {
 				_value = [_privateKeys,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
 			};
 		};
 	};
 
-	//Build any nested types with current _privateKeys list
+	//Build any nested types with current _privateKeys list 
 	{
 		_typedef#_x set [1,createhashmapfromarray (_y call XPS_fnc_buildTypeDefinition)];
 	} foreach _nested;

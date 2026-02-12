@@ -7,7 +7,7 @@ Description:
 	This returns true if game was launched with the -debug parameter -OR- XPS_DEBUG macro is forcefully defined.
 	The effects it has when true is to force:
 	
-	- No obfuscation of 'private' properties
+	- No replacing of 'private' properties
 	- No compileFinal of Type Definitions (ignores isFinal = 1)
 	- Always recompile (forces recompile = 1)
 
@@ -27,6 +27,7 @@ uinamespace setvariable [XPS_PRESTART_VAR,true];
 diag_log format ["XPS_DebugMode:%1",XPS_DebugMode];
 with uiNamespace do{
 	diag_log text "[XPS preStart]";
+	XPS_TypeDef_Defaults = compileFinal (["_preprocess","_allowNils","_recompile","_preCache","_noStack","_isFinal"] createhashmapfromarray [true,true,false,false,false,false]);
 	private _start = diag_ticktime;
 	{
 		if (isClass _x) then {_result = [_x] call XPS_fnc_parseTypeDefClass;};

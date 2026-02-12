@@ -10,15 +10,14 @@ Authors:
     Crashdome
 ----------------------------------------------------------------------------
 
-	Method: GetLocation
-		<code>
+	Property: Status
+		<anything> or <XPS_Status> <Enumeration>
 
-	Method: Evaluate
+	Method: Execute
 		<code>
 
 ---------------------------------------------------------------------------- */
 [
-    // ["CanPerform","CODE"],
-    // ["IsComplete","CODE"],
-	// ["Execute","CODE"]
+	["Status","ANYTHING"],
+	["Execute","CODE"]
 ]

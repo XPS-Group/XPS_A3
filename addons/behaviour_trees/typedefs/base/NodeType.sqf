@@ -1,28 +1,28 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: core. XPS_enum_Status
+TypeDef: core. XPS_BT_enum_NodeType
 	<TypeDefinition>
 		---prototype
-		XPS_enum_Status : XPS_ifc_IEnumeration, XPS_typ_Enumeration
+		XPS_BT_enum_NodeType : XPS_ifc_IEnumeration, XPS_typ_Enumeration
 		---
 
 Authors: 
 	Crashdome
 
 Description:
-	An Enumeration set for node statuses.
+	An Enumeration set for node types.
 
 	--- code
-	XPS_Status_Success	Success		SUCCESS
-	XPS_Status_Failure	Failure		FAILURE
-	XPS_Status_Running	Running		RUNNING
+	XPS_BT_NodeType_Leaf		Leaf		LEAF
+	XPS_BT_NodeType_Decorator	Decorator	DECORATOR
+	XPS_BT_NodeType_Composite	Composite	COMPOSITE
 	---
 
 	See <XPS_fnc_createEnumeration:core. typeHandlers. XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_enum_Status"],
+	["#type","XPS_BT_enum_NodeType"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
     	<core.XPS_typ_Enumeration>
@@ -43,7 +43,7 @@ Description:
 		<String> - "<STRING>"
 	-----------------------------------------------------------------------------*/
 	["ValueType","STRING"],
-	["Enumerations", [["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
+	["Enumerations", [["Leaf","LEAF"], ["Decorator","DECORATOR"], ["Composite","COMPOSITE"]]]
 	/*----------------------------------------------------------------------------
 	Property: Values
 		<XPS_typ_Enumeration.Values>

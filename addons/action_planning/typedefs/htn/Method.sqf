@@ -13,9 +13,8 @@ Authors:
 	Crashdome
 
 Description:
-	A Method is a collection used in Heirarchical Task Networks which decompose 
-	into smaller subtasks based on a satisfied condition. These collections are usually 
-	found in a <XPS_AP_typ_CompoundTask> in order of priority.
+	A Method is a collection used in Heirarchical Task/Goal-Task Networks which decompose 
+	into smaller subtasks based on a satisfied condition. 
 
 Returns:
 	<HashmapObject> of a Method
