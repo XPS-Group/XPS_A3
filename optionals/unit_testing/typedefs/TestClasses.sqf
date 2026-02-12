@@ -15,7 +15,7 @@ Description:
  
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_UT_type_TestClasses"],
+	["#type","XPS_UT_typ_TestClasses"],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
 		---prototype
@@ -39,7 +39,7 @@ Description:
 	/*----------------------------------------------------------------------------
 	Str: #str
 		---text
-		"XPS_UT_type_TestClasses"
+		"XPS_UT_typ_TestClasses"
 		---
 	----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select  0}],

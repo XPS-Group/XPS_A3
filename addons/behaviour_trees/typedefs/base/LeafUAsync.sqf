@@ -3,7 +3,7 @@
 TypeDef: behaviour_trees. XPS_BT_typ_LeafUAsync
 	<TypeDefinition>
 		---prototype
-		XPS_BT_typ_LeafUAsync : XPS_BT_ifc_INode
+		XPS_BT_typ_LeafUAsync : XPS_BT_ifc_INode, XPS_BT_typ_Node
 		---
     	--- Prototype --- 
     	createHashmapObject ["XPS_BT_typ_LeafUAsync"]
@@ -24,19 +24,17 @@ Returns:
 ---------------------------------------------------------------------------- */
 [
 	["#type","XPS_BT_typ_LeafUAsync"],
+	["#base", XPS_BT_typ_Node],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
     	"XPS_BT_typ_LeafUAsync"
     	---
 	-----------------------------------------------------------------------------*/
-	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
 	Implements: @interfaces
     	<XPS_BT_ifc_INode>
 	-----------------------------------------------------------------------------*/
-	["@interfaces",["XPS_BT_ifc_INode"]],
-	["#flags",["unscheduled"]],
 	["_startTime",0],
 	/*----------------------------------------------------------------------------
 	Protected: condition
@@ -65,17 +63,15 @@ Returns:
     	---
 
 	Description:
-		The code that executes during a Tick of this node when the condition has been met.
-
-	Must be Overridden - This type contains no functionality
+		The code that executes during a Tick of this node when the condition has been met. Default is to simply return <Success:XPS_Status_Success>
 
 	Parameters:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>
 	-----------------------------------------------------------------------------*/
-	["result",{XPS_BT_Status_Failure}],
+	["result",{XPS_Status_Success}],
 	/*----------------------------------------------------------------------------
 	Protected: timeout
     
@@ -90,28 +86,8 @@ Returns:
 	["timeout",0],
 	/*----------------------------------------------------------------------------
 	Protected: preTick
-    
-    	--- Prototype --- 
-    	call ["preTick",_context]
-    	---
-
-	Description:
-		The code that executes before a Tick of this node. Usually 
-		propogates down the tree if possible.
-
-	Parameters:
-		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
-
-	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<XPS_BT_typ_Node.preTick>
 	-----------------------------------------------------------------------------*/
-	["preTick",compileFinal {
-		if (isNil {_self get "Status"}) then {
-			private _status = XPS_BT_Status_Running;
-			_self set ["Status",_status];
-			_self set ["_startTime",diag_tickTime];
-		};
-	}],
 	/*----------------------------------------------------------------------------
 	Protected: processTick
     
@@ -130,30 +106,13 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick", {}],
 	/*----------------------------------------------------------------------------
 	Protected: postTick
-    
-    	--- Prototype --- 
-    	call ["postTick",_status]
-    	---
-
-	Description:
-		The code that executes after a Tick of this node and then
-		sets the <Status> property before going back up the tree.
-
-	Parameters:
-		_status - <Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
-
-	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<XPS_BT_typ_Node.postTick>
 	-----------------------------------------------------------------------------*/
-	["postTick",compileFinal {
-		_self set ["Status",_this];
-		_this;
-	}],
 	/*----------------------------------------------------------------------------
 	Property: NodeType
     
@@ -164,22 +123,13 @@ Returns:
 		<XPS_BT_ifc_INode>
     
     Returns: 
-		<String> - "LEAF"
+		<XPS_BT_enum_NodeType> - XPS_BT_NodeType_Leaf
 	-----------------------------------------------------------------------------*/
-	["NodeType","LEAF"],
+	["NodeType",nil,[["CTOR","XPS_BT_NodeType_Leaf"]]],
 	/*----------------------------------------------------------------------------
 	Property: Status
-    
-    	--- Prototype --- 
-    	get "Status"
-    	---
-
-		<XPS_BT_ifc_INode>
-    
-    Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<XPS_BT_typ_Node.Status>
 	-----------------------------------------------------------------------------*/
-	["Status",nil],
 	/*----------------------------------------------------------------------------
 	Method: Halt
     
@@ -194,7 +144,7 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Halt",compileFinal {		
-		_self call ["postTick", XPS_BT_Status_Failure];
+		_self call ["XPS_BT_typ_Node.Halt"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: Init
@@ -204,6 +154,7 @@ Returns:
     	---
 
 		<XPS_BT_ifc_INode>
+		<XPS_BT_typ_Node.Init>
 
 	Description:
 		Initialization code usually called to reset the node.
@@ -212,7 +163,7 @@ Returns:
 		Nothing
 	-----------------------------------------------------------------------------*/
 	["Init",compileFinal {
-		_self set ["Status",nil];
+		_self call ["XPS_BT_typ_Node.Init",[]];
 		_self set ["_startTime",0];
 	}],
 	/*----------------------------------------------------------------------------
@@ -227,30 +178,32 @@ Returns:
 	Description:
 		The code that begins the entire Tick cycle process. Calls proccessTick
 		in a *Unscheduled* environment but defers to a conditional check once "Running". 
-		Status should be <XPS_BT_Status_Running> until condition or timeout are satisfied.
+		Status should be <XPS_Status_Running> until condition or timeout are satisfied.
 
 	Parameters:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil : <Status> property after execution
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil : <Status> property after execution
 	-----------------------------------------------------------------------------*/
 	["Tick",compileFinal {	
 		
 		switch (true) do {
 
-			case (isNil {_self get "Status"}): {
+			case (_self call ["Status",[]] isEqualTo XPS_Status_Running): {
+				_self call ["preTick",_this];
+			};
+			case (_self call ["Status",[]] isEqualTo XPS_Status_Initialized): {
 				_self call ["preTick",_this];
 				_self call ["processTick",_this];
 			};
-			// always check timeout first before condition
-			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))): {
-				_self call ["postTick",XPS_BT_Status_Failure];
+			case (diag_tickTime > ((_self get "timeout") + (_self get "_startTime"))):{
+				_self call ["Halt"];
 			};
-
 			case (_self call ["condition",_this]): {
 				_self call ["postTick",_self call ["result",_this]];
 			};
 		};
+		_self call ["postTick",_self call ["Status",[]]];
 	}]
 ]

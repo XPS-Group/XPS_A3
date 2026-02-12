@@ -14,43 +14,43 @@ ADDON = false;
 diag_log text "[XPS BT preInit]";
 
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_BT_Status
+Variable: behaviour_trees. XPS_NodeType
 
 Description:
 	A Helper class for an <Enumeration> set
 
-	- <XPS_BT_Status_Success> 
-	- <XPS_BT_Status_Failure> 
-	- <XPS_BT_Status_Running> 
+	- <XPS_NodeType_Leaf> 
+	- <XPS_NodeType_Decorator> 
+	- <XPS_NodeType_Composite> 
 
 Returns: 
-	<HashmapObject> - of type <XPS_BT_enum_Status>
+	<HashmapObject> - of type <XPS_enum_NodeType>
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_BT_Status_Success 
+Variable: behaviour_trees. XPS_NodeType_Leaf 
 	<Enumeration> 
 
 Keys: 
-	#str - "Success"
-	Value - "SUCCESS"
+	#str - "Leaf"
+	Value - "LEAF"
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_BT_Status_Failure
+Variable: behaviour_trees. XPS_NodeType_Decorator
 	<Enumeration> 
 
 Keys: 
-	#str - "Failure"
-	Value - "FAILURE"
+	#str - "Decorator"
+	Value - "DECORATOR"
 ---------------------------------------------------------------------------*/
 /* -------------------------------------------------------------------------
-Variable: behaviour_trees. XPS_BT_Status_Running 
+Variable: behaviour_trees. XPS_NodeType_Composite 
 	<Enumeration> 
 
 Keys: 
-	#str - "Running"
-	Value - "RUNNING"
+	#str - "Composite"
+	Value - "COMPOSITE"
 ---------------------------------------------------------------------------*/
-["XPS_BT_Status",XPS_BT_enum_Status] call XPS_fnc_createEnumeration;
+["XPS_BT_NodeType",XPS_BT_enum_NodeType] call XPS_fnc_createEnumeration;
 
 diag_log text "[XPS BT preInit End]";
 

@@ -9,7 +9,10 @@ Interface: core. XPS_ifc_IDelegate
 Authors:
     Crashdome
 ----------------------------------------------------------------------------
-	Method: Attach
+	Method: Subscribe
+		<code>
+		
+	Method: Unsubscribe
 		<code>
 
 	Method: Invoke
@@ -17,7 +20,7 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["Attach","CODE"],
-	["Detach","CODE"],
+	["Subscribe","CODE"],
+	["Unsubscribe","CODE"],
 	["Invoke","CODE"]
 ]

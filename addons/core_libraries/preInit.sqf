@@ -28,7 +28,7 @@ Description:
 Returns: 
 	<Static> - of <XPS_typ_Enum>
 ---------------------------------------------------------------------------*/
-XPS_Enum = compileFinal createHashmapObject [XPS_typ_Enum];
+if (isNil {XPS_Enum}) then {XPS_Enum = compileFinal createHashmapObject [XPS_typ_Enum]};
 
 /* -------------------------------------------------------------------------
 Variable: core. XPS_LifeTime
@@ -68,6 +68,46 @@ Keys:
 	Value - "2"
 ---------------------------------------------------------------------------*/
 ["XPS_LifeTime",XPS_enum_LifeTime] call XPS_fnc_createEnumeration;
+
+/* -------------------------------------------------------------------------
+Variable: core. XPS_Status
+
+Description:
+	A Helper class for an <Enumeration> set
+
+	- <XPS_Status_Success> 
+	- <XPS_Status_Failure> 
+	- <XPS_Status_Running> 
+
+Returns: 
+	<HashmapObject> - of type <XPS_enum_Status>
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
+Variable: core. XPS_Status_Success 
+	<Enumeration> 
+
+Keys: 
+	#str - "Success"
+	Value - "SUCCESS"
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
+Variable: core. XPS_Status_Failure
+	<Enumeration> 
+
+Keys: 
+	#str - "Failure"
+	Value - "FAILURE"
+---------------------------------------------------------------------------*/
+/* -------------------------------------------------------------------------
+Variable: core. XPS_Status_Running 
+	<Enumeration> 
+
+Keys: 
+	#str - "Running"
+	Value - "RUNNING"
+---------------------------------------------------------------------------*/
+["XPS_Status",XPS_enum_Status] call XPS_fnc_createEnumeration;
+
 diag_log text "[XPS Core preInit End]";
 
 ADDON = true;

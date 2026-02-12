@@ -11,13 +11,15 @@ Description:
 	retrieve <Enumeration> objects. Can be used to perform additional operations
 	on them as well. This function only accepts definitions of the 'enum' type.
 
-	The 'enum' type should only contain three things:
+	The 'enum' type should only contain:
 
-	- The "ValueType" property with a value of either "SCALAR", "STRING", or "TEXT" 
-	- The "Enums" proeprty 
+	- The "ValueType" property with a value of either "SCALAR", "STRING", "TEXT", or "HASHMAP" 
+	- The "Enums" property 
 		- an <Array> of either:
-			- <Strings> - only if "ValueType" is "SCALAR" - value will be an incremental number
-			- an <Array> Key/Value pair in format : [ <String> , Value ] where Value is one of the above three acceptable types
+			- <Strings> - only if "ValueType" is "SCALAR" - value will be an incremental number automatically starting with 0
+			- an <Array> Key/Value pair in format : [ <String> , Value ] where Value is one of the above acceptable types
+
+	Note that the 'Key' is always a string. 
 
 
 ------------------------------------------------------------------------------
@@ -35,24 +37,35 @@ Description:
 ------------------------------------------------------------------------------*/
 if !(params [ ["_varName",nil,[""]], ["_typeDef",nil,[[],createhashmap]] ]) exitWith {false};
 
+if (!(isNil _varName) && {isFinal _varName}) exitwith {false};
+
 private _fnc_createEnumConstant = {
 	params ["_var","_name","_val","_def"];
 
 	private _baseDef = [
 		["#type", _var]
 	];
-
+	
 	private _hashObject = compileFinal createHashmapObject [[
 		["#str", compileFinal format["%1",str _name]],
 		["#base",_baseDef],
 		["#type", format["%1_%2",_var,_name]],
-		["#flags",["sealed","nocopy"]],
+		["#flags",["sealed","noCopy"]],
 		["Value",_val]
 	]];
+	
 	private _gVar = format["%1_%2",_var,_name];
-	if (isNil _gVar || {(call compile _gVar) isNotEqualTo _hashObject}) then {call compile format["%1 = _hashObject",_gvar];};
+	if (isNil _gVar || {(currentNamespace getvariable _gVar) isNotEqualTo _hashObject}) then {currentNamespace setvariable [_gvar,_hashObject];};
+	
 	_def set [_name , compileFinal _gVar ];
-	_def set [_val , compileFinal _gVar ];
+	switch (true) do {
+		case (_val isEqualTypeAny ["",0]) : {
+			_def set [_val , compileFinal _gVar ];
+		};
+		case (_val isEqualType createhashmap) : {
+			_def set [str _val , compileFinal _gVar ];
+		};
+	};
 };
 
 private _baseDef = if (_typeDef isEqualType []) then {createHashMapFromArray _typeDef} else {+_typeDef};
@@ -61,11 +74,11 @@ private _newDef = createhashmap;
 	_newDef set ["#str", compileFinal format ["%1",str _varName]];
 	_newDef set ["#type",_baseDef getOrDefault ["#type","unknown type"]];
 	_newDef set ["#base",_baseDef getOrDefault ["#base",XPS_typ_Enumeration]];
-	_newDef set ["#flags",["sealed","nocopy"]];
+	_newDef set ["#flags",["sealed","noCopy"]];
 	_newDef set ["Names",[]];
 	_newDef set ["Values",[]];
 
-private _enumType = if (toUpper (_baseDef getOrDefault ["ValueType",""]) in ["STRING","SCALAR","TEXT"]) then {toUpper (_baseDef get "ValueType")} else {"SCALAR"};
+private _enumType = if (toUpper (_baseDef getOrDefault ["ValueType",""]) in ["STRING","SCALAR","TEXT", "HASHMAP"]) then {toUpper (_baseDef get "ValueType")} else {"SCALAR"};
 _newDef set ["ValueType",_enumType];
 
 
@@ -87,14 +100,23 @@ switch (true) do {
 	};
 	case (_keyArray isEqualTypeAll []) : {
 		{	
-			if !(_x params [ ["_key","",[""]], ["_value","",[0,""]]]) exitWith {false};
+			if !(_x params [ ["_key","",[""]], ["_value","",[0,"",createhashmap]]]) exitWith {false};
 			
-			if ((_enumType == "SCALAR" && {_value isEqualType 0}) ||
-			(_enumType in ["STRING","TEXT"] && {_value isEqualType ""}) ) then {
+			private _isValidType = false;
+			switch (true) do {
+				case (_enumType isEqualTo "SCALAR" && {_value isEqualType 0});
+				case (_enumType isEqualTo "HASHMAP" && {_value isEqualType createhashmap}) : {
+					_isValidType = true;
+				};
+				case (_enumType in ["STRING","TEXT"] && {_value isEqualType ""}) : {
+					if (_enumType == "TEXT") then { _value = text _value}; 
+					_isValidType = true;
+				};
+			};
+			if (_isValidType) then {
 				private _nameOk = _newDef get "Names" pushBackUnique _key;
 				if (_nameOK isEqualTo -1) then {continue};
 				
-				if (_enumType == "TEXT") then { _value = text _value}; 
 				private _valOk = _newDef get "Values" pushBackUnique _value;
 				if (_valOk isEqualTo -1) then {_newDef get "Names" deleteat _nameOK; continue};
 				
@@ -104,7 +126,7 @@ switch (true) do {
 	};
 };
 
-call compile format["%1 = compileFinal createHashmapObject [_newDef]",_varName];
+currentNamespace setVariable [_varName,compileFinal createHashmapObject [_newDef]];
 
 true;
 /*------------------------------------------------------------------------------
@@ -113,12 +135,12 @@ Example: Using a definiton defined locally with no provided values
 
 	--- Code
 		private _enumDef = [
-			["#type","TAG_typ_Pets"],
+			["#type","TAG_enum_Pets"],
 			["ValueType","SCALAR"],
 			["Enumerations", [ "None", "Cat", "Dog", "Bird"]]
 		];
 
-		private _result = ["TAG_Pets", _typeDef ] call XPS_fnc_createEnumeration; 
+		private _result = ["TAG_Pets", _enumDef ] call XPS_fnc_createEnumeration; 
 	---
 
 	This will result in the following variables in being defined with the following <HashmapObjects>:

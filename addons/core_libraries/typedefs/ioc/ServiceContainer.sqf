@@ -39,7 +39,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
 		params [["_provider",createHashmapObject [XPS_typ_ServiceProvider],[createhashmap]]];		
-		if !(CHECK_IFC1(_provider,XPS_ifc_IServiceProvider)) exitWith {
+		if !(XPS_CHECK_IFC1(_provider,XPS_ifc_IServiceProvider)) exitWith {
             throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","_provider parameter was an invalid type",_this]];
 		};
 		
@@ -72,9 +72,8 @@ Returns:
 	/*----------------------------------------------------------------------------
 	Flags: #flags
 		sealed
-		unscheduled
 	----------------------------------------------------------------------------*/
-	["#flags",["sealed","unscheduled"]],
+	["#flags",["sealed"]],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 

@@ -101,7 +101,7 @@ Returns:
 		} catch {
 			_self call ["updateTest",[[_className,_method],["Result","Failed"]]];
 			if (_exception isEqualType createhashmap && {
-				count ((_exception getOrDefault ["#type",[]]) arrayIntersect ["XPS_typ_Exception"]) > 0}
+				(_exception getOrDefault ["#type",[]]) arrayIntersect ["XPS_typ_Exception"] isNotEqualTo [];}
 			) then {
 				private _details = _self get "_unitTestCollection" call ["GetItem",[_className,_method]] get "Details";
 				_details pushBack ["Exception",_exception get "#type" select 0];

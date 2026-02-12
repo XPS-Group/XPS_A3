@@ -3,24 +3,21 @@
 Function: main. typeHandlers. XPS_fnc_findReplaceKeyInCode
 	
 	---prototype
-	_result = [_find,_replace,_code] call XPS_fnc_findReplaceKeyInCode
+	_result = [_hashmapOfKeys,_code] call XPS_fnc_findReplaceKeyInCode
 	---
 
 Description:
     
-	Replaces a key such as a private key "_key" with a different key. The values must be in quotes in code block.
+	Internal Only - although use cases outside of XPS might be useful to some. Replaces
+	a key such as a private key "_key" with a different key. The values must be in quotes in code block.
 
 Authors: 
 	Crashdome
 ----------------------------------------------------------------------------
 
-Parameter: _find 
+Parameter: _hashmapOfKeys
 
-	<String> - the string to find
-
-Parameter: _replace 
-
-	<String> - the string to replace found string
+	<Hashmap> - a map of (key)strings to find / and (value)string to replace it
 
 Parameter: _code 
 
@@ -41,9 +38,11 @@ Example:
 	---
 
 ---------------------------------------------------------------------------- */
-params [["_find","",[""]],["_replace","",[""]],["_code",{},[{}]]];
-
-private _findRegex = """""+" insert [1,_find];
-private _replaceRegex = """""" insert [1,_replace];
-private _newCodeStr = (str _code) regexreplace [_findRegex,_replaceRegex];
+params [["_pair",createhashmap,[createhashmap]],["_code",{},[{}]]];
+private _newCodeStr = (str _code);
+{
+	private _findRegex = """""+" insert [1,_x];
+	private _replaceRegex = """""" insert [1,_y];
+	_newCodeStr = _newCodeStr regexreplace [_findRegex,_replaceRegex];
+} foreach _pair;
 call compile _newCodeStr; //Have to 'call' otherwise double brackets: {{ code }}

@@ -30,6 +30,9 @@ Returns:
     Return:
         <True>
     ----------------------------------------------------------------------------*/
+    ["#create", compileFinal {
+        _self set ["_buffer",[]];
+    }],
 	/*----------------------------------------------------------------------------
 	Str: #str
 		--- prototype
@@ -38,12 +41,17 @@ Returns:
 	----------------------------------------------------------------------------*/
 	["#str", compileFinal {_self get "#type" select  0}],
 	/*----------------------------------------------------------------------------
+	Flags: #flags
+		sealed
+	----------------------------------------------------------------------------*/
+	["#flags",["sealed"]],
+	/*----------------------------------------------------------------------------
 	Implements: @interfaces
 		<XPS_ifc_IQueue>
 		<XPS_ifc_IList>
 	----------------------------------------------------------------------------*/
     ["@interfaces", ["XPS_ifc_IQueue"]],
-	["_queueArray",[],[["CTOR"]]],
+	["_buffer",[]],
     /*----------------------------------------------------------------------------
     Method: Clear
     
@@ -60,7 +68,7 @@ Returns:
 		Nothing
     ----------------------------------------------------------------------------*/
 	["Clear", compileFinal {
-		_self get "_queueArray" resize 0;
+		_self get "_buffer" resize 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Count
@@ -75,10 +83,10 @@ Returns:
 		none
 		
 	Returns:
-		<Number> - the number of elements in the stack
+		<Number> - the number of elements in the queue
     ----------------------------------------------------------------------------*/
 	["Count", compileFinal {
-		count (_self get "_queueArray");
+		count (_self get "_buffer");
 	}],
     /*----------------------------------------------------------------------------
     Method: IsEmpty
@@ -96,7 +104,7 @@ Returns:
 		<Boolean> - <True> if queue is empty, otherwise <False>.
     ----------------------------------------------------------------------------*/
 	["IsEmpty", compileFinal {
-		count (_self get "_queueArray") isEqualTo 0;
+		count (_self get "_buffer") isEqualTo 0;
 	}],
     /*----------------------------------------------------------------------------
     Method: Peek
@@ -116,7 +124,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Peek", compileFinal {
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_queueArray" select 0;
+		    _self get "_buffer" select 0;
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------
@@ -136,7 +144,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["Dequeue", compileFinal {
         if !(_self call ["IsEmpty"]) then {
-		    _self get "_queueArray" deleteat 0;
+		    _self get "_buffer" deleteat 0;
         } else {nil};
 	}],
     /*----------------------------------------------------------------------------
@@ -155,7 +163,7 @@ Returns:
 		True
     ----------------------------------------------------------------------------*/
 	["Enqueue", compileFinal {
-		_self get "_queueArray" pushBack _this;
+		_self get "_buffer" pushBack _this;
         true;
 	}],
     /*----------------------------------------------------------------------------
@@ -174,7 +182,7 @@ Returns:
 		True if value was added, False if already exists
     ----------------------------------------------------------------------------*/
 	["EnqueueUnique", compileFinal {
-		if (_self get "_queueArray" pushBackUnique _this isEqualTo -1) exitwith {false};
+		if (_self get "_buffer" pushBackUnique _this isEqualTo -1) exitwith {false};
         true;
 	}]
 ]

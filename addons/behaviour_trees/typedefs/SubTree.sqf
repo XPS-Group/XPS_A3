@@ -6,7 +6,7 @@ TypeDef: behaviour_trees. XPS_BT_typ_SubTree
 		XPS_BT_typ_SubTree : XPS_BT_ifc_INode, XPS_BT_typ_Leaf
 		---
     	--- Prototype --- 
-    	createHashmapObject ["XPS_BT_typ_SubTree"]
+    	createHashmapObject ["XPS_BT_typ_SubTree", _tree*]
     	---
 
 Authors: 
@@ -28,16 +28,15 @@ Returns:
 	["#base",XPS_BT_typ_Leaf],
 	/*----------------------------------------------------------------------------
 	Constructor: #create
-    
-    	--- Prototype --- 
-    	call ["XPS_BT_typ_SubTree"]
-    	---
-
-	Returns:
-		<True>
+		<XPS_BT_typ_Node.#create>
 	-----------------------------------------------------------------------------*/
 	["#create", compileFinal {
-		_self set ["tree",nil];
+		_self call ["XPS_BT_typ_Node.#create",[]];
+		if (isNil "_this") then {
+			_self set ["tree",nil];
+		} else {
+			_self set ["tree",_this];
+		};
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -76,10 +75,10 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
-		private _status = _self get "Status";
+		private _status = XPS_Status_Failure;
 		private _tree = _self get "tree";
 		if !(isNil "_tree") then {_status = _tree call ["Tick",_this];};
 		_status;

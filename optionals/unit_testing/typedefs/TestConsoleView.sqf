@@ -43,8 +43,8 @@ Returns:
 		_self set ["_displayHandle",_display];
 		private _viewModel = createHashmapObject [XPS_UT_typ_TestConsoleViewModel];
 		_self set ["_viewModel",_viewModel];
-		_viewModel get "UpdateUnitTest" call ["Attach",[_self,"onUpdateUnitTest"]];
-		_viewModel get "StateChanged" call ["Attach",[_self,"onTestServiceStateChanged"]];
+		_viewModel get "UpdateUnitTest" call ["Subscribe",[_self,"onUpdateUnitTest"]];
+		_viewModel get "StateChanged" call ["Subscribe",[_self,"onTestServiceStateChanged"]];
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -262,7 +262,7 @@ Returns:
 		_self set ["_displayHandle",displayNull];
 		private _vm = _self get "_viewModel";
 		_self set ["_viewModel",nil];
-		_vm get "UpdateUnitTest" call ["Detach",[_self,"onUpdateUnitTest"]];
+		_vm get "UpdateUnitTest" call ["Unsubscribe",[_self,"onUpdateUnitTest"]];
 		_vm call ["Close"];
 	}],
 	/*----------------------------------------------------------------------------

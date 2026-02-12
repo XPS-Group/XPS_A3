@@ -49,8 +49,11 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#create",compileFinal {
-		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],["_reversePath",true,[true]]]) exitWith {nil;};
-		if !(CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
+		if !(params [["_graph",nil,[createhashmap]],["_startKey",nil,[]],["_endKey",nil,[]],"_reversePath"]) exitWith {nil;};
+		if !(XPS_CHECK_IFC1(_graph,XPS_ifc_IAstarGraph)) then {diag_log text format["XPS_typ_AstarSearch: %1 does not pass interface check for XPS_ifc_IAstarGraph",_graph]};
+		
+		[_reversePath, true] select {isNil "_reversePath"};
+		
 		_self set ["_workingGraph",_graph];
 		_self set ["_workingStartKey",_startKey];
 		_self set ["_workingEndKey",_endKey];
@@ -139,7 +142,7 @@ Returns:
 		<Array> - of nodes from start to goal
 	-----------------------------------------------------------------------------*/
 	["getPath",compileFinal {
-		private _status = "FAILURE";
+		private _status = XPS_Status_Failure;
 		private _start = _self get "StartNode";
 		private _end = _self get "EndNode";
 		private _current = _end;
@@ -148,12 +151,12 @@ Returns:
 
 		if (isNil {_cameFrom get (_current get "Index")}) then {_current = _self get "lastNode";};
 
-		while {!(isNil "_current") && !(_current isEqualTo _start)} do {
+		while {!(isNil "_current") && (_current isNotEqualTo _start)} do {
 			_path pushBack _current;
 			_current = _cameFrom get (_current get "Index");
 		};
 
-		if (_current isEqualTo _start) then {_status = "SUCCESS";};
+		if (_current isEqualTo _start) then {_status = XPS_Status_Success;};
 		if (_self get "_reverse") then {reverse _path};
 		_self set ["Path",_path];
 		_self set ["Status",_status];
@@ -177,14 +180,8 @@ Returns:
 		params [["_priority",nil,[0]],"_item"];
 
 		private _frontier = _self get "frontier";
-		private _frontierSize = count _frontier;
-		private _i = 0;
-
-		while {_i <= _frontierSize - 1 && { _priority > ((_frontier select _i) select 0) }} do {
-			_i = _i + 1;
-		};
-
-		_frontier insert [_i, [[_priority, _item]] ];
+		_frontier pushback [_priority, _item];
+		_frontier sort true;
 	}],
 	/*----------------------------------------------------------------------------
 	Protected: frontierPullLowest
@@ -198,7 +195,7 @@ Returns:
 	-----------------------------------------------------------------------------*/
 	["frontierPullLowest",compileFinal {
 		private _frontier = _self get "frontier";
-		if (count _frontier > 0) exitWith {
+		if (_frontier isNotEqualTo []) exitWith {
 			(_frontier deleteat 0) # 1;
 		};
 		nil;
@@ -324,7 +321,7 @@ Returns:
 		_self get "costSoFar" set [_self get "StartNode" get "Index",0];
 		_self set ["cameFrom",createhashmap];
 		_self set ["Path",[]];
-		_self set ["Status","INITIALIZED"];
+		_self set ["Status","Initialized"];
 	}],
 	/*----------------------------------------------------------------------------
 	Method: ProcessNextNode
@@ -339,11 +336,13 @@ Returns:
 	it on to the working graph.
 	-----------------------------------------------------------------------------*/
 	["ProcessNextNode",compileFinal {
-		//Bail if already finished
-		if (_self get "Status" in ["SUCCESS","FAILURE"]) exitWith {};
 		
 		// Set status Running if not already
-		if !(_self get "Status" == "RUNNING") then {_self set ["Status","RUNNING"]};
+		private _status = _self get "Status";
+		if (_status isEqualTo "Initialized") then {_self set ["Status",XPS_Status_Running]};
+
+		//Bail if already finished
+		if (_status in [XPS_Status_Success,XPS_Status_Failure]) exitWith {};
 
 		private _graph = _self get "_workingGraph";
 		private _endNode = _self get "EndNode";

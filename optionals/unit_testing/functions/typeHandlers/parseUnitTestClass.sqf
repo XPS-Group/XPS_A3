@@ -35,9 +35,7 @@ private _result = if (isNil "_result") then {[]} else {_result};
 
 private _fnc_loadFile = {
 	params ["_file"];
-	private _statement = "createHashmapObject [ [ call compileScript [""%1"",false] ,false ,true ,true ,true ] call XPS_fnc_buildTypeDefinition ];";
-	private _code =  format[_statement,_file];
-	call compile _code;
+	createHashmapObject [ [ call compileScript [_file,false] ,false ,true ,true ,true ] call XPS_fnc_buildTypeDefinition ];
 };
 
 private _file = _class >> "file";

@@ -150,14 +150,15 @@ Flags:
 		_self set ["RoadObject",_object];
 		_self set ["ConnectedTo",createhashmap];
 		//_self set ["ConnectedToPath",createHashMapFromArray [["RHDrive",createhashmap],["RHWalk",createhashmap],["LHDrive",createhashmap],["LHWalk",createhashmap]]];
-		private _roadInfo = getRoadInfo _object;
-		_self set ["Type",_roadInfo#0]; 
-		_self set ["Width",_roadInfo#1]; 
-		_self set ["BeginPos",_roadInfo#6]; 
-		_self set ["EndPos",_roadInfo#7]; 
-		_self set ["IsBridge",_roadInfo#8]; 
+		// private _roadInfo = getRoadInfo _object;
+		getRoadInfo _object params ["_mapType", "_width","_isPedestrian", "_texture", "_textureEnd", "_material", "_begPos", "_endPos", "_isBridge"];
+		_self set ["Type", _mapType]; 
+		_self set ["Width", _width]; 
+		_self set ["BeginPos", _begPos]; 
+		_self set ["EndPos", _endPos]; 
+		_self set ["IsBridge", _isBridge]; 
 		private _aslPos = getposASL _object;
-		_aslPos set [2,((_roadInfo#7#2) + (_roadInfo#6#2))/2];
+		_aslPos set [2,((_begPos#2) + (_endPos#2))/2];
 		_self set ["PosASL",_aslPos]; 
 	}]
 ]

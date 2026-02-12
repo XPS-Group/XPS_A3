@@ -13,10 +13,10 @@ Authors:
 	Crashdome
    
 Description:
-	<HashmapObject> which wraps an <XPS_ifc_IDelegate> to provide Attach/Detach functionality without exposing the Invoke function.
+	<HashmapObject> which wraps an <XPS_ifc_IDelegate> to provide Subscribe/Unsubscribe functionality without exposing the Invoke function.
 
 Parameters: 
-	_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Attach/Detach functions around.
+	_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Subscribe/Unsubscribe functions around.
 
 Returns:
 	<HashmapObject>
@@ -36,7 +36,7 @@ Throws:
         ---
     
 	Parameters: 
-		_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Attach/Detach functions around.
+		_delegate - <XPS_ifc_IDelegate> - the delegate to wrap Subscribe/Unsubscribe functions around.
 		
 	Returns:
 		<True>
@@ -50,7 +50,7 @@ Throws:
 		if (isNil "_anyDelegate") exitWith {
 			throw createHashmapObject [XPS_typ_ArgumentNilException,[_self,"#create","Delegate Parameter was nil or not a hashmap"]];
 		};
-		if (!(CHECK_IFC1(_anyDelegate,XPS_ifc_IDelegate))) exitWith {
+		if (!(XPS_CHECK_IFC1(_anyDelegate,XPS_ifc_IDelegate))) exitWith {
 			throw createHashmapObject [XPS_typ_InvalidArgumentException,[_self,"#create","Delegate Parameter was Invalid type",_this]];
 		};
 		_self set ["_delegate",_anyDelegate];
@@ -69,10 +69,10 @@ Throws:
 	["@interfaces",["XPS_ifc_IEventHandler"]],
 	["_delegate",nil],
     /*----------------------------------------------------------------------------
-    Method: Attach
+    Method: Subscribe
     
         --- Prototype --- 
-        call ["Attach",_pointer]
+        call ["Subscribe",_pointer]
         ---
 
         <XPS_ifc_IEventHandler>
@@ -84,12 +84,12 @@ Throws:
 
 		Example Using Code:
 		--- code 
-        call ["Attach", compileFinal { hint "Hello";}]
+        call ["Subscribe", compileFinal { hint "Hello";}]
 		---
 
 		Example Using <HashmapObject> Method:
 		--- code 
-        call ["Attach",[_hashmapobject, "MyMethodName"]]
+        call ["Subscribe",[_hashmapobject, "MyMethodName"]]
 		---
 		
 	Returns:
@@ -100,14 +100,14 @@ Throws:
 		<XPS_typ_InvalidArgumentException> - when parameter supplied does not conform to the above
 		<XPS_typ_InvalidArgumentException> - when parameter supplied was already added
     ----------------------------------------------------------------------------*/
-	["Attach", compileFinal {
-		_self get "_delegate" call ["Attach",_this];
+	["Subscribe", compileFinal {
+		_self get "_delegate" call ["Subscribe",_this];
 	}],
     /*----------------------------------------------------------------------------
-    Method: Detach
+    Method: Unsubscribe
     
         --- Prototype --- 
-        call ["Detach",_pointer]
+        call ["Unsubscribe",_pointer]
         ---
 
         <XPS_ifc_IEventHandler>
@@ -122,7 +122,7 @@ Throws:
 	Returns:
 		Deleted element or nothing if not found
     ----------------------------------------------------------------------------*/
-	["Detach", compileFinal {
-		_self get "_delegate" call ["Detach",_this];
+	["Unsubscribe", compileFinal {
+		_self get "_delegate" call ["Unsubscribe",_this];
 	}]
 ]

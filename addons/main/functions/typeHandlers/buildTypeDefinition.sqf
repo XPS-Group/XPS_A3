@@ -15,7 +15,7 @@ Description:
 
 	Has extra enhancements for inheritance and interfacing by looking for the following keys:
 
-	_String - any string starting with an underscore is obfuscated by replacing the key and references to that key in code blocks with
+	_String - any string starting with an underscore is changed at runtime by replacing the key and references to that key in code blocks with
 	a unique identifier every time the type definition is rebuilt. This does not apply if debug mode is enabled. 
 	See <XPS_fnc_preprocessTypeDefinition> for more info. 
 
@@ -61,14 +61,21 @@ private _errors = false;
 private _fnc_recurseBases = {
 	params ["_hashmap"];
 	if ("#base" in _hashmap) then {
-		private _base = createHashMapFromArray (_hashmap get "#base");
-		[_base] call _fnc_recurseBases;
-		_hashmap merge _base;
+		private _base = _hashmap get "#base";
+		if !(_base isEqualTypeAny [[],createhashmap]) exitwith {diag_log format ["XPS_fnc_buildTypeDefinition: Error during #base recursion - #base:%1",_base];_errors = true;};
+		if (_base isEqualType []) then {_base = createhashmapfromarray _base};
+		if !(isNil "_base" || {_base isEqualTo createhashmap}) then {
+			[_base] call _fnc_recurseBases;
+			_hashmap merge _base;
+		} else {
+			diag_log format ["XPS_fnc_buildTypeDefinition: Empty Base - #base:%1",_base];
+			_errors = true;
+		};
 	};
 };
 
 if (_preprocess) then {
-	if !(_type call XPS_fnc_preprocessTypeDefinition) exitWith {
+	if !([_type] call XPS_fnc_preprocessTypeDefinition) exitWith {
 		_errors = true;
 	};
 };
@@ -79,7 +86,7 @@ if (_errors) exitWith {
 };
 
 private _hashmap = createHashMapFromArray _type;
-private _preCompiled = _hashmap; // In case it doesn't have a parent, we need this for later
+private _pHashmap = _hashmap; // In case it doesn't have a parent, we need this for later
 
 // Check for parent type
 if ("#base" in _hashmap) then {
@@ -89,9 +96,9 @@ if ("#base" in _hashmap) then {
 		_errors = true;
 	};
 
-	_preCompiled = if (_pType isEqualType []) then {createHashMapFromArray _pType} else {+_pType};
+	_pHashmap = if (_pType isEqualType []) then {createHashMapFromArray _pType} else {+_pType};
 
-	private _pTypeName = _preCompiled get "#type";
+	private _pTypeName = _pHashmap get "#type";
 	private _keys = keys _hashmap;
 	{
 		if (isNil "_y") then {continue};
@@ -129,22 +136,37 @@ if ("#base" in _hashmap) then {
 				};
 			};
 		};
-	} forEach _preCompiled;
-
-	[_preCompiled] call _fnc_recurseBases;
+	} forEach _pHashmap;
 
 	if (_noStack) then {
 		{
-			if (_x in _precompiled) then {
-				if !(_x in _keys) then {_hashmap set [_x, _precompiled get _x]};
-				_preCompiled deleteat _x;
+			if (_x in _pHashmap) then {
+				if !(_x in _keys) then {_hashmap set [_x, _pHashmap get _x]};
+				_pHashmap deleteat _x;
 			};
 		} forEach ["#create","#clone","#delete"];
-		_hashmap set ["#base",_preCompiled toArray false];
+		_hashmap set ["#base",+_pHashmap];
 	};
 	
-	// Merge for interface check
-	_preCompiled merge [_hashmap,true];
+	//merge create,delete,serialize, and deserialize methods IF preprocessor generated them - denoted by two underscores e.g _#create_
+	{
+		_x params ["_desiredKey","_appendKey"];
+		if (_appendKey in _hashmap) then {
+			if (_desiredKey in _hashmap) then {
+				private _strCode = str (_hashmap get _desiredKey) trim ["{}",0];
+				private _appCode = str (_hashmap get _appendKey) trim ["{}",0];
+				private _mergedCode = compileFinal (_strCode + _appCode);
+				_hashmap set [_desiredKey , _mergedcode];
+			} else {
+				_hashmap set [_desiredKey , _hashmap get _appendKey];
+			};
+			_hashmap deleteat _appendKey;
+		};
+	} foreach [["#create","_#create_"],["#delete","_#delete_"],["Serialize","_Serialize_"],["Deserialize","_Deserialize_"]];
+
+	// Merge with parent and get Base Keys for interface check
+	_pHashmap merge [_hashmap,true];
+	[_pHashmap] call _fnc_recurseBases;
 	
 };
 
@@ -154,11 +176,11 @@ if (_errors) exitWith {
 };
 
 // Check Interfaces are implemented
-private _interfaces = _preCompiled getOrDefault ["@interfaces",nil];
+private _interfaces = _pHashmap getOrDefault ["@interfaces",nil];
 
-if (isNil {_interfaces} || {[_preCompiled, keys _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
-	// Passes all checks and is Ok to push out definition
-	_hashmap toArray false;
+if (isNil {_interfaces} || {[_pHashmap, _interfaces, _allowNils] call XPS_fnc_checkInterface}) then {
+	// Passes all checks and is Ok to push out built definition
+	_hashmap;
 } else {
 	diag_log text (format ["XPS_fnc_buildTypeDefinition: Type:%1 did not pass Interface Check",_hashmap get "#type"]);
 	false;

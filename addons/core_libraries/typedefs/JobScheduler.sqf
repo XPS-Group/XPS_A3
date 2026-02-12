@@ -35,6 +35,7 @@ Returns:
     -------------------------------------------------------------------------*/ 
 	["#create", compileFinal {
 		_self call ["XPS_typ_TypeCollection.#create",_this];
+		_self set ["_queueObject",createHashmapObject [XPS_typ_Queue]];
 	}],
     /*----------------------------------------------------------------------------
     Parent: #str
@@ -49,7 +50,7 @@ Returns:
     ----------------------------------------------------------------------------*/
 	["@interfaces",["XPS_ifc_IJobScheduler"]],
 	["_handle",nil],
-	["_queueObject", nil, [["CTOR","createHashmapObject [XPS_typ_Queue]"]]],
+	["_queueObject",nil],
 	/*----------------------------------------------------------------------------
 	Property: CurrentItem
     

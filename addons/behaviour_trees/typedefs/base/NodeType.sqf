@@ -1,28 +1,28 @@
 #include "script_component.hpp"
 /* ----------------------------------------------------------------------------
-TypeDef: behaviour_trees. XPS_BT_enum_Status
+TypeDef: core. XPS_BT_enum_NodeType
 	<TypeDefinition>
 		---prototype
-		XPS_BT_enum_Status : core.XPS_ifc_IEnumeration, core.XPS_typ_Enumeration
+		XPS_BT_enum_NodeType : XPS_ifc_IEnumeration, XPS_typ_Enumeration
 		---
 
 Authors: 
 	Crashdome
 
 Description:
-	An Enumeration set for node statuses.
+	An Enumeration set for node types.
 
 	--- code
-	XPS_BT_Status_Success	Success		SUCCESS
-	XPS_BT_Status_Failure	Failure		FAILURE
-	XPS_BT_Status_Running	Running		RUNNING
+	XPS_BT_NodeType_Leaf		Leaf		LEAF
+	XPS_BT_NodeType_Decorator	Decorator	DECORATOR
+	XPS_BT_NodeType_Composite	Composite	COMPOSITE
 	---
 
-	See <core.XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
+	See <XPS_fnc_createEnumeration:core. typeHandlers. XPS_fnc_createEnumeration> for more info on usage of types inheriting this type
 
 ---------------------------------------------------------------------------- */
 [
-	["#type","XPS_BT_enum_Status"],
+	["#type","XPS_BT_enum_NodeType"],
 	/*----------------------------------------------------------------------------
 	Parent: #base
     	<core.XPS_typ_Enumeration>
@@ -43,17 +43,17 @@ Description:
 		<String> - "<STRING>"
 	-----------------------------------------------------------------------------*/
 	["ValueType","STRING"],
-	["Enumerations", [["Success","SUCCESS"], ["Failure","FAILURE"], ["Running","RUNNING"]]]
+	["Enumerations", [["Leaf","LEAF"], ["Decorator","DECORATOR"], ["Composite","COMPOSITE"]]]
 	/*----------------------------------------------------------------------------
 	Property: Values
-		<core.XPS_typ_Enumeration.Values>
+		<XPS_typ_Enumeration.Values>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: GetEnum
-		<core.XPS_typ_Enumeration.GetEnum>
+		<XPS_typ_Enumeration.GetEnum>
 	-----------------------------------------------------------------------------*/
 	/*----------------------------------------------------------------------------
 	Method: IsDefined
-		<core.XPS_typ_Enumeration.IsDefined>
+		<XPS_typ_Enumeration.IsDefined>
 	-----------------------------------------------------------------------------*/
 ]

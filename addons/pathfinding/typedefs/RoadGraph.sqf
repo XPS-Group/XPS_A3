@@ -137,10 +137,10 @@ Flags:
 	["getAllConnected",compileFinal {
 		params [["_node",nil,[createhashmap]]];
 		private _object = _node get "RoadObject";
-		private _ct = _node get "ConnectedTo";
+		private _connectedTo = _node get "ConnectedTo";
 		private _roadArray = [];
 		{
-			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in _ct) then {
+			if !(_x isEqualto objNull || (str _x) isEqualTo (str _object) || (str _x) in _connectedTo) then {
 				_roadArray pushBackunique _x;
 			};
 		} forEach roadsconnectedto _object;
@@ -158,9 +158,12 @@ Flags:
 		private _ePosR = _ePosC getpos [_width,(_pos getDir _ePosC)+90];
 		{
 			_x resize 2;
-			private _r = roadAt _x;
-			if !(_r isEqualto objNull || (str _r) isEqualTo (str _object) || (str _r) in _ct || abs((getposASL _r)#2)-(_pos#2)>2) then {
-				_roadArray pushBackunique _r;
+			private _road = roadAt _x;
+			if !(_road isEqualto objNull 
+				|| {(str _road) isEqualTo (str _object) 
+				|| {(str _road) in _connectedTo 
+				|| {abs((getposASL _road)#2)-(_pos#2)>2}}}) then {
+					_roadArray pushBackunique _road;
 			};
 		} forEach [_bposC,_bPosL,_bPosR,_eposC,_ePosL,_ePosR];
 
@@ -176,9 +179,9 @@ Flags:
 		// _m setmarkerdir (_pos getdir _ePosC);  
 
 		{
-			_ct set [str _x,_x];
-			private _rct = _self get "Roads" get (str _x);
-			_rct get "ConnectedTo" set [str _object,_object];
+			_connectedTo set [str _x,_x];
+			private _roadsConnected = _self get "Roads" get (str _x);
+			_roadsConnected get "ConnectedTo" set [str _object,_object];
 
 		} forEach _roadArray;
 		
@@ -307,7 +310,7 @@ Flags:
 	["GetNodeAt",compileFinal {
 		if !(params [["_pos",nil,[[]],[2,3]]]) exitWith {nil};
 		private _roads = nearestTerrainObjects [_pos,["MAIN ROAD","ROAD","TRACK","TRAIL"],50,true];
-		if (count _roads > 0) exitWith {
+		if (_roads isNotEqualTo []) exitWith {
 			_self get "Roads" get (str (_roads#0));
 		};
 		nil;
@@ -353,18 +356,18 @@ Flags:
 					private _hm = _x;
 					//Get which color it should be
 					private _color = "ColorBlack"; 
-					private _rct = [];
-					_rct append values (_hm get "ConnectedTo");
-					if (count _rct < 2) then {_color = "ColorBlue"}; 
+					private _roadsConnected = [];
+					_roadsConnected append values (_hm get "ConnectedTo");
+					if (count _roadsConnected < 2) then {_color = "ColorBlue"}; 
 					if (_hm get "IsBridge") then {_color = "ColorWhite"}; 
 					if (_hm get "Type" == "TRAIL") then {_color = "ColorOrange"};
-					if (count _rct < 1) then {_color = "ColorRed"}; 
-					if (count _rct > 2) then {_color = "ColorGreen"};  
+					if (count _roadsConnected < 1) then {_color = "ColorRed"}; 
+					if (count _roadsConnected > 2) then {_color = "ColorGreen"};  
 
 					//Create the marker
 					_m = createmarker [_hm get "Index",_hm get "RoadObject"]; 
-					_m setmarkertype "hd_dot"; 
-					_m setmarkercolor _color; 
+					_m setmarkertypelocal "hd_dot"; 
+					_m setmarkercolorlocal _color; 
 					_m setmarkersize [0.4,0.4];  
 					_markers pushBack (_hm get "Index");
 				} forEach values (_self get "Roads");
@@ -427,9 +430,9 @@ Flags:
 		private _mP = _start;
 		{
 			_m = createmarker [str str str str str (_x get "PosASL"),_x get "PosASL"];
-			_m setmarkertype "mil_arrow";
-			_m setmarkercolor "ColorRed";
-			_m setmarkersize [0.5,0.5];
+			_m setmarkertypelocal "mil_arrow";
+			_m setmarkercolorlocal "ColorRed";
+			_m setmarkersizelocal [0.5,0.5];
 			_m setmarkerdir (_mP getdir (getmarkerpos _m));
 			_mP = getmarkerpos _m;
 		} forEach _path;

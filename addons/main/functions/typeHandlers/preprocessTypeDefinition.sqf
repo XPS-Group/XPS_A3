@@ -1,4 +1,5 @@
 #include "script_component.hpp"
+#pragma hemtt ignore_variables ["_privateKeys","_allowNils","_preprocess","_noStack"]
 /* ----------------------------------------------------------------------------
 Function: main. typeHandlers. XPS_fnc_preprocessTypeDefinition
 	
@@ -36,6 +37,9 @@ Description:
 		["VAILDATE_ANY", value] - see BIS command isEqualTypeAny
 		["VAILDATE_PARAMS", value] - see BIS command isEqualTypeParams
 		["VAILDATE_TYPE", value] - see BIS command isEqualTypeType
+		["NESTED_TYPE", value] - Creates a nested class definition - value must be an array of booleans: [allowNils, preprocess, noStack]
+		["IN_TYPE_ONLY"] - Injects a delete key (used for nested types) on creation of an object
+		["SERIALIZABLE"] - creates "Serialize" and "Deserialize" methods if they don't exist and adds this key to serialization code
 
 	However, you can define any Attribute as long as it is in an array. The preprocessor will
 	ignore custom attributes but, the first element MUST be a string. This is good if you want to 
@@ -61,7 +65,8 @@ private _typeDef = _this;
 
 if (count _this == 1 && {_this#0 isEqualTypeAll []}) then {_typeDef = _this#0};
 
-private _privateKeys = [];
+_privateKeys = if (isNil "_privateKeys") then {createhashmap} else {_privateKeys};
+
 private _result = true;
 private _ctor = ""; 
 private _dtor = "";
@@ -70,9 +75,19 @@ private _dtor_l = "";
 private _hasCtor = false;
 private _hasDtor = false;
 
-private _index = _typeDef findIf {_x isEqualType [] && {_x select 0 == "#type"}};
-private _typeArray = [_typeDef select _index,["<unknown type>"]] select (_index isEqualTo -1);
+private _srlz = ""; 
+private _desrlz = "";
+private _hasSrlz = false;
+private _hasDesrlz = false;
+
+private _typeIndex = _typeDef findIf {_x isEqualType [] && {_x select 0 == "#type"}};
+private _typeArray = [_typeDef select _typeIndex,["<unknown type>"]] select (_typeIndex isEqualTo -1);
 private _typeName = _typeArray select (count _typeArray > 1);
+
+private _flagsIndex = _typeDef findIf {_x isEqualType [] && {_x select 0 == "#flags"}};
+private _flags = [_typeDef select _flagsIndex,[]] select (_flagsIndex isEqualTo -1);
+
+private _nested = createhashmap;
 
 try 
 {
@@ -88,22 +103,10 @@ try
 		private _key = _keyPair#0;
 		private _value = _keyPair#1;
 
-			if (_key == "#create") then {_hasCtor = true};
-			if (_key == "#delete") then {_hasDtor = true};
-
-			// Convert Interface list of strings to hashmap with ref to interface
-			if (_key == "@interfaces") then {
-				if (_value isEqualType [] && {_value isEqualTypeAll ""}) then {
-					private _interfaces = createhashmap;
-					{
-						private _ifc = call compile _x;
-						if (isNil "_ifc") then  {throw format ["Cannot create interface: %1.",_x]};
-						_interfaces merge [createHashMapFromArray [[_x,_ifc]],true];
-					} forEach _value;
-					_value = compileFinal _interfaces;
-					_keyPair set [1,_value];
-				} else {throw format ["Interface list for Key @interfaces is not an array of strings."]};
-			};
+			if (toLower _key isEqualTo "#create") then {_hasCtor = true};
+			if (toLower _key isEqualTo "#delete") then {_hasDtor = true};
+			if (toLower _key isEqualTo "serialize") then {_hasSrlz = true};
+			if (toLower _key isEqualTo "deserialize") then {_hasDesrlz = true};
 
 		private _attributes = [];
 		if (count _keyPair > 2) then {
@@ -180,6 +183,22 @@ try
 						_result = false;
 					};
 				};
+				case "NESTED_TYPE" : {
+					if (isNil "_attParams") then {_attParams = [true, true, true]} else {
+						if !(_attParams isEqualTypeAll true) then {throw  format ["Inner Type Attribute for Key %2 was %1. Expected Array of Booleans.",_attParams,_key]}
+					};
+
+					_nested set [_i, [_value]+_attparams];
+				};
+				case "IN_TYPE_ONLY" : {	
+					if !("sealed" in _flags) then {
+						_ctor_l = _ctor_l + format["_self deleteAt %1;",str _key]; 
+					};
+				};
+				case "SERIALIZABLE" : {
+					_srlz = _srlz + format["_thisDTO set [%2, _self get %1];",str _key,str ("s|"+_key)]; 
+					_desrlz = _desrlz + format["_self set [%1, _thisDTO get %2];",str _key,str ("s|"+_key)]; 
+				};
 			};
 
 			_a = _a + 1;
@@ -189,7 +208,7 @@ try
 		// Finally record if a private key for later obfuscation
 		if (_key isEqualType "" && {_key find "_" isEqualTo 0}) then {
 			private _uid = [8] call XPS_fnc_createUniqueID;
-			_privateKeys pushBack [_key,_uid];
+			_privateKeys set [_key,_uid];
 			_keyPair set [0,_uid]
 		};
 	};
@@ -199,10 +218,13 @@ try
 
 
 	// ------- Code injection for constructor/destructor and private keys -------- //
-	// Add create / delete methods if they dont exist prior to changing private keys
-	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushBack ["#create",compile (_ctor + _ctor_l)]};
-	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushBack ["#delete",compile (_dtor + _dtor_l)]};
+	// Add create / delete / serialize / deserialize methods if they dont exist prior to changing private keys
+	if (!_hasCtor && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}) then {_typeDef pushBack ["_#create_",compileFinal  (_ctor + _ctor_l)]};
+	if (!_hasDtor && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}) then {_typeDef pushBack ["_#delete_",compileFinal  (_dtor + _dtor_l)]};
+	if (!_hasSrlz && {_srlz isNotEqualTo ""}) then {_typeDef pushBack ["_Serialize_",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_srlz+"compileFinal _thisDTO;")]};
+	if (!_hasDesrlz && {_desrlz isNotEqualTo ""}) then {_typeDef pushBack ["_Deserialize_",compileFinal  ("params [[""_thisDTO"",createhashmap,[createhashmap]]];"+_desrlz)]};
 
+	// First pass - Injection
 	for "_ix" from 0 to (count _typeDef)-1 do {
 		private _keyPair = _typeDef#_ix;
 		_keyPair params ["_key","_value"];
@@ -210,25 +232,40 @@ try
 		if (_hasCtor && {_key == "#create" && {_ctor isNotEqualTo "" || _ctor_l isNotEqualTo ""}}) then {
 			private _strCode = (str _value) insert [1,_ctor];
 			_value = call compile (_strCode insert [count _strCode - 1,_ctor_l]);
-			_keyPair set [1, _value];
+			_keyPair set [1, compileFinal _value];
 		};
 		// Destructor injection but only if it existed prior to above code
 		if (_hasDtor && {_key == "#delete" && {_dtor isNotEqualTo "" || _dtor_l isNotEqualTo ""}}) then {
 			private _strCode = (str _value) insert [1,_dtor];
 			_value = call compile (_strCode insert [count _strCode - 1,_dtor_l]);
-			_keyPair set [1, _value];
+			_keyPair set [1, compileFinal _value];
+		};
+		// Serialize injection but only if it existed prior to above code
+		if (_hasSrlz && {_key == "Serialize" && {_srlz isNotEqualTo ""}}) then {
+			private _strCode = str _value;
+			_value = call compile (_strCode insert [count _strCode - 1,_srlz+"compileFinal _thisDTO;"]);
+			_keyPair set [1, compileFinal _value];
+		};
+		// Deserialize injection but only if it existed prior to above code
+		if (_hasDesrlz && {_key == "Deserialize" && {_desrlz isNotEqualTo ""}}) then {
+			private _strCode = str _value;
+			_value = call compile (_strCode insert [count _strCode - 1,_desrlz]);
+			_keyPair set [1,compileFinal _value];
 		};
 
 		if (_value isEqualType {}) then {
 			//Replace Private Keys in any code block
-			{
-				private _find = _x#0;
-				private _replace = _x#1;
-				_value = [_find,_replace,_value] call xps_fnc_findReplaceKeyInCode;
+			if (_privateKeys isNotEqualTo createhashmap) then {
+				_value = [_privateKeys,_value] call xps_fnc_findReplaceKeyInCode;
 				_keyPair set [1,_value];
-			} forEach _privateKeys;
+			};
 		};
 	};
+
+	//Build any nested types with current _privateKeys list 
+	{
+		_typedef#_x set [1,createhashmapfromarray (_y call XPS_fnc_buildTypeDefinition)];
+	} foreach _nested;
 
 	_result;
 

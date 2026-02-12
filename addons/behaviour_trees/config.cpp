@@ -4,7 +4,7 @@ class CfgPatches {
 	class ADDON {
 			// Meta information for editor
 			name = "XPS : Behaviour Trees";
-			author = "Crashdome";
+			author = "XPS Group";
 			url = "";
 	
 			requiredVersion = REQUIRED_VERSION; 
@@ -15,5 +15,6 @@ class CfgPatches {
 	};
 };
 
+#include "Cfg3DEN.hpp"
 #include "CfgFunctions.hpp"
 #include "CfgTypeDefinitions.hpp"

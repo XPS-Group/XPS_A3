@@ -15,7 +15,7 @@ Description:
 	Provides a Native Type checker limited to <Hashmap Supported Key Types : https://community.bistudio.com/wiki/HashMap>
 	
 	- <Array>
-	- <Bool>
+	- <Boolean>
 	- <Code>
 	- <Config>
 	- <Namespace>

@@ -1,4 +1,5 @@
 #include "script_component.hpp"
+#pragma hemtt ignore_variables ["_preprocess","_allowNils","_recompile","_preCache","_noStack","_isFinal"]
 /* ----------------------------------------------------------------------------
 Function: main. typeHandlers. XPS_fnc_parseTypeDefClass
 	
@@ -26,7 +27,7 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 if !(params [["_class",nil,[configFile]],"_tag"]) exitWith {false;};
-disableSerialization;
+
 _tag = [_tag] param [0,configName _class,[""]];
 if (isText (_class >> "tag")) then {
 	//diag_log text format ["[XPS TD parser] : changing TAG: %1",_tag];
@@ -34,14 +35,23 @@ if (isText (_class >> "tag")) then {
 };
 
 private _fnc_loadFile = {
-	private _statement = "";
+	private _map = 0;
 	switch (_type) do {
-		case "ifc" : {_statement = "private _ifc = (call compileScript [""%1"",false]) call XPS_fnc_preprocessInterface; if (_ifc isEqualType []) then {%5 createHashMapFromArray _ifc;};"};
+		case "ifc" : {
+			_map = createhashmapfromarray ((call compileScript [_file,false]) call XPS_fnc_preprocessInterface);
+		};
 		case "enum";
-		case "typ" : {_statement = "private _td = [call compileScript [""%1"",false],%2,%3,%4] call XPS_fnc_buildTypeDefinition; if (_td isEqualType []) then {%5 createHashMapFromArray _td;};"}; 
+		case "typ" : {
+			_map = [call compileScript [_file,false],_allowNils,_preprocess,_noStack] call XPS_fnc_buildTypeDefinition;
+		}; 
 	};
-	private _code =  format[_statement,_file,_allowNils,_preprocess,_noStack,_isFinal_Cmd];
-	call compile _code;
+	if (_map isEqualType createhashmap) then {
+		if (_isFinal) then {
+			compileFinal _map
+		} else {
+			_map
+		};
+	};
 };
 
 //diag_log text format ["[XPS TD parser] : parsing TAG: %1 - CLASS: %2",_tag, configName _class];
@@ -55,36 +65,41 @@ if (isText _file && isText _type) then {
 	private _varName = format ["%1_%2_%3",_tag,_type,configName _class];
 	private _typeDefinition = uiNamespace getVariable _varName;
 	private _preStart = uiNamespace getVariable XPS_PRESTART_VAR;
-	private _preprocess = if (isNumber (_class >> "preprocess")) then {getNumber (_class >> "preprocess") isEqualTo 1} else {true};
-	private _allowNils = if (isNumber (_class >> "allowNils")) then {getNumber (_class >> "allowNils") isEqualTo 1} else {true};
-	private _recompile = if (isNumber (_class >> "recompile")) then {getNumber (_class >> "recompile") isEqualTo 1} else {false};
-	private _preCache = if (isNumber (_class >> "preCache")) then {getNumber (_class >> "preCache") isEqualTo 1} else {false};
-	private _noStack = if (isNumber (_class >> "noStack")) then {getNumber (_class >> "noStack") isEqualTo 1} else {false};
-	private _isFinal = if (isNumber (_class >> "isFinal")) then {getNumber (_class >> "isFinal") isEqualTo 1} else {false};
+	//Set defaults as local vars
+	private _properties = +XPS_TypeDef_Defaults;
+
+	//Get property values in config
+	{
+		private _propName = _x select [1]; // remove underscore 
+		if (isNumber (_class >> _propName)) then {_properties set [_x, getNumber (_class >> _propName) isEqualTo 1]};
+	} foreach keys _properties;
+
+	values _properties params keys _properties;
 	
-	// Account if in 'debug mode' or filePatching enabled then force recompilation 
-	if ((!(isnil "XPS_DebugMode") && XPS_DebugMode) || {isFilePatchingEnabled}) then { _isFinal = false; _recompile = true;}; 
+	// Account if in 'debug mode' - force recompilation and no compileFinal
+	if (!(isnil "XPS_DebugMode") && {XPS_DebugMode}) then { _isFinal = false; _recompile = true;}; 
 	
-	// If recompiling, we can ignore preCaching
+	// If recompiling, we can ignore preCaching (recompile happens on Eden / Mission init - no need to run preStart for any reason)
 	if (_recompile) then {_precache = false;};
-	
-	private _isFinal_Cmd = ["", "compileFinal"] select (_isFinal);
 
 	// Only run during preStart if preCached -OR- during preInit
 	if ((_preStart && _preCache) || {!_preStart}) then {
 
 		//use UINamespace only if preCached or compiled and cached on first mission load
-		if (_preCache || {!_reCompile}) then {
+		if (_preCache || {!_recompile}) then {
 			if (isNil {_typeDefinition} || {_recompile && {!_isFinal}}) then {
-				// diag_log text "[XPS TD parser]  : init namespace variables";
+				//diag_log text "[XPS TD parser]  : init namespace variables";
 				uiNamespace setvariable [_varName, call _fnc_loadFile];
 				missionNamespace setvariable [_varName,uiNamespace getVariable _varName];
 			} else {
-				// diag_log text "[XPS TD parser]  : using cached";
-				missionNamespace setvariable [_varName,_typeDefinition];
+				//diag_log text "[XPS TD parser]  : using cached";
+				if (isNil {missionNamespace getVariable _varName}) then {
+					missionNamespace setvariable [_varName,_typeDefinition];
+				};
 			};
 		} else {
 			//We are recompiling each mission
+			//diag_log text "[XPS TD parser]  : loading always";
 			missionNamespace setvariable [_varName, call _fnc_loadFile];
 		};
 	};

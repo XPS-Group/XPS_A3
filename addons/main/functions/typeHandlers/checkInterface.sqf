@@ -54,30 +54,33 @@ if (_hashmap isEqualTo createhashmap || {_interfaces isEqualTo []}) exitWith {
 	false;
 };
 
-if !(_interfaces isEqualType []) then {_interfaces = [_interfaces]};
+switch (true) do {
+	case (_interfaces isEqualType "") : {_interfaces = [_interfaces]};
+	case (_interfaces isEqualType createhashmap) : {_interfaces = [_interfaces]};
+};
 
 private _result = true;
 
 for "_a" from 0 to (count _interfaces -1) do {
-	private _interface = [];
+	private _interface = _interfaces#_a;
 	// build it from string var
-	if ((_interfaces#_a) isEqualType "") then {
-		_interface = call compile (_interfaces#_a);
+	if ((_interface) isEqualType "") then {
+		_interface = currentNamespace getvariable  _interface;
 		if !(_interface isEqualType createhashmap) then {
 			// Not a valid hashmap - exit without checking and fail
-			diag_log text (format ["XPS_fnc_checkInterface: Interface was not a valid hashmap.  Interface provided:%1",_interfaces#_a]);
+			diag_log text (format ["XPS_fnc_checkInterface: Interface was not a valid hashmap.  Interface provided:%1",_interface]);
 			_interface = createhashmap;
 			_result = false;
 		};
 	};
 
 	if (isNil {_interface}) exitWith {
-		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interface provided:%1",_interfaces#_a]);
+		diag_log text (format ["XPS_fnc_checkInterface: Interface was nil.  Interface provided:%1",_interface]);
 		_result = false;
 	};
-
+	
 	if !(_interface isEqualType createhashmap) exitWith {
-		diag_log text (format ["XPS_fnc_checkInterface: Interface was invalid or not a hashmap.  Interface provided:%1",_interfaces#_a]);
+		diag_log text (format ["XPS_fnc_checkInterface: Interface was invalid or not a hashmap.  Interface provided:%1",_interface]);
 		_result = false;
 	};
 	
@@ -86,7 +89,7 @@ for "_a" from 0 to (count _interfaces -1) do {
 		[_x,_y] params ["_key","_checkType"];
 		//Check key exists
 		if !(_key in _hashmap) then {
-			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing for Interface: %3",_hashmap get "#type",_key,_interfaces#_a]);
+			diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key is missing",_hashmap get "#type",_key]);
 			_result = false;
 			continue;
 		};
@@ -110,13 +113,13 @@ for "_a" from 0 to (count _interfaces -1) do {
 					};
 				};
 				// Check Interfaces last
-				if (_typeIfcs isEqualtype createhashmap) then {
-					if (toLower _checkType in ((keys _typeIfcs) apply {toLower _x})) then {
+				if (_typeIfcs isEqualtype []/*createhashmap*/) then {
+					if (toLower _checkType in ((/*keys*/ _typeIfcs) apply {toLower _x})) then {
 						continue;
 					};
 				};
 			};
-			if !(tolower _type isEqualTo tolower _checkType) then {
+			if (tolower _type isNotEqualTo tolower _checkType) then {
 				diag_log text (format ["XPS_fnc_checkInterface: Type:%1 - %2 key has a value type %3. Type %4 expected",_hashmap get "#type",_key,_type,_checkType]);
 				_result = false;
 			};

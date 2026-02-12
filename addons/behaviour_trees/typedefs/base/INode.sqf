@@ -11,10 +11,10 @@ Authors:
 ----------------------------------------------------------------------------
 
 	Property: NodeType
-	<Enumeration>
+		<Enumeration>
 
 	Property: Status
-	<Enumeration>
+		<code>
 
 	Method: Init
 		<code>
@@ -24,8 +24,8 @@ Authors:
 
 ---------------------------------------------------------------------------- */
 [
-	["NodeType", "STRING"],
-	["Status","ANYTHING"],
+	["NodeType", "XPS_BT_NodeType"],
+	["Status","CODE"],
 	["Init","CODE"],
 	["Tick","CODE"]
 ]

@@ -45,7 +45,7 @@ Example: Check two child types
     --- Code
 	private _baseDef = [["#type","Tag_typ_MyBase"]];
     private _def1 = [["#type","Tag_typ_MyType1"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
-    private _def1 = [["#type","Tag_typ_MyType2"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
+    private _def2 = [["#type","Tag_typ_MyType2"],["#base",_baseDef],["Method",compileFinal {hint "Hi"}],["PropertyB",10]];
 		
 		_type1 = createHashmapObject [_def1];
 		_type2 = createHashmapObject [_def2];
@@ -60,11 +60,11 @@ Example: Check two child types
 
 params [["_type1",createhashmap,[createhashmap]],["_type2",createhashmap,[createhashmap]],["_strict",true,[true]]];
 
-private _types1 = (_type1 getOrDefault ["#type",[call XPS_fnc_createUniqueID]]) apply {toLower _x;};
-private _types2 = (_type2 getOrDefault ["#type",[call XPS_fnc_createUniqueID]]) apply {toLower _x;};
+private _types1 = (_type1 getOrDefault ["#type",[[] call XPS_fnc_createUniqueID]]) apply {toLower _x;};
+private _types2 = (_type2 getOrDefault ["#type",[[] call XPS_fnc_createUniqueID]]) apply {toLower _x;};
 
 if (_strict) then {
 	_types1 isEqualTo _types2;
 } else {
-	count (_types1 arrayIntersect _types2) > 0;
+	_types1 arrayIntersect _types2 isNotEqualTo [];
 };

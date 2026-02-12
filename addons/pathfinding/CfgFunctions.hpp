@@ -5,7 +5,7 @@ class CfgFunctions {
 		};
 		class Init {
 			class preInit {
-				file = FILEPATH_C_Q(preInit.sqf);
+				file = XPS_FILEPATH_C_STR(preInit.sqf);
 				preInit = 1;
 			};
 		};

@@ -15,6 +15,50 @@ Authors:
 Description:
 	Raises an event X number of frames after calling <Start>. Event is optionally repeatable.
 
+Warning:
+	When calling "Start", an "EachFrame" event handler is created which contains a ref to this hashmap object.
+	It will return the event handler ID which is useful. Care should be given to not let the hashmap leave scope. 
+	Once a FrameDelay object leaves scope and "Start" has been called, it will not automatically be garbage collected. 
+	For this reason, one should always call "Stop" before it goes out of scope. Alternatively, the ID can be used
+	with removeMissionEventHandler as a backup.
+
+	For example, consider this:
+	--- code ---
+	tempVar = createhashmapobject [XPS_typ_FrameDelay,[5000]];
+	_id = tempVar call ["Start"];
+	tempVar = nil; // hashmap object is assumed to be orphaned but in fact is not since event handler contains a ref
+	// There is now no way to "Stop" the timer
+	---
+
+	Best Practice is to force call "Stop" or "#delete" when object is finished being used but state is unknown. This will forcibly 
+	remove the event handler.
+	--- code ---
+	tempVar = createhashmapobject [XPS_typ_FrameDelay,[5000]];
+	_id = tempVar call ["Start"];
+
+	// Code which may or may not "Stop" the timer
+
+	tempVar call ["#delete"]; // forces clean up when state is unknown
+	tempVar = nil; // hashmap object is now orphaned and will be removed from memory
+	---
+
+	Alternatively cache the string representation of the var name (either global or local scope) with handler ID 
+	to post-check and perform cleanup. A crude example of this is below.
+	--- code ---
+	myTimerHandles = []
+	tempVar = createhashmapobject [XPS_typ_FrameDelay,[5000]];
+	_id = tempVar call ["Start"];
+	myTimerHandles pushback [_id,"tempVar"];
+	tempVar = nil; // hashmap object still exists and is running
+	 
+	 // a monitor loop in some other function/type
+	 {
+	 	// checks if var is nil and removes eventhandler thus fully orphaning the object
+		_x params ["_id","_varname"];
+		if (isNil _varName) then {removeMissionEventHandler ["EachFrame",_id]};
+	 } foreach myTimerHandles
+	---
+
 Returns:
 	<HashmapObject>
 
@@ -61,7 +105,8 @@ Returns:
 		<True>
 	-----------------------------------------------------------------------------*/
 	["#delete", {
-        player sideChat "FrameDelay Deleted";
+		_self call ["Stop"];
+		true;
 	}],
 	/*----------------------------------------------------------------------------
 	Str: #str
@@ -100,6 +145,17 @@ Returns:
 		<Number> - Number of Frames before <Elapsed> is invoked
 	-----------------------------------------------------------------------------*/
     ["Delay",nil],
+	/*----------------------------------------------------------------------------
+	Property: Paused
+    
+    	--- Prototype --- 
+    	get "Paused"
+    	---
+    
+    Returns: 
+		<Boolean> - whether the timer should pause execution
+	-----------------------------------------------------------------------------*/
+    ["Paused",false],
     /*----------------------------------------------------------------------------
     Method: Start
     
@@ -113,17 +169,19 @@ Returns:
 		none
 		
 	Returns:
-		Nothing
+		<Number> - the "EachFrame" missionEventHandler ID
     ----------------------------------------------------------------------------*/
     ["Start",compileFinal {
+		_self set ["Paused",false];
 		private _hndl = _self get "_handle";
-		if (isNil "_handle") then {
+		if (isNil "_hndl") then {
             _hndl = addMissionEventHandler ["EachFrame",{
                 _thisArgs params ["_obj","_numFrames"];
+				if (_obj get "Paused") exitwith {};
                 private _count = _obj get "_counter";
                 _count = _count + 1;
                 _obj set ["_counter",_count];
-                if (_numFrames < _count) then {
+                if (_numFrames <= _count) then {
                     _obj get "_onElapsed" call ["Invoke",[_obj,[_count]]];
                     if (_obj get "AutoReset") then {
                         _obj call ["Reset"];
@@ -134,6 +192,7 @@ Returns:
             },[_self,_self get "Delay"]];
             _self set ["_handle",_hndl];
         };
+		_self get ["_handle"];
     }],
     /*----------------------------------------------------------------------------
     Method: Stop

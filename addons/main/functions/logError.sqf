@@ -34,7 +34,7 @@ if !(params [["_errorString","",[""]],"_args"]) exitWith {
 };
 _args = [_args] param [0,[],[[]]];
 
-if (count _args > 0) then {
+if (_args isNotEqualTo []) then {
     diag_log _errorString;
 } else {
     args insert [0,_errorString];

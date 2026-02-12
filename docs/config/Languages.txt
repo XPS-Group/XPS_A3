@@ -24,7 +24,7 @@ Language: SQF
    Line Comment: //
    Block Comment: /* */
    Member Operator: .
-   Enum Values: Under Parent
+   Enum Values: Under Type
    Case Sensitive: No
 
 

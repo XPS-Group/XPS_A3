@@ -30,7 +30,6 @@ Returns:
 	Constructor: #create
 		<XPS_BT_typ_Composite. #create>
 	-----------------------------------------------------------------------------*/
-	["#create", {_self call ["XPS_BT_typ_Composite.#create"];}],
 	/*----------------------------------------------------------------------------
 	Str: #str
     	--- text --- 
@@ -65,32 +64,32 @@ Returns:
 		_context - <HashmapObject> or <hashmap> - typically a blackboard object that implements the <XPS_ifc_IBlackboard:core.XPS_ifc_IBlackboard> interface
 
 	Returns: 
-		<Enumeration> - <XPS_BT_Status_Success>, <XPS_BT_Status_Failure>, or <XPS_BT_Status_Running>,, or nil
+		<Enumeration> - <XPS_Status_Success>, <XPS_Status_Failure>, or <XPS_Status_Running>,, or nil
 	-----------------------------------------------------------------------------*/
 	["processTick",compileFinal {
 		private _children = _self get "children";
 		private _currentIndex = _self get "currentIndex";
 
-		if (_children isEqualTo []) exitWith {XPS_BT_Status_Success};
+		if (_children isEqualTo []) exitWith {XPS_Status_Success};
 
 		private _child = _children#_currentIndex;
 		private _status = _child call ["Tick",_this];
 
 		switch (_status) do {
-			case XPS_BT_Status_Success : {
+			case XPS_Status_Success : {
 				_currentIndex = _currentIndex+1;
 				if (_currentIndex < count _children) then {
 					_self set ["currentIndex",_currentIndex];
-					_status = XPS_BT_Status_Running;
+					_status = XPS_Status_Running;
 				};
 			};
-			case XPS_BT_Status_Failure : {
+			case XPS_Status_Failure : {
 				// Do Nothing - keep status failure
 			};
-			case XPS_BT_Status_Running : {
+			case XPS_Status_Running : {
 				// Do Nothing - keep index and status same
 			};
-			default {_status = XPS_BT_Status_Failure};
+			default {_status = XPS_Status_Failure};
 		};
 		_status;
 	}]
